@@ -1,0 +1,2 @@
+//>>built
+require({cache:{"url:epi/shell/form/templates/Group.html":"<li></li>"}});define("epi/shell/form/Group",["dojo/_base/declare","dijit/_WidgetBase","dijit/_Container","dijit/_Contained","dijit/_TemplatedMixin","dojo/text!./templates/Group.html"],function(_1,_2,_3,_4,_5,_6){return _1([_2,_3,_4,_5],{templateString:_6});});

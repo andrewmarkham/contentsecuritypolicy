@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/ValidationTextarea",["dojo/_base/declare","dijit/form/Textarea","epi/shell/widget/_ValueRequiredMixin"],function(_1,_2,_3){return _1([_2,_3],{_setPlaceHolderAttr:function(_4){this.inherited(arguments);this.set("placeholder",_4);},_setValueAttr:function(_5){this.inherited(arguments);this._started&&this.validate();}});});

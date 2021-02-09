@@ -1,0 +1,303 @@
+// GENERAL
+//===============================================================================================================================
+.clearfix() {
+    &:before, &:after { content: ""; display: table; }
+    &:after { clear: both; }
+    zoom: 1;
+}
+
+@input-margin: 0.2em;
+
+
+
+// TYPOGRAPHY
+//===============================================================================================================================
+.sans-serif() { font-family: Barlow, sans-serif; }
+.serif() { font-family: Georgia, "Times New Roman", serif; }
+
+.font-size(@px, @rem) { font-size: @px + 0px; font-size: @rem + 0rem; }
+
+
+.text-shadow-specific (@hLength, @vLength, @radius, @r, @g, @b, @opacity) {
+    // This mixin is no longer required and should not be used, but exists here for legacy reasons
+    text-shadow: @hLength @vLength @radius rgba(@r, @g, @b, @opacity);
+}
+
+.epi-timestampReset() {
+    font-style: normal;
+    font-weight: normal;
+    font-size: inherit;
+    .sans-serif;
+    vertical-align: inherit;
+    padding-top: 0px;
+}
+
+
+.epi-functionLink() {
+    color: @text-color-secondary;
+    cursor: pointer;
+    font-size: 11px;
+    text-decoration: underline;
+}
+
+.epi-visibleLink() {
+    color: @link-color;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+
+.epi-componentToolbarBase() {
+    background: @epi-componentToolbar-background;
+    border-top: 1px solid @epi-componentToolbar-border;
+}
+
+
+
+
+
+// BACKGROUNDS AND BORDERS
+//===============================================================================================================================
+.epi-focused () {
+    border-color: @focused-border-color;
+    box-shadow: 0 0 0 1px @focused-border-color;
+    .transition-duration(.1s);
+}
+
+.heavy-border(@color: #000000) {
+    border: 3px solid @color;
+}
+
+.svgBackground(@fallbackColor, @backgroundX, @backgroundY, @svgUrl) {
+    background: @fallbackColor url("../images/gradients/Gradients.png") @backgroundX @backgroundY repeat-x;
+    background: none, url("../@{svgUrl}"), @fallbackColor url("../images/gradients/Gradients.png") @backgroundX @backgroundY repeat-x;
+    -webkit-background-size: auto 100% !important; // TODO: this is a temporary fix due to webkit currently mishandling background-size. Investigate later.
+    background-size: 100% 100%;
+}
+
+.gradient (@fallbackColor, @startColor, @endColor) {
+    background-color: @fallbackColor;
+    background-image: -moz-linear-gradient(@startColor, @endColor);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(@startColor), to(@endColor));
+    background-image: -webkit-linear-gradient(@startColor, @endColor);
+    background-image: -o-linear-gradient(@startColor, @endColor);
+}
+
+.epi-applicationBackground() {
+    .box-shadow-specific-inset (0, 10px, 10px, 0px, 135, 135, 130, 0.05);
+    background: #ebebe6 url("../epi/images/iframe_background.png");
+    background: url("../epi/images/iframe_spotlight.png") center center, #ebebe6 url("../epi/images/iframe_background.png");
+    background-size: cover, auto;
+}
+
+.epi-selectedItemBackground() {
+    background: @epi-selected-item;
+    color: @text-color;
+}
+
+.epi-selectedItemInactiveBackground() {
+    background: @epi-selected-inactive-item;
+    color: @text-color;
+}
+
+.epi-applicationBackgroundInverted() {
+}
+
+
+
+// STATUSES
+//===============================================================================================================================
+.epi-neutral() {
+    background: @surface400;
+    color: @text-color;
+}
+.epi-primary() {
+    background: @primary300;
+    color: @text-color;
+}
+.epi-success() {
+    background: @success300;
+    color: @text-color;
+}
+.epi-info() {
+    background: @reminder300;
+    color: @text-color;
+}
+.epi-warning() {
+    background: @warning300;
+    color: @text-color;
+}
+.epi-danger() {
+    background: @error300;
+    color: @text-color;
+}
+
+
+// CSS3
+//===============================================================================================================================
+// Box mixins
+.content-box() {
+    -moz-box-sizing: content-box; // Prefixed up until v 28.0
+    box-sizing: content-box;
+}
+
+.border-box() {
+    -moz-box-sizing: border-box; // Prefixed up until v 28.0
+    box-sizing: border-box;
+}
+
+
+.border-radius (@radius) {
+    // This mixin is no longer required and should not be used, but exists here for legacy reasons
+    border-radius: @radius;
+}
+
+.border-radius-specific (@radius-tl, @radius-tr, @radius-br, @radius-bl) {
+    // This mixin is no longer required and should not be used, but exists here for legacy reasons
+    // iOs 3.2 and Android 2.1 need prefixing, but are ancient and unsupported
+    border-top-left-radius: @radius-tl;
+    border-top-right-radius: @radius-tr;
+    border-bottom-right-radius: @radius-br;
+    border-bottom-left-radius: @radius-bl;
+}
+
+
+.box-shadow (@value) {
+    -moz-box-shadow: @value; // Prefixed up until v 28.0
+    box-shadow: @value;
+}
+
+.box-shadow-specific (@hLength, @vLength, @radius, @spread, @r, @g, @b, @opacity) {
+    -webkit-box-shadow: @hLength @vLength @radius @spread rgba(@r, @g, @b, @opacity); // Prefixed for iOS Safari (v 4.2-4.3) and Android (3.0)
+    -moz-box-shadow: @hLength @vLength @radius @spread rgba(@r, @g, @b, @opacity); // Prefixed up until v 28.0
+    box-shadow: @hLength @vLength @radius @spread rgba(@r, @g, @b, @opacity);
+}
+
+.box-shadow-specific-inset (@hLength, @vLength, @radius, @spread, @r, @g, @b, @opacity) {
+    -webkit-box-shadow: inset @hLength @vLength @radius @spread rgba(@r, @g, @b, @opacity); // Prefixed for iOS Safari (v 4.2-4.3) and Android (3.0)
+    -moz-box-shadow: inset @hLength @vLength @radius @spread rgba(@r, @g, @b, @opacity); // Prefixed up until v 28.0
+    box-shadow: inset @hLength @vLength @radius @spread rgba(@r, @g, @b, @opacity);
+}
+
+
+// Transitions
+.transition-property (@value) {
+    -webkit-transition-property: @value; // Prefixed for iOS Safari (v 6.0-6.1) and Android (v 4.2-4.3)
+    transition-property: @value;
+}
+
+.transition-property (@value1, @value2) {
+    -webkit-transition-property: @value1, @value2; // Prefixed for iOS Safari (v 6.0-6.1) and Android (v 4.2-4.3)
+    transition-property: @value1, @value2;
+}
+
+.transition-duration (@value) {
+    -webkit-transition-duration: @value; // Prefixed for iOS Safari (v 6.0-6.1) and Android (v 4.2-4.3)
+    transition-duration: @value;
+}
+
+.transition-duration (@value1, @value2) {
+    -webkit-transition-duration: @value1, @value2; // Prefixed for iOS Safari (v 6.0-6.1) and Android (v 4.2-4.3)
+    transition-duration: @value1, @value2;
+}
+
+.transition-timing-function (@value) {
+    -webkit-transition-timing-function: @value; // Prefixed for iOS Safari (v 6.0-6.1) and Android (v 4.2-4.3)
+    transition-timing-function: @value;
+}
+.transition (@value) {
+    -webkit-transition: @value; // Prefixed for iOS Safari (v 6.0-6.1) and Android (v 4.2-4.3)
+            transition: @value;
+}
+
+
+// Transforms
+.scaleX(@value) {
+    -webkit-transform: scaleX(@value);
+       -moz-transform: scaleX(@value);
+        -ms-transform: scaleX(@value);
+         -o-transform: scaleX(@value);
+            transform: scaleX(@value);
+}
+
+.transform(@string){
+    -webkit-transform: @string;
+       -moz-transform: @string;
+        -ms-transform: @string;
+         -o-transform: @string;
+            transform: @string;
+}
+
+.transform-origin(@y, @x) {
+    -webkit-transform-origin: @y @x;
+       -moz-transform-origin: @y @x;
+        -ms-transform-origin: @y @x;
+         -o-transform-origin: @y @x;
+            transform-origin: @y @x;
+}
+
+
+// Misc
+.column(@columns, @gap) {
+    -webkit-column-count: @columns;
+       -moz-column-count: @columns;
+         -o-column-count: @columns;
+        -ms-column-count: @columns;
+            column-count: @columns;
+
+    -webkit-column-gap: @gap + 0px;
+       -moz-column-gap: @gap + 0px;
+         -o-column-gap: @gap + 0px;
+        -ms-column-gap: @gap + 0px;
+            column-gap: @gap + 0px;
+}
+
+
+
+
+
+// OBJECTS
+//===============================================================================================================================
+// Arrows
+.arrow() {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.arrowTop(@width, @r,@g,@b,@a) {
+    border-top: none;
+    border-right: @width solid rgba(255,255,255,0);
+    border-bottom: @width solid rgba(@r,@g,@b,@a);
+    border-left: @width solid rgba(255,255,255,0);
+    height: 0;
+    width: 0;
+}
+.arrowRight(@width, @r,@g,@b,@a) {
+    border-top: @width solid rgba(255,255,255,0);
+    border-right: none;
+    border-bottom: @width solid  rgba(255,255,255,0);
+    border-left: @width solid rgba(@r,@g,@b,@a);
+    height: 0;
+    width: 0;
+}
+.arrowBottom(@width, @r,@g,@b,@a) {
+    border-top: @width solid rgba(@r,@g,@b,@a);
+    border-right: @width solid  rgba(255,255,255,0);
+    border-bottom: none;
+    border-left: @width solid rgba(255,255,255,0);
+    height: 0;
+    width: 0;
+}
+.arrowLeft(@width, @r,@g,@b,@a) {
+    border-top: @width solid rgba(255,255,255,0);
+    border-right: @width solid rgba(@r,@g,@b,@a);
+    border-bottom: @width solid  rgba(255,255,255,0);
+    border-left: none;
+    height: 0;
+    width: 0;
+}

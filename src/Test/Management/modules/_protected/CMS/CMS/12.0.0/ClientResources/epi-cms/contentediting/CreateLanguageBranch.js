@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/CreateLanguageBranch",["dojo/_base/declare","dojo/_base/lang","epi-cms/contentediting/CreateContent","epi-cms/contentediting/viewmodel/CreateLanguageBranchViewModel"],function(_1,_2,_3,_4){return _1([_3],{modelType:_4,_setCreateMode:function(){_2.mixin(this._contextService.currentContext,{currentMode:"translate"});}});});

@@ -1,0 +1,73 @@
+#epi-quickNavigator {
+    background: #f7542b;
+	border: 1px solid #f7542b;
+	border-top: none;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.25);
+	display: inline-block;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: fixed;
+	right: 10px;
+	top: 0;
+	z-index: 100000;
+}
+#epi-quickNavigator a {
+    text-decoration: none;   
+}
+#epi-quickNavigator .epi-quickNavigator-editLink a span {
+    background: url(../images/episerver-white.svg) center center no-repeat;
+    display: block;
+    height: 16px;
+    line-height: 12px;
+    margin: 6px 10px 0;
+    text-indent: -9999em;
+    width: 50px;
+}
+#epi-quickNavigator > li {
+    box-sizing: border-box;
+	display: block;
+	float: left;
+    line-height: 16px !important;
+	position: relative;
+}
+#epi-quickNavigator .quicknav-logo {
+    margin: 7px 10px 0;
+    width: 90px; 
+}
+#epi-quickNavigator .epi-quickNavigator-dropdown-arrow {
+	background: #f7542b url(../images/quicknav/quicknav-arrow.png) center center no-repeat;
+	border-left: 1px solid #e1410e;
+	display: block;
+	height: 26px;
+	width: 19px;
+}
+#epi-quickNavigator .epi-quickNavigator-dropdown-arrow:hover {
+	background-color: #ed4c1c;
+}
+
+#epi-quickNavigator .epi-quickNavigator-dropdown ul {
+	background: #555B61;
+	border: 1px solid #666;
+	display: none;
+	list-style: none;
+	padding: 6px 0;
+	position: absolute;
+	right: -1px;
+	box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+}
+#epi-quickNavigator .epi-quickNavigator-dropdown ul li a {
+	color: #fff;
+	display: block;
+    font-family: Arial, Helvetica, Sans-Serif !important;
+	font-size: 13px !important;
+    line-height: 16px !important;
+	white-space: nowrap;
+	padding: 3px 20px;
+}
+#epi-quickNavigator .epi-quickNavigator-dropdown ul li a:hover {
+	background: #c7d500;
+	color: #333;
+} 

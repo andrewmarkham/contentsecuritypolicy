@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/content-approval/command/ApproveChanges",["dojo/_base/declare","./_ApprovalTransitionWithReasonTextCommand","epi/i18n!epi/nls/episerver.cms.contentapproval.command.approvechanges"],function(_1,_2,_3){return _1([_2],{label:_3.label,title:_3.title,dialogPlaceHolder:_3.placeholder,confirmActionText:_3.confirmactiontext,executingLabel:_3.label,executeMethod:"approveChanges",isCommentRequiredPropertyName:"isApproveCommentRequired"});});

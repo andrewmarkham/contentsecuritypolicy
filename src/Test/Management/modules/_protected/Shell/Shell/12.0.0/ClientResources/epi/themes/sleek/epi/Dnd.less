@@ -1,0 +1,18 @@
+@import "../variables";
+
+.Sleek {
+    &.dojoDndMove,
+    &.dojoDndCopy {
+
+        .epi-visible-dnd-area {
+
+            &.dojoDndContainer {
+                border: 2px dashed @epi-drag-border-active;
+            }
+
+            &.dojoDndContainerOver {
+                border: 2px solid @epi-drag-border-hover;
+            }
+        }
+    }
+}

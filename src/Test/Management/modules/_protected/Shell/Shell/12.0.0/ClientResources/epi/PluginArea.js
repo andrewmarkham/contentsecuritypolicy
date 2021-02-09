@@ -1,0 +1,2 @@
+//>>built
+define("epi/PluginArea",["dojo/_base/declare","dojo/Evented","epi/locator"],function(_1,_2,_3){return _1([_2],{constructor:function(_4){if(typeof _4!=="string"||_4===""){throw new Error("The argument 'identifier' must be a non-empty string.");}this._identifier=_4;_3.add(_4,[]);_3.on(_4,this.emit.bind(this));},add:function(_5){return _3.add(this._identifier,_5);},get:function(){return _3.get(this._identifier);}});});

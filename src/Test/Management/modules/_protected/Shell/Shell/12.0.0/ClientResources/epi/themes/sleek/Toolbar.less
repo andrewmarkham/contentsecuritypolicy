@@ -1,0 +1,364 @@
+/* Toolbar
+ *
+ * Styling Toolbar means styling the toolbar container and the widget inside toolbar  (dijitToolbar)
+ *
+ * 1. toolbar (default styling):
+ * 		.dijitToolbar - styles for outer container
+ *
+ * 2. widget inside toolbar
+ * 		.dijitToolbar .dijitButtonNode   - Button widget
+ * 					  .dijitComboButton  - ComboButton widget
+ * 					  .dijitDropDownButton  - DropDownButton widget
+ * 					  .dijitToggleButton  - ToggleButton widget
+ *
+ * 3. hovered widget inside toolbar (ie, mouse hover on the widget inside)
+ * 			.dijitToolbar .dijitButtonNodeHover  - styles for hovered Button widget
+ *
+ * 4. actived widget inside toolbar (ie, mouse down on the widget inside)
+ * 			.dijitToolbar .dijitButtonNodeActive  - mouse down on Button widget
+ */
+
+@import "variables";
+@import "./epi/CommonIcons.less";
+
+.Sleek .dijitToolbar {
+	padding: 4px 6px;
+    color: #4a4a4a;
+	zoom: 1;
+    overflow: hidden;
+}
+
+.Sleek .dijitToolbar label {
+	padding: 0 3px 0 6px;
+}
+
+.dj_ie6 .Sleek .dijitToolbar {
+	background-image: none;
+}
+
+.Sleek .dijitToolbarSeparator {
+	/* separator icon in the editor sprite */
+	background: url('../../patch/dijit/icons/images/editorIconsEnabled.png');
+}
+
+/* Toolbar inside of disabled Editor */
+.Sleek .dijitDisabled .dijitToolbar {
+	background: none;
+	background-color: @disabled-background-color;
+	border-bottom: 1px solid @disabled-border-color;
+}
+
+.Sleek .dijitToolbar .dijitComboBoxDisabled .dijitArrowButtonInner {
+	background-position: 0 50%;
+}
+
+
+
+/*============================*/
+/* EPi */
+/*============================*/
+
+.Sleek .epi-toolbar-unwrapped {
+	background-color: @bar-background-color;
+	border-top: 1px solid #E6E6E6;
+	border-bottom: 1px solid #E6E6E6;
+	padding: 4px 6px;
+}
+
+.Sleek {
+    .epi-globalToolbar {
+        .svgBackground(@epi-toolbar-background,0px,-2300px,'images/gradients/GlobalToolbar.svg');
+        padding: 10px 0 8px 0;
+
+        &:focus {
+            outline: none !important;
+        }
+
+        .epi-toolbarLeading {
+            .epi-mediumButton, .epi-expandoMenuButton:last-child, .dijitDropDownButton:last-child {
+                margin: 0 8px 0 0;
+            }
+
+            .epi-expandoMenuButton {
+                margin: 0;
+                .epi-mediumButton {
+                    margin:0 3px 0 0;
+                }
+            }
+        }
+
+        .epi-toolbarLeading {
+            width: 70%;
+        }
+
+        .epi-toolbarCenter {
+            width: 0%;
+        }
+
+        .epi-toolbarTrailing {
+            width: 30%;
+        }
+    }
+
+
+    .epi-localToolbar {
+        border-bottom: 1px solid @border-color;
+        height: auto;
+		min-height: 42px;
+        padding: 0;
+        z-index: 800;
+		width: 100%;
+		.border-box();
+
+
+        &:focus {
+            outline: none !important;
+        }
+
+		.dijitToolbar {
+			padding: 0;
+		}
+
+        .epi-toolbarLeading {
+            width: 40%;
+        }
+
+        .epi-toolbarCenter {
+            width: 20%;
+        }
+
+        .epi-toolbarTrailing {
+            min-width: 349px;
+            width: 40%;
+
+            .epi-statusText {
+                display: none;
+            }
+
+            .epi-statusContainer .dijitIcon {
+                position: relative;
+                top: 1px;
+            }
+
+            .epi-statusIndicator {
+                &.epi-statusIndicatorChangesToPublish,
+                &.epi-statusIndicatorNotPublishedYet {
+                    & .epi-statusContainer .dijitIcon {
+                        // epi-iconEdited
+                        .commonIcons(@icon_size-small, 76, 1);
+                    }
+                }
+                &.epi-statusIndicatorReadyToPublish {
+                    & .epi-statusContainer .dijitIcon {
+                        // epi-iconCheckmark
+                        .commonIcons(@icon_size-small, 2, 0);
+                    }
+                }
+                &.epi-statusIndicatorScheduledPublish {
+                    & .epi-statusContainer .dijitIcon {
+                        // epi-iconClock
+                        .commonIcons(@icon_size-small, 1, 1);
+                    }
+                }
+                &.epi-statusIndicatorInUse {
+                    & .epi-statusContainer .dijitIcon {
+                        // epi-iconUser
+                        .commonIcons(@icon_size-small, 35, 1);
+                    }
+                }
+                &.epi-statusIndicatorPublished {
+                    & .epi-statusContainer .dijitIcon {
+                        // epi-iconPublished
+                        .commonIcons(@icon_size-small, 65, 1);
+                    }
+                }
+            }
+
+			.epi-statusIndicator {
+				.epi-statusIndicator { margin-bottom: 10px; }
+			}
+			.epi-mediumButton { vertical-align: top; }
+			.epi-viewSwitchButton {
+                vertical-align: top;
+                .dijitButton:last-child {
+                    margin-right: 0;
+                }
+            }
+		}
+    }
+
+	.epi-viewHeaderContainer {
+        border-bottom: 1px solid @border-color;
+		padding: 0 8px;
+    }
+
+    .epi-toolbarLeading h1 {
+		display: inline-block;
+        font-size: 15px;
+        font-weight: bold;
+        margin: 1px 0 0;
+        color: @text-color-soft;
+        vertical-align: top;
+		width: -webkit-calc(100% - 18px);
+		width: -moz-calc(100% - 18px);
+		width: calc(100% - 18px);
+    }
+
+    .dijitToolbar.epi-toolbarBottom {
+        background: @epi-toolbar-background;
+        border-bottom: none;
+        min-height: 17px;
+    }
+
+    .epi-toolbarGroupContainer {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+
+        &:focus {
+            outline: none !important;
+        }
+
+        .epi-toolbarGroup {
+            .border-box;
+            display: table-cell;
+            vertical-align: top;
+
+            &:focus {
+                outline: none !important;
+            }
+        }
+
+        .epi-toolbarLeading {
+            text-align: left;
+        }
+
+        .epi-toolbarCenter {
+            padding: 0;
+            text-align: center;
+        }
+
+        .epi-toolbarTrailing {
+            padding: 0 0 2px 0; // 2px bottom padding is used to fix a negative Zoom bug (#86736) in Chrome
+            text-align: right;
+        }
+    }
+	.epi-pinnableToolbar .epi-toolbarTrailing {
+		padding: 0;
+	}
+
+    .epi-globalToolbar.dijitToolbar .epi-toolbarGroupContainer {
+        .epi-toolbarLeading {
+            width: 70%;
+        }
+
+        .epi-toolbarTrailing {
+            min-width: 30px;
+        }
+    }
+    /* Shared Narrow & Medium Styles */
+    .epi-editToolbarNarrow,
+    .epi-editToolbarMedium {
+		&.epi-localToolbar {
+			.epi-toolbarLeading {
+				padding-left: 8px;
+			}
+			.epi-toolbarTrailing {
+				padding-right: 8px;
+			}
+		}
+    }
+
+    .epi-editToolbarLarge {
+        &.epi-localToolbar {
+            .epi-statusText {
+                display: inline;
+            }
+
+            .epi-statusContainer .dijitIcon {
+                display: none;
+            }
+        }
+    }
+
+        /* Narrow styles */
+        .epi-editToolbarNarrow.epi-localToolbar {
+            height: auto;
+            overflow: visible;
+            padding-top: 38px;
+
+            .epi-toolbarLeading,
+            .epi-toolbarCenter,
+            .epi-toolbarTrailing {
+                display: block;
+                height: auto;
+            }
+
+            .epi-toolbarLeading {
+                .border-box;
+                padding: 0 8px;
+                text-align: left;
+                width: 100%;
+            }
+
+            .epi-toolbarCenter {
+                padding: 4px 8px 0;
+                width: auto;
+            }
+
+            .epi-toolbarTrailing {
+                .border-box;
+                padding: 0 8px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+        }
+        /* Medium styles */
+        .epi-editToolbarMedium.epi-localToolbar {
+            height: auto;
+            overflow: visible;
+            padding-top: 38px;
+
+            .epi-toolbarLeading,
+            .epi-toolbarCenter,
+            .epi-toolbarTrailing {
+                height: auto;
+            }
+
+            .epi-toolbarLeading {
+                .border-box;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 50%;
+            }
+
+            .epi-toolbarCenter {
+                display: block;
+                padding: 4px 8px 0;
+                width: 100%;
+            }
+
+            .epi-toolbarTrailing {
+                .border-box;
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 50%;
+            }
+        }
+}
+
+.Sleek {
+	.epi-flatToolbar {
+        background: @epi-flat-toolbar-background;
+		border-bottom: 1px solid @border-color;
+		padding: 8px 16px;
+
+        .epi-flatButton.dijitButton {
+            margin-right: 8px;
+        }
+	}
+}

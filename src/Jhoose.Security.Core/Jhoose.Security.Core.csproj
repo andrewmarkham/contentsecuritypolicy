@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <PackageId>Jhoose.Security.Core</PackageId>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>Andrew Markham</Authors>
+    
+    <Title></Title>
+    <Description></Description>
+    <Tags>Jhoose;Episerver;Content Security Policy</Tags>
+    <ReleaseNotes></ReleaseNotes>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+  </PropertyGroup>
+
+<ItemGroup>
+  <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.2.0" />
+</ItemGroup>
+</Project>

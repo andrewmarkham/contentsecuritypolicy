@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/form/ValidationError",["dojo"],function(_1){return _1.declare(null,{constructor:function(){this._validationMessages=[];this._validationInputs=[];},Add:function(_2,_3){this._validationMessages.push(_2);this._validationInputs.push(_3);},GetValidationMessages:function(){return this._validationMessages;},GetValidationInputs:function(){return this._validationInputs;},GetValidationMessage:function(i){return this._validationMessages[i];},GetValidationInput:function(i){return this._validationInputs[i];}});});

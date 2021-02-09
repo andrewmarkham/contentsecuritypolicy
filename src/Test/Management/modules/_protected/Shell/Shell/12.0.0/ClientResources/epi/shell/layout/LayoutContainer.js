@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/layout/LayoutContainer",["dojo/_base/declare","dijit/_WidgetBase","dijit/_Container","dijit/_Contained","dijit/_TemplatedMixin","epi/shell/layout/SimpleContainer"],function(_1,_2,_3,_4,_5,_6){var _7=_1([_2,_3,_4,_5],{templateString:"<li class=\"epi-form-container__section__row\">                                            <label style=\"display: none\"><span data-dojo-attach-point=\"readonlyIcon\"></span></label>                                         </li>"});return _1([_6],{_setTitleAttr:function(){},_FieldItem:_7});});

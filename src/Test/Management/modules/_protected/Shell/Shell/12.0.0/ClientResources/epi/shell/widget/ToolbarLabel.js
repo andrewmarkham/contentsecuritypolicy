@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/ToolbarLabel",["dojo","dojo/dom-construct","dijit/_WidgetBase"],function(_1,_2,_3){return _1.declare([_3],{baseClass:"epi-breadCrumbsCurrentItem dijitInline",label:null,buildRendering:function(){if(!this.domNode){this.domNode=this.srcNodeRef||_2.create("h1");}this.inherited(arguments);},_setLabelAttr:{node:"domNode",type:"innerText"}});});

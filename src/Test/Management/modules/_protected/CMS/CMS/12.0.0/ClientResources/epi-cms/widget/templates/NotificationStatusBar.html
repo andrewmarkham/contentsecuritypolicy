@@ -1,0 +1,13 @@
+﻿<div>
+    <div class="epi-dijitTooltipTitleBar">
+        <span class="epi-dijitTooltipTitle">${res.title}</span>
+        <span class="epi-closeButton dijitDialogCloseIcon" data-dojo-attach-point="closeIcon" title="${res.title}" role="button"></span>
+    </div>
+    <div class="epi-dijitTooltipContent" data-dojo-attach-point="zoneLayoutNode">
+        <div data-dojo-attach-point="zoneContainer">
+            <div data-dojo-type="epi-cms/widget/NotificationStatusZone" data-dojo-attach-point="errorZone" data-dojo-props="title: '${res.errortitle}', type: 'error'"></div>
+            <div data-dojo-type="epi-cms/widget/NotificationStatusZone" data-dojo-attach-point="warningZone" data-dojo-props="title: '${res.warningtitle}', type: 'warning'"></div>
+            <div data-dojo-type="epi-cms/widget/NotificationStatusZone" data-dojo-attach-point="infoZone"  data-dojo-props="title: '${res.notetitle}', type: 'note'"></div>
+        </div>
+    </div>
+</div>

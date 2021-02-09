@@ -1,0 +1,16 @@
+﻿<div class="epi-menu--inverted">
+    <div class="epi-dijitTooltipContainer">
+        <div class="epi-invertedTooltip">
+            <div class="epi-tooltipDialogTop">
+                <span data-dojo-attach-point="header">${resources.whocansee}</span>
+            </div>
+        </div>
+        <div class="epi-tooltipDialogContent--max-height">
+            <div data-dojo-type="dijit/Menu" data-dojo-attach-point="visitorGroupsMenu" style="width:100%"></div>
+            <div class="epi-menuSeparator" tabindex="-1"></div>
+            <div data-dojo-type="dijit/Menu" data-dojo-attach-point="filterOptionsMenu" style="width:100%">
+                <div data-dojo-attach-point="rdEveryone" data-dojo-type="epi/shell/widget/RadioMenuItem" data-dojo-props="label:'${resources.everyone}', value: ''"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,2 @@
+//>>built
+define("xstyle/page",["xstyle/core/base","xstyle/main","dojo/domReady!"],function(_1){var _2=document.getElementsByTagName("textarea")[0].value,_3=document.body,_4={"&lt;":"<","&gt;":">","&amp;":"&"};_3._contentNode=_3;_3.innerHTML="";_2=_2.replace(/&\w+;/g,function(_5){return _4[_5];});var _6=eval("("+_2+")");_1.definitions.pageContent.put(_6);});

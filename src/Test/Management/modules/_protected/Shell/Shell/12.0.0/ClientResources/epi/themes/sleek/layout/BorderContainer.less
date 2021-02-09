@@ -1,0 +1,148 @@
+/* BorderContainer
+
+Splitters and gutters separate panes within a BorderContainer. Splitters can be moved up and down (horizonal splitters) or left and right (vertical splitters), while Gutters are static. A "thumb" is the slit on a Splitter that indicates it is movable.
+
+Styling the BorderContainer widget consists of the following:
+
+.dijitBorderContainer - for border and padding of the entire border container
+
+.dijitSplitContainer-child, .dijitBorderContainer-child - for border or child panes of the border container. By default borders are put on all children of BorderContainer.
+
+.dijitBorderContainer-dijitTabContainerTop,
+.dijitBorderContainer-dijitTabContainerBottom,
+.dijitBorderContainer-dijitTabContainerLeft,
+.dijitBorderContainer-dijitTabContainerRight,
+.dijitBorderContainer-dijitAccordionContainer   -for border of the border containers within TabContainer or AccordionContainer widget
+
+.dijitBorderContainer-dijitBorderContainer - for border and padding of nested BorderContainers
+
+Splitters and gutters:
+
+.dijitSplitterH, .dijitGutterH - for height, background, and border of a horizontal splitter and gutter
+.dijitSplitterH .dijitSplitterThumb - for color, height/width of the thumb on a horizontal splitter
+.dijitSplitterV, .dijitGutterV - - for height, background, and border of a vertical splitter and gutter
+.dijitSplitterV .dijitSplitterThumb - for color, height/width of the thumb on a vertical splitter
+.dijitSplitterHHover - for background-color of a hovered horizontal splitter
+.dijitSplitterHHover .dijitSplitterThumb - for background-color of a hovered thumb on a horizontal splitter
+.dijitSplitterVHover  - for background-color of a hovered vertical splitter
+.dijitSplitterVHover .dijitSplitterThumb - for background-color of a hovered thumb on a vertical splitter
+.dijitSplitterHActive - for background-color of an active horizontal splitter
+.dijitSplitterVActive - for background-color of an active horizontal splitter
+*/
+
+@import "../variables";
+
+.Sleek .dijitBorderContainer {
+	/* matches the width of the splitters between panes */
+	background-color: @pane-background-color;
+	padding: 0;
+}
+
+.Sleek .dijitSplitContainer-child,
+.Sleek .dijitBorderContainer-child {
+	/* By default put borders on all children of BorderContainer,
+	 *  to give illusion of borders on the splitters themselves.
+	 */
+}
+
+.Sleek .dijitBorderContainer-dijitTabContainerTop,
+.Sleek .dijitBorderContainer-dijitTabContainerBottom,
+.Sleek .dijitBorderContainer-dijitTabContainerLeft,
+.Sleek .dijitBorderContainer-dijitTabContainerRight,
+.Sleek .dijitBorderContainer-dijitAccordionContainer {
+	/* except that TabContainer defines borders on it's sub-nodes (tablist and dijitTabPaneWrapper),
+	 * so override rule setting border on domNode
+	 */
+	 border: none;
+
+}
+.Sleek .dijitBorderContainer-dijitBorderContainer {
+	/* make nested BorderContainers look like a single big widget with lots of splitters */
+	border: 0;
+	padding: 0;
+}
+
+/* Splitters and gutters */
+
+.Sleek .dijitSplitterH,
+.Sleek .dijitGutterH {
+	background:@primary50;
+	border:0;
+	height:5px;
+}
+
+.Sleek .dijitSplitterH .dijitSplitterThumb {
+	background: @surface600;
+	height:1px;
+	top:2px;
+	width:19px;
+}
+
+.Sleek .dijitSplitterV,
+.Sleek .dijitGutterV {
+    background: transparent;
+	border:0;
+	width:5px;
+	margin: 0;
+	z-index: 900 !important;
+}
+.Sleek .dijitSplitterV.dijitAlignLeft,
+.Sleek .dijitGutterV.dijitAlignLeft {
+    border-right: 1px @border-color solid;
+    margin-left: -5px;
+}
+.Sleek .dijitSplitterV.dijitAlignRight,
+.Sleek .dijitGutterV.dijitAlignRight {
+    border-left: 1px @border-color solid;
+    margin-right: -5px;
+}
+
+
+.Sleek .dijitSplitterV .dijitSplitterThumb {
+	background: none;
+	height:19px;
+	left:2px;
+	width:1px;
+	margin: 0;
+}
+
+.Sleek .dijitSplitterV.dijitHidden {
+    margin: 0;
+}
+
+/* hovered splitter */
+.Sleek .dijitSplitterHHover {
+	font-size: 1px;
+	background: @splitter-hovered-background-color;
+}
+
+.Sleek .dijitSplitterVHover {
+	font-size: 1px;
+}
+
+.Sleek .dijitSplitterVHover .dijitSplitterThumb {
+	background: none;
+}
+
+.dj_ie6 .dijitSplitterHHover,
+.dj_ie6 .Sleek .dijitSplitterVHover {
+	background-color: @splitter-hovered-background-color;
+	background-image:none;
+}
+
+/* active splitter */
+.Sleek .dijitSplitterHActive,
+.Sleek .dijitSplitterVActive {
+	font-size: 1px;
+	background-color:@splitter-dragged-background-color;
+}
+
+.Sleek .dijitSplitterCoverActive {
+    background-color: transparent;
+    cursor: col-resize;
+	z-index: 500 !important;
+}
+
+.Sleek .epi-iframe--overflow {
+    overflow: visible;
+}

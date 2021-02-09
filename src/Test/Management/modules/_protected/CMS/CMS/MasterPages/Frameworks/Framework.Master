@@ -1,0 +1,33 @@
+<%@ Master Language="C#" AutoEventWireup="false" Codebehind="Framework.master.cs" Inherits="EPiServer.UI.Edit.MasterPages.Frameworks.Framework" %>
+<%@ Import Namespace="System.Threading"%>
+<%@ Import Namespace="EPiServer.Framework.Web.Mvc.Html"%>
+<%@ Import Namespace="EPiServer.Framework.Web.Resources"%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<%= Thread.CurrentThread.CurrentUICulture.Name %>" xml:lang="<%= Thread.CurrentThread.CurrentUICulture.Name %>">
+<head runat="server">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="shortcut icon" href="~/util/images/favicon.ico" type="image/x-icon" />
+
+    <asp:PlaceHolder runat="server" id="cssLinkRegion" />
+    <asp:PlaceHolder ID="clientScripts" runat="server" />
+    <asp:PlaceHolder ID="shellScripts" runat="server">
+            <%=Page.ClientResources("Dojo", new[] { ClientResourceType.Style })%>
+            <%=Page.ClientResources("ShellCore")%>
+            <%=Page.ClientResources("ShellWidgets")%>
+            <%=Page.ClientResources("ShellCoreLightTheme")%>
+            <%=Page.ClientResources("ShellWidgetsLightTheme")%>
+            <%=Page.ClientResources("Navigation")%>
+    </asp:PlaceHolder>
+
+    <title runat="server" />
+
+</head>
+<body style="overflow:hidden;">
+    <form id="aspnetForm" runat="server">
+        <asp:ContentPlaceHolder ID="FullRegion" runat="server">
+        </asp:ContentPlaceHolder>
+    </form>
+</body>
+</html>

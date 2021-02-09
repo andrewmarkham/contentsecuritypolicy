@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/dgrid/selection/Exclusive",["dojo/_base/declare"],function(_1){return _1([],{_exclusiveSelectionHandler:function(_2,_3){if(this._lastSelected!==_3){this.clearSelection();this.select(_3);this._lastSelected=_3;}}});});

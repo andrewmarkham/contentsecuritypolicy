@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/logger",[],function(){var _1=function(){},c=console,_2=1,_3;function _4(_5){var id=_2++;_5=id+": "+_5;c.group(_5);c.time(id);return {end:function(){c.timeEnd(id);c.groupEnd(_5);id=_5=null;}};};function _6(_7){c=_7;};if(!c||!c.group||!c.time){c={log:_1,info:_1,time:_1,timeEnd:_1,group:_1,groupEnd:_1};}_3={timedGroup:_4,setConsole:_6};["log","info","time","timeEnd","group","groupEnd"].forEach(function(_8){_3[_8]=function(){c[_8].apply(c,arguments);};});return _3;});

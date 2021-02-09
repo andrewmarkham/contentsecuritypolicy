@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contextNavigation",["dojo/_base/declare","epi/dependency"],function(_1,_2){var _3=_1([],{back:function(_4){var _5=_2.resolve("epi.cms.BackContextHistory");_5.closeAndNavigateBack(_4||this);}});return new _3();});

@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/dialog/_DialogMixin",["dojo","dojo/dom-style"],function(_1,_2){return _1.declare(null,{closeIconVisible:true,_setCloseIconVisibleAttr:function(){this._set("closeIconVisible",this.closeIconVisible);_2.set(this.closeButtonNode,"visibility",this.closeIconVisible?"visible":"hidden");_2.set(this.titleNode,"margin-right",this.closeIconVisible?"25px":"0");}});});

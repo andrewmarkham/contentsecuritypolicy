@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/project/command/_ProjectCommand",["dojo/_base/declare","epi/shell/command/_PropertyWatchCommand"],function(_1,_2){return _1([_2],{propertiesToWatch:["selectedProject"],_onPropertyChanged:function(){}});});

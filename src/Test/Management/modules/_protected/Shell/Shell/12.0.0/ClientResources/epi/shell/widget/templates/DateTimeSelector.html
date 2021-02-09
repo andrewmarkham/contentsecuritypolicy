@@ -1,0 +1,8 @@
+﻿<div style="position: relative;" class="epi-dateTimeWrapper">
+    <div data-dojo-attach-point="calendar" data-dojo-type="dijit/Calendar"  data-dojo-attach-event="onChange: _onChange, onKeyPress:_onCalendarKeyPress" ></div>
+    <div data-dojo-attach-point="calendarOverlay" style="position: absolute; left: 0; top: 0;"></div>
+    <div style="text-align: center; padding: 5px" class="epi-timePickerWrapper">
+        <div class="dijitInline dijitIcon epi-iconClock"></div><div data-dojo-attach-point="timePicker" data-dojo-type="epi/shell/widget/TimeSpinner" data-dojo-attach-event="onKeyPress:_onTimePickerKeyPress, onChange: _onChange"></div>
+        <div data-dojo-attach-point="timeZoneInfo" data-dojo-type="epi/shell/widget/TimeZoneInfo"></div>
+    </div>
+</div>

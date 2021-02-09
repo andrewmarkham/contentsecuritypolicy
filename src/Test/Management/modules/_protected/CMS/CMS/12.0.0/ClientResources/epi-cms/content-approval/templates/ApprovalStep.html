@@ -1,0 +1,17 @@
+<div class="epi-approval-step">
+    <div class="epi-approval-step__header">
+        <div class="dijitInline dojoDndHandle">
+            <span class="dijitInline epi-iconDnD"></span>
+        </div>
+        <div placeholder="${resources.header.placeholder}" title="${resources.header.tooltip}" data-dojo-attach-point="headerTextbox" data-dojo-type="dijit/form/TextBox"></div>
+        <div class="dijitInline" data-dojo-attach-point="removeNode"></div>
+    </div>
+    <div class="epi-approval-step__container">
+        <div data-dojo-attach-point="listNode"></div>
+        <div class="epi-reviewer__add">
+            <span class="dijitInline dijitIcon epi-iconUser"></span>
+            <div class="dijitInline" data-dojo-attach-point="searchNode"></div>
+        </div>
+    </div>
+    <div class="epi-approval-step__add-step" data-dojo-attach-point="arrowNode"></div>
+</div>

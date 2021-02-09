@@ -1,0 +1,90 @@
+@import "../variables";
+
+.Sleek {
+    // Example
+    // <div class="epi-selector-list">
+    //    <div class="dgrid-row">
+    //        <div class="epi-selector-list__type-wrapper">
+    //          <span class="dijit dijitReset dijitInline dijitCheckBox"></span>
+    //        </div>
+    //        <label class="epi-selector-list__title dojoxEllipsis"><span>item.name</span></label>
+    //        <span class="epi-selector-list__description dojoxEllipsis">item.whatever</span>
+    //    </div>
+    // </div>
+
+
+    .epi-selector-list {
+        @type-margin: 5px;
+        @type-width: 25px;
+        @ellipsis-width: 40px;
+
+        background: @popup-background-color;
+        width: 300px;
+
+
+        // Chromeless btn with input icon
+        &-btn {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 5px 4px;
+            width: 100%;
+
+            &.dijitHover {
+                .epi-selectedItemBackground;
+            }
+
+            .dijitButtonNode {
+                text-align: left;
+                width: 100%;
+            }
+            .dijitButtonContents:focus {
+                outline: none;
+            }
+            .dijitIcon {
+                margin-right: 7px;
+            }
+        }
+
+        &__separator {
+            border-top: 1px solid @minor-border-color;
+        }
+
+        &__type-wrapper {
+            float: left;
+            margin-right: @type-margin;
+            text-align: center;
+            width: @type-width;
+
+            > span {
+                position: relative;
+                top: -1px;
+            }
+        }
+
+        // use <strong> instead of <span> inside the label if you want it bold
+        &__title {
+            cursor: pointer;
+            display: inline-block;
+            max-width: ~"calc(100% - @{ellipsis-width})";
+        }
+        &__description {
+            clear: both;
+            color: @text-color-secondary;
+            margin-left: @type-width + @type-margin;
+            max-width: ~"calc(100% - @{ellipsis-width})";
+        }
+
+
+        // Dgrid stuff
+        .dijitFocused,
+        .dgrid-row:focus {
+            background: @epi-selected-item;
+            outline: none;
+        }
+
+        .dgrid-selected {
+            .dijitRadio { background-position: -90px; }
+            .dijitCheckBox { background-position: -0; }
+        }
+    }
+}

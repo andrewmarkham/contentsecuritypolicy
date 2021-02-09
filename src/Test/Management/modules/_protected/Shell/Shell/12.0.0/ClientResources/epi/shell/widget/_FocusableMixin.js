@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/_FocusableMixin",["dojo/dom-class","dojo/_base/declare","dijit/_FocusMixin"],function(_1,_2,_3){return _2(_3,{onFocus:function(){_1.add(this.domNode,"epi-focused");},onBlur:function(){_1.remove(this.domNode,"epi-focused");}});});

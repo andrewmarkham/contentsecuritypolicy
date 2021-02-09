@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/viewmodel/_ViewModelMixin",["dojo/_base/array","dojo/_base/declare","dojo/Stateful","dojo/Evented","dijit/Destroyable"],function(_1,_2,_3,_4,_5){return _2([_3,_4,_5],{modify:function(_6,_7,_8){this._isBeingModified=true;if(_7){_6.apply(_7);}else{_6();}this._isBeingModified=false;if(_8||_8===undefined){this.emit("changed");}},emit:function(_9,_a){if(_9==="changed"&&this._isBeingModified){return;}this.inherited(arguments);}});});

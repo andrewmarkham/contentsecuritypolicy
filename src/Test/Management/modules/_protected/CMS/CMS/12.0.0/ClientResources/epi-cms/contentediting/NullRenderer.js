@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/NullRenderer",["dojo/_base/declare","dojo/Deferred","epi-cms/contentediting/_Renderer"],function(_1,_2,_3){return _1([_3],{render:function(_4,_5,_6,_7){return new _2().reject("Do not render the content.");}});});

@@ -1,0 +1,29 @@
+﻿<div class="epi-createContent">
+    <div data-dojo-attach-point="layoutContainer" data-dojo-type="dijit/layout/BorderContainer" data-dojo-props="gutters: false, livesplitters: false">
+        <div class="epi-static-node" data-dojo-attach-point="topPanel" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'top'">
+            <div data-dojo-attach-point="headingPanel">
+                <h1><span data-dojo-attach-point="headingTextNode"></span>:&nbsp;<span data-dojo-attach-point="contentTypeNameNode"></span></h1>
+            </div>
+            <div data-dojo-attach-point="toolbar" class="epi-localToolbar epi-viewHeaderContainer" data-dojo-type="epi/shell/widget/ToolbarSet" data-dojo-props="region:'top'"></div>
+            <div data-dojo-attach-point="namePanel">
+                <label>${sharedResources.header.name}</label>
+                <input data-dojo-attach-point="nameTextBox"
+                       data-dojo-type="dijit/form/ValidationTextBox"
+                       data-dojo-props="selectOnClick: true, required: true, trim:true"
+                       data-dojo-attach-event="onChange: _onContentNameChange, onBlur: _onBlurVerifyContent"
+                       maxlength="255" />
+                <span data-dojo-attach-point="contentNameHelpTextNode" class="dijitInline dgrid-no-data"></span>
+            </div>
+        </div>
+        <div class="epi-newContentContainer epi-animation-node" data-dojo-attach-point="stackContainer" data-dojo-type="dijit/layout/StackContainer" data-dojo-props="region: 'center'">
+            <div data-dojo-attach-point="contentTypeList" data-dojo-type="epi-cms/widget/ContentTypeList" data-dojo-attach-event="onContentTypeSelected: _onContentTypeSelected">
+                <div data-dojo-attach-point='subHeadingPanel' class="push-padding--left">
+                    <h1 data-dojo-attach-point="subHeadingTextNode"></h1>
+                    <p data-dojo-attach-point="subHeadingDescNode"></p>
+                </div>
+            </div>
+            <div data-dojo-attach-point="propertiesForm" data-dojo-type="epi-cms/widget/PropertiesForm" data-dojo-attach-event="onPropertyValidStateChange: _onPropertyValidStateChange">
+            </div>
+        </div>
+    </div>
+</div>

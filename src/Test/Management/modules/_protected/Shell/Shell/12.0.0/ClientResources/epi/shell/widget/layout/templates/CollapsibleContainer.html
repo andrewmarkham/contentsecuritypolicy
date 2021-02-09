@@ -1,0 +1,14 @@
+﻿<div>
+    <div class="epi-gadgetTitle dojoxDragHandle" data-dojo-attach-point="titleBarNode">
+        <div data-dojo-attach-point="focusNode" class="epi-gadgetTitleFocus dijitInline">
+            <button data-dojo-type="dijit/form/ToggleButton" data-dojo-attach-point="_toggleButton"
+                data-dojo-attach-event="onClick: _toggle" data-dojo-props="title:'${res.togglebuttontooltip}', showLabel:true, iconClass:'epi-gadget-toggle', 'class':'epi-chromelessButton'">${title}</button>
+        </div>
+
+        <span class="epi-extraIconsContainer" style="float:right">
+            <a class="dijitInline dijitIcon epi-extraIcon epi-pt-contextMenu" style="min-width:16px" data-dojo-attach-event="onClick: _onContextMenu">&nbsp;</a>
+        </span>
+        
+    </div>
+    <div data-dojo-attach-point="containerNode"></div>
+</div>

@@ -1,0 +1,82 @@
+@import "variables";
+
+.Sleek
+{
+    .epi-item-collection-editor
+    {
+        &.epi-item-collection-editorError
+        {
+            .epi-content-area-editor
+            {
+                border-color: @error-border-color;
+            }
+        }
+
+        .dgrid-focus {
+            .epi-selectedItemInactiveBackground;
+        }
+
+        .epi-content-area-editor
+        {
+            .dgrid
+            {
+                height: auto;
+
+                .dojoDndItemBefore
+                {
+                    border-top: 2px solid @dnd-dropseparator-color;
+                }
+
+                .dojoDndItemAfter
+                {
+                    border-bottom: 2px solid @dnd-dropseparator-color;
+                }
+            }
+
+            .dgrid-scroller
+            {
+                position: relative;
+            }
+
+            .dgrid-no-data
+            {
+                padding: 0;
+            }
+
+            .dgrid-row
+            {
+                border: solid 1px @border-color;
+                margin: 0 0 4px 0;
+
+                .epi-rowIcon
+                {
+                    display: inline-block;
+                    background-color: @epi-grid-row-border;
+                    float: left;
+                    margin: -5px 5px -5px -5px;
+                    padding: 5px 5px 4px 5px;
+                }
+
+                &.dgrid-row-even,
+                &.dgrid-row-odd 
+                { 
+                    background: @epi-grid-row-odd;
+                }
+            }
+        }
+
+        &.epi-item-collection-editorFocused
+        {
+            .epi-content-area-editor
+            {
+                border-style: solid;
+				.epi-focused();
+            }
+
+            .dgrid-focus {
+                border: 1px solid @focused-border-color;
+                background-color: @textbox-background-color;
+            }
+        }
+    }
+}

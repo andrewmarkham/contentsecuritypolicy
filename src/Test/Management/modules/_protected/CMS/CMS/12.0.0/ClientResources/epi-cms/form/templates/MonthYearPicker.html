@@ -1,0 +1,21 @@
+﻿<div class="dijit dijitReset dijitInline" waiRole="presentation" style="${styleString}" dojoAttachPoint="container" id="widget_${id}" >
+    <select data-dojo-type="dijit/form/FilteringSelect" dojoAttachPoint="yearDropDown" id="yearDropDown_${id}">
+        <option value="0000">${yearLabel}</option>
+        ${yearOptions}
+    </select>
+    <select data-dojo-type="dijit/form/FilteringSelect" dojoAttachPoint="monthDropDown" id="monthDropDown_${id}">
+        <option value="00">${monthLabel}</option>    
+        <option value="01">${janName}</option>
+        <option value="02">${febName}</option>
+        <option value="03">${marName}</option>
+        <option value="04">${aprName}</option>
+        <option value="05">${mayName}</option>
+        <option value="06">${junName}</option>
+        <option value="07">${julName}</option>
+        <option value="08">${augName}</option>
+        <option value="09">${sepName}</option>
+        <option value="10">${octName}</option>
+        <option value="11">${novName}</option>
+        <option value="12">${decName}</option>
+    </select>    
+</div>

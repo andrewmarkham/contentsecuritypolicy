@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/commandproviders/PublishMenu",["dojo","dojo/_base/declare","epi/shell/command/_CommandProviderMixin","epi-cms/contentediting/command/ForPublishMenu","epi-cms/contentediting/command/IgnoreInUseNotification"],function(_1,_2,_3,_4,_5){return _2([_3],{constructor:function(){this.inherited(arguments);this.add("commands",_4(new _5(),{priority:10000}));}});});

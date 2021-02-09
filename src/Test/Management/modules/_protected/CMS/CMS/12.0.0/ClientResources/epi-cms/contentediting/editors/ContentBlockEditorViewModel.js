@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/editors/ContentBlockEditorViewModel",["dojo/_base/declare","dojo/_base/lang","dojo/Stateful","epi-cms/widget/viewmodel/ContentStatusViewModel"],function(_1,_2,_3,_4){return _1([_3,_4],{contentLink:"",contentGroup:"",roleIdentities:null,selected:false,name:"",index:0,getValue:function(){return {contentLink:this.contentLink,name:this.name,contentGroup:this.contentGroup,roleIdentities:this.roleIdentities};}});});

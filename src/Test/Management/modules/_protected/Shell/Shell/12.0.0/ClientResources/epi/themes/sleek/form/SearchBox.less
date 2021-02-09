@@ -1,0 +1,58 @@
+﻿@import "../variables";
+
+.Sleek 
+{   
+    .epi-searchInput-mixin() {
+        background-position: 3px center;
+        height: 22px;
+
+        .dijitInputContainer {
+            padding: 3px 5px;
+            margin-left: 18px;
+        }
+
+        .dijitPlaceHolder {
+            padding: 3px 0px 0px 6px;
+        }
+    }
+    .epi-contentSearchBox-mixin() {
+        &.dijitTextBoxDisabled {
+            background-color: @textbox-disabled-background-color;
+        }
+    
+        background-color: @epi-select-background-color-fallback;
+    
+        .epi-clearButton {
+            background: url("images/icons/clearButtonIcon.png") center center no-repeat;
+            height: 16px;
+            margin: 4px 3px 5px 0;
+            float: right;
+            cursor: pointer;
+            width: 16px;
+        }
+    }
+
+    .epi-search--full-width {
+        &.epi-searchInput {
+            width: -webkit-calc(~"100% - 2px");
+            width: calc(~"100% - 2px");
+            .epi-searchInput-mixin();
+        }
+        
+        &.epi-contentSearchBox {
+            .epi-contentSearchBox-mixin();
+        }
+    }
+    .epi-gadgetInnerToolbar {
+        
+        // Overrides default search input icon
+        .epi-searchInput {
+            width: 100%;
+            .epi-searchInput-mixin()
+        }
+        
+        .epi-contentSearchBox {
+            .epi-contentSearchBox-mixin();
+        }
+    }
+}

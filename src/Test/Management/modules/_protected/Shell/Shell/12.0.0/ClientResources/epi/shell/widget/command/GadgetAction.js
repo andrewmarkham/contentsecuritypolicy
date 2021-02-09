@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/command/GadgetAction",["dojo/_base/declare","epi/shell/command/_Command"],function(_1,_2){return _1([_2],{actionName:null,category:"setting",canExecute:true,_execute:function(){this.model.loadView({action:this.actionName});}});});

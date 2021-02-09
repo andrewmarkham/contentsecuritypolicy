@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/layout/GroupContainer",["dojo/_base/declare","dojo/dom-class","dojo/dom-construct","./SimpleContainer"],function(_1,_2,_3,_4){return _1([_4],{labelNode:null,templateString:"<fieldset><ul class=\"epi-form-container__section\" data-dojo-attach-point=\"containerNode\"></ul></fieldset>",_setTitleAttr:function(_5){var _6,_7;if(_5){_6=this.labelNode?"replace":"first";_7=this.labelNode||this.domNode;this.labelNode=_3.create("legend",{innerHTML:_5},_7,_6);}else{if(this.labelNode){_3.destroy(this.labelNode);}}}});});

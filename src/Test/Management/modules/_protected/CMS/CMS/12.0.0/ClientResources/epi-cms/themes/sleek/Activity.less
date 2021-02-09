@@ -1,0 +1,132 @@
+@import "variables.less";
+
+.Sleek {
+
+    .epi-activity-feed {
+        background: @pane-background-color;
+        height: 100%;
+        overflow: hidden;
+
+        .dgrid {
+            height: 100%;
+
+            .dgrid-content {
+                background: none;
+                box-sizing: border-box;
+                padding: 12px;
+            }
+        }
+
+        &--single-item {
+
+            .epi-event__title-wrapper { display: none; }
+        }
+
+        &__error-message {
+            color: @danger;
+            display: block;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+    }
+
+    .epi-activity {
+        &__message{
+            // Hide the status node if is a message activity
+            .epi-event__status {
+                display: none;
+            }
+
+            .epi-activity__comments {
+                padding: 0;
+
+                .epi-activity-comment {
+                    background: #fafafa;
+                    padding: 8px 8px 8px 16px;
+                }
+            }
+        }
+
+        .epi-event__status {
+            .style-content-approval-activity(@color) {
+                background: none;
+                border: 1px solid @color;
+                color: #000;
+                text-shadow: none;
+            }
+
+            // The "ContentApprovalStepActivity" part is auto-generated from the server type, hence the casing:
+            &.epi-event--danger-ContentApprovalStepActivity {
+                .style-content-approval-activity(@error300);
+            }
+            &.epi-event--success-ContentApprovalStepActivity {
+                .style-content-approval-activity(@success300);
+            }
+            &.epi-event--warning-ContentApprovalStepActivity {
+                .style-content-approval-activity(@warning300);
+            }
+        }
+
+        &__comment {
+            border-bottom: 1px dashed @border-inner--1;
+            padding-bottom: 18px;
+            margin-bottom: 18px;
+        }
+
+        &__comments { padding: 0 4px; }
+
+        &.epi-card {
+            cursor: default;
+            margin-bottom: 8px;
+            padding: 14px 16px;
+        }
+
+        .epi-activity-comment {
+            margin-bottom: 6px;
+
+            header {
+                margin-bottom: 3px;
+
+                > span { vertical-align: baseline; }
+
+                .epi-iconEdited {
+                    opacity: 0.5; // Make the icon a bit transparent to better match the text color.
+                    vertical-align: bottom;
+                }
+            }
+
+            &__message { word-wrap: break-word; }
+
+            .epi-username { margin-right: 4px; }
+        }
+    }
+
+    .epi-activity-comment-form {
+
+        &.epi-card {
+            background-color: #fff;
+            margin: 12px 12px 0;
+            padding: 14px 16px;
+        }
+
+        &__buttons {
+            text-align: right;
+
+            .epi-chromeless--text-only { margin-left: 4px; }
+        }
+
+        .epi-autocomplete-textarea {
+            margin-bottom: 4px;
+        }
+
+        > .epi-chromeless--text-only {
+            margin-top: 3px;
+
+            .dijitButtonNode { color: @text-color-secondary; }
+        }
+
+        .epi-autocomplete-textarea .dijitTextArea {
+            min-height: 44px;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+﻿<div class="dijitTabListContainer-${tabPosition}" style="visibility:hidden">
+    <div data-dojo-type="dijit/Toolbar" class="epi-componentToolbar" data-dojo-attach-point="_toolbar">
+        <div data-dojo-type="dijit/form/DropDownButton" id="${id}_addBtn" class="epi-componentToolbarButton epi-componentSettingsContainer epi-mediumButton" iconClass="epi-iconSettingsMenu" data-dojo-attach-point="_addBtn" showLabel="false" title="${res.settingsmenutooltip}">
+            <div data-dojo-type="dijit/Menu" data-dojo-attach-point="_addMenu"></div>
+        </div>
+    </div>
+    <div data-dojo-type="dijit.layout._ScrollingTabControllerButton" class="tabStripButton-${tabPosition}" id="${id}_menuBtn" iconClass="dijitTabStripMenuIcon" data-dojo-attach-point="_menuBtn" showLabel="false">&#9660;</div>
+    <div data-dojo-type="dijit.layout._ScrollingTabControllerButton" class="tabStripButton-${tabPosition}" id="${id}_leftBtn" iconClass="dijitTabStripSlideLeftIcon" data-dojo-attach-point="_leftBtn" data-dojo-attach-event="onClick: doSlideLeft" showLabel="false">&#9664;</div>
+    <div data-dojo-type="dijit.layout._ScrollingTabControllerButton" class="tabStripButton-${tabPosition}" id="${id}_rightBtn" iconClass="dijitTabStripSlideRightIcon" data-dojo-attach-point="_rightBtn" data-dojo-attach-event="onClick: doSlideRight" showLabel="false">&#9654;</div>
+    <div class="dijitTabListWrapper" data-dojo-attach-point="tablistWrapper">
+        <div wairole="tablist" data-dojo-attach-event="onkeypress:onkeypress" data-dojo-attach-point="containerNode" class="nowrapTabStrip"></div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+/* Editor 
+ * 
+ * Styling Editor means styling the Editor inside iframe container (dijitEditorIFrameContainer)
+ * 
+ * 1. Editor iframe container (default styling): 
+ * 		.dijitEditorIFrameContainer - normal state styles: background-color, border, padding
+ *
+ * 2. hovered Editor iframe container (ie, mouse hover on editor)
+ * 		.dijitEditorHover .dijitEditorIFrameContainer/dijitEditorIFrame - styles when mouse hover on the container
+ * 
+ * 3. focused Editor iframe container (ie, mouse focus on the editor pane)
+ * 		.dijitEditorFocused .dijitEditorIFrameContainer/dijitEditorIFrame - styles when container focused
+ * 
+ * 3. disabled Editor iframe container 
+ * 		.dijitEditorDisabled - editor's inner iframe container disable status styles: background, border
+ */
+
+@import "variables";
+
+.Sleek .dijitEditorIFrameContainer{
+	padding:3px 3px 1px 10px;
+}
+.Sleek .dijitEditorIFrame {
+	background-color: @textbox-background-color;
+}
+.Sleek .dijitEditor {
+	border: 1px solid @border-color;
+}
+.Sleek .dijitEditor .dijitEditorIFrameContainer{
+	background-color: @textbox-background-color;
+	background-image: url('form/images/textBox_back.png');
+	background-repeat:repeat-x;
+}
+.dj_ie6 .Sleek .dijitEditor .dijitEditorIFrameContainer{
+	background-image: none;
+}
+.Sleek .dijitEditorHover .dijitEditorIFrameContainer,
+.Sleek .dijitEditorHover .dijitEditorIFrameContainer .dijitEditorIFrame{
+	background-color: @textbox-hovered-background-color;
+}
+.Sleek .dijitEditorFocused .dijitEditorIFrameContainer,
+.Sleek .dijitEditorFocused .dijitEditorIFrameContainer .dijitEditorIFrame{
+	/* TODO: contradicts rule above, which background-color do you want? */
+	background-color: @textbox-focused-background-color;
+}
+
+/* Disabled */
+.Sleek .dijitEditorDisabled {
+	border: 1px solid @disabled-border-color;
+	color: @disabled-text-color;
+}
+
+.Sleek .dijitDisabled .dijitEditorIFrame,
+.Sleek .dijitDisabled .dijitEditorIFrameContainer,
+.Sleek .dijitDisabled .dijitEditorIFrameContainer .dijitEditorIFrame {
+	background-color: @textbox-disabled-background-color;
+	background-image: none;
+}

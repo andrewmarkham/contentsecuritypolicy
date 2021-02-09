@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/socket/notificationService",["dojo/_base/declare","dojo/_base/lang","epi/shell/widget/dialog/Confirmation"],function(_1,_2,_3){var _4,_5=_1([_3],{getActions:function(){return [{name:this._okButtonName,label:this.buttonOk,title:null,action:_2.hitch(this,this._onCancel)}];}});return {show:function(_6){_4&&_4.hide();_4=new _5(_6);_4.show();}};});

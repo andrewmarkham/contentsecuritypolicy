@@ -1,0 +1,42 @@
+﻿<div class="epi-hierarchicalList">
+    <div class="epi-gadgetInnerToolbar" data-dojo-attach-point="searchBoxNode">
+        <div data-dojo-attach-point="searchBox"
+             data-dojo-type="epi/shell/widget/SearchBox"
+             data-dojo-props="triggerContextChange: this.triggerContextChange, triggerChangeOnEnter: true, encodeSearchText: true">
+        </div>
+    </div>
+    <div data-dojo-attach-point="container"
+         data-dojo-type="dijit/layout/BorderContainer"
+         data-dojo-props="gutters: false">
+
+        <div data-dojo-attach-point="contentNode">
+            <div class="epi-gadgetTopContainer ${additionalTreeClass}"
+                 data-dojo-attach-point="tree"
+                 data-dojo-type="epi-cms/widget/FolderTree"
+                 data-dojo-props="region:'center', splitter:false, model: this.model.treeStoreModel, showRoot: false, contextMenu: this.contextMenu, dndSource: this.dndSource"></div>
+            <div class="epi-gadgetBottomContainer"
+                 data-dojo-attach-point="listContainer"
+                 data-dojo-type="dijit/layout/BorderContainer"
+                 data-dojo-props="region:'bottom', splitter:true, gutters: false">
+                <div class="epi-createContentContainer"
+                     data-dojo-attach-point="createContentArea"
+                     data-dojo-type="dijit/layout/_LayoutWidget"
+                     data-dojo-props="region:'top', splitter:false">
+                    <button type="button" class="epi-flat epi-chromeless"
+                            data-dojo-type="dijit/form/Button"
+                            data-dojo-attach-point="createContentAreaButton"></button>
+                </div>
+                <div data-dojo-attach-point="list"
+                     data-dojo-type="epi-cms/widget/ContentList"
+                     data-dojo-props="region:'center', splitter:false, store: this.model.store, queryOptions: this.model.listQueryOptions, contextMenu: this.contextMenu, resources: this.res">
+                </div>
+            </div>
+        </div>
+        <div data-dojo-attach-point="resultNode" style="display:none">
+            <div data-dojo-attach-point="searchResultList"
+                 data-dojo-type="epi-cms/widget/ContentList"
+                 data-dojo-props="region:'center', splitter:false, store: this.model.searchStore, queryOptions: this.model.searchResultQueryOptions, contextMenu: this.contextMenu, resources: this.res">
+            </div>
+        </div>
+    </div>
+</div>

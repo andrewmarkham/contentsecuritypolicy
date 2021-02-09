@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/command/_NonEditViewCommandMixin",["dojo/_base/declare","dojo/_base/lang","dojo/topic","dijit/Destroyable"],function(_1,_2,_3,_4){return _1([_4],{constructor:function(){this.own(_3.subscribe("/epi/shell/action/viewchanged",_2.hitch(this,"_viewChanged")));},_viewChanged:function(_5,_6,_7){this.set("isAvailable",_5==="epi-cms/contentediting/PageDataController"||_5==="epi-cms/compare/views/CompareView");}});});

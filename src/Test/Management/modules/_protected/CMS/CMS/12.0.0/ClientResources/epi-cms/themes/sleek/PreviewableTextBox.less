@@ -1,0 +1,27 @@
+﻿@import "variables.less";
+
+.Sleek {
+    .epi-previewableTextBox {
+        &-wrapper {
+            &.epi-state-empty {
+                .epi-previewableTextBox-text {
+                    display: none;
+                }
+            }
+        }
+        
+        &-text {
+            color: @text-color;
+            margin: 4px 0 0;
+            max-width: 15em;
+            vertical-align: top;
+            width: auto;
+        }
+         
+        &-link {
+            display: inline-block;
+            margin: 4px 0 0;
+            vertical-align: top; 
+        }
+    }
+}

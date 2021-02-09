@@ -1,0 +1,100 @@
+﻿@import "variables.less";
+
+.Sleek {
+    .epi-hierarchicalList {
+        /* This class used in both child widgets: folder tree and grid content list */
+        .epi-opacity50 {
+            opacity: 0.5;
+        }
+        /* Styles for folder tree widget */
+        .dijitTree {
+            overflow: auto;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .epi-extraIconsContainer .epi-iconContextMenu {
+            visibility: hidden;
+        }
+
+        .epi-folderTreeNode--hovered > .dijitTreeRow,
+        .epi-folderTreeNode--focused > .dijitTreeRow {
+            .epi-extraIconsContainer .epi-iconContextMenu {
+                cursor: pointer;
+                visibility: visible;
+            }
+        }
+
+        .epi-createContentContainer {
+            text-align: center;
+        }
+
+        .dgrid {
+            .epi-missingLanguageIndicator {
+                float: right;
+                margin: 0 5px;
+                max-width: 85px;
+                min-width: 25px;
+                text-align: right;
+            }
+
+            .epi-statusIcon {
+                float: right;
+                margin-right: 2px;
+            }
+
+            .dgrid-row {
+                border: 1px solid transparent;
+                &.dgrid-selected.ui-state-active {
+                    border: 1px solid transparent;
+                }
+                &.dgrid-row-odd:focus,
+                &.dgrid-row-even:focus {
+                    border: 1px solid @epi-card-border-in-focus;
+                }
+            }
+        }
+    }
+
+    .epi-focused .epi-hierarchicalList {
+
+        /* Styles for grid content list widget */
+        /* Override to keep select focus color even when unfocused */
+        .dgrid-focus-mixin(@color) {
+            .dgrid {
+                .dgrid-scroller {
+                    .dgrid-row {
+                        &.dgrid-row-odd, &.dgrid-row-even {
+                            &.dgrid-selected {
+                                background: @color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .epi-contentList.epi-focused,
+        &.epi-list--is-active .epi-contentList {
+            .dgrid-focus-mixin(@epi-selected-item);
+        }
+
+        .epi-contentList {
+            .dgrid-focus-mixin(@epi-selected-inactive-item);
+        }
+
+        &.epi-tree--is-active {
+            .dijitTree .epi-folderTreeNode .dijitTreeRowSelected{
+                background: @epi-selected-item;
+            }
+        }
+
+        .dijitTree.epi-focused .epi-folderTreeNode .dijitTreeRowSelected{
+            background: @epi-selected-item;
+        }
+
+        .dijitTree .epi-folderTreeNode .dijitTreeRowSelected{
+            background: @epi-selected-inactive-item;
+        }
+    }
+}

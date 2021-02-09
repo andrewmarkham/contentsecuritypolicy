@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/AutoResizingIframe",["dojo/_base/declare","./Iframe","./_AutoResizingIframeMixin","./_DynamicStyleSheetIframeMixin"],function(_1,_2,_3,_4){return _1([_2,_3,_4],{});});

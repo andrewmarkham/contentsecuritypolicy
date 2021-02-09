@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/content-approval/Breadcrumb",["dojo/_base/declare","dojo/topic","epi/dependency","epi-cms/widget/Breadcrumb"],function(_1,_2,_3,_4){return _1([_4],{postscript:function(){this.inherited(arguments);this.approvalService=this.approvalService||_3.resolve("epi.cms.ApprovalService");},onNodeClick:function(e,_5){e.preventDefault();this.approvalService.navigateToDefinition(_5.contentLink);}});});

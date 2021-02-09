@@ -1,0 +1,12 @@
+﻿<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100em" height="27em" viewBox="0 0 100 27" enable-background="new 0 0 100 27" xml:space="preserve">
+  <defs>
+    <linearGradient y2="1" x2="0" y1="0" x1="0" id="svg_3">
+      <stop stop-color="#f1f1f1" offset="0"/>
+      <stop stop-color="#dadada" offset="1"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <title>Layer 1</title>
+    <rect id="svg_1" height="27" width="100" y="0" x="0" fill="url(#svg_3)"/>
+  </g>
+</svg>

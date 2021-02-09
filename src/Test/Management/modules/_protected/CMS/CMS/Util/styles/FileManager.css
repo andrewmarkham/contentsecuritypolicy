@@ -1,0 +1,219 @@
+#mainLayoutTable
+{
+	position: relative
+}
+.FM-ToolLinkText
+{
+	color: #000000;
+	text-decoration: none;
+	font-weight: normal;
+	margin-right: 2px;
+}
+
+.FM-ToolLinkImage
+{
+	margin: 2px 5px 2px 2px;
+	vertical-align: middle;
+}
+
+a.FM-DirectoryLink
+{
+	color: #000000;
+}
+
+a.FM-SearchHitLink
+{
+	color: #000000;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+a.FM-FileLink
+{
+	font:normal 11px tahoma;
+	color: Black;
+	text-decoration: none;
+}
+
+a.FM-FileLink:hover
+{
+	text-decoration: none;
+}
+
+a.FM-DirectoryShortcut
+{
+	color: #000000;
+	text-decoration: none;
+}
+
+td.FM-ShortcutCell
+{
+	background-color: #fbfbfb;
+	border: solid 1px #888888;
+}
+
+td.FM-BrowserCell
+{
+    
+	background-color: #ffffff;
+	border: solid 1px #888888;
+	border-left: none;
+}
+
+td.FM-DirectoryToolbar
+{
+	padding:	5px 2px 5px 2px;
+}
+
+.FM-Title
+{
+	font-weight: bold;
+}
+
+.FM-ButtonBar {
+	background-color:	#eeeeee;
+    border-top:			1px solid #888888;
+    border-bottom:		1px solid #888888;
+    padding: 2px 10px;
+}
+
+/* The FM-ScrollingTableArea is a div which we want to have scroll if necessary (contains files and folders, versionlist, search result etc).*/
+div.FM-ScrollingTableArea
+{
+	position: relative;
+	overflow: auto;
+	height: 324px; /* Default height. The true height will be calculated using javascript */
+}
+
+/* 	Need an inner div with float to cope with table width 100% */
+div.FM-ScrollingTableArea div.FM-ScrollingTableAreaInner
+{
+	zoom: 1;
+}
+
+td.FM-ItemHeader,
+th.FM-ItemHeader
+{
+	background-image: none;
+	color: #333333;
+	font-weight: normal;
+	border-bottom: solid 1px #888888;
+	background-color: #eeeeee;
+	padding: 2px 5px 2px 5px;
+}
+
+td.FM-ItemHeader a, 
+th.FM-ItemHeader a
+{
+	color: #333333;
+}
+tr.FM-ItemRow td
+{
+	cursor: default;
+	padding: 1px 5px 4px 5px;
+	border-bottom:	solid 1px #d1d1d1;
+}
+
+tr.FM-ItemRowSelected td
+{
+	cursor: default;
+	padding: 1px 5px 4px 5px;
+	border-bottom:	solid 1px #d1d1d1;
+	background-color:	#d1d1d1;
+}
+tr.FM-ItemRow td img, tr.FM-ItemRowSelected td img { display: inline-block; margin-bottom: -3px; vertical-align: bottom; }
+
+#searchresultArea tr.FM-ItemRow td 
+{
+    border-bottom: 0;
+}
+#searchresultArea tr.FM-ItemRowSeparator td 
+{
+    cursor: default;
+    border-bottom:	solid 1px #d1d1d1;
+}
+
+table.FM-NavigatorTable
+{
+	border-collapse: collapse;
+	width: 100%;
+}
+
+td.FM-NavigatorHeadingCell, td.FM-NavigatorHeadingImageCell {
+	background-color: #e3e3e3;
+	color: #000;
+	padding: 2px 5px;
+	border-top: solid 1px #888888;
+	border-bottom: solid 1px #888888;
+	text-shadow:0 1px 0 #eaeaea;
+}
+
+td.FM-NavigatorTopHeadingCell, td.FM-NavigatorTopHeadingImageCell {
+	background-color: #e3e3e3;
+	color: #000;
+	padding: 2px 5px;
+	border-bottom: solid 1px #888888;
+	text-shadow:0 1px 0 #eaeaea;
+	white-space:nowrap;
+}
+
+td.FM-NavigatorHeadingImageCell, td.FM-NavigatorTopHeadingImageCell {
+	vertical-align: middle;
+    text-align: right;
+}
+
+td.FM-NavigationTreeCell
+{
+	padding: 5px 2px 5px 0px;
+}
+
+td.FM-NavigationTextCell
+{
+	padding: 5px;
+}
+
+.FM-BreadCrumb
+{
+	margin: 5px 2px 5px 5px;
+}
+
+td.FM-ImagePreview
+{
+	width: 50px;
+	height: 50px;
+}
+
+table.FM-CommandHeading
+{
+	border-bottom: solid 1px #d1d1d1;
+}
+
+table.FM-MarginTable
+{
+	width: 100%;
+}
+
+table.FM-MarginTable tbody
+{
+	margin: 5px;
+}
+table.FM-MarginTable th {
+   width: 150px;   
+}
+
+table.epi-formLayout td td { padding-bottom: 6px; }
+
+table.epi-formLayout fieldset { margin: 3px 0 0 0; }
+
+.FM-WarningBox
+{
+	display:block;
+	font:messagebox;
+	font-weight: bold;
+	border:solid 1px #aaaaaa;
+	background-color:#FFD053;
+	padding: 0.3em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	padding: 1.0em;
+}

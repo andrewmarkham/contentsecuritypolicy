@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/Profile",["dojo/_base/lang","dojo/when","epi/shell/Profile","epi-cms/ApplicationSettings"],function(_1,_2,_3,_4){_1.extend(_3,{getContentLanguage:function(){return _2(this.get("editlanguage"),function(_5){return _5||_4.currentContentLanguage;});},setContentLanguage:function(_6){return this.set("editlanguage",_6,{location:"server"});}});return _3;});

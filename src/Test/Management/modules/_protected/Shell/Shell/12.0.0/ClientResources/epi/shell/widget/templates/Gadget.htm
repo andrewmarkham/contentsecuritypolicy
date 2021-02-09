@@ -1,0 +1,24 @@
+﻿<!-- Remove?? -->
+<div>
+    <div class="epi-gadgetContainer">
+        <div class="epi-gadgetTitle dojoxDragHandle" data-dojo-attach-point="titleBarNode">
+            <div data-dojo-attach-point="focusNode" class="epi-gadgetTitleFocus">
+                <button data-dojo-type="dijit/form/ToggleButton" data-dojo-attach-point="toggleButton"
+                    data-dojo-attach-event="onClick:toggle" data-dojo-props="title:'${res.togglebuttontooltip}', showLabel:true, iconClass:'epi-gadget-toggle', 'class':'epi-chromelessButton'">
+                    ${title}</button>
+            </div>
+            <div class="epi-gadgetButtonBar">
+                <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="closeButton" data-dojo-attach-event="onClick:onClose"
+                    data-dojo-props="showLabel:false, title:'${res.closebuttontooltip}', iconClass:'epi-gadget-delete', 'class':'epi-chromelessButton'">
+                    ${res.closebuttontooltip}</button>
+            </div>
+        </div>
+        <div class="epi-gadgetContentOuter" data-dojo-attach-point="hideNode" wairole="presentation">
+            <div class="dijitReset" data-dojo-attach-point="wipeNode" wairole="presentation">
+                <div class="epi-gadgetContentInner" data-dojo-attach-point="containerNode" wairole="region"
+                    tabindex="-1" id="${id}_pane">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

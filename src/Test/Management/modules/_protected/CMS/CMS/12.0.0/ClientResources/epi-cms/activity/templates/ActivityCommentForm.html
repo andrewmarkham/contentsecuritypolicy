@@ -1,0 +1,26 @@
+<div class="epi-activity-comment-form">
+    <div class="epi-activity-comment__message"
+         data-dojo-attach-point="commentNode"></div>
+    <div data-dojo-attach-point="_commentTextarea, focusNode"
+         data-dojo-attach-event="onChange:_commentChanged, onFocus: _commentFocused"
+         data-dojo-props="intermediateChanges: true, searchProperty: 'name', tagProperty: 'name', displayProperty: 'displayName'"
+         data-dojo-type="epi/shell/widget/AutoCompleteTextarea" class="epi-autocomplete-textarea--chat-icon"></div>
+    <div class="epi-activity-comment-form__buttons dijitHidden"
+         data-dojo-attach-point="_commentFormButtons">
+        <span class="epi-activity-feed__error-message"
+              data-dojo-attach-point="_errorMessage"></span>
+        <button data-dojo-type="dijit/form/Button"
+                class="epi-primary"
+                data-dojo-attach-event="onClick:_postComment"
+                data-dojo-props="disabled: true"
+                data-dojo-attach-point="_postButton"></button>
+        <button data-dojo-type="dijit/form/Button"
+                class="epi-chromeless epi-chromeless--text-only"
+                data-dojo-attach-point="_resetButton"
+                data-dojo-attach-event="onClick: _reset"></button>
+    </div>
+    <button data-dojo-type="dijit/form/Button"
+            class="epi-chromeless epi-chromeless--text-only epi-text--small"
+            data-dojo-attach-point="_editButton"
+            data-dojo-attach-event="onClick: _toggleWriteComment"></button>
+</div>

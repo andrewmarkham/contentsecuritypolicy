@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/widget/command/RestoreContent",["dojo/_base/declare","epi/shell/command/_Command"],function(_1,_2){return _1([_2],{content:null,_execute:function(){if(this.canExecute&&this.content){this.model.restore(this.content);}},_onModelChange:function(){var _3=!!this.model;this.set("canExecute",_3);}});});

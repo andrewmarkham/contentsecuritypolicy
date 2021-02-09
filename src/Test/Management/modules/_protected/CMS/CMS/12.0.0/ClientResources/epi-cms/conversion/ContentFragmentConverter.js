@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/conversion/ContentFragmentConverter",["dojo/_base/declare"],function(_1){return _1([],{convert:function(_2,_3,_4){if(!_4){return null;}return {contentLink:_4.contentLink,name:_4.name,typeIdentifier:_4.typeIdentifier,id:_4.id};}});});

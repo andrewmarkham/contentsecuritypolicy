@@ -1,0 +1,128 @@
+html, body 
+{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+body
+{
+	margin: 0em 2px 0em 2px;
+}
+
+body.mceContentBody
+{
+	text-align: left;
+	padding-left: 3px;
+}
+
+A
+{
+	background-color: Yellow;
+}
+
+Q
+{
+	background-color: #c5d2fb;
+}
+
+TABLE.borderless
+{
+	border-collapse: separate;
+	border-style: solid;
+	border-width: 1px;
+	border-color: Silver;	
+}
+
+TABLE.selectable
+{
+	border-collapse: separate;
+	border-style: solid;
+	border-width: 1px;
+	border-color: Silver;	
+}
+
+/* TD classes */
+TD.selectable
+{
+}
+
+TABLE.selectable TD.selected, TABLE.borderless TD.selected
+{
+	color: White;
+	background-color: #6666aa;
+}
+
+TABLE.selectable TD.borderless, TABLE.borderless TD.borderless
+{
+	border-style: solid;
+	border-width: 1px;
+	border-color: Silver;
+}
+
+TABLE.selectable TD.rowheader, TABLE.borderless TD.rowheader
+{
+	border-right: 2px solid #0077cc;
+}
+
+TABLE.selectable TD.colheader, TABLE.borderless TD.colheader
+{
+	border-bottom: 2px solid #0077cc;
+}
+
+/* TH classes */
+TH
+{
+	border-style: solid;
+	border-width: 1px;
+	border-color: #0077cc;
+}
+TH.selectable
+{
+}
+
+TABLE.selectable TH.selected, TABLE.borderless TH.selected
+{
+	color: White;
+	background-color: #6666aa;
+}
+
+TABLE.selectable TH.rowheader, TABLE.borderless TH.rowheader
+{
+	border-right: 2px solid #0077cc;
+}
+
+TABLE.selectable TH.colheader, TABLE.borderless TH.colheader
+{
+	border-bottom: 2px solid #0077cc;
+}
+
+TABLE.selectable TH.borderless, TABLE.borderless TH.borderless
+{
+}
+
+CAPTION
+{
+	border-style: dotted;
+	border-width: 1px;
+	border-color: #6666aa;
+}
+
+IMG.selected
+{
+	border: 1px dashed highlight;
+}
+
+BODY.editmode
+{
+	text-align: left;
+	padding-left: 3px;
+}
+
+.epi_dc
+{
+	font-family: Tahoma, MS Sans Serif, Arial, Geneva, Helvetica;
+	font-size: 12px;
+	border: 1px solid #333333;
+	background-color: #F8EDA4;
+	padding: 3px;
+}

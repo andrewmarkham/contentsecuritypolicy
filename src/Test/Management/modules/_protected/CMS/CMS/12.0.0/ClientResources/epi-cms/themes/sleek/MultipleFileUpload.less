@@ -1,0 +1,107 @@
+@import "variables.less";
+
+.Sleek {
+    .epi-dialog-upload {
+        width: 550px;
+        .dijitDialogPaneContentArea {
+            overflow: auto;
+        }
+    }
+
+    // Drop zone in asset management
+    .epi-assetsDropZone {
+        background: @epi-gadget-background;
+        left: 0;
+        top: 0;
+        z-index: 5;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        display: none;
+
+        &.epi-dragOver,
+        &.epi-dragStart {
+            display: table;
+        }
+
+        .epi-dropZone {
+            display: table-cell;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .epi-dropZone-icon {
+            height: 50px;
+            background: transparent url("images/drop-stuff-medium.png") no-repeat scroll center center;
+
+            &.epi-no-drop {
+                background: transparent url("images/forbidden-medium.png") no-repeat scroll center center;
+            }
+        }
+
+        .epi-dropZone-overlay {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    }
+
+    // Layout
+    .epi-multiFileUpload {
+
+        .epi-breadCrumbs,
+        .dijitProgressBar,
+        .epi-toolbar-unwrapped {
+            margin-bottom: 10px;
+            position: relative;
+
+            // Show cursor as hand in Chrome and Firefox
+            input[type = file] {
+                cursor: pointer;
+            }
+
+            .epi-uploadToolbarOverlay {
+                position: absolute;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                /* For IE */
+                background: @pane-background-color;
+                opacity: 0.3;
+            }
+        }
+    }
+    // Upload List/Grid
+    .epi-multiFileUpload-list {
+
+        .dgrid {
+            /* Auto height of dgrid */
+            height: 16em;
+
+            .dgrid-header {
+                .dgrid-column-fileName {
+                    border-left: 1px solid @border-color;
+                }
+
+                .dgrid-column-status {
+                    border-right: 1px solid @border-color;
+                }
+            }
+
+            .dgrid-column-fileName {
+                word-wrap: break-word;
+            }
+
+            .dgrid-column-size,
+            .dgrid-column-status {
+                width: 120px;
+            }
+        }
+
+        .epi-failedStatus {
+            color: #e3201c; // TODO: Change the name of the class. Change to a proper color variable when we have a plan for global error handling.
+        }
+    }
+}

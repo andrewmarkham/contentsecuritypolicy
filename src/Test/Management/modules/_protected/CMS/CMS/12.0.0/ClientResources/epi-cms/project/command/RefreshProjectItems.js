@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/project/command/RefreshProjectItems",["dojo/_base/declare","./_ProjectCommand","epi/i18n!epi/cms/nls/episerver.shared.action"],function(_1,_2,_3){return _1([_2],{label:_3.refresh,iconClass:"epi-iconReload",category:"projectButton",canExecute:true,_execute:function(){this.model.refreshProject();this.model.refreshActivities();}});});

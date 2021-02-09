@@ -1,0 +1,37 @@
+<%@ Register TagPrefix="EPiServerUI" Namespace="EPiServer.UI.WebControls" Assembly="EPiServer.UI" %>
+
+<asp:TextBox CssClass="episize240" runat="server" />
+<asp:TextBox SkinId="Size500" CssClass="episize500" runat="server" />
+<asp:TextBox SkinId="Size200" CssClass="episize200" runat="server" />
+<asp:TextBox SkinId="Size140" CssClass="episize140" runat="server" />
+<asp:TextBox SkinId="Size50" CssClass="episize50" runat="server" />
+<asp:TextBox SkinId="Size35" CssClass="episize35" runat="server" />
+<asp:TextBox SkinId="Size25" CssClass="episize25" runat="server" />
+<asp:TextBox SkinId="Custom" runat="server" />
+
+<asp:DropDownList CssClass="episize240" runat="server" />
+<asp:DropDownList SkinId="Size200" CssClass="episize200" runat="server" />
+<asp:DropDownList SkinId="Size140" CssClass="episize140" runat="server" />
+<asp:DropDownList SkinId="Size50" CssClass="episize50" runat="server" />
+<asp:DropDownList SkinId="Custom" runat="server" />
+
+
+<asp:ListBox CssClass="episize240" runat="server" />
+<asp:ListBox SkinId="Size300" CssClass="episize300" runat="server" />
+<asp:ListBox SkinId="Size200" CssClass="episize200" runat="server" />
+<asp:ListBox SkinId="Size140" CssClass="episize140" runat="server" />
+<asp:ListBox SkinId="Size50" CssClass="episize50" runat="server" />
+<asp:ListBox SkinId="Custom" runat="server" />
+
+<EPiServerUI:SubscriptionHandlerInput CssClass="episize240" runat="server" />
+<EPiServerUI:SubscriptionHandlerInput SkinId="Size200" CssClass="episize200" runat="server" />
+<EPiServerUI:SubscriptionHandlerInput SkinId="Size140" CssClass="episize140" runat="server" />
+<EPiServerUI:SubscriptionHandlerInput SkinId="Size50" CssClass="episize50" runat="server" />
+<EPiServerUI:SubscriptionHandlerInput SkinId="Custom" runat="server" />
+
+<asp:DataGrid runat="server" CssClass="epi-default" SelectedItemStyle-CssClass="epi-applicationSelectedColor" BorderStyle="None" GridLines="None"/>
+<asp:GridView runat="server" CssClass="epi-default" SelectedRowStyle-CssClass="epi-applicationSelectedColor" BorderStyle="None" GridLines="None" />
+<asp:DetailsView runat="server" CssClass="epi-default" SelectedItemStyle-CssClass="epi-applicationSelectedColor" BorderStyle="None" GridLines="None" />
+<EPiServerUI:SortedGridView runat="server" AllowPaging="true" AllowSorting="true" PagerStyle-CssClass="epipager" UseAccessibleHeader="true" BorderStyle="None" CssClass="epi-default epi-default-legacy" SelectedRowStyle-CssClass="episelectedrow" GridLines="None" />
+
+<EPiServerUI:ToolButtonContainer runat="server" CssItemDiv="epitoolbuttoncontaineritem" />

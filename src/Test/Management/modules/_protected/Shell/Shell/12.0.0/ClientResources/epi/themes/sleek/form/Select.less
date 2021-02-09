@@ -1,0 +1,234 @@
+//Select
+//Styling Select mainly includes:
+//1. Containers
+//      .dijitSelect - for border, background-color
+//      .dijitButtonContents - for border
+//2. Arrow
+//      .dijitArrowButton - for border, padding and background-color|image
+//      .dijitArrowButtonInner - for border, background-color|image, display and width|height
+//3. Menu
+//      .dijitSelectMenu .* - for border, padding
+//4. Various states
+//      .dijitSelectHover|.dijitSelectFocused|.dijitSelectDisabled .* - for border, padding and background-color|image
+//
+
+@import "../variables";
+
+.Sleek .dijitSelect .dijitButtonText {
+    padding: 1px 5px 0;
+    min-width: 25px;
+}
+
+/* normal status */
+.Sleek .dijitSelect {
+    border: 1px solid @border-color;
+    background-color: @textbox-background-color;
+    border-collapse: separate;
+    border-radius: @epi-textbox-border-radius;
+    margin: 0;
+    width: auto;
+}
+.Sleek .dijitSelect .dijitButtonContents {
+    border: 0 solid @border-color;
+    border-right-width: 1px;
+    border-radius: @epi-textbox-border-radius 0px 0px @epi-textbox-border-radius;
+}
+
+.Sleek .dijitSelect .dijitInputField {
+    padding: 2px 8px;
+}
+
+.Sleek .dijitSelect .dijitArrowButton {
+    background-color: @arrowbutton-background-color;
+    border: none;
+    border-radius: 0px @epi-textbox-border-radius @epi-textbox-border-radius 0px;
+    padding: 0 1px 1px 1px;
+    width: 18px;
+}
+
+.Sleek .dijitSelect .dijitArrowButton .dijitArrowButtonInner {
+    background-image: url("images/commonFormArrows.png");
+    background-position:-35px 60%;
+    background-repeat: no-repeat;
+    border-radius: @epi-textbox-border-radius;
+    width:16px;
+    height:16px;
+}
+
+/* hover status */
+.Sleek .dijitSelectHover {
+    border: 1px solid @epi-textbox-hover-border-color;
+}
+
+.Sleek .dijitSelectHover .dijitButtonContents {
+    border-color:@epi-textbox-hover-border-color;
+}
+
+.Sleek .dijitSelectHover .dijitArrowButton {
+    background-color:@arrowbutton-hovered-background-color;
+}
+
+/* focused status */
+.Sleek .dijitSelect:focus {
+    outline: none;
+}
+.Sleek .dijitSelectFocused {
+    border: 1px solid @focused-border-color;
+}
+.Sleek .dijitSelectFocused .dijitButtonContents {
+    border-color:@focused-border-color;
+}
+.Sleek .dijitSelectFocused .dijitArrowButton {
+    border: none;
+    padding: 0 1px;
+}
+.Sleek .dijitSelectFocused .dijitArrowButton .dijitArrowButtonInner {
+    background-position:-70px 70%;
+    margin-bottom: 1px;
+}
+
+/* disable status */
+.Sleek .dijitSelectDisabled {
+    border: 1px solid @disabled-border-color;
+    background-color: @disabled-background-color;
+    background-image: none;
+    color: @disabled-text-color;
+}
+.Sleek .dijitSelectDisabled .dijitArrowButton {
+    background-color: @disabled-background-color;
+}
+.Sleek .dijitSelectDisabled .dijitArrowButton .dijitArrowButtonInner {
+    background-position:0 70%
+}
+
+/* Dropdown menu style for select */
+
+.Sleek .dijitSelectMenu td.dijitMenuItemIconCell,
+.Sleek .dijitSelectMenu td.dijitMenuArrowCell {
+    /* so that arrow and icon cells from MenuItem are not displayed */
+    display: none;
+}
+.Sleek .dijitSelectMenu td.dijitMenuItemLabel {
+    /* line up menu text with text in select box (in LTR and RTL modes) */
+    padding: 8px 16px;;
+}
+
+.Sleek .dijitSelectMenu .dijitMenuSeparatorTop {
+    border-bottom: 1px solid @epi-separator-color;
+}
+
+.Sleek .dijitSelectLabel .dijitIcon {
+    position: relative;
+    vertical-align: top;
+    top: 1px;
+}
+
+
+
+// .epi-chromeless* is our "unstyled" widget classes. No chrome at all
+.Sleek {
+    .epi-chromelessSelect {
+        &.dijitSelect {
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0);
+            border-radius: 0;
+            box-shadow: none;
+            color: #353535;
+            font-size: 1em;
+            padding: 0;
+            text-shadow: none;
+        }
+        &.dijitButton {
+            margin: 0;
+        }
+        .dijitButtonNode {
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            color: #353535;
+            font-size: 1em;
+            padding: 0;
+            text-shadow: none;
+        }
+        .dijitButtonText {
+            min-width: 0;
+        }
+        .dijitButtonContents {
+            background-color: transparent;
+            background-image: none;
+            border: 1px solid rgba(0,0,0,0);
+        }
+
+        .dijitArrowButton {
+            background: none;
+
+
+            .dijitArrowButtonInner {
+                background-position: -35px 50%;
+            }
+        }
+
+        &.dijitSelectFocused {
+            .dijitButtonContents {
+                box-shadow: none;
+            }
+            .dijitArrowButtonInner {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+// Dojo apparently style their dropdowns for IE using browser sniffing which needs to be overridden and normalized
+.dj_ie .Sleek .epi-chromelessSelect.dijitSelect .dijitSelectLabel { line-height: 12px; }
+
+// .epi-flat* is our "flat" widget classes. This gives a flat color background plate. Can be used as a modifier class with epi-chromeless*
+// ex. class="epi-chromelessbutton epi-flatButton"
+.Sleek {
+    .epi-flatSelect {
+        .dijitButtonNode {
+            border-radius: @button-border-radius;
+        }
+        .dijitButtonContents {
+            background: @epi-flat-background;
+        }
+        .dijitArrowButton {
+            background: @epi-flat-background;
+            border-radius: 0px @button-border-radius @button-border-radius 0px;
+        }
+        .dijitButtonText {
+            //min-width: 25px;
+        }
+        &.epi-flat-input--dark {
+            .dijitArrowButtonInner {
+                background-image: url(images/buttonArrows_inv.png);
+                background-position: -47px 50%;
+            }
+        }
+    }
+
+    // Styles for the CategorizedSelect widget
+    // The Menu as added automatically by dijit, hence the capital M
+    // and the menu is shown in a popup, outside the task gadget itself, that is why it isn't wrapped inside the categorized select dom
+    .epi-categorized-select-Menu {
+        overflow-y: visible !important; // IE adds inline scrollbars
+
+        .dijitMenuTable {
+            margin-bottom: 15px;
+        }
+
+
+        td.dijitMenuItemLabel {
+            padding: 2px 10px;
+        }
+
+        .dijitMenuItemGroup {
+            td {
+                color: #a7a7a7;
+                padding: 20px 10px 2px;
+                text-transform: uppercase;
+            }
+
+            &:first-child td { padding-top: 10px; }
+        }
+    }
+}

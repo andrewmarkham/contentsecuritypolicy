@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/store/storeDelegate",["dojo/_base/lang","dojo/aspect"],function(_1,_2){return function(_3,_4){var _5=_1.delegate(_3,_4);if((typeof _3.notify!=="function")||(typeof _4!=="object")){return _5;}var _6=false;_2.before(_3,"notify",function(){if(_6){return;}_6=true;_5.notify.apply(_5,arguments);_6=false;},true);_5.notify=function(){if(!_6){_6=true;_3.notify.apply(_5,arguments);}_6=false;};return _5;};});

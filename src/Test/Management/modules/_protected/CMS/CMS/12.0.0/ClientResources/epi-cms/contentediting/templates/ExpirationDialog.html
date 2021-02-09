@@ -1,0 +1,11 @@
+﻿<div class="epi-formContainer">
+    <div data-dojo-type="epi-cms/widget/Breadcrumb" data-dojo-attach-point="breadcrumb" data-dojo-props="showCurrentNode: false"></div>
+    <h1 data-dojo-attach-point="contentNameNode" class="epi-breadCrumbsCurrentItem dijitInline dojoxEllipsis"></h1>
+    <div data-dojo-attach-point="stateNode" class="epi-notificationBar epi-notificationBarItem">
+        <div class="epi-notificationBarText" data-dojo-attach-point="infoTextNode"></div>
+        <div class="epi-notificationBarButtonContainer">
+            <button data-dojo-type="dijit/form/Button" data-dojo-attach-point="removeButton" data-dojo-attach-event="onClick: _onRemoveButtonClick">${res.removebutton}</button>
+        </div>
+    </div>
+    <div data-dojo-type="dijit/form/Form" data-dojo-attach-point="form"></div>
+</div>

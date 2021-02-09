@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/ContentRepositoryDescriptorService",["epi/assign"],function(_1){function _2(_3){_1(this,_3);};_2.prototype.get=function(_4){return !_4?null:this[_4.toLowerCase()];};_2.prototype.list=function(){return Object.keys(this);};return _2;});

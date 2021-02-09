@@ -1,0 +1,82 @@
+/* Accordion
+ * 
+ * Styling AccordionContainer basically means styling the accordion pane (dijitAccordionInnerContainer)
+ * and the title inside of it (dijitAccordionTitle).   There are 4 basic states to style:
+ * 
+ * 1. closed pane (and default styling): 
+ * 		.dijitAccordionInnerContainer - container for each accordion child
+ * 		.dijitAccordionTitle - title for each accordion child
+ *
+ * 2. active closed pane (ie, mouse down on a title bar)
+ * 		.dijitAccordionInnerContainerActive - for background-color, border
+ * 		.dijitAccordionInnerContainerActive dijitAccordionTitle - for text color
+ * 
+ * 3. open pane (expanded child)
+ *		.dijitAccordionChildWrapper - wraps around the child widget (typically ContentPane)
+ *			setting a margin so that there's blue trim all the way around the child
+ *
+ * 		These rules need to override the closed pane active:
+ *
+ * 		.dijitAccordionInnerContainerSelected - for background-color, border
+ * 		.dijitAccordionInnerContainerSelected .dijitAccordionTitle - for text color
+ * 
+ * 4. hovered pane, open or closed
+ * 		The selectors below affect hovering over both a closed pane (ie, hovering a title bar),
+ * 		and hovering over an open pane.   Also, treat mouse down on an open pane as a hover:
+ *
+ * 		.dijitAccordionInnerContainerHover, .dijitAccordionInnerContainerSelectedActive - for background-color, border
+ * 		.dijitAccordionInnerContainerHover .dijitAccordionTitle - for text color
+ */
+
+@import "../variables";
+
+
+
+/* Animation */
+.Sleek {
+    .epi-cardContainer-child .epi-animation-node {
+        .transform(translateY(-100%));
+        z-index: 1100;
+    }
+
+    .epi-cardContainer-child--primary {
+        z-index: 1000;
+    }
+
+    .epi-cardContainer-child--primary {
+        .epi-animation-node {
+            .transform(translateY(0));
+        }
+        /* Remark: All checkbox input child controls of the container that applied CSS transform in Chrome will not clickable. So that, add one more class in order to reset CSS transform */
+        .epi-animation-node-reset {
+            .transform(none);
+        }
+    }
+
+    .epi-cardContainer-child--secondary,
+    .epi-cardContainer-child--secondary-out {
+        z-index: 1100;
+        position: absolute;
+    }
+
+    .epi-cardContainer-child .epi-static-node {
+        position: relative;
+        z-index: 2000;
+    }
+    // The animated node
+    .epi-cardContainer-child--secondary {
+        .epi-animation-node {
+            .transform(translateY(0));
+            .transition(all 0.5s ease-out);
+        }
+        /* Remark: All checkbox input child controls of the container that applied CSS transform in Chrome will not clickable. So that, add one more class in order to reset CSS transform */
+        .epi-animation-node-reset {
+            .transform(none);
+        }
+    }
+
+    .epi-cardContainer-child--secondary-out .epi-animation-node {
+        .transform(translateY(-100%));
+        .transition(all 0.5s ease-out);
+    }
+}

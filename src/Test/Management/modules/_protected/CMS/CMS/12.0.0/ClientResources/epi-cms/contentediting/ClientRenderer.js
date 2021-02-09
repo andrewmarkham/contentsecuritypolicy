@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/ClientRenderer",["dojo/_base/declare","dojo/_base/Deferred","epi-cms/contentediting/_Renderer"],function(_1,_2,_3){return _1([_3],{render:function(_4,_5,_6,_7){var _8=new _2();_8.resolve(_6||"");return _8;}});});

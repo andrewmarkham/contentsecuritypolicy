@@ -1,0 +1,25 @@
+﻿@model Test.ContentDomain.Models.Pages.ArticlePage
+
+<article class="post">
+	<header>
+		<div class="title">
+			<h2>@Html.PropertyFor(p => p.Heading)</h2>
+			<p>@Html.PropertyFor(p => p.Strapline)</p>
+		</div>
+		<div class="meta">
+			<time class="published" datetime='@Model.ArticleDate.ToString("yyyy-MM-dd")'>@Model.ArticleDate.ToString("MMMM d, yyyy")</time>
+			<a href="#" class="author"><span class="name">Jane Doe</span><img src="/images/avatar.jpg" alt="" /></a>
+		</div>
+	</header>
+	<span class="image featured">
+		<picture image-reference=@Model.HeadingImage></picture>
+	</span>
+	@Html.PropertyFor(p => p.Body)
+	<footer>
+		<ul class="stats">
+			<li><a href="#">General</a></li>
+			<li><a href="#" class="icon solid fa-heart">28</a></li>
+			<li><a href="#" class="icon solid fa-comment">128</a></li>
+		</ul>
+	</footer>
+</article>

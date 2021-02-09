@@ -1,0 +1,18 @@
+﻿@import "variables.less";
+
+/* Content Editable Editor */
+.Sleek {
+    .epi-content-editable-editor {
+        position: absolute;
+        background: transparent;
+        cursor: pointer;
+        left: -3px;
+        top: -3px;
+        right: -3px;
+        bottom: -3px;
+
+        &.epi-content-editable-editorError {
+            border: 1px solid @error-border-color;
+        }
+    }
+}

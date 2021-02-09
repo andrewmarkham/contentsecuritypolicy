@@ -1,0 +1,57 @@
+﻿@import "variables.less";
+
+.Sleek {
+
+	.epi-searchResultList {
+		background-color: @epi-content-list-background-color;        
+		min-height: 29px; // Set minimum height to show fully standby
+		padding: 5px 0;
+
+		.dgrid {
+			height: auto; // Reset default height
+
+			.epi-missingLanguageIndicator {
+				float: right;
+				margin: 0 5px;
+				max-width: 85px;
+				min-width: 25px;
+				text-align: right;
+			}
+						
+			.dgrid-header-scroll {
+				display: none; // Hide header scroller
+			}
+
+			.dgrid-scroller {
+				position: static; // Reset default position
+				max-height: 300px;
+				overflow: hidden;
+				overflow-y: auto;
+
+				.dgrid-content {
+					height: auto; // Reset default height
+					// Make row have better viewport
+					.dgrid-cell {
+						line-height: 24px;
+						padding: 3px 10px;
+					}
+
+					.epi-ct-missingLanguageRow {
+						color: @text-color;
+						font-style: normal;
+					}
+				}
+			}
+		}
+		
+		.epi-searchResultListEmptyMessage {
+			text-align: center;
+			line-height: 24px;
+			display: none;
+		}
+
+		.epi-searchResultListNavigation {
+			display: none;
+		}
+	}
+}

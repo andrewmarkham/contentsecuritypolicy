@@ -1,0 +1,73 @@
+/* ======= Styling for the document itself (overriding dojo.css) ======== */
+
+/* imports must be placed first since the .less parser won't move them */
+@import url("../../patch/dojo/resources/dojo.css");
+
+@import "variables";
+
+html, body { height: 100%; width: 100%; padding: 0; border: 0; position: fixed; }
+
+.Sleek {
+    .sans-serif();
+    color: @document-text-color;
+    font-size: 14px;
+
+    .epi-body-background--dark {
+        background: @grey2;
+        min-height: 100%;
+    }
+    .epi-body-padding--horizontal {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+.Sleek .epi-text--small { font-size: 0.9em; }
+
+/* Headings */
+.Sleek h1 {
+	font-size: 1.545em;
+	margin-bottom:0.727em;
+}
+.Sleek h2 {
+	font-size: 1.364em;
+	line-height: 1.455em;
+	margin-top:1em;
+	margin-bottom:0.60em;
+	font-weight: normal;
+}
+.Sleek h3, .Sleek h4, .Sleek h5, .Sleek h6 {
+	font-size:1.091em;
+	font-weight: normal;
+}
+
+/* paragraphs, quotes and lists */
+.Sleek p {
+	line-height: 1.3em;
+	margin-top: 0;
+}
+
+/* pre and code */
+.Sleek pre, .Sleek code {
+	font-family:inherit;
+	background-color: @document-shadedsection-background-color;
+	border: 1px solid @document-border-color;
+}
+
+/* tables */
+.Sleek table.dojoTabular thead, .Sleek table.dojoTabular tfoot {
+	background-color: @document-shadedsection-background-color;
+	border: 1px solid @document-border-color;
+}
+
+
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+	}
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */

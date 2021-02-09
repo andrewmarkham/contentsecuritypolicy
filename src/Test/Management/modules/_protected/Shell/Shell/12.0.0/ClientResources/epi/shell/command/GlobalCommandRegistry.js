@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/command/GlobalCommandRegistry",["dojo/_base/declare","epi/shell/command/CommandRegistryItem"],function(_1,_2){return _1(null,{_mappings:null,constructor:function(_3){this._mappings={};},registerProvider:function(_4,_5){var _6=this._mappings[_4];if(!_6){_6=new _2();this._mappings[_4]=_6;}_6.add("providers",_5);return {unregister:function(){_6.remove("providers",_5);}};},get:function(_7,_8){var _9=this._mappings[_7];if(_8&&!_9){_9=new _2();this._mappings[_7]=_9;}return _9;}});});

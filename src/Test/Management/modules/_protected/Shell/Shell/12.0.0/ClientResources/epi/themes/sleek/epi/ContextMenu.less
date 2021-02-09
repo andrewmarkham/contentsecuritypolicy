@@ -1,0 +1,137 @@
+﻿@import "../variables";
+
+/* Context Menu */
+.Sleek .ContextMenu {
+    background: @menu-background-color;
+	border: 1px solid @menu-border-color;
+	color: @text-color-inverted;
+	.sans-serif;
+	
+	.ContextMenuItem-Active {
+	    background: #c7d500;
+        color: @text-color;
+    }
+    
+    .ContextMenuItem,
+    .ContextMenuItem-Active,
+    .ContextMenuItemDisabled,
+    .ContextMenuItemDisabled-Active {
+        background-repeat: no-repeat;
+        background-position: 4px center;
+        font-size: 13px;
+        padding: 4px 6px 4px 25px;
+        .text-shadow-specific(0,0,0,0,0,0,0);
+    }
+    .ContextMenuItemDisabled,
+    .ContextMenuItemDisabled-Active {
+        background-color: @menu-background-color;
+        color: @disabled-text-color;
+        opacity: 0.7;
+    }
+    .ContextMenuItem-Separator {
+        border-top: 1px solid @epi-separator-color;
+    }
+    
+    div[style*="Clear.gif"],
+    div[style*="CreateFolder.gif"],
+    div[style*="AddFile.gif"],
+    div[style*="Security.gif"],
+    div[style*="CreateFolder.gif"],
+    div[style*="Delete.gif"],
+    div[style*="Edit.gif"],
+    div[style*="Cut.gif"],
+    div[style*="Copy.gif"],
+    div[style*="Paste.gif"],
+    div[style*="Favorite.gif"] {
+        background-image: none !important;
+        
+        &:before {
+            background: transparent url('images/icons/commonIcons16x16.png') no-repeat;
+            content: ' ';
+            display: block;
+            height: 16px;
+            left: 4px;
+            margin: 6px 4px 0 0;
+            position: absolute;
+            top: -1px;
+            width: 16px;
+        }
+    }
+    
+    .ContextMenuItem[style*="Clear.gif"]:before {
+        background-position: -16px 0;
+    }
+    .ContextMenuItem-Active[style*="Clear.gif"]:before {
+        background-position: 0 0;
+    }
+    
+    .ContextMenuItem[style*="CreateFolder.gif"]:before {
+       background-position: -16px -368px;
+    }
+    .ContextMenuItem-Active[style*="CreateFolder.gif"]:before {
+        background-position: 0 -368px;
+    }
+    
+    .ContextMenuItem[style*="AddFile.gif"]:before { 
+        background-position: -16px -240px;
+    }
+    .ContextMenuItem-Active[style*="AddFile.gif"]:before { 
+        background-position: 0 -240px;
+    }
+    
+    .ContextMenuItem[style*="Security.gif"]:before { 
+        background-position: -16px -304px;
+    }
+    .ContextMenuItem-Active[style*="Security.gif"]:before { 
+        background-position: 0 -304px;
+    }
+    
+    .ContextMenuItem[style*="CreateFolder.gif"]:before { 
+        background-position: -16px -240px;
+    }
+    .ContextMenuItem-Active[style*="CreateFolder.gif"]:before { 
+        background-position: 0 -240px;
+    }
+    
+    .ContextMenuItem[style*="Delete.gif"]:before { 
+        background-position: -16px -192px;
+    }
+    .ContextMenuItem-Active[style*="Delete.gif"]:before { 
+        background-position: 0 -192px;
+    }
+    
+    .ContextMenuItem[style*="Edit.gif"]:before { 
+        background-position: -16px -512px;
+    }
+    .ContextMenuItem-Active[style*="Edit.gif"]:before { 
+        background-position: 0 -512px;
+    }
+    
+    .ContextMenuItem[style*="Cut.gif"]:before { 
+        background-position: -16px 0;
+    }
+    .ContextMenuItem-Active[style*="Cut.gif"]:before { 
+        background-position: 0 0;
+    }
+    
+    .ContextMenuItem[style*="Copy.gif"]:before { 
+        background-position: -16px 0;
+    }
+    .ContextMenuItem-Active[style*="Copy.gif"]:before { 
+        background-position: 0 0;
+    }
+    
+    .ContextMenuItem[style*="Paste.gif"]:before { 
+        background-position: -16px 0;
+    }
+    .ContextMenuItem-Active[style*="Paste.gif"]:before { 
+        background-position: 0 0;
+    }
+    
+    .ContextMenuItem[style*="Favorite.gif"]:before { 
+        background-position: -16px -272px;
+    }
+    .ContextMenuItem-Active[style*="Favorite.gif"]:before { 
+        background-position: 0 -272px;
+    }
+}

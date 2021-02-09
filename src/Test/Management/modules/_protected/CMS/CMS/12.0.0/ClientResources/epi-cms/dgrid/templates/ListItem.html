@@ -1,0 +1,27 @@
+<div class="epi-mo">
+    <div class="epi-mo--img">
+        <div class="dijitIcon ${iconResizer}">${icon}</div>
+    </div>
+    <div class="epi-mo--body">
+        <div class="epi-card__menu">
+            ${menu}
+        </div>
+        <span class="epi-secondaryText dijitInline epi-lozenge ${languageBranchClass}">${languageBranch}</span>
+        <div class="epi-card__info">
+            <div class="dijitInline">
+                <span class="epi-card__title" title="${cardTitleTooltip}">${cardTitle}</span>
+                <span class="epi-secondaryText">
+                    ${contentTypeDescription}
+                    <span class="dijitInline epi-lozenge ${languageBranchClass}">${languageBranch}</span>
+                </span>
+            </div>
+        </div>
+        <div class="dijitInline epi-card__title--ellipsis-wrapper">
+            <div>
+                <span class="dijitInline epi-card__title dojoxEllipsis" title="${nameTooltip}">${name}</span>
+            </div>
+            ${statusIcon}<span class="epi-secondaryText">${status}</span>
+            <span class="dijitInline dijitIcon epi-iconBubble epi-icon--warning ${commentsClass}" title="${commentsTooltip}"></span>
+        </div>
+    </div>
+</div>

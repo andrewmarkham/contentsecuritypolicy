@@ -1,0 +1,77 @@
+﻿// Set up
+@icon_size-small: 16;
+@icon_size-medium: 24;
+@icon_size-large: 32;
+
+.commonIcons(@iconSize, @y: 1, @x: 0) {
+    @posY: (@iconSize * @y);
+    @posX: (@iconSize * @x);
+
+    background: url('images/icons/colorfulCommonIcons@{iconSize}x@{iconSize}.png') -@posX + 0px -@posY + 0px no-repeat;
+    height: @iconSize + 0px;
+    width: @iconSize + 0px;
+}
+
+.icons_list-small(@x) {
+    .epi-iconFavorite             { .commonIcons(@icon_size-small, 1, @x); }
+}
+.icons_list-medium(@x) {
+    .epi-iconFavorite             { .commonIcons(@icon_size-medium, 1, @x); }
+}
+
+
+
+// Usage
+.Sleek {
+    &,
+    .dgrid-selected,
+	.dijitTreeRowSelected,
+	.dijitMenuItemSelected,
+	.dijitMenu .dijitMenuItemHover,
+    .dijitMenu .epi-menuInverted,
+    .dijitMenu .epi-menuInverted .dijitMenuItemSelected,
+	.dijitMenu .epi-menuInverted .dijitMenuItemHover {
+        .icons_list-small(0);
+    }
+    .epi-mediumButton {
+        .icons_list-medium(0);
+    }
+    .dijitMenuItem,
+    .dijitMenuItemDisabled,
+    .dijitMenuItemDisabled.dijitMenuItemSelected,
+    .dijitMenuItemDisabled.dijitMenuItemHover {
+        .icons_list-small(1);
+    }
+
+    // Checked
+    .dijitChecked {
+        .icons_list-small(1);
+
+        &.epi-mediumButton,
+        & .epi-mediumButton {
+            .icons_list-medium(1);
+        }
+    }
+    .dijitTab.dijitTabChecked {
+        .icons_list-small(1);
+
+        &.epi-mediumButton,
+        & .epi-mediumButton {
+            .icons_list-medium(1);
+        }
+    }
+    .epi-leadingToggleButton,
+    .epi-trailingToggleButton {
+        .icons_list-medium(1);
+    }
+
+
+// Specials (Avoid as far as possible)
+    .epi-overlayControls {
+        .icons_list-small(1);
+
+        &.epi-mediumButton {
+            .icons_list-medium(1);
+        }
+    }
+}

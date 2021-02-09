@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/project/command/PublishMenuButtonBuilder",["dojo/_base/declare","dojo/_base/lang","dojo/on","dijit/form/Button","epi/shell/command/_CommandModelBindingMixin","epi/shell/command/builder/ButtonBuilder"],function(_1,_2,on,_3,_4,_5){return _1([_5],{_buttonClass:_1([_3,_4],{_setSelected:function(){},_setIsAvailableAttr:function(_6){if(!_6&&this.get("focused")){on.emit(this.domNode,"beforeFocusedButtonRemoved",{bubbles:true});}this.inherited(arguments);}})});});

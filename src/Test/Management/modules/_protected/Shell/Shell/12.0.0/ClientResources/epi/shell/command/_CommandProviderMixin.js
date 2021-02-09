@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/command/_CommandProviderMixin",["dojo/_base/array","dojo/_base/declare","epi/shell/StatefulArray"],function(_1,_2,_3){return _2([_3],{commands:null,constructor:function(){this.commands=this.commands||[];},updateCommandModel:function(_4){_1.forEach(this.commands,function(_5){_5.set("model",_4);});}});});

@@ -1,0 +1,64 @@
+<div class="epi-project-overview">
+    <div data-dojo-attach-point="toolbar" class="epi-project-overview__toolbar epi-viewHeaderContainer epi-editToolbarMedium">
+        <h2 class="dijitInline">
+            <div class="dijitInline epi-iconObjectProject epi-icon--large"></div>
+            <span data-dojo-attach-point="projectNameNode"></span>
+        </h2>
+        <div class="epi-project-overview__toolbar__trailing">
+            <div data-dojo-type="dijit/form/DropDownButton"
+                 data-dojo-attach-point="publishContainer"
+                 data-dojo-props="showLabel: true, label: this.res.overview.publishdropdown.label"
+                 data-dojo-attach-event="onClick:_publishMenuClickHandler"
+                 class="epi-mediumButton epi-button--bold">
+                <span></span>
+                <div data-dojo-type="epi-cms/project/PublishMenu"
+                     data-dojo-attach-point="publishMenu"
+                     data-dojo-props="commandSource: this.model">
+                    <section data-epi-section="primarySection">
+                        <span data-dojo-attach-point="projectStatusMessageNode"></span>
+                    </section>
+                    <section data-epi-section="statusSection">
+                        <ul>
+                            <li>
+                                ${res.view.createdby} <span data-dojo-attach-point="createdByNode" class="epi-username"></span>,
+                                <span data-dojo-attach-point="createdNode" class="epi-timestamp"></span>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <button data-dojo-type="dijit/form/Button"
+                    data-dojo-attach-point="closeButton"
+                    data-dojo-attach-event="onClick:_close"
+                    data-dojo-props="showLabel: true, label: this.res.overview.closebutton.label"
+                    class="epi-mediumButton epi-button--bold"></button>
+        </div>
+    </div>
+
+    <div data-dojo-attach-point="tabs" data-dojo-type="dijit/layout/TabContainer">
+        <div data-dojo-type="epi-cms/project/ProjectItemList"
+             data-dojo-attach-point="itemList"
+             data-dojo-props="title: this.res.overview.title, commandSource: this.model, res: this.res.overview">
+
+                <section data-epi-section="toolbarSection">
+                    <div data-dojo-attach-point="toolbarTextNode" class="epi-project-item-list__item-count-message-node"></div>
+                    <div data-dojo-attach-point="toolbarGroupNode" class="epi-floatRight"></div>
+                </section>
+                <section data-epi-section="activitySection">
+                    <div data-dojo-type="epi-cms/activity/ActivityFeed"
+                         data-dojo-attach-point="activityFeed"
+                         data-dojo-props="model: this.model.activityFeedModel"></div>
+                </section>
+        </div>
+
+        <div data-dojo-type="epi-cms/activity/ActivityFeed"
+             data-dojo-attach-point="projectComments"
+             data-dojo-props="title: this.res.comments.title, model: this.model.projectCommentFeedModel"
+             class="epi-project-comment-feed">
+            <div data-dojo-type="dijit/Toolbar"
+                 data-dojo-attach-point="projectCommentsToolbar"
+                 class="epi-project-item-list__toolbar epi-flatToolbar">
+            </div>
+         </div>
+    </div>
+</div>

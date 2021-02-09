@@ -1,0 +1,176 @@
+@import "../variables";
+
+
+.Sleek {
+    /* Notifications */
+    .epi-notificationIcon {
+            background: #d1d1d1;
+            .border-radius(30px);
+            color: #fff;
+            cursor: pointer;
+            display: inline-block;
+            font-weight: bold;
+            line-height: 20px;
+            height: 21px;
+            margin: 3px 8px 0 0;
+            min-width: 16px;
+            padding: 0 6px;
+            text-align: center;
+            vertical-align: top;
+    }
+    .epi-notificationIcon-DimmedOut {
+        cursor: default;
+        display: none;
+        span { cursor: default; }
+    }
+    .epi-notificationIcon-Error {
+        background: @danger;
+    }
+    .epi-notificationIcon-Warning {
+        background: #ffc129;
+        color: #000;
+    }
+    .epi-notificationIcon-Note {
+        background: #4c8aeb;
+    }
+
+    .epi-dijitTooltipNotificationBlock {
+        padding: 10px;
+
+        .epi-notificationTypeTitle {
+            border-bottom: 1px solid @bar-border-color;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            margin-right: 8px;
+            width: 100%;
+            while-space: nowrap;
+        }
+        .dijitIcon {
+            float: right;
+            margin-bottom: 5px;
+			margin-left: 8px;
+        }
+        li {
+            word-wrap: break-word;
+            margin: 0 0 6px 0;
+        }
+    }
+
+
+    .epi-dijitTooltipBlockError {
+        background-color: #fff;
+
+        span, ul {
+            color: @error700;
+        }
+    }
+
+    .epi-dijitTooltipBlockWarning {
+        span {
+            color: #F8921F;
+        }
+    }
+
+    .epi-dijitTooltipBlockNote {
+        span {
+            color: #0497F6;
+        }
+    }
+
+    .epi-dijitTooltipErrorIcon,
+    .epi-dijitTooltipWarningIcon,
+    .epi-dijitTooltipNoteIcon {
+        background-image: url('images/notifications.png');
+        height: 16px;
+        margin-right: 7px;
+        width: 16px;
+    }
+
+    .epi-dijitTooltipErrorIcon {
+        background-position: 0 -32px;
+    }
+
+    .epi-dijitTooltipWarningIcon {
+        background-position: 0 -48px;
+    }
+
+    .epi-dijitTooltipNoteIcon {
+        background-position: 0 -64px;
+    }
+
+    .epi-dijitTooltipBlockHidden {
+        display: none;
+    }
+
+
+    /* Action Triggered Notifications */
+    .epi-discreetNotification,
+    .epi-discreetNotificationPublishing {
+        bottom: 0px;
+        display: none;
+        padding: 6px 8px;
+        position: fixed;
+        right: 0;
+        z-index: 10000000;
+    }
+
+    .epi-discreetNotification  {
+        background: @notification-background-success;
+        border: 1px solid @notification-border-success;
+        border-bottom: none;
+        border-right: none;
+        color: @text-color;
+    }
+
+    .epi-discreetNotificationPublishing {
+        background: @notification-background-publishing;
+        border: 1px solid @text-color-white;
+        color: @text-color-white;
+    }
+
+    .epi-discreetNotificationVisible {
+        display: block;
+    }
+
+    .epi-discreetNotificationPending {
+        height: 16px;
+        margin-right: 4px;
+        width: 16px;
+    }
+
+    .epi-discreetNotificationSuccess {
+    }
+
+    .epi-discreetNotificationPending {
+        background: url('images/notificationPending.gif') top left no-repeat;
+    }
+
+    // Notification badge
+    .epi-badge-node {
+        overflow: visible;
+        position: relative;
+
+        &::after {
+            @size: 18px;
+
+            background: @danger;
+            border-radius: 2000px;
+            box-sizing: border-box;
+            color: #fff;
+            content: attr(badge-value);
+            font-size: 10px;
+            height: @size;
+            line-height: @size;
+            min-width: @size;
+            pointer-events: none;
+            padding: 0 4px;
+            position: absolute;
+            right: -7px;
+            text-align: center;
+            top: -2px;
+            width: auto;
+        }
+    }
+}

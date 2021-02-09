@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/dgrid/SingleQuery",["dojo/_base/declare","dgrid/_StoreMixin"],function(_1,_2){return _1(_2,{refresh:function(){this.inherited(arguments);if(!this._started||!this.store){return;}return this._trackError(function(){var _3=this.get("queryOptions"),_4=this.store.query(this.query,_3);return this.renderArray(_4,null,_3);}.bind(this));},renderArray:function(){var _5=this.inherited(arguments);this._lastCollection=null;return _5;}});});

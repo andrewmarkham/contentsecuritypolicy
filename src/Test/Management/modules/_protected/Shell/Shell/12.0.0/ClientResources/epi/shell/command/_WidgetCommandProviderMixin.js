@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/command/_WidgetCommandProviderMixin",["dojo/_base/declare","epi/shell/command/_WidgetCommandBinderMixin","epi/shell/command/_GlobalCommandProviderMixin"],function(_1,_2,_3){return _1([_3,_2],{postMixInProperties:function(){this.inherited(arguments);this.commandProvider=this.commandProvider||this;}});});

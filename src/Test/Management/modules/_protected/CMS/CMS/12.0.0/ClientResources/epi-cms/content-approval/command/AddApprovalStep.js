@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/content-approval/command/AddApprovalStep",["dojo/_base/declare","epi/i18n!epi/nls/episerver.shared.action","epi/shell/command/_PropertyWatchCommand"],function(_1,_2,_3){return _1([_3],{label:_2.add,iconClass:"epi-icon--inverted epi-iconPlus",category:"add",propertiesToWatch:["isReadOnly"],_execute:function(){this.model.createApprovalStep();},_onPropertyChanged:function(){var _4=!this.model.isReadOnly;this.set({canExecute:_4,isAvailable:_4});}});});

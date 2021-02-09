@@ -1,0 +1,60 @@
+﻿@import "variables.less";
+
+.Sleek {
+    .epi-trash
+    {
+        .epi-emptyCommand {
+            float: right;
+        }
+        
+        .epi-trashHeader {
+            background: @epi-content-search-box-background-color;
+            padding: 10px 0;
+            
+            .epi-gadgetInnerToolbar, .epi-removedByContainer {
+                float: left;
+                display: inline-block;
+            }
+            
+            .epi-gadgetInnerToolbar {
+                width: 300px;
+                margin-right: 45px;
+            }
+            
+            .epi-removedByContainer {
+                margin-left: 15px;
+                padding: 2px;
+                
+                table.dijitDownArrowButton {
+                    min-width: 100px;
+                }
+            }
+        }
+
+        .epi-gridAction {
+            display: none;
+            float: right;
+            padding-right: 10px;
+        }
+
+        .dgrid-selected,
+        .epi-dgrid-mouseover {
+            .epi-gridAction {
+                display: block;
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+        .dijitTabContainer {
+            .dijitTabListContainer-top {
+                width: 100% !important; /* fix the pin, unpin problem */
+            }
+
+            &.hide-tablist {
+                .dijitTabController {
+                    display: none;
+                }
+            }
+        }
+    }
+}

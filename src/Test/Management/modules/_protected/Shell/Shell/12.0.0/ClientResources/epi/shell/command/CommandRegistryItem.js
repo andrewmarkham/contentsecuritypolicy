@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/command/CommandRegistryItem",["dojo/_base/array","dojo/_base/declare","epi/shell/StatefulArray"],function(_1,_2,_3){return _2([_3],{providers:null,constructor:function(){this.providers=this.providers||[];}});});

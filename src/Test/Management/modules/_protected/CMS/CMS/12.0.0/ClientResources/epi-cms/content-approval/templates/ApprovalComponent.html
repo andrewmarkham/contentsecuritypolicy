@@ -1,0 +1,63 @@
+﻿<div class="epi-content-approval">
+    <div class="epi-localToolbar epi-viewHeaderContainer" data-dojo-type="dijit/Toolbar">
+        <div class="epi-toolbarGroupContainer">
+            <div class="epi-toolbarGroup epi-toolbarLeading">
+                <div data-dojo-attach-point="breadcrumb" data-dojo-type="epi-cms/content-approval/Breadcrumb" data-dojo-props="displayAsText:false, showCurrentNode:false"></div>
+                <div data-dojo-attach-point="breadcrumbCurrentItem" data-dojo-type="epi-cms/widget/BreadcrumbCurrentItem"></div>
+            </div>
+            <div class="epi-toolbarGroup epi-toolbarTrailing" data-dojo-attach-point="commandNode">
+                <div data-dojo-attach-point="validation" data-dojo-type="epi-cms/widget/NotificationStatusBar"></div>
+            </div>
+        </div>
+    </div>
+    <div data-dojo-attach-point="containerNode" class="epi-content-approval__container">
+        <div class="epi-content-approval__header">
+            <hgroup class="epi-heading-group">
+                <h1 class="epi-heading"><span class="epi-heading-icon" data-dojo-attach-point="contentIcon"></span> <span data-dojo-attach-point="contentName"></span></h1>
+                <h2 class="epi-heading">${resources.title}</h2>
+            </hgroup>
+            <p>${resources.instructions.reviewers}</p>
+            <p>${resources.instructions.steps}</p>
+            <div class="epi-content-approval__settings clearfix" data-dojo-type="dijit/form/Form" data-dojo-attach-point="form">
+                <span class="dijitInline">
+                    <input id="enable-approval" data-dojo-attach-point="enableButton" data-dojo-type="dijit/form/RadioButton" data-dojo-props="name:'status', value:${ApprovalDefinitionStatus.enabled}">
+                    <label class="dijitInline" for="enable-approval">${resources.states.enabled}</label>
+                </span>
+                <span class="dijitInline">
+                    <input id="inherit-approval" data-dojo-attach-point="inheritButton" data-dojo-type="dijit/form/RadioButton" data-dojo-props="name:'status', value:${ApprovalDefinitionStatus.inherited}">
+                    <label class="dijitInline" for="inherit-approval">${resources.states.inherited}</label>
+                </span>
+                <span class="dijitInline">
+                    <input id="disabled-approval" data-dojo-attach-point="disableButton" data-dojo-type="dijit/form/RadioButton" data-dojo-props="name:'status', value:${ApprovalDefinitionStatus.disabled}">
+                    <label class="dijitInline" for="disabled-approval">${resources.states.disabled}</label>
+                </span>
+                <fieldset class="dijitInline" data-dojo-attach-point="demandCommentFieldsetNode">
+                    <div>
+                        <input id="demandcomment-start" data-dojo-attach-point="demandStartCommentButton" data-dojo-type="dijit/form/CheckBox">
+                        <label class="dijitInline" for="demandcomment-start">${resources.demandcomment.start}</label>
+                    </div>
+                    <div>
+                        <input id="demandcomment-approve-approval" data-dojo-attach-point="demandApproveCommentButton" data-dojo-type="dijit/form/CheckBox">
+                        <label class="dijitInline" for="demandcomment-approve-approval">${resources.demandcomment.label} ${resources.demandcomment.approve}</label>
+                    </div>
+                    <div>
+                        <input id="demandcomment-approval" data-dojo-attach-point="demandDeclineCommentButton" data-dojo-type="dijit/form/CheckBox">
+                        <label class="dijitInline" for="demandcomment-approval">${resources.demandcomment.label} ${resources.demandcomment.decline}</label>
+                    </div>
+                    <div>
+                        <input id="prevent-self-approve" data-dojo-attach-point="preventSelfApproveButton" data-dojo-type="dijit/form/CheckBox">
+                        <label class="dijitInline" for="prevent-self-approve">${resources.preventselfapprove}</label>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="epi-content-approval__disabled-warning" data-dojo-attach-point="warningNode">
+            <span data-dojo-attach-point="warningMessage"></span><a class="epi-visibleLink" data-dojo-attach-point="goToInheritedSequence" data-dojo-attach-event="onclick:_goToInheritedSequence">${resources.gotoinheritedsequence}</a>
+        </div>
+        <div class="epi-content-approval__filter" data-dojo-attach-point="filterNode">
+            <span class="dijitInline">${resources.languagefilter.description}</span>
+            <div data-dojo-attach-point="languageFilter" data-dojo-type="dijit/form/Select" class="epi-chromeless epi-chromeless--with-arrow epi-visibleLink"></div>
+        </div>
+        <div data-dojo-attach-point="stepList" data-dojo-type="epi-cms/content-approval/ApprovalStepList"></div>
+    </div>
+</div>

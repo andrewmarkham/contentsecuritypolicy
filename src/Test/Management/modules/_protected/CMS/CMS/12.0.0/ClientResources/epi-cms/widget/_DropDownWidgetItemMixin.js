@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/widget/_DropDownWidgetItemMixin",["dojo/_base/declare","dojo/dom-construct"],function(_1,_2){return _1(null,{buildRendering:function(){this.inherited(arguments);this.domNode=this._wrapItem(this);},_wrapItem:function(_3){var tr=_2.create("tr");var td=_2.create("th",null,tr);_3.placeAt(td,"first");return tr;}});});

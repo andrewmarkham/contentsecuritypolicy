@@ -1,0 +1,101 @@
+form {
+    padding-left:0;
+}
+
+div.episerver-pagetreeview ul {
+    list-style: none;
+    margin: 0 1em;
+    padding: 0;
+    zoom:1; /* hasLayout fix */
+}
+
+div.episerver-pagetreeview ul ul {
+    margin: 0 0 0 1.1em; 
+}
+
+div.episerver-pagetreeview ul li {
+    white-space: nowrap;
+    padding: 0;
+    list-style-type:none;
+    position:relative;
+    zoom:1; /* IE fix, see explanation above*/
+}
+
+div.episerver-pagetreeview .show {
+}
+
+div.episerver-pagetreeview .hide {
+    display:none;
+}
+
+div.episerver-pagetreeview span.icon {
+    width: 14px;
+    height: 18px;
+    position:absolute;
+    cursor:default;
+    background-position: left center;
+    background-repeat: no-repeat;
+    background-color:#3d3d3d;
+    -moz-user-select: none;
+}
+
+div.episerver-pagetreeview span.templatecontainer {
+    margin-left:15px;
+}
+
+span.separatorcontainer {
+	margin-left: 15px;
+	height: 4px;
+	line-height: 4px;
+	width:100px;
+	display:block;
+	font-size: 1px;
+}
+
+li.parent {
+    background: url(../../App_Themes/Default/Images/ExplorerTree/I.gif) repeat-y left top;
+}
+
+li.parentlast {
+    background: url(../../App_Themes/Default/Images/ExplorerTree/I.gif) no-repeat left top;
+}
+
+li.leafnode {
+	background: url(../../App_Themes/Default/Images/ExplorerTree/I.gif) repeat-y left top;
+}
+
+li.leafnodelast {
+	background: url(../../App_Themes/Default/Images/ExplorerTree/I.gif) no-repeat left top;
+}
+
+li span.leafnode {
+    background-image: url(../../App_Themes/Default/Images/ExplorerTree/T.gif);
+}
+
+li span.leafnodelast {
+    background-image: url(../../App_Themes/Default/Images/ExplorerTree/L.gif);
+}
+
+li span.collapse {
+    background-image: url(../../App_Themes/Default/Images/ExplorerTree/Tminus.gif);
+}
+
+li span.collapselast {
+    background-image: url(../../App_Themes/Default/Images/ExplorerTree/Lminus.gif);
+}
+
+li span.expand {
+    background-image: url(../../App_Themes/Default/Images/ExplorerTree/Tplus.gif);
+}
+
+li span.expandlast {
+    background-image: url(../../App_Themes/Default/Images/ExplorerTree/Lplus.gif);
+}
+
+li span.load {
+    background-image: url(../../App_Themes/Default/Images/ExplorerTree/loading.gif);
+}
+
+li span.loadlast {
+    background-image: url(../../App_Themes/Default/Images/ExplorerTree/loading.gif);
+}

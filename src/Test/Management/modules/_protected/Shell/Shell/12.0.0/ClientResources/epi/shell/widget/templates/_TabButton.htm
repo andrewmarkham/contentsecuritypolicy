@@ -1,0 +1,25 @@
+﻿<div role="presentation" data-dojo-attach-point="titleNode,innerDiv,tabContent" class="dijitTabInner dijitTabContent">
+	<img src="${_blankGif}" alt="" class="dijitIcon dijitTabButtonIcon" data-dojo-attach-point="iconNode"/>
+    <span class="tabLabel" data-dojo-attach-point="tabName,containerNode,focusNode"></span>
+    <input type="text" style="display:none;" class="tabLabel" data-dojo-attach-point="editBox" data-dojo-attach-event="onblur: _editBoxBlur, onkeypress: _editBoxKeyDown" maxlength="50" />
+	<span class="dijitInline dijitTabCloseButton dijitTabCloseIcon" data-dojo-attach-point="closeNode" role="presentation">
+		<span data-dojo-attach-point="closeText" class="dijitTabCloseText">[x]</span>
+    </span>
+    <span class="dijitInline" role="presentation">
+        <div data-dojo-type="dijit/form/DropDownButton" data-dojo-attach-point="nodeOptions" showLabel="false" title="" iconClass="epi-iconSettingsMenu" class="epi-mediumButton epi-chromelessButton" style="display: none" data-dojo-attach-event="onMouseDown: onMenuButton">
+            <div data-dojo-type="dijit/Menu" data-dojo-attach-point="dropDown">
+                <div data-dojo-type="dijit/MenuItem" data-dojo-attach-event="onClick: onRenameMenuItem">${res.menuitemrename}</div>
+                <div data-dojo-type="dijit/PopupMenuItem">
+                    <span>${res.menuitemlayout}</span>
+                    <div data-dojo-type="dijit/Menu" data-dojo-attach-point="menuLayout">
+                        <div data-dojo-type="dijit/CheckedMenuItem" checked="false" title="${res.menuitemlayout1}" data-dojo-props="column: 1" data-dojo-attach-event="onClick: onLayoutClick">${res.menuitemlayout1}</div>
+                        <div data-dojo-type="dijit/CheckedMenuItem" checked="false" title="${res.menuitemlayout2}" data-dojo-props="column: 2" data-dojo-attach-event="onClick: onLayoutClick">${res.menuitemlayout2}</div>
+                        <div data-dojo-type="dijit/CheckedMenuItem" checked="false" title="${res.menuitemlayout3}" data-dojo-props="column: 3" data-dojo-attach-event="onClick: onLayoutClick">${res.menuitemlayout3}</div>
+                    </div>
+                </div>
+                <div data-dojo-type="dijit/MenuSeparator"></div>
+                <div data-dojo-type="dijit/MenuItem" data-dojo-attach-point="closeTabMenuItem" data-dojo-attach-event="onClick: onCloseMenuItem">${res.menuitemclose}</div>
+            </div>
+        </div>
+    </span>
+</div>

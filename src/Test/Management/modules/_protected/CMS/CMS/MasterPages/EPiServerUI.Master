@@ -1,0 +1,40 @@
+<%@ Import Namespace="System.Threading"%>
+<%@ Master Language="C#" AutoEventWireup="False" CodeBehind="EPiServerUI.Master.cs" Inherits="EPiServer.UI.Admin.MasterPages.EPiServerUI" %>
+<%@ Import Namespace="EPiServer.Framework.Web.Mvc.Html"%>
+<%@ Import Namespace="EPiServer.Framework.Web.Resources"%>
+<%@ Import Namespace="EPiServer.Shell" %>
+<%@ Import Namespace="EPiServer.Shell.Web.UI"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<%= Thread.CurrentThread.CurrentUICulture.Name %>" xml:lang="<%= Thread.CurrentThread.CurrentUICulture.Name %>">
+    <head runat="server">
+        <title runat="server" />
+        <!-- Mimic Internet Explorer 7 -->
+        <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+
+        <asp:PlaceHolder runat="server">
+            <%=Page.ClientResources("Dojo", new[] { ClientResourceType.Style }) %>
+            <%=Page.ClientResources("ShellCore")%>
+            <%=Page.ClientResources("ShellCoreLightTheme")%>
+            <%=Page.ClientResources("Navigation")%>
+        </asp:PlaceHolder>
+
+        <asp:PlaceHolder runat="server" id="cssLinkRegion" />
+        <asp:ContentPlaceHolder runat="server" id="HeaderContentRegion" />
+
+    </head>
+    <body id="body" runat="server">
+        <form id="aspnetForm" runat="server" novalidate="true">
+            <asp:ContentPlaceHolder ID="FullRegion" runat="server"><div class="epi-contentContainer epi-padding">
+                <div class="epi-contentArea">
+                    <EPiServerUI:SystemPrefix id="SystemPrefixControl" runat="server" />
+                    <asp:ValidationSummary ID="ValidationSummary" runat="server" CssClass="EP-validationSummary" ForeColor="Black" />
+                </div>
+
+                <asp:ContentPlaceHolder ID="MainRegion" runat="server"/>
+                </div>
+            </asp:ContentPlaceHolder>
+        </form>
+    </body>
+</html>

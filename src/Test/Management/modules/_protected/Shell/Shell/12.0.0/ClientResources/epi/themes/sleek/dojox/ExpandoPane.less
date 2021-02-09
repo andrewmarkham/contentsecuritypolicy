@@ -1,0 +1,78 @@
+/* Import original CSS */
+@import url("../../../patch/dojox/layout/resources/ExpandoPane.css");
+@import "../variables";
+
+/* Sleek specific styling */
+
+
+/* EPi the following styles are SPECIFIC and should be targeted at ID's (ex #leading, #trailing) or classes (ex .epi-sidebarPane) when available */
+.Sleek .dojoxExpandoPane {
+    background: #f9f9f9 url(../layout/images/noise.png) top left repeat;
+}
+.Sleek .dojoxExpandoLeft {
+    /*border-right: 1px solid @pane-outer-border; TODO: Investigate double borders */
+}
+.Sleek .dojoxExpandoRight {
+    /*border-left: 1px solid @pane-outer-border; TODO: Investigate double borders */
+}
+.Sleek .dojoxExpandoWrapper {
+    background: #eff3f7 url(../layout/images/noise.png) top left repeat;
+    border: none;
+    .box-shadow-specific(1px,1px,0px,0px,255,255,255,0.7);
+    margin: 0;
+}
+
+.Sleek .dojoxExpandoPane.dojoxExpandoClosed {
+    background: #dde3eb url(../layout/images/noise.png) top left repeat;
+    width: 24px !important;
+}
+
+
+.Sleek .dojoxExpandoTitle {
+    font-weight: bold;
+    .svgBackground(#9eaeb4,0px,-2300px,'images/gradients/expandopane_title.svg');
+    border-bottom:1px solid @pane-outer-border;
+    padding: 5px 2px 3px;
+    min-height:25px;
+    color:#4a4a4a;
+}
+.Sleek .dojoxExpandoPane.dojoxExpandoClosed .dojoxExpandoTitle {
+    padding: 5px 0px 2px;
+}
+.Sleek .dojoxExpandoPane.dojoxExpandoClosed .dojoxExpandoContent {
+    display: none;
+}
+    
+.Sleek .dojoxExpandoTitleNode {
+    .text-shadow-specific(0px,1px,0px,255,255,255,0.6);
+    padding: 0 4px;
+}
+
+
+ .Sleek .dojoxExpandoIcon {
+    background-image: url('images/expandoPaneExpandImages.png');
+    height:16px;
+    margin-top: 5px;
+    width: 16px;
+    cursor: pointer;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+}
+ 
+/* Expanded left pane icon */
+/* Collapsed right pane icon */
+.Sleek .dojoxExpandoLeft .dojoxExpandoIcon,
+.Sleek .dojoxExpandoClosed.dojoxExpandoRight .dojoxExpandoIcon {
+    background-position: 0 0;
+}
+ 
+/* Expanded right pane icon */
+/* Collapsed left pane icon */
+.Sleek .dojoxExpandoRight .dojoxExpandoIcon,
+.Sleek .dojoxExpandoClosed.dojoxExpandoLeft .dojoxExpandoIcon {
+    background-position: -32px 0;
+}
+
+.Sleek .dojoxExpandoLeft .epi-widgetFullHeight {
+    background: #fbfbfb;
+}

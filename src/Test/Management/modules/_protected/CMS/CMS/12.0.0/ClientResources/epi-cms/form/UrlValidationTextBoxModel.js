@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/form/UrlValidationTextBoxModel",["dojo/_base/declare","dojo/_base/lang","epi/Url"],function(_1,_2,_3){var _4=_1([],{pattern:null,addProtocol:true,validator:function(_5,_6){var re=this.pattern?new RegExp(this.pattern,"i"):_4.validationRegex;return re.test(_5);},validateUrl:function(_7){_7=_7?_2.trim(_7):"";if(!this.addProtocol||_7===""){return _7;}if(this.validator(_7)){return _7;}else{if(_7.indexOf("\\\\")===0){_7="file://"+_7.substr(2);}else{_7="http://"+_7;}return _7;}}});_4.validationRegex=/^([a-z]+:|\/|\.).+/i;return _4;});

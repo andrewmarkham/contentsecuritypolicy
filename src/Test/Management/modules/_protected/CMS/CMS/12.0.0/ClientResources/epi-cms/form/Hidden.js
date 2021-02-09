@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/form/Hidden",["dojo/_base/declare","dijit/form/_FormValueWidget"],function(_1,_2){return _1([_2],{title:"Hidden",templateString:"<input data-dojo-attach-point=\"focusNode\" ${!nameAttrSetting} type=\"hidden\" />"});});

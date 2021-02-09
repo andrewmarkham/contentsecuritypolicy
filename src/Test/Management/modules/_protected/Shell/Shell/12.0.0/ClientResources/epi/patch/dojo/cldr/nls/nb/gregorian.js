@@ -1,0 +1,2 @@
+//>>built
+define("epi/patch/dojo/cldr/nls/nb/gregorian",["dojo/cldr/nls/nb/gregorian","dojo/i18n"],function(_1,_2){_1["dateTimeFormat-medium"]="{1} {0}";_1["dateTimeFormat-long"]="{1} {0}";_1["dateTimeFormat-short"]="{1} {0}";_1["dateTimeFormat-full"]="{1} {0}";var _3="dojo/cldr/nls/gregorian/nb-no";if(_2.cache[_3]){_2.cache[_3]=_1;}});

@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/PropagatingContainer",["epi","dojo","dijit","dijit/_Widget","dijit/_Container","dijit/_Contained"],function(_1,_2,_3,_4,_5,_6){return _2.declare([_4,_5,_6],{buildRendering:function(){this.inherited(arguments);_2.addClass(this.domNode,"dijitContainer");},set:function(_7,_8){this.inherited(arguments);_2.forEach(this.getChildren(),function(_9){_9.set(_7,_8);});}});});

@@ -1,0 +1,628 @@
+// OFFICIAL COLORS FROM THE 2014 STYLE GUIDE, SHARED WITH MARKETING
+//===============================================================================================================================
+@border-inner--1: @border-color;
+@border-inner--2: #e2e2e2;
+@border-inner--3: #c7c7c7;
+@border-inner--4: #5c6467;
+@border-inner--5: #586062;
+
+@epi-icon: #9a9c9e;
+@epi-mute--text: #898b8b;
+
+@epi-border--1: #b5b5b5;
+@epi-border--2: #a8a8a8;
+@epi-border--3: #9d9d9d;
+@epi-border--4: #3a3f41;
+@epi-border--5: #292d2e;
+
+
+@orange1: #fdc860;
+@orange2: #ffac2a;
+@orange3: #ff9702;
+@orange4: #f28c02;
+@orange5: #f08202;
+
+
+@blue1: #84c8e4;
+@blue2: #3bbaf7;
+@blue3: #1ba4fa;
+@blue4: #1a96ed;
+@blue5: #1285de;
+
+
+@green1: #cbe25e;
+@green2: #b4d633;
+@green3: #95c532;
+@green4: #89b333;
+@green5: #81a830;
+
+
+@red1: #fa8466;
+@red2: #fa6945;
+@red3: #f7542b;
+@red4: #ed4c1c;
+@red5: #e1410e;
+
+
+@yellow1: #fdf490;
+@yellow2: #fff147;
+@yellow3: #ffee25;
+@yellow4: #ffed0f;
+@yellow5: #ffe900;
+
+
+@turquoise1: #a6e0e2;
+@turquoise2: #38cbd0;
+@turquoise3: #17bac0;
+@turquoise4: #1eabb0;
+@turquoise5: #149ba0;
+
+@grey1: #f8f9f9;
+@grey2: #ededed;
+@grey3: #c7c9c9;
+@grey4: #9fa3ae;
+@grey5: #444a4c;
+@grey6: #323738;
+
+// Additional hues, not a part of the primary palette
+@orange6: #fcbe00;
+
+@epi-orange--heavy: #FF9000;
+@epi-blue--heavy: #0468ff;
+@epi-green--heavy: #26c841;
+
+@epi-darkgray: #323738;
+@epi-gray: #444A4C;
+
+
+@epi-white: #fff;
+@epi-eggwhite: #f4f4f4;
+
+@epi-typeface: #3b3838;
+
+
+@grey: #777;
+@dark-grey: #555a61;
+@light-grey: #c7c7c7;
+
+
+
+// DOJO LEGACY COLORS
+//===============================================================================================================================
+// General
+@text-color: @primary900;              // Text color for enabled widgets
+@text-color-white: #ffffff;         // White text color
+
+@border-color: @surface400;         // Border color for (enabled, unhovered) TextBox, Slider, Accordion, BorderContainer, TabContainer
+@popup-border-color: #666666;       // Border for Dialog, Menu, Tooltip.   Must also update tooltip.png (the arrow image file) to match
+@minor-border-color: #d3d3d3;       // Color of borders inside widgets: horizontal line in Calendar between weeks, around color swatches in ColorPalette, above Dialog action bar
+
+@disabled-border-color: #d3d3d3;    // Border color for disabled/readonly Button, TextBox etc. widgets
+@disabled-background-color: #efefef;// Disabled button, textbox, etc.
+@disabled-text-color: @surface600;      // Text color for disabled/readonly widgets
+
+@unselected-background-color: #efefef;// Background color for unselected/unopened tab button, accordion pane, TitlePane, Menu items
+@unselected-text-color: @primary900;    // Text color for unselected/unopened tab button, accordion pane, TitlePane, Menu items
+
+@hovered-border-color: #858585;     // Hover of textbox, tab label, BorderContainer splitter, Calendar, etc.
+@hovered-background-color: #abd6ff; // Background color for hover of Button, MenuBar, Accordion pane, Calendar... anything that has a (non-white) color to start with and gets darker on hover
+@hovered-text-color: @text-color;   // Used for title of select Accordion pane, label of select tab, hovered Menu item, etc.
+
+@pressed-border-color: #769dc0;     // During click on Calendar day, Slider up/down buttons, tab button, etc.
+@pressed-background-color: #7dbefa; // Background color while clicking on Accordion/TitlePane title bar, tab button, Calendar day, Toolbar button, Tree row.
+
+@selected-border-color: #769dc0;    // Selected AccordionPane, tab of nested TabContainer (but plain TabContainer is special)
+@selected-background-color: #cfe5fa;// Selected Accordion pane, nested tab label, Tree row
+@selected-text-color: @text-color;  // title of selected Accordion pane, label of selected tab, hovered Menu item, etc.
+
+@bar-background-color: #fafafa;     // MenuBar, Toolbar, action bar at bottom of dialog
+@pane-background-color: #fff;       // Background color of Accordion panes, Dialogs, etc.
+@pane-border-color: #cbcbcb;        // Border color for panes. Used for project items splitter and top-bar
+@popup-background-color: #fff;      // Background for Dialog.   TODO: currently use for ColorPalette, maybe should change.
+
+
+
+// Buttons
+@button-border-color: #888b8f;              // Border for (stand-alone) buttons in normal, hovered, or active state
+@button-background-color: #ffffff;          // Background color for buttons
+@button-hovered-background-color: #fafafa;  // Background color for hovered buttons
+@button-pressed-background-color: #e4e4e4;  // Background color for pressed buttons
+@button-border-radius: 2px;                 // Rounded corner radius for buttons (except in toolbar)
+
+// Input widgets@epi-status-background-black
+// TODO: refactor after q4 2013 release
+@focused-border-color: @primary500; // Focused textbox, editor, select, etc.
+
+@error-border-color: #d46464;               // Border for textbox in error state
+@error-focused-border-color: #ce4f4f;       // Border of textbox in error state, and focused
+@erroricon-background-color: #d46464;       // Background color for exclamation point validation icon (for TextBox in error state)
+@textbox-background-color: #fff;            // Default background color of TextBox based widgets
+@textbox-hovered-background-color: #fff;    // Background color when hovering a unfocused TextBox, Select, Editor, or other input widget
+@textbox-focused-background-color: @textbox-background-color;
+@textbox-error-background-color: @textbox-background-color;
+@textbox-disabled-background-color: #f0f0f0;
+
+@textbox-padding: 5px;                      // Padding for Textbox, Textarea, etc.
+
+// CheckBox, RadioButton
+@focus-outline-color: #4a4a4a;              // Color for artificial focus outline around labels of checkboxes
+
+// TabContainer
+@nestedtab-hovered-background-color: @textbox-hovered-background-color;
+@nestedtab-hovered-border-color: #cfe5fa;
+@nestedtab-selected-border-color: @selected-border-color;
+@nestedtab-selected-background-color: #898989;
+@tab-disabled-background-color: #d3d3d3;        // For disabled tabs of a TabContainer (not officially supported)
+
+// document header
+@document-header-background-color: @primary50;
+
+// Arrow buttons (stand alone, or inside ComboBox / ComboButton / Spinner / etc.
+@arrowbutton-background-color: @button-background-color;
+@arrowbutton-hovered-background-color: @button-hovered-background-color; // Color of arrow when hovering ComboBox.   But hovering Spinner doesnt change arrow color (TODO)
+@arrowbutton-pressed-background-color: @button-pressed-background-color;
+@arrowbutton-inner-border-color: #fff;          // Typically the arrows have an inner white border (a.k.a. padding) and then an outer black-ish border
+
+// Slider
+// Note: any changes here require corresponding changes in form/images/sliderThumbs.png
+@slider-fullbar-background-color: #cfe5fa;          // Background color for part of slider bar before (to the left or below) the handle
+@slider-remainingbar-background-color: #fff;        // Background color for part of slider bar after (to the right or above) the handle
+@slider-hovered-fullbar-background-color: #abd6ff;  // Background color for part of bar of hovered slider before (to the left or below) the handle
+@slider-hovered-remainingbar-background-color: #fff;// Background color for part of bar of hovered slider after (to the right or above) the handle
+@slider-hoveredButton-background-color: #fff;       // Background color of slider increment/decrement buttons when mouse is over slider but not over the buttons
+@slider-focused-fullbar-background-color: #abd6ff;  // Background color for part of bar of focused slider before (to the left or below) the handle
+@slider-focused-remainingbar-background-color: #fff;// Background color for part of bar of focused slider after (to the right or above) the handle
+@slider-button-hovered-background-color: #cfe5fa;   // Background color of slider increment/decrement buttons when mouse is over the buttons
+@slider-button-pressed-background-color: #abd6ff;   // Background color of slider increment/decrement buttons while button is depressed
+
+// Select, ComboBox
+@select-dropdownitem-background-color: #fff;            // Background color for items in the drop down list of a ComboBox/Select
+@select-dropdownitem-hovered-background-color: #7dbefa; // Background color for the hovered item in the drop down list of a ComboBox/Select
+@select-matchedtext-background-color: #abd6ff;          // Background color of text in ComboBox drop down that matches typed in phrase
+
+// Menus
+@menu-background-color: #fff;
+@menu-text-color: @text-color;
+@menu-light-background-color: #eeeded;
+@menu-light-text-color: @primary900;
+@menu-border-color: @pane-outer-border;
+@menu-border-radius: 2px;
+
+// Calendar
+@calendar-background-color: #f0f2f3;
+@calendar-currentmonth-background-color: #fff;      // Background color for days of the current month
+@calendar-adjacentmonth-background-color: #bec4cb;  // Background color used for days from previous or next month
+@calendar-adjacentmonth-text-color: #fff;       // Text color used for days from previous or next month
+@calendar-date-pressed-border-color: #fff;          // For some reason pressing a day of the month (as opposed to hovering it) makes the border go away, is this intentional?
+@calendar-date-pressed-background-color: @pressed-background-color;
+@calendar-date-selected-border-color: #c4d700;
+@calendar-date-selected-background-color: #abd6ff;
+@calendar-button-hovered-background-color: #e9f4fe; // for hover or next/previous year, and month drop down (TODO: border and background are built in to calendarArrows.png, can't control from here)
+@calendar-button-hovered-border-color: #fff;        // for hover or next/previous year, and month drop down
+@calendar-button-pressed-background-color: #cfe5fa;
+@calendar-button-pressed-border-color: @pressed-border-color;
+
+
+// ProgressBar
+@progressbar-border-color: #565656; // Border color of progress bar
+@progressbar-full-background-color:#31c23a;     // Background color for part of progress bar indicating amount completed
+@progressbar-empty-background-color: #909090;       // Background color for part of progress bar indicating amount remaining
+@progressbar-text-color: @text-color;           // Color of progress bar text (ex: "35%").  Must contrast with both empty and full background colors.
+
+// TimePicker
+@timepicker-minorvalue-background-color: #efefef;   // For 3:15, 3:30, 3:45 but not 3:00 or 4:00
+@timepicker-minorvalue-text-color: #818181;
+@timepicker-majorvalue-background-color: #e9f4fe;   // For 3:00, 4:00, 5:00, etc.
+@timepicker-value-hovered-background-color: #7dbefa;
+@timepicker-value-hovered-text-color: @hovered-text-color;
+@timepicker-arrow-hovered-background-color: #abd6ff;
+
+// ColorPalette
+@colorpalette-background-color: #fff;
+@swatch-border-color: @minor-border-color;
+@swatch-hovered-border-color: #000;
+@swatch-selected-border-color: #000;
+
+// Dialog
+@dialog-underlay-color: #fff;           // the thing that grays out the screen when a dialog is shown
+@dialog-titlebar-border-color: #fff;    // Inner border around the title sectionof a Dialog, inside the main border of the Dialog and the border between title and content
+@dialog-titlebar-background-color: #abd6ff;
+
+// BorderContainer
+@splitter-hovered-background-color: @primary100;    // Color of splitter when user hovers it, before mouse down
+@splitter-dragged-background-color: @primary100;    // Color of splitter while it's being dragged
+
+// Toolbar
+@toolbar-button-checked-background-color: #fff;                             // a toggled-on button in the toolbar
+@toolbar-combobutton-hovered-unhoveredsection-background-color: #f4ffff;    // when user hovers a ComboButton in a Toolbar, the other half of the button turns this color
+@toolbar-button-border-radius: 2px;         // Rounded corner radius for buttons for buttons in toolbar
+
+// DnD
+@dnd-avatar-background-color: @surface50;                     // Background color of DnD avatar
+@dnd-avatar-header-background-color: #C0C0C0;           // Dragged item border color when it can't be dropped
+@dnd-avatar-candrop-header-background-color: @primary500; // Dragged item border color when it can be dropped
+@dnd-avatar-border-radius: 2px;                            // Dragged item border radius
+@dnd-dropseparator-color: @primary500;                      // Color of line indicating that user is about to drop between items A & B
+
+// Document level
+@document-text-color: @primary900;                                  // Text color for document itself (text outside of widgets)
+@document-shadedsection-background-color: @bar-background-color;// background color used for <pre>, <code>, and table header rows
+@document-border-color: #d3d3d3;                                // Border for <pre>, <code>, tables, etc.
+
+
+
+
+
+// EPI COLOR VARIABLES
+//===============================================================================================================================
+// General
+@text-color-soft: @primary900; // Softer text color for large text
+@text-color-secondary: @surface800;
+@text-color-inverted: #e3e3e3;  // Text color on dark backgrounds
+@text-color-error: @warning;
+
+@link-color: @primary500;
+@bar-border-color: @border-color;
+
+
+@pane-outer-border: #858585;
+@pane-inner-border: #bababa;
+@pane-background: @surface100; // Sidebars, Dashboard background, gutters between widgets, splitter
+
+
+@notification-background-success: #d3edd2;
+@notification-background-fail: #f00;
+@notification-background-publishing: #444444;
+@notification-border-success: #57a55a;
+@notification-border-fail: #f00;
+
+@epi-forms-label: @primary900;
+@epi-form-subheader-color: @primary900;
+
+@epi-notificationBar-background: @reminder100;
+@epi-notificationBar-border: @border-color;
+
+// Interaction color for multiple objects, effecting forms, DND, overlays etc
+// TODO: Re-factor this and the DND variables below after q4 2013 release
+@epi-active-object: #b4c600;
+
+// Status Bar
+@label-color: #808080;
+
+
+// Buttons & Icons
+
+// Primary
+@primary1: @blue1;
+@primary2: @blue2;
+@primary: @blue3;
+@primary4: @blue4;
+@primary5: @blue5;
+
+// new primary color
+@primary50: #F0F0F2;
+@primary100: #D4E0FD;
+@primary200: #BED0FB;
+@primary300: #8EBAFF;
+@primary400: #5484F4;
+@primary500: #1456F1;
+@primary600: #05159B;
+@primary700: #030D63;
+@primary800: #040A47;
+@primary900: #01062B;
+
+@primary-background: @primary500;
+@primary-background--active: @primary500;
+
+@epi-button-primary-fallback: @primary500;
+@epi-button-primary-text-color: @text-color-white;
+@epi-button-primary-border-color: @primary500;
+
+// Success
+@success300: #81C784;
+
+// Reminder
+@reminder50: #FFFDE7;
+@reminder100: #FFF9C4;
+@reminder300: #FFF176;
+
+// Warning
+@warning300: #FFB74D;
+
+// Error
+@error300: #E57373;
+@error500: #F44336;
+@error700: #D32F2F;
+
+// Surface
+@surface50: #FFFFFF;
+@surface100: #FAFAFA;
+@surface200: #F5F5F5;
+@surface300: #F0F0F0;
+@surface400: #DEDEDE; // border
+@surface500: #C2C2C2;
+@surface600: #979797;
+@surface700: #818181;
+@surface800: #606060;
+@surface900: #3C3C3C;
+
+// Success
+@success1: @green1;
+@success2: @green2;
+@success: @green3;
+@success4: @green4;
+@success5: @green5;
+
+@success-background: @primary500;
+@success-background--active: @primary500;
+
+@epi-button-success-fallback: @primary500;
+@epi-button-success-text-color: @text-color-white;
+@epi-button-success-border-color: @primary500;
+
+
+// Info
+@info1: @yellow1;
+@info2: @yellow2;
+@info: @yellow3;
+@info4: @yellow4;
+@info5: @yellow5;
+
+@info-background: @info;
+@info-background--active: @info4;
+
+@epi-button-info-fallback: @info;
+@epi-button-info-text-color: @text-color-white;
+@epi-button-info-border-color: @info4;
+
+
+// Warning
+@warning1: @orange1;
+@warning2: @orange2;
+@warning: @orange3;
+@warning4: @orange4;
+@warning5: @orange5;
+
+@warning-background: @warning;
+@warning-background--active: @warning4;
+
+@epi-button-warning-fallback: @warning;
+@epi-button-warning-text-color: @text-color-white;
+@epi-button-warning-border-color: @warning4;
+
+
+// Danger
+@danger1: @red1;
+@danger2: @red2;
+@danger: @error500;
+@danger4: @red4;
+@danger5: @red5;
+
+@danger-background: @danger;
+@danger-background--active: @danger4;
+
+@epi-button-danger-fallback: @danger;
+@epi-button-danger-text-color: @text-color-white;
+@epi-button-danger-border-color: @danger4;
+
+@epi-chromelessButton-border: #d8d8d8;
+
+@epi-flat-background: @surface400;
+@epi-button-flat-background: @epi-flat-background;
+
+// Default: flat near-white 2012
+@epi-button-fallback: #e4e4e4;
+@epi-button-text-color: @primary900;
+@epi-button-border-color: @surface700;
+@epi-button-text-shadow: rgba(0,0,0,0);
+
+// A button inside a button, currently only ExpandoButton: grey 2012
+@epi-button-Child-fallback: #d7d7d7;
+@epi-button-Child-text-color: @primary900;
+@epi-button-Child-border-color: #aeb7b7;
+@epi-button-Child-text-shadow: rgba(255,255,255,0.25);
+
+// Icon colors - only used in Styleguide, as the icons themselves are images in different colors
+@icon--default: @surface800;
+@icon--inverted: @surface50;
+@icon--active: @primary300;
+@icon--success: @success300;
+@icon--danger: @error300;
+@icon--warning: @warning300;
+@icon--primary: @primary500;
+
+// Input widgets
+@epi-input-border: 1px solid @border-color;
+@epi-textbox-border-radius: 2px;
+@epi-textbox-hover-border-color: #444;
+
+
+// TabContainer
+@tab-background-color: #FFFFFF;
+@selected-tab-indicator-color: @primary500;
+@selected-tab-text-color: @primary500;
+
+
+// Select, ComboBox
+@epi-select-line-height: 12px;
+
+
+// Menus
+@epi-separator-color: @surface400;
+
+@epi-menuInverted-color: @text-color;
+@epi-menuInverted-disabled-color: #888888;
+@epi-menuInverted-background-color: #f0f2f3;
+@epi-menuInverted-separator-border-color: #d9ddde;
+
+
+// Calendar
+@calendar-date-selected-text-color: #fff;
+
+
+// Dialog
+@epi-dialog-title-background-color: @surface200;
+@epi-dialog-bottom-bar-background-color: @surface200;
+@epi-dialog-padding: 16px;
+@epi-dialog-border-color: #999;
+@epi-dialog-inner-border-color: #e6e6e6;
+
+@epi-lfw-dialog-background: @surface100;
+
+@epi-dialog-border-radius: 4px;
+@epi-dialog-shadow-border-radius: 8px;
+
+
+// IframeWithOverlay
+@epi-viewport-background-color: #999;
+@epi-viewport-content-background-color: #fff;
+
+// Overlay
+@epi-blockarea-overlay-border-color: @surface700;
+@epi-blockarea-overlay-border-active-color: @primary500;
+
+// Toolbar
+@epi-toolbar-background: #f8f9f8;
+@epi-flat-toolbar-background: #fff;
+@epi-toolbar-border: #999;
+
+
+// Gadget Chrome
+@epi-component-border: @surface400;
+@epi-componentToolbar-background: @surface50;
+@epi-componentToolbar-border: #cdd2d3;
+
+
+// DnD
+@epi-drag-border-active: @primary500;
+@epi-drag-border-hover: @primary500;
+
+
+// Dojox Grid
+@epi-grid-header-border: #aeaeae;
+@epi-grid-row-border: #eeeeee;
+@epi-grid-row-odd: #fff;
+@epi-grid-row-even: @surface100;
+@epi-grid-row-odd-border: #e5e3d5;
+
+// Tree
+@epi-tree-mngr--group-background: #e8e7e3;
+@epi-tree-mngr--group-border: #d8d7d2;
+
+
+// Tooltip
+@epi-invertedTooltip-border-color: #989a9b;
+@epi-invertedTooltip-divider-border-color: @border-color;
+@epi-tooltipDialog-background-color: #fff;
+
+
+// Gadgets
+@epi-gadget-background: @surface50;
+@epi-gadget-header-background: @surface50;
+@epi-gadget-secondary-background: @surface50;
+@epi-gadget-secondary-border: #cdd2d0;
+
+
+// Cards
+@epi-card-selected-active: @epi-selected-item;
+@epi-card-selected-border-active: @focused-border-color;
+@epi-card-border-in-focus: @focused-border-color;
+@epi-card-selected-inactive: @primary50;
+@epi-card-selected-border-inactive: @surface400;
+
+// Gradients and colors
+@epi-status-background-black: #333;
+@epi-status-background-green: #8cb700;
+@epi-status-border-green: darken(@epi-status-background-green, 10%);
+@epi-status-background-yellow: #ffde00;
+@epi-status-border-yellow: darken(@epi-status-background-yellow, 10%);
+@epi-status-background-red: #ff5705;
+@epi-status-border-red: darken(@epi-status-background-red, 10%);
+@epi-status-background-orange: #ffa400;
+@epi-status-border-orange: darken(@epi-status-background-orange, 10%);
+@epi-status-background-blue: #23b4e9;
+@epi-status-border-blue: darken(@epi-status-background-blue, 10%);
+
+@epi-status-border-green: #7ca600;
+@epi-status-border-red: #e65000;
+
+@epi-selected-item: @primary100;
+@epi-selected-inactive-item: @primary50;
+
+
+@epi-dialog-background-color-start: #e5e5e5;
+@epi-dialog-background-color-end: #c1c1c1;
+@epi-dialog-background-color-fallback: #e5e5e5;
+
+@epi-menu-background-color-Default-start: #4f8bff;
+@epi-menu-background-color-Default-end: #4984f1;
+@epi-menu-background-color-Default-fallback: #4984f1;
+
+@epi-menu-background-color-Default-Active-start: #2c95f6;
+@epi-menu-background-color-Default-Active-end: #2489e6;
+@epi-menu-background-color-Default-Active-fallback: #2890ee;
+
+@epi-menu-background-color-Default-Disabled-start: #93c4f5;
+@epi-menu-background-color-Default-Disabled-end: #85b2e9;
+@epi-menu-background-color-Default-Disabled-fallback: #93c4f5;
+
+
+@epi-input-arrow-background-color-start: #e8e8e8;
+@epi-input-arrow-background-color-end: #cfcfcf;
+@epi-input-arrow-background-color-fallback: #dedede;
+
+@epi-input-arrow-background-color-Active-start: #1E61C7;
+@epi-input-arrow-background-color-Active-end: #57aefa;
+@epi-input-arrow-background-color-Active-fallback: #3984f7;
+
+@epi-input-arrow-background-color-Disabled-start: #93c4f5;
+@epi-input-arrow-background-color-Disabled-end: #85b2e9;
+@epi-input-arrow-background-color-Disabled-fallback: #93c4f5;
+
+@epi-select-background-color-start: #ffffff;
+@epi-select-background-color-end: #ececec;
+@epi-select-background-color-fallback: #ffffff;
+
+@epi-content-search-box-background-color: @surface50;
+@epi-content-list-background-color: #ffffff;
+
+@epi-dashed-border-color: @surface400;
+
+
+
+// Deprecated color variables. Refactored, but not renamed.
+//===============================================================================================================================
+// Buttons
+// Salt is now Primary
+@epi-button-Salt-fallback: @epi-button-primary-fallback;
+@epi-button-Salt-text-color: @epi-button-primary-text-color;
+@epi-button-Salt-border-color: @epi-button-primary-border-color;
+@epi-button-Salt-text-shadow: rgba(255,255,255,0.25);
+
+// Sweet is now Success
+@epi-button-Sweet-fallback: @epi-button-success-fallback;
+@epi-button-Sweet-text-color: @epi-button-success-text-color;
+@epi-button-Sweet-border-color: @epi-button-success-border-color;
+@epi-button-Sweet-text-shadow: rgba(255,255,255,0.25);
+
+// Sour is now Warning
+@epi-button-Sour-fallback: @epi-button-warning-fallback;
+@epi-button-Sour-text-color: @epi-button-warning-text-color;
+@epi-button-Sour-border-color: @epi-button-warning-border-color;
+@epi-button-Sour-text-shadow: rgba(0,0,0,0);
+
+// Bitter is now Danger
+@epi-button-Bitter-fallback: @epi-button-danger-fallback;
+@epi-button-Bitter-text-color: @epi-button-danger-text-color;
+@epi-button-Bitter-border-color: @epi-button-danger-border-color;
+@epi-button-Bitter-text-shadow: rgba(0,0,0,0);
+
+// Umami does not exist in 2014
+@epi-button-Umami-fallback: rgba(0,0,0,0);
+@epi-button-Umami-text-color: #ffffff;
+@epi-button-Umami-border-color: rgba(53,64,68,0.55);
+@epi-button-Umami-text-shadow: rgba(0,0,0,0);
+
+
+@epi-flat-background--dark: @grey4;
+@epi-grid-outline-selected: @focused-border-color;

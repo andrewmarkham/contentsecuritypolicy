@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/dgrid/TemplateColumn",["dojo/_base/array"],function(_1){return function(_2,_3){var _4=_2.renderCell;_2.formatters=_3||_2.formatters;if(_2.formatters&&_2.formatters.length>0){_2.renderCell=function(_5,_6,_7,_8){_1.forEach(_2.formatters,function(_9){_6=_9(_6,_5,_7,_8);});if(_6){_7.innerHTML=_6;}};}return _4?_4.call(_2):_2;};});

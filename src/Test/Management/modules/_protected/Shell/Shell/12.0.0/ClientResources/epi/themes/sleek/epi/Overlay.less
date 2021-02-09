@@ -1,0 +1,149 @@
+﻿@import "../variables";
+
+//Overlay widget styles
+.Sleek  {
+    .epi-overlay-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 1px;
+    }
+    .epi-overlay-targetCover {
+        display: none;
+        position: absolute;
+        background-color: #FFF;
+        opacity: 0.01;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 1px;
+        z-index: 400;
+    }
+    .epi-overlayControls {
+        background: #3a3e41;
+    }
+}
+
+
+//Overlay item styles
+.Sleek  {
+    .epi-overlay-item {
+
+        position: absolute;
+        z-index: 500;
+
+        .epi-overlay-item-container {
+            position: absolute;
+            background: transparent;
+            border: 1px solid @surface700;
+            cursor: pointer;
+            left: -3px;
+            top: -3px;
+            right: -3px;
+            bottom: -3px;
+
+            // Make clickable on overlay item in IE browser
+            .epi-overlay-bracket {
+                background-color: #fff;
+                opacity: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* Hide the information node by default. */
+        .epi-overlay-item-info {
+            background: @epi-drag-border-hover;
+            .border-radius(2px);
+            color: @surface50;
+            line-height: 25px;
+            min-height: 25px;
+            padding: 0 4px;
+            position: absolute;
+            left: -3px;
+			text-align: left;
+            top: -25px;
+            visibility: hidden;
+			white-space: nowrap;
+			width: auto;
+
+            &.epi-overlay-item-info--inside {
+                top: -3px;
+            }
+        }
+
+        /* Hide the information node when editing (i.e. when it has focus). */
+        &.dijitFocused .epi-overlay-item-info {
+            visibility: hidden !important;
+        }
+
+        /* Display the information node when hovering the overlay. */
+        &.dijitHover .epi-overlay-item-info {
+            visibility: visible;
+        }
+
+        .epi-overlay-createBlock {
+            bottom: 0;
+            margin: 10px 0 0;
+            padding: 8px 0;
+            position: absolute;
+            text-align: center;
+            width: 100%;
+        }
+        .epi-overlay-createBlock:hover {
+            text-decoration: underline;
+        }
+    }
+
+    .epi-overlay-itemHover,
+    .epi-overlay-itemFocused  {
+        .epi-overlay-item-container {
+            border: 3px solid @epi-drag-border-active;
+            .border-radius(2px);
+        }
+    }
+
+    .epi-overlay-itemActive {
+        .epi-overlay-item-container {
+            background: rgba(255, 255, 255, 0);
+            border: 3px solid @epi-drag-border-hover;
+            .border-radius(3px);
+            .transition(background 0.5s linear);
+        }
+    }
+
+    .epi-overlay-itemError {
+        .epi-overlay-item-container {
+            border-color: @error-border-color;
+        }
+    }
+
+
+    // Hide overlays that can not receive the dnd content
+    &.dojoDndCopy .epi-overlay-item,
+    &.dojoDndMove .epi-overlay-item {
+        display: none;
+    }
+
+    // Show overlays that CAN receive the dnd content
+    &.dojoDndCopy .epi-overlay-container .dojoDndTarget,
+    &.dojoDndMove .epi-overlay-container .dojoDndTarget {
+        display: block;
+    }
+
+    // when user drag item toward block area
+    &.dojoDndCopy,
+    &.dojoDndMove {
+        .epi-overlay-container .dojoDndTarget .epi-overlay-item-container {
+            background: transparent;
+            border: 3px dashed @epi-drag-border-active;
+        }
+
+        .epi-overlay-container .dojoDndTarget.dojoDndContainerOver .epi-overlay-item-container {
+            background: transparent;
+            border: 3px solid @epi-drag-border-active;
+        }
+    }
+
+}

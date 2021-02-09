@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/command/MoveOutsideGroup",["dojo/_base/declare","epi-cms/contentediting/command/_ContentAreaCommand","epi/i18n!epi/cms/nls/episerver.cms.contentediting.editors.contentarea.personalize"],function(_1,_2,_3){return _1([_2],{label:_3.moveoutsidegroup,tooltip:_3.moveoutsidegroup,iconClass:"",category:"menuWithSeparator",_execute:function(){this.model.moveOutsideGroup();},_onModelValueChange:function(){this.set("canExecute",this.model.contentGroup&&!this.model.get("readOnly"));}});});

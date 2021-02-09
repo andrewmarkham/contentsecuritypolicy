@@ -1,0 +1,24 @@
+<div class="epi-project-item-list">
+    <div data-dojo-type="dijit/Toolbar"
+         data-dojo-attach-point="toolbar"
+         class="epi-project-item-list__toolbar epi-flatToolbar">
+        <span data-dojo-attach-point="toolbarSection"></span>
+    </div>
+    <div data-dojo-attach-point="listContainer" class="epi-project-item-list__container">
+        <div data-dojo-attach-point="notificationBarNode" class="epi-notificationBar dijitHidden">
+            <div class="epi-notificationBarItem">
+                <div class="epi-notificationBarText">
+                    <p data-dojo-attach-point="notificationTextNode"></p>
+                </div>
+            </div>
+        </div>
+        <div data-dojo-attach-point="overlayNode"
+             class="epi-project-item-list__dnd-area epi-visible-dnd-area epi-project-list-area__dnd-area--empty-list dijitHidden">
+            <span class="epi-project-item-list__dnd-area-content">${res.droptoadditems}</span>
+        </div>
+        <div data-dojo-attach-point="itemListNode"
+             class="epi-card-list dgrid--centered-no-data-message"></div
+        ><div data-dojo-attach-point="activitySection"
+              class="epi-activity-section"></div>
+    </div>
+</div>

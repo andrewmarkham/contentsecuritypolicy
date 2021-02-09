@@ -1,0 +1,55 @@
+﻿@import "../variables";
+
+.Sleek {
+    .epi-statusBarWrapper {
+        background: @epi-toolbar-background;
+        color: @text-color;
+
+        .epi-label {
+            color: @label-color;
+        }
+
+        a,
+        a:visited,
+        a:active,
+        a:hover {
+            color: @link-color;
+        }
+    }
+
+    .epi-statusBar,
+    .epi-statusBar-details {
+        border-bottom: 1px solid @bar-border-color;
+        height: 25px;
+        line-height: 26px;
+        padding: 0 6px;
+    }
+
+    .epi-statusTitle {
+        font-weight: bold;
+    }
+
+    .epi-statusBar {
+        a {
+            float: right;
+        }
+        
+        div {
+            display: inline-block;
+        }
+    }
+
+    .epi-statusBar-details {
+        background: @bar-background-color;
+    }
+
+    .epi-statusBar-details li {
+        display: inline-block;
+        margin-right: 12px;
+    }
+
+    .epi-statusTitleWrapper 
+    {
+        vertical-align: top;
+    }
+}

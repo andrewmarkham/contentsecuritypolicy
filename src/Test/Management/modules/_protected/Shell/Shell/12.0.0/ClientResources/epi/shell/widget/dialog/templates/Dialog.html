@@ -1,0 +1,15 @@
+﻿<div class="dijitDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title"></span>
+        <span data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon" data-dojo-attach-event="ondijitclick: onCancel" title="${resources.close}" role="button" tabIndex="-1">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${resources.cancel}">x</span>
+        </span>
+    </div>
+    <div data-dojo-attach-point="contentContainerNode" class="epi-dialogPaneContent">
+        <span data-dojo-attach-point="iconNode" class="dijitIcon dijitInline epi-dialogIcon"></span>
+        <div data-dojo-attach-point="headingNode" class="epi-dialogDescriptionHeader"></div>
+        <div data-dojo-attach-point="descriptionNode" class="epi-dialogDescriptionSummary"></div>
+        <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContentArea"></div>
+        <div data-dojo-attach-point="actionContainerNode" class="dijitDialogPaneActionBar"></div>
+    </div>
+</div>

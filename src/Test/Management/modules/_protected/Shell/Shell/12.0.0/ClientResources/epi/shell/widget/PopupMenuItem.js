@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/PopupMenuItem",["dojo/_base/declare","dijit/_Container","dijit/Menu","dijit/PopupMenuItem"],function(_1,_2,_3,_4){return _1([_4,_2],{constructor:function(){this.popup=new _3();},addChild:function(_5,_6){return this.popup.addChild(_5,_6);},getChildren:function(){return this.popup.getChildren();},removeChild:function(_7){return this.popup.removeChild(_7);}});});

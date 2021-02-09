@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/layout/PreserveRatioBorderContainer",["dojo/_base/declare","dijit/layout/BorderContainer","epi/shell/layout/_PreserveRatioMixin"],function(_1,_2,_3){return _1([_2,_3],{});});

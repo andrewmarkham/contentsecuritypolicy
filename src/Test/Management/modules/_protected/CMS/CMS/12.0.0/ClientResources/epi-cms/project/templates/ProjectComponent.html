@@ -1,0 +1,47 @@
+﻿<div>
+    <div data-dojo-type="epi-cms/project/ProjectItemList"
+         data-dojo-attach-point="itemList"
+         data-dojo-props="commandSource: this.model, listItemType: 'card-compact'">
+        <section data-epi-section="toolbarSection">
+            <span data-dojo-type="epi-cms/project/ProjectSelector"
+                  data-dojo-attach-point="projectSelector"
+                  data-dojo-props="store:this.model.projectStore"
+                  data-dojo-attach-event="onSortChanged:_projectSelectorSortChanged, onChange:_projectSelectorChange"></span>
+            <div data-dojo-type="dijit/form/DropDownButton"
+                 data-dojo-attach-point="publishContainer"
+                 data-dojo-props="iconClass: 'epi-iconPublishProject', showLabel: false, label: this.res.publishdropdown.label"
+                 data-dojo-attach-event="openDropDown:_publishMenuClickHandler"
+                 class="epi-flat epi-chromeless epi-chromeless--with-arrow">
+                <span></span>
+                <div data-dojo-type="epi-cms/project/PublishMenu"
+                     data-dojo-attach-point="publishMenu"
+                     data-dojo-props="commandSource: this.model">
+                    <section data-epi-section="primarySection">
+                        <span data-dojo-attach-point="projectStatusMessageNode"></span>
+                    </section>
+                    <section data-epi-section="statusSection">
+                        <ul>
+                            <li>
+                                ${res.view.createdby} <span data-dojo-attach-point="createdByNode" class="epi-username"></span>,
+                                <span data-dojo-attach-point="createdNode" class="epi-timestamp"></span>
+                            </li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+            <div data-dojo-attach-point="toolbarGroupNode" class="epi-floatRight"></div>
+        </section>
+
+        <section data-epi-section="listContainer">
+            <div data-dojo-attach-point="placeholderNode" class="epi-project-gadget__placeholder dijitHidden">
+                <div class="epi-project-gadget__placeholder-content">
+                    <button data-dojo-type="dijit/form/Button" type="button"
+                            data-dojo-props="iconClass: 'epi-iconPlus'"
+                            data-dojo-attach-event="onClick:_newProjectButtonClickHandler"
+                            class="epi-flat epi-chromeless">${res.command.newproject.label}</button>
+                    <div data-dojo-attach-point="createProjectInfoNode" class="epi-project-gadget__placeholder-info"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

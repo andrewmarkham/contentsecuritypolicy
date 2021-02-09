@@ -1,0 +1,1 @@
+Directory for caching data as files on disk.

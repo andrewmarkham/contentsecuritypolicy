@@ -1,0 +1,42 @@
+﻿@import "variables.less";
+
+.Sleek {
+    .epi-mediaList {
+        .epi-createContentContainer {
+            .dijitButtonContents {
+                display: inline-block;
+            }
+
+            .dijitButtonNode {
+                color: @text-color-secondary;
+                padding: 6px 4px;
+            }
+
+            .dijitButtonText {
+                height: auto;
+                line-height: inherit;
+                padding: 0;
+                text-align: left;
+                white-space: normal;
+                width: calc(~"100% - 50px");
+            }
+
+            .dijitIcon {
+                background: url("images/upload-files-medium.png") no-repeat center center transparent;
+                height: 20px;
+                margin: 0;
+                width: 50px;
+            }
+        }
+        //.epi-createContentContainer
+        .epi-contentList {
+            .dgrid {
+                .dgrid-no-data {
+                    padding: 15px 0 0 0;
+                }
+            }
+        }
+        //.epi-contentList
+    }
+    //.epi-mediaList
+}

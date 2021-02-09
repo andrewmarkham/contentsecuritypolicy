@@ -1,0 +1,19 @@
+{
+    "name": "epi-cms",
+    "version":"1.1.0",
+    "author": "EPiServer AB <support@episerver.com>",
+    "main":"main",
+    "dependencies": {
+        "dojo": "current",
+        "dijit": "current"
+    },
+    "description": "",
+    "licenses": [{
+        "type": "EPiServer End User License Agreement",
+        "url": "http://www.episerver.com/Licenses/Implemented-software/EULA/"
+    }],
+    "bugs": "http://world.episerver.com/Support/Categories/How-can-we-be-of-assistance/Developer-Support/",
+    "keywords": ["EPiServer", "CMS"],
+    "homepage": "http://www.episerver.com/",
+    "dojoBuild": "epi-cms.profile.js"
+}

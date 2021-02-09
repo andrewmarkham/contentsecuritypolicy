@@ -1,0 +1,16 @@
+﻿<div style="display: inline-block">
+    <div class="dijitInline dijitReset" data-dojo-attach-point="stateNode">
+        <span data-dojo-attach-point="statusNonEditableIcon" class="dijitInline dijitReset dijitIcon">&nbsp;</span>
+        <span class="epi-statusContainer dijitInline dijitReset">
+            <span data-dojo-attach-point="statusTextIcon" class="dijitInline dijitReset dijitIcon"></span>
+            <span data-dojo-attach-point="statusTextNode" class="epi-statusText"></span>
+        </span><span class="epi-statusArrow dijitInline dijitReset"></span><!-- These need to be on the same line. -->
+    </div>
+
+
+
+    <div data-dojo-attach-point="dropDownButton" data-dojo-type="dijit/form/DropDownButton"
+        data-dojo-props="label: '${commonRes.action.publish}', 'class': 'epi-mediumButton epi-button--bold'">
+        <div data-dojo-attach-point="dropDownMenu" data-dojo-type="epi-cms/contentediting/PublishMenu"></div>
+    </div>
+</div>

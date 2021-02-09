@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/command/MoveToPrevious",["dojo/_base/declare","epi","epi-cms/contentediting/command/_ContentAreaCommand"],function(_1,_2,_3){return _1([_3],{label:_2.resources.action.moveup,tooltip:_2.resources.action.moveup,iconClass:"epi-iconUp",_execute:function(){this.model.movePrevious();},_onModelChange:function(){this.inherited(arguments);this._watch("canMovePrevious",function(){this._onModelValueChange();},this);},_onModelValueChange:function(){this.set("canExecute",this.model.get("canMovePrevious")&&!this.model.get("readOnly"));}});});

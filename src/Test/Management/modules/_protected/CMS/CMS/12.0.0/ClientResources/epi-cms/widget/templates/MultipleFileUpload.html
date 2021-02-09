@@ -1,0 +1,13 @@
+﻿<div class="epi-multiFileUpload">
+    <form method="post" action="" enctype="multipart/form-data">
+        <div data-dojo-attach-point="breadcrumbBar" data-dojo-type="epi-cms/widget/Breadcrumb"></div>
+        <div data-dojo-attach-point="uploadToolbar" class="epi-toolbar-unwrapped">
+            <span title="${res.uploadform.addfiles}" >
+                <input type="file" multiple="multiple" data-dojo-type="dojox.form.Uploader" data-dojo-attach-point="uploaderInput" 
+                    data-dojo-props="iconClass:'epi-iconPlus', showLabel: false, multiple: true" />
+            </span>
+            <div data-dojo-attach-point="toolbarDisableLayer"></div>
+        </div>
+        <div data-dojo-attach-point="fileList" data-dojo-type="epi-cms/widget/FileList"></div>
+    </form>
+</div>

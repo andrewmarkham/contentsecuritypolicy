@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/command/ItemCollectionCommands",["dojo/_base/declare","./BlockRemove","./ItemEdit","./MoveToPrevious","./MoveToNext","./ContentAreaCommands"],function(_1,_2,_3,_4,_5,_6){return _1([_6],{constructor:function(_7){var _8=_7?_7.commandOptions:{};this.commands=[new _3(_8),new _4(_8),new _5(_8),new _2(_8)];}});});

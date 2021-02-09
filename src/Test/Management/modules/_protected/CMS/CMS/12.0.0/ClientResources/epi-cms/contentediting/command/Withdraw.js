@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/command/Withdraw",["dojo/_base/declare","epi-cms/contentediting/ContentActionSupport","epi-cms/contentediting/command/_ChangeContentStatus","epi/i18n!epi/cms/nls/episerver.cms.contentediting.toolbar.buttons"],function(_1,_2,_3,_4){return _1([_3],{label:_4.withdraw.label,tooltip:_4.withdraw.title,iconClass:"epi-iconPen",action:_2.saveAction.Reject|_2.saveAction.ForceCurrentVersion|_2.saveAction.SkipValidation});});

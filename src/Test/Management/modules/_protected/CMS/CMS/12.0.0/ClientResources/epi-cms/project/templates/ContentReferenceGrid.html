@@ -1,0 +1,15 @@
+<div class="epi-contentReferences">
+    <div data-dojo-attach-point="notificationBar" class="dijitHidden epi-notificationBar epi-notificationBarWithBorders epi-notificationBarItem">
+        <div data-dojo-attach-point="notificationNode" class="epi-notificationBarText"></div>
+    </div>
+    <div class="epi-captionPanel" data-dojo-attach-point="captionPanelNode">
+        <strong data-dojo-attach-point="resultSummaryNode"></strong>
+        <div class="epi-floatRight">
+            <button class="epi-chromelessButton"
+                    data-dojo-type="dijit/form/Button"
+                    data-dojo-attach-event="onClick:_refresh"
+                    data-dojo-props="iconClass:'epi-iconReload'">${res.buttons.refresh}</button>
+        </div>
+    </div>
+    <div data-dojo-attach-point="gridNode"></div>
+</div>

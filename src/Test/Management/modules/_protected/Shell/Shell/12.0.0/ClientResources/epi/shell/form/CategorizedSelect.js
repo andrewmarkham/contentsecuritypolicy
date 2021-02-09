@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/form/CategorizedSelect",["dojo/_base/declare","./CategoryMenuItem","dijit/form/Select"],function(_1,_2,_3){return _1([_3],{baseClass:"epi-categorized-select- dijitSelect dijitValidationTextBox",_getMenuItemForOption:function(_4){if(_4.category){return new _2({ownerDocument:this.ownerDocument,label:_4.label});}return this.inherited(arguments);}});});

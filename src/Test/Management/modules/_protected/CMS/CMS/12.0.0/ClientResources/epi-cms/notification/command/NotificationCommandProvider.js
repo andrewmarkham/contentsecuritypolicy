@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/notification/command/NotificationCommandProvider",["dojo/_base/declare","epi-cms/component/command/_GlobalToolbarCommandProvider","epi-cms/notification/NotificationButton","epi-cms/notification/command/ViewNotifications"],function(_1,_2,_3,_4){return _1([_2],{postscript:function(){this.inherited(arguments);var _5={widget:_3,"class":"epi-chromeless"};this.addToTrailing(new _4(),_5);}});});

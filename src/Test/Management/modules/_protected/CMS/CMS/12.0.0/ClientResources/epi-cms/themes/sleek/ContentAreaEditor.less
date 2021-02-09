@@ -1,0 +1,234 @@
+﻿@import "variables.less";
+
+/* Content Area Wrapper */
+.Sleek {
+    .epi-content-area-wrapper {
+        @area-padding: 10px;
+
+        background: @grey1;
+        padding: @area-padding;
+
+        .epi-content-area-header-block {
+            margin-bottom: 10px;
+
+            h3 { margin-top: 0; }
+        }
+
+        .epi-content-area-editor {
+            margin: 0 -@area-padding -@area-padding;
+        }
+    }
+
+    .epi-content-area-wrapperFocused .epi-content-area-editor{
+        border-style: solid;
+        .epi-focused();
+    }
+
+    .epi-content-area-editor {
+        background-color: @surface100;
+        border: 2px solid @epi-dashed-border-color;
+        .border-box;
+        height: auto;
+        line-height: 1.2;
+        min-height: 24px;
+        width: 360px;
+        padding: 8px;
+
+        &--wide {
+            width: 500px;
+        }
+
+        &.dijitError {
+            border-color: @error-border-color;
+        }
+
+        &.epi-content-area-editorFocused {
+            border-style: solid;
+            .epi-focused();
+
+            &.dijitError {
+                border-color: @error-border-color;
+            }
+        }
+
+        .dgrid-content {
+            background: @surface100;
+        }
+
+        h1, h2, h3, h4, h5 {
+            margin-top: 0;
+        }
+
+        .dgrid {
+            .dojoDndItemBefore {
+                border-top: 2px solid @dnd-dropseparator-color;
+            }
+
+            .dojoDndItemAfter {
+                border-bottom: 2px solid @dnd-dropseparator-color;
+            }
+        }
+    }
+
+    .epi-content-area-empty-dnd-source {
+        background-color: #fff;
+        border: 1px solid black;
+        margin-bottom: 5px;
+        min-height: 24px;
+    }
+
+    .epi-content-area-itemcontainer {
+    }
+
+    .epi-content-area-actionscontainer {
+        background: @grey1;
+        padding: 50px 20px 6px;
+        background: url('images/drop-stuff-medium.png') no-repeat center 16px;
+        color: #666;
+        font-size: 0.9em;
+        text-align: center;
+    }
+}
+
+/* Content Block Area */
+
+    .epi-content-block-editor .epi-iconContextMenu {
+        .Sleek & {
+            display: block;
+            float: left;
+            margin: 0px 3px;
+        }
+    }
+
+    .Sleek {
+        .epi-content-block-editor-node-selected .epi-content-block-node {
+            background: #c7d500;
+            border: 1px solid #959F00;
+        }
+    }
+
+    .Sleek {
+        /* Block area wrapper */
+        .epi-content-block-editor {
+            background-color: @grey1;
+            height: auto;
+
+            padding: 3px 0;
+            width: auto;
+            overflow: hidden;
+            white-space: normal;
+        }
+
+        /* Highlighted drop area below object */
+        .epi-content-block-editor.dojoDndItemAfter {
+            border-bottom: 4px solid @dnd-dropseparator-color;
+            border-top: none;
+            padding-bottom: 3px;
+        }
+
+        /* Highlighted drop area above object */
+        .epi-content-block-editor.dojoDndItemBefore {
+            border-top: 4px solid @dnd-dropseparator-color;
+            border-bottom: none;
+            padding-top: 3px;
+        }
+
+        .epi-content-block-editor.epi-dndDisableIndicator.dojoDndItemAfter,
+        .epi-content-block-editor.epi-dndDisableBottomIndicator.dojoDndItemAfter {
+            border-bottom: none;
+        }
+
+        .epi-content-block-editor.epi-dndDisableIndicator.dojoDndItemBefore,
+        .epi-content-block-editor.epi-dndDisableTopIndicator.dojoDndItemBefore {
+            border-top: none;
+        }
+
+        .epi-content-block-editor.dojoDndItem {
+             .epi-content-block-node {
+                cursor: move;
+
+                .epi-iconContextMenu {
+                    cursor: pointer;
+                 }
+             }
+        }
+
+    /* Readonly property */
+        .epi-content-area-editor.dijitReadOnly {
+            .dgrid-row {
+                cursor: default;
+            }
+
+            .epi-content-block-editor.dojoDndItemOver {
+                cursor: default;
+            }
+
+            .epi-content-block-editor.dojoDndItem {
+                 .epi-content-block-node {
+                    cursor: default;
+
+                    .epi-iconContextMenu {
+                        cursor: default;
+                     }
+                 }
+            }
+        }
+    }
+
+    .Sleek {
+        /* Block item */
+        .epi-content-block-node {
+            border: 1px solid #ddd;
+            .border-radius(22px);
+            display: block;
+            height: 16px;
+            padding: 4px 8px 4px 12px;
+            background: #fff;
+
+            .dojoxEllipsis {
+                display: inline-block;
+                width: 350px;
+            }
+        }
+
+        /* Empty block item - Required to accept content blocks if content area is empty */
+        .epi-content-area-empty-message {
+            margin: 4px 0;
+            padding: 8px;
+            text-align: center;
+            color: @text-color-soft;
+        }
+
+        /* DnD over empty block item */
+        &.dojoDndCopy .epi-content-area-editor.epi-content-area-editorHover .epi-content-area-empty-message,
+        &.dojoDndMove .epi-content-area-editor.epi-content-area-editorHover .epi-content-area-empty-message {
+            background: #e1ec7a;
+        }
+
+/* Empty drop area for blocks inside form */
+    &.dojoDndCopy .epi-content-area-editor,
+    &.dojoDndMove .epi-content-area-editor {
+        border: 2px dashed @epi-drag-border-hover !important;
+        box-shadow: none;
+    }
+
+    &.dojoDndCopy,
+    &.dojoDndMove {
+        /* Readonly property */
+        .dijitReadOnly,
+        /* Dnd disabled */
+        .dojoDndTargetDisabled {
+            &.epi-content-area-editor,
+            &.epi-content-area-wrapper .epi-content-area-editor {
+                border: 2px solid @epi-dashed-border-color !important;
+            }
+            .epi-content-area-empty-dnd-source {
+                background-color: inherit;
+                border: none;
+                margin-bottom: 0px;
+                min-height: 0px;
+            }
+        }
+    }
+}
+

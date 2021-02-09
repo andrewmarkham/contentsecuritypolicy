@@ -1,0 +1,63 @@
+/* ProgressBar
+ * 
+ * Styling of the ProgressBar consists of the following:
+ * 
+ * 1. the base progress bar
+ *		.dijitProgressBar -	sets margins for the progress bar
+ *
+ * 2. the empty bar
+ *		.dijitProgressBarEmpty  - sets background img and color for bar or parts of bar that are not finished yet
+ *		Also sets border color for whole bar
+ *
+ * 3. tile mode
+ * 		.dijitProgressBarTile
+ *		inner container for finished portion when in 'tile' (image) mode 
+ * 	
+ * 4. full bar mode
+ * 		.dijitProgressBarFull
+ *		adds border to right side of the filled portion of bar
+ *
+ * 5. text for label of  bar
+ *		.dijitProgressBarLabel - sets text color, which must contrast with both the "Empty" and "Full" parts. 
+ * 	
+ * 6. indeterminate mode
+ *		.dijitProgressBarIndeterminate .dijitProgressBarTile 
+ * 		sets animated gif for the progress bar in 'indeterminate' mode
+ */
+ 
+ @import "variables";
+ 
+.Sleek .dijitProgressBar {
+	margin:2px 0 2px 0;
+}
+.Sleek .dijitProgressBarEmpty {
+	/* outer container and background of the bar that's not finished yet*/
+	background: @progressbar-empty-background-color url("images/progressBarEmpty.png") repeat-x top;
+	/* border-color: @progressbar-border-color; */
+	border-top: 1px solid #505252;
+	border-bottom: 1px solid #686868;
+	border-right: 1px solid #686868;
+	border-left: 1px solid #686868;
+	border-radius: 10px;
+}
+.Sleek .dijitProgressBarTile {
+	/* inner container for finished portion when in 'tile' (image) mode */
+	background: @progressbar-full-background-color url("images/progressBarFull.png") repeat-x top;	
+}
+.dj_ie6 .Sleek .dijitProgressBarTile {
+	background-image: none;
+} 
+.Sleek .dijitProgressBarFull {
+	border-right:1px solid @progressbar-border-color;
+}
+.Sleek .dijitProgressBarLabel {
+	/* Set to a color that contrasts with both the "Empty" and "Full" parts. */
+	color: @progressbar-text-color;
+	font-size: 5px;
+	text-indent: -9999px;
+}
+.Sleek .dijitProgressBarIndeterminate .dijitProgressBarTile {
+	/* use an animated gif for the progress bar in 'indeterminate' mode;
+		background-color won't appear unless user has turned off background images */
+	background: @bar-background-color url("images/progressBarAnim.gif") repeat-x top;
+} 

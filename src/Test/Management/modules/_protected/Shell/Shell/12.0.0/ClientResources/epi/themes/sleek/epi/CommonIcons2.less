@@ -1,0 +1,156 @@
+// Set up
+@icon_size-small: 16;
+@icon_size-medium: 24;
+@icon_size-large: 32;
+
+.commonIcons(@iconSize, @y: 1, @x: 0) {
+    @posY: (@iconSize * @y);
+    @posX: (@iconSize * @x);
+
+    background: url('images/icons/commonIcons@{iconSize}x@{iconSize}.png') -@posX + 0px -@posY + 0px no-repeat;
+    height: @iconSize + 0px;
+    width: @iconSize + 0px;
+
+    &.epi-icon--inverted {
+        background-position: -@iconSize + 0px -@posY + 0px;
+    }
+    &.epi-icon--active {
+        background-position: -@iconSize*2 + 0px -@posY + 0px;
+    }
+    &.epi-icon--success {
+        background-position: -@iconSize*3 + 0px -@posY + 0px;
+    }
+    &.epi-icon--danger {
+        background-position: -@iconSize*4 + 0px -@posY + 0px;
+    }
+    &.epi-icon--warning {
+        background-position: -@iconSize*5 + 0px -@posY + 0px;
+    }
+    &.epi-icon--primary {
+        background-position: -@iconSize*6 + 0px -@posY + 0px;
+    }
+}
+
+.icons_list-small(@modifier, @x) {
+    @{modifier}.epi-iconClock             { .commonIcons(@icon_size-small, 1, @x); }
+    @{modifier}.epi-iconCheckmark         { .commonIcons(@icon_size-small, 2, @x); }
+    @{modifier}.epi-iconStop              { .commonIcons(@icon_size-small, 3, @x); }
+    @{modifier}.epi-iconVersions          { .commonIcons(@icon_size-small, 4, @x); }
+    @{modifier}.epi-iconRevert            { .commonIcons(@icon_size-small, 5, @x); }
+    @{modifier}.epi-iconUndo              { .commonIcons(@icon_size-small, 6, @x); }
+    @{modifier}.epi-iconRedo              { .commonIcons(@icon_size-small, 7, @x); }
+    @{modifier}.epi-iconPen               { .commonIcons(@icon_size-small, 8, @x); }
+    @{modifier}.epi-iconPenDisabled       { .commonIcons(@icon_size-small, 9, @x); }
+    @{modifier}.epi-iconDuplicatePage     { .commonIcons(@icon_size-small, 10, @x); }
+    @{modifier}.epi-iconPrimary           { .commonIcons(@icon_size-small, 11, @x); }
+    @{modifier}.epi-iconTrash             { .commonIcons(@icon_size-small, 12, @x); }
+    @{modifier}.epi-iconUsers             { .commonIcons(@icon_size-small, 13, @x); }
+    @{modifier}.epi-iconSearch            { .commonIcons(@icon_size-small, 14, @x); }
+    @{modifier}.epi-iconPlus              { .commonIcons(@icon_size-small, 15, @x); }
+    @{modifier}.epi-iconMinus             { .commonIcons(@icon_size-small, 16, @x); }
+    @{modifier}.epi-iconStar              { .commonIcons(@icon_size-small, 17, @x); }
+    @{modifier}.epi-iconSettings          { .commonIcons(@icon_size-small, 18, @x); }
+    @{modifier}.epi-iconLock              { .commonIcons(@icon_size-small, 19, @x); }
+    @{modifier}.epi-iconPin               { .commonIcons(@icon_size-small, 20, @x); }
+    @{modifier}.epi-iconPage              { .commonIcons(@icon_size-small, 21, @x); }
+    @{modifier}.epi-iconClose             { .commonIcons(@icon_size-small, 22, @x); }
+    @{modifier}.epi-iconFolder            { .commonIcons(@icon_size-small, 23, @x); }
+    @{modifier}.epi-iconSharedBlock       { .commonIcons(@icon_size-small, 24, @x); }
+    @{modifier}.epi-iconUp                { .commonIcons(@icon_size-small, 25, @x); }
+    @{modifier}.epi-iconDown              { .commonIcons(@icon_size-small, 26, @x); }
+    @{modifier}.epi-iconReload            { .commonIcons(@icon_size-small, 27, @x); }
+    @{modifier}.epi-iconShare             { .commonIcons(@icon_size-small, 28, @x); }
+    @{modifier}.epi-iconDownload          { .commonIcons(@icon_size-small, 29, @x); }
+    @{modifier}.epi-iconDnD               { .commonIcons(@icon_size-small, 30, @x); }
+    @{modifier}.epi-iconContextMenu       { .commonIcons(@icon_size-small, 31, @x); }
+    @{modifier}.epi-iconRename            { .commonIcons(@icon_size-small, 32, @x); }
+    @{modifier}.epi-iconLeft              { .commonIcons(@icon_size-small, 33, @x); }
+    @{modifier}.epi-iconRight             { .commonIcons(@icon_size-small, 34, @x); }
+    @{modifier}.epi-iconUser              { .commonIcons(@icon_size-small, 35, @x); }
+    @{modifier}.epi-iconHidden            { .commonIcons(@icon_size-small, 36, @x); }
+    @{modifier}.epi-iconNewWindow         { .commonIcons(@icon_size-small, 37, @x); }
+    @{modifier}.epi-iconCatalog           { .commonIcons(@icon_size-small, 38, @x); }
+    @{modifier}.epi-iconCategory          { .commonIcons(@icon_size-small, 39, @x); }
+    @{modifier}.epi-iconProduct           { .commonIcons(@icon_size-small, 40, @x); }
+    @{modifier}.epi-iconSKU               { .commonIcons(@icon_size-small, 41, @x); }
+    @{modifier}.epi-iconPackage           { .commonIcons(@icon_size-small, 42, @x); }
+    @{modifier}.epi-iconBundle            { .commonIcons(@icon_size-small, 43, @x); }
+    @{modifier}.epi-iconBoxes             { .commonIcons(@icon_size-small, 44, @x); }
+    @{modifier}.epi-iconReferences        { .commonIcons(@icon_size-small, 45, @x); }
+    @{modifier}.epi-iconBubble            { .commonIcons(@icon_size-small, 46, @x); }
+    @{modifier}.epi-iconLocation          { .commonIcons(@icon_size-small, 47, @x); }
+    @{modifier}.epi-iconMail              { .commonIcons(@icon_size-small, 48, @x); }
+    @{modifier}.epi-iconTelephone         { .commonIcons(@icon_size-small, 49, @x); }
+    @{modifier}.epi-iconWebsite           { .commonIcons(@icon_size-small, 50, @x); }
+    @{modifier}.epi-iconLink              { .commonIcons(@icon_size-small, 51, @x); }
+    @{modifier}.epi-iconUpload            { .commonIcons(@icon_size-small, 52, @x); }
+    @{modifier}.epi-iconError             { .commonIcons(@icon_size-small, 53, @x); }
+    @{modifier}.epi-iconWarning           { .commonIcons(@icon_size-small, 54, @x); }
+    @{modifier}.epi-iconInfo              { .commonIcons(@icon_size-small, 55, @x); }
+    @{modifier}.epi-iconPricing           { .commonIcons(@icon_size-small, 56, @x); }
+    @{modifier}.epi-iconCut               { .commonIcons(@icon_size-small, 57, @x); }
+    @{modifier}.epi-iconCopy              { .commonIcons(@icon_size-small, 58, @x); }
+    @{modifier}.epi-iconPaste             { .commonIcons(@icon_size-small, 59, @x); }
+    @{modifier}.epi-iconDetach            { .commonIcons(@icon_size-small, 60, @x); }
+    @{modifier}.epi-iconList              { .commonIcons(@icon_size-small, 61, @x); }
+    @{modifier}.epi-iconThumbnails        { .commonIcons(@icon_size-small, 62, @x); }
+    @{modifier}.epi-iconTiles             { .commonIcons(@icon_size-small, 63, @x); }
+    @{modifier}.epi-iconProject           { .commonIcons(@icon_size-small, 64, @x); }
+    @{modifier}.epi-iconPublished         { .commonIcons(@icon_size-small, 65, @x); }
+    @{modifier}.epi-iconPreviouslyPublished { .commonIcons(@icon_size-small, 66, @x); }
+    @{modifier}.epi-iconTruck             { .commonIcons(@icon_size-small, 67, @x); }
+    @{modifier}.epi-iconCart              { .commonIcons(@icon_size-small, 68, @x); }
+    @{modifier}.epi-iconSort              { .commonIcons(@icon_size-small, 69, @x); }
+    @{modifier}.epi-iconCampaign          { .commonIcons(@icon_size-small, 70, @x); }
+    @{modifier}.epi-iconPublishProject    { .commonIcons(@icon_size-small, 71, @x); }
+    @{modifier}.epi-iconPromotion         { .commonIcons(@icon_size-small, 72, @x); }
+    @{modifier}.epi-iconLayout            { .commonIcons(@icon_size-small, 73, @x); }
+    @{modifier}.epi-iconSortAscending     { .commonIcons(@icon_size-small, 74, @x); }
+    @{modifier}.epi-iconSortDescending    { .commonIcons(@icon_size-small, 75, @x); }
+    @{modifier}.epi-iconEdited            { .commonIcons(@icon_size-small, 76, @x); }
+    @{modifier}.epi-iconBell              { .commonIcons(@icon_size-small, 77, @x); }
+    @{modifier}.epi-iconApproval          { .commonIcons(@icon_size-small, 78, @x); }
+    @{modifier}.epi-iconGlasses           { .commonIcons(@icon_size-small, 79, @x); }
+    @{modifier}.epi-iconTrophy            { .commonIcons(@icon_size-small, 80, @x); }
+    @{modifier}.epi-iconGraph             { .commonIcons(@icon_size-small, 81, @x); }
+}
+.icons_list-medium(@modifier, @x) {
+    @{modifier}.epi-iconTree              { .commonIcons(@icon_size-medium, 1, @x); }
+    @{modifier}.epi-iconFolder            { .commonIcons(@icon_size-medium, 2, @x); }
+    @{modifier}.epi-iconUsers             { .commonIcons(@icon_size-medium, 3, @x); }
+    @{modifier}.epi-iconDevice            { .commonIcons(@icon_size-medium, 4, @x); }
+    @{modifier}.epi-iconGuides            { .commonIcons(@icon_size-medium, 5, @x); }
+    @{modifier}.epi-iconEye               { .commonIcons(@icon_size-medium, 6, @x); }
+    @{modifier}.epi-iconForms             { .commonIcons(@icon_size-medium, 7, @x); }
+    @{modifier}.epi-iconSettings          { .commonIcons(@icon_size-medium, 8, @x); }
+    @{modifier}.epi-iconSettingsMenu      { .commonIcons(@icon_size-medium, 9, @x); }
+    @{modifier}.epi-iconContextMenu       { .commonIcons(@icon_size-medium, 10, @x); }
+    @{modifier}.epi-iconPlus              { .commonIcons(@icon_size-medium, 11, @x); }
+    @{modifier}.epi-iconPreview           { .commonIcons(@icon_size-medium, 12, @x); }
+    @{modifier}.epi-iconFilters           { .commonIcons(@icon_size-medium, 13, @x); }
+    @{modifier}.epi-iconSegments          { .commonIcons(@icon_size-medium, 14, @x); }
+    @{modifier}.epi-iconMenu              { .commonIcons(@icon_size-medium, 15, @x); }
+    @{modifier}.epi-iconStar              { .commonIcons(@icon_size-medium, 16, @x); }
+    @{modifier}.epi-iconLayout            { .commonIcons(@icon_size-medium, 17, @x); }
+    @{modifier}.epi-iconList              { .commonIcons(@icon_size-medium, 18, @x); }
+    @{modifier}.epi-iconPrice             { .commonIcons(@icon_size-medium, 19, @x); }
+    @{modifier}.epi-iconRelations         { .commonIcons(@icon_size-medium, 20, @x); }
+    @{modifier}.epi-iconError             { .commonIcons(@icon_size-medium, 21, @x); }
+    @{modifier}.epi-iconWarning           { .commonIcons(@icon_size-medium, 22, @x); }
+    @{modifier}.epi-iconInfo              { .commonIcons(@icon_size-medium, 23, @x); }
+    @{modifier}.epi-iconSKU--medium       { .commonIcons(@icon_size-medium, 24, @x); }
+    @{modifier}.epi-iconPackage--medium   { .commonIcons(@icon_size-medium, 25, @x); }
+    @{modifier}.epi-iconBundle--medium    { .commonIcons(@icon_size-medium, 26, @x); }
+    @{modifier}.epi-iconHelp              { .commonIcons(@icon_size-medium, 27, @x); }
+    @{modifier}.epi-iconCompare           { .commonIcons(@icon_size-medium, 28, @x); }
+    @{modifier}.epi-iconProject           { .commonIcons(@icon_size-medium, 29, @x); }
+    @{modifier}.epi-iconBell              { .commonIcons(@icon_size-medium, 30, @x); }
+    @{modifier}.epi-iconBubble			  { .commonIcons(@icon_size-medium, 31, @x); }
+}
+
+
+// Usage
+.Sleek {
+    .icons_list-small(~"",0);
+    .icons_list-medium(~".epi-icon--medium",0);
+}

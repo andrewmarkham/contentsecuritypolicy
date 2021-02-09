@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/viewmodel/_ContentViewModelObserver",["dojo/_base/declare","dojo/Stateful","epi/shell/DestroyableByKey"],function(_1,_2,_3){return _1([_2,_3],{dataModel:null,_dataModelHandlesKey:"dataModelHandles",_dataModelSetter:function(_4){this.destroyByKey(this._dataModelHandlesKey);this.dataModel=_4;this.onDataModelChange();this.ownByKey(this._dataModelHandlesKey,this.dataModel.watch("status",this.onDataModelChange.bind(this)),this.dataModel.watch("contentData",this.onDataModelChange.bind(this)));},onDataModelChange:function(_5,_6,_7){}});});

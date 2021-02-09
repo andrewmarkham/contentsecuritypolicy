@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/command/_WidgetCommandConsumerMixin",["dojo/_base/declare","epi/shell/command/_CommandConsumerMixin","epi/shell/command/_WidgetCommandProviderMixin"],function(_1,_2,_3){return _1([_2,_3],{});});

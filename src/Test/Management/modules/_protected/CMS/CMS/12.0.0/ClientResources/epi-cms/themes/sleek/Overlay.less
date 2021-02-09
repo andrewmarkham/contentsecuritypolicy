@@ -1,0 +1,310 @@
+﻿@import "variables.less";
+
+.Sleek {
+
+    .epi-overlay-blockarea {
+
+		// The visual representation of the BlockArea
+        .epi-overlay-item-container {
+            border-color: @epi-blockarea-overlay-border-color;
+
+            .epi-overlay-item-info {
+                background-color: @epi-blockarea-overlay-border-active-color;
+            }
+        }
+        &.epi-overlay-itemHover,
+        &.epi-overlay-itemFocused  {
+            .epi-overlay-item-container {
+                border-color: @epi-blockarea-overlay-border-active-color;
+            }
+        }
+
+        &.dijitReadOnly {
+            .dijitDropDownButton {
+                visibility: hidden;
+            }
+            .epi-overlay-blockarea-actions {
+                visibility: hidden;
+            }
+        }
+
+		// Container for the blocks
+		.epi-overlay-blockarea-container,
+        .epi-overlay-blockarea-actionscontainer  {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			bottom: 0px;
+			right: 0px;
+		}
+
+        .epi-overlay-blockarea-actionscontainer  {
+        }
+
+        // default styling of content in actions container
+        .epi-overlay-blockarea-actionscontainer > div  {
+			background: url('images/action-bg-pattern.png');
+            text-align: center;
+            line-height: 18px;
+            padding: 0;
+        }
+
+        .epi-overlay-blockarea-actionscontainer > div > span {
+            background: #f9f9f9 url('images/drop-stuff-small.png') no-repeat 12px center;
+			color: #666;
+			display: inline-block;
+            line-height: 18px;
+            padding: 4px 14px 4px 54px;
+			text-align: center;
+        }
+
+		// Reset dndItem defaults
+        .dojoDndItemBefore,
+        .dojoDndItemAfter {
+            border: 0;
+        }
+
+        .epi-overlay-block {
+
+            .epi-settingsButton {
+                cursor: pointer;
+                margin: 0;
+                position: absolute;
+                right: 3px;
+                top: 3px;
+                z-index: 500;
+            }
+
+			.epi-personalized {
+                position: absolute;
+                right: 31px;
+                top: 3px;
+                z-index: 500;
+                .dijitIcon {
+                    padding: 1px 0;
+                }
+            }
+
+			// Show border, buttons and badges
+		    &.dojoDndItem.dojoDndItemOver {
+				& > div {
+					border: 2px solid @epi-drag-border-hover;
+				}
+				.epi-overlayControls {
+					display: block;
+				}
+			}
+
+            &.dojoDndItem {
+                .border-box;
+                position: absolute;
+                .transition (padding 0.3s);
+                z-index: 600;
+
+				// By default buttons and notifications should be hidden
+				.epi-overlayControls {
+					display: none;
+				}
+            }
+
+            // Block states
+            &.dojoDndItem > div {
+                .border-box;
+                height: 100%;
+                width: 100%;
+            }
+
+            /*
+            &.dojoDndItemOver > div {}
+            &.dojoDndItemAnchor > div { }
+            &.dojoDndItemSelected > div {  }
+            */
+        }
+
+        .epi-overlay-block.epi-overlay-block-standby {
+            background: #C0C0C0 url('images/loading.gif') center no-repeat !important;
+            min-height: 24px;
+            opacity: 0.75;
+        }
+
+        .epi-overlay-block.epi-overlay-item-missing-renderer {
+            background: rgba(0, 255, 255, 0.5);
+        }
+
+        // The position marker for dnd
+        .dojoDndItem-marker {
+
+            position: absolute;
+
+            .epi-dndDropMarker {
+                background: rgb(79, 87, 97);
+                border: 1px solid rgba(255, 255, 255, 0.96);
+                height: 3px;
+                left: -16px;
+                position: absolute;
+                right: -16px;
+                top: -3px;
+                z-index: 550;
+
+                &:before,
+                &:after {
+                    content: "";
+                    height: 22px;
+                    position: absolute;
+                    top: -9px;
+                    width: 18px;
+                }
+
+                &:before {
+                    background: url("images/dndHandle.png") no-repeat 0 50%;
+                    left: -8px;
+                }
+                &:after {
+                    background: url("images/dndHandle.png") no-repeat -18px 50%;
+                    right: -8px;
+                }
+            }
+        }
+
+        &.dojoDndHorizontal {
+            .dojoDndItem-marker {
+                .epi-dndDropMarker {
+                    bottom: -12px;
+                    height: auto;
+                    left: -3px;
+                    right: 0px;
+                    top: -12px;
+                    width: 3px;
+
+                    &:before,
+                    &:after {
+                        content: "";
+                        height: 18px;
+                        left: -9px;
+                        width: 22px;
+                    }
+
+                    &:before {
+                        background: url("images/dndHandle-vertical.png") no-repeat 0 0;
+                        top: -6px;
+                    }
+
+                    &:after {
+                        background: url("images/dndHandle-vertical.png") no-repeat 0 -18px;
+                        bottom: -6px;
+                        top: auto;
+                    }
+                }
+            }
+        }
+    }
+
+    // Block states during dnd
+    &.dojoDndCopy .epi-overlay-blockarea .epi-overlay-block.dojoDndItem,
+    &.dojoDndMove .epi-overlay-blockarea .epi-overlay-block.dojoDndItem {
+        padding: 1px 0;
+        .transition (padding 0.3s);
+
+		.epi-overlayControls {
+            display: none;
+        }
+
+        & > div,
+        &.dojoDndItemOver > div {
+			border-width: 0px;
+            border-top: 1px solid #79dcff;
+			border-bottom: 1px solid #79dcff;
+        }
+
+        &.dojoDndItemBefore {
+            border: 0;
+            padding-top: 5px;
+            .transition (padding-top 0.3s);
+        }
+        &.dojoDndItemAfter {
+            border: 0;
+            padding-bottom: 5px;
+            .transition (padding 0.3s);
+        }
+    }
+
+	.dojoDndSourceCopied,
+	.dojoDndSourceMoved {
+		.dojoDndItem.dojoDndItemAnchor > div {
+            background-color: rgba(255,255,255, 0.6);
+        }
+	}
+
+    &.dojoDndCopy .epi-overlay-blockarea.dojoDndHorizontal .epi-overlay-block.dojoDndItem,
+    &.dojoDndMove .epi-overlay-blockarea.dojoDndHorizontal .epi-overlay-block.dojoDndItem {
+        padding: 0 2px;
+
+		& > div,
+		&.dojoDndItemOver > div {
+			border-width: 0px;
+            border-left: 1px solid #79dcff;
+			border-right: 1px solid #79dcff;
+        }
+
+        &.dojoDndItemBefore {
+            padding-left: 3px;
+        }
+        &.dojoDndItemAfter {
+            padding-right: 4px;
+        }
+    }
+}
+
+// OverlayItemInfo section
+.Sleek {
+
+    .epi-overlay-content {
+        display: block;
+        height: 100%;
+        width: 100%;
+
+        .epi-overlay-content-highlight-area {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -13px 0 0 -24px;
+            height: 26px;
+            width: 48px;
+        }
+
+        .epi-overlayControls {
+            background-color: orange;
+        }
+
+        .epi-overlay-content-hint {
+            .border-box;
+            position: absolute;
+            right: 27px;
+            top: 2px;
+            width: 28px;
+            height: 26px;
+            text-align: center;
+
+            .epi-iconHidden {
+                margin-top: 5px;
+            }
+        }
+    }
+
+    // Overlay indicating unpublished block
+    .epi-overlay-content-invisible {
+        background: url("images/stripePattern.png") top left repeat;
+
+        .epi-overlay-content-highlight-area {
+            background: url("images/hiddenBlockBadge.png");
+        }
+    }
+
+    // Overlays with centered info icon
+    .epi-overlay-content-info { }
+
+    .epi-overlay-content-tooltip {
+        max-width: 250px;
+        word-wrap: break-word;
+    }
+}

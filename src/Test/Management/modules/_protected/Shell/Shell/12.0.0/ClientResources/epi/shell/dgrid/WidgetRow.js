@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/dgrid/WidgetRow",["dojo/_base/declare","dijit/registry"],function(_1,_2){return _1(null,{insertRow:function(){var _3=this.inherited(arguments),_4=_2.byNode(_3);_4.startup();return _3;},removeRow:function(_5,_6){this.inherited(arguments);var _7=_5.element||_5,_8=_2.byNode(_7);if(_8){_8.destroyRecursive(_6);}}});});

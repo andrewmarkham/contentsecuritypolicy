@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/layout/CreateContentGroupContainer",["dojo/_base/declare","dojo/dom-construct","epi/shell/layout/SimpleContainer"],function(_1,_2,_3){return _1([_3],{templateString:"<div class='epi-containerLayout clearfix'>                            <div class='epi-formsHeaderContainer'>                                <h2>${title}</h2>                            </div>                            <ul data-dojo-attach-point='containerNode'></ul>                        </div>"});});

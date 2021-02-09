@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/activity/viewmodels/ActivityCommentViewModel",["dojo/_base/declare","./_ActivityViewModel","epi/i18n!epi/cms/nls/episerver.shared.action"],function(_1,_2,_3){return _1([_2],{sendLabel:_3.save,_save:function(_4){var _5=this.activityService.saveComment(this.id,_4);_5.then(this.set.bind(this));return _5;}});});

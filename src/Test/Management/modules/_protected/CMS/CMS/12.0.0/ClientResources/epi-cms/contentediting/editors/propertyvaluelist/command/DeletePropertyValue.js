@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/editors/propertyvaluelist/command/DeletePropertyValue",["dojo/_base/declare","epi/shell/command/_Command","epi/i18n!epi/nls/episerver.shared.action"],function(_1,_2,_3){return _1([_2],{label:_3.deletelabel,iconClass:"epi-iconTrash",category:"itemContext",canExecute:true,isAvailable:true,_execute:function(){this.model.remove();}});});

@@ -1,0 +1,21 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ShellSettings.Master.cs" Inherits="EPiServer.UI.MasterPages.ShellSettings" %>
+
+<asp:Content ContentPlaceHolderID="HeaderContent" runat="server">
+
+    <script type="text/javascript" src="<%= EPiServer.UriSupport.ResolveUrlFromUtilBySettings("javascript/episerverscriptmanager.js") %>"></script>
+    <script type="text/javascript" src="<%= EPiServer.UriSupport.ResolveUrlFromUIBySettings("javascript/system.js") %>"></script>
+    <script type="text/javascript" src="<%= EPiServer.UriSupport.ResolveUrlFromUIBySettings("javascript/dialog.js") %>"></script>
+    <script type="text/javascript" src="<%= EPiServer.UriSupport.ResolveUrlFromUIBySettings("javascript/system.aspx") %>"></script>
+
+    <asp:ContentPlaceHolder ID="HeaderContent" runat="server" />
+</asp:Content>
+
+<asp:Content ContentPlaceHolderID="MainContent" runat="server">
+    <form runat="server">
+        <div class="epi-contentContainer">
+            <div class="epi-padding epi-overflowHidden">
+                <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+            </div>
+        </div>
+    </form>
+</asp:Content>

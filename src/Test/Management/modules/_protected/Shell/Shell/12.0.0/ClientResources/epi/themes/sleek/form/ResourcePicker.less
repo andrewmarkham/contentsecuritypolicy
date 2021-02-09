@@ -1,0 +1,118 @@
+﻿@import "../variables";
+
+
+.Sleek .epi-resourceInputContainer {
+    .epi-clearButton
+    {
+        background: #fff url("images/icons/clearButtonIcon.png") center center no-repeat;
+        display: block;
+        height: 17px;
+        position: absolute;
+        right: 2px;
+        top: 7px;
+        width: 21px;
+        z-index: 1;
+    }
+    .epi-clearButtonSlimInput
+    {
+        .epi-clearButton;
+        top: 5px;
+        cursor: pointer;
+    }
+
+    .epi-resourceName
+    {
+        background: @surface400;
+        border-radius: 22px;
+        display: inline-block;
+        line-height: 1.4;
+        padding: 0px 7px 1px 9px;
+        position: relative;
+        vertical-align: middle;
+
+        span:last-child {
+            color: #717d81;
+            .serif;
+        }
+    }
+    .epi-resourceName.dojoxEllipsis {
+        max-width: 76% !important;
+    }
+    .dijitError {
+        border-color: @error-border-color;
+    }
+
+    .dijitFocused {
+        .epi-focused();
+    }
+
+    &.epi-noValue {
+        .epi-clearButton,
+        .epi-resourceName { visibility: hidden; }
+    }
+}
+
+
+
+.Sleek .epi-categorySelectorDialog{
+    padding-top: 5px;
+
+    .dijitTreeContent {
+        color: #e5e5e5;
+
+        .dijitTreeLabel {
+            color: @text-color;
+        }
+    }
+}
+
+.Sleek .epi-categorySelector{
+    .epi-addButton .dijitButtonText { padding: 0px; }
+    .epi-addIcon  { margin: 0 3px; }
+    .epi-resourceName {
+        width:auto;
+        padding: 0;
+        float: left;
+    }
+    .epi-resourceName div.dojoxEllipsis {
+        padding: 2px 0 2px 12px;
+        color: @primary900;
+        max-width: 85px;
+        float: left;
+        display: inline-block;
+        width: auto;
+    }
+    .epi-removeButton {
+        background: url("images/icons/clearButtonIcon.png") 0 4px no-repeat;
+        display: inline-block;
+        height: 20px;
+        width: 16px;
+        padding: 0 8px 0 0;
+    }
+    .epi-categoryButton {
+        display:inline-block;
+        max-width: 145px;
+    }
+    .epi-categoriesGroup {
+        min-height: 26px;
+        padding: 2px;
+        white-space: normal;
+
+        &__message {
+          padding: 4px;
+        }
+    }
+    .dijitTextBox .dijitInputContainer {
+        padding: 2px 4px 2px 0px;
+    }
+
+    &.dijitError .dijitTextBox.epi-categoriesGroup {
+        border-color: @error-border-color;
+    }
+}
+.Sleek .epi-categoryTreeNode {
+    .epi-checkboxNode.dijitTreeExpando{
+        background: none;
+        margin: 3px 5px 0;
+    }
+}

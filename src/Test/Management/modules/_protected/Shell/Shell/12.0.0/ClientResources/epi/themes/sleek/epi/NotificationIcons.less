@@ -1,0 +1,34 @@
+﻿// Set up
+@icon_size-small: 16;
+@icon_size-medium: 24;
+@icon_size-large: 32;
+
+.notificationIcons(@iconSize, @y: 1, @x: 0) {
+    @posY: (@iconSize * @y);
+    @posX: (@iconSize * @x);
+    
+    background: url('images/icons/notificationIcons@{iconSize}x@{iconSize}.png') -@posX + 0px -@posY + 0px no-repeat;
+    height: @iconSize + 0px;
+    width: @iconSize + 0px;
+}
+
+.icons_list-small(@modifier, @x) {
+    @{modifier}.epi-iconSuccess             { .notificationIcons(@icon_size-small, 1, @x); }
+    @{modifier}.epi-iconDanger              { .notificationIcons(@icon_size-small, 2, @x); }
+    @{modifier}.epi-iconWarning             { .notificationIcons(@icon_size-small, 3, @x); }
+    @{modifier}.epi-iconInfo                { .notificationIcons(@icon_size-small, 4, @x); }
+}
+.icons_list-large(@modifier, @x) {
+    @{modifier}.epi-iconSuccess             { .notificationIcons(@icon_size-large, 1, @x); }
+    @{modifier}.epi-iconDanger              { .notificationIcons(@icon_size-large, 2, @x); }
+    @{modifier}.epi-iconWarning             { .notificationIcons(@icon_size-large, 3, @x); }
+    @{modifier}.epi-iconInfo                { .notificationIcons(@icon_size-large, 4, @x); }
+}
+
+
+
+// Usage
+.Sleek {
+    .icons_list-small(~".epi-icon--colored", 0);
+    .icons_list-large(~".epi-icon--colored.epi-icon--large", 0);
+}

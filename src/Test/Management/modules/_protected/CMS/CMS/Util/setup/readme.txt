@@ -1,0 +1,1 @@
+Directory is used to store EPiServer content files at initial setup

@@ -1,0 +1,75 @@
+@import "variables.less";
+
+.Sleek {
+
+    .epi-dialog-contentReferences {
+        width: 700px;
+    }
+
+    .epi-contentReferences {
+
+        .dgrid-row {
+            border-bottom: 1px solid @border-inner--1;
+
+            &.dgrid-row-even {
+                background: none;
+            }
+         }
+
+        .epi-captionPanel {
+            border-bottom: 1px solid @epi-dialog-inner-border-color;
+            margin-top: 10px;
+            overflow: hidden;
+            padding: 0 0 4px 4px;
+        }
+
+        .dgrid-no-data {
+            text-align: center;
+            padding: 6px 0;
+        }
+
+        .dgrid {
+            height: auto;
+            clear: both;
+        }
+
+        .dgrid-cell {
+            vertical-align: middle;
+        }
+
+        .dgrid-scroller,
+        .epi-plain-grid.dgrid .dgrid-scroller,
+        .epi-plain-grid.epi-plain-grid--no-header.dgrid .dgrid-scroller {
+            margin-top: 0;
+            max-height: 30em;
+            position: relative;
+        }
+
+        .dgrid-column-treePath {
+            color: @text-color-secondary;
+            font-size: 0.85em;
+        }
+
+        .dgrid-column-view {
+            text-align: right;
+        }
+
+        .dgrid-column-view a {
+            text-decoration: underline;
+            visibility: hidden;
+        }
+
+        .dgrid-selected .dgrid-column-view a,
+        .dgrid-row:hover .dgrid-column-view a {
+            visibility: visible;
+        }
+
+        .dijitIcon {
+            margin: 0 5px 0 0;
+        }
+
+        .epi-notificationBarText {
+            padding: 6px 0;
+        }
+    }
+}

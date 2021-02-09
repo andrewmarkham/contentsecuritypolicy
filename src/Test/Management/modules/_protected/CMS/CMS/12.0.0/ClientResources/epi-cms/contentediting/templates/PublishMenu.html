@@ -1,0 +1,32 @@
+﻿<div class="epi-invertedTooltip epi-publishActionMenu" role="menu" tabIndex="${tabIndex}" data-dojo-attach-event="onkeypress:_onKeyPress" >
+    <div class="epi-tooltipDialogTop" data-dojo-attach-point="topInfoSection">
+        <ul>
+            <li data-dojo-attach-point="lastChangeStatusNode" class="epi-lastchangeStatus"></li>
+            <li data-dojo-attach-point="mainButtonSection">
+                <button data-dojo-type="dijit/form/Button"
+                        data-dojo-attach-point="mainButton"
+                        data-dojo-attach-event="onClick: _onMainButtonClick"
+                        class="epi-button--full-width"></button>
+            </li>
+        </ul>
+    </div>
+    <div class="epi-tooltipDialogInfo"data-dojo-attach-point="publishInfoSection">
+        <ul>
+            <li data-dojo-attach-point="lastPublishedTitleNode"></li>
+            <li>
+                <span data-dojo-attach-point="lastPublishedTextNode"></span>
+            </li>
+            <li>
+                <a href="#" title="${res.lastpublishedviewlinktooltip}" data-dojo-attach-point="lastPublishedViewLinkNode">${res.view}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="epi-tooltipDialogInfo" data-dojo-attach-point="additionalInfoSection">
+        <ul>
+            <li data-dojo-attach-point="additionalInfoNode"></li>
+        </ul>
+    </div>
+    <table class="dijitReset epi-tooltipDialogMenu epi-menuInverted" data-dojo-attach-point="bottomInfoSection" cellspacing="0">
+	    <tbody data-dojo-attach-point="containerNode" ></tbody>
+    </table>
+</div>

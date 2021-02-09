@@ -1,0 +1,14 @@
+﻿<div class="epi-lfw-dialog epi-lfw-dialog--dark dijitDialog" role="dialog" aria-labelledby="${id}_title">
+    <div data-dojo-attach-point="titleBar" class="dijitDialogTitleBar">
+        <span data-dojo-attach-point="titleNode" class="dijitDialogTitle" id="${id}_title"></span>
+         <span data-dojo-attach-point="closeButtonNode" class="dijitDialogCloseIcon" data-dojo-attach-event="ondijitclick: onButtonClose" title="${buttonCloseText}" role="button" tabIndex="0">
+            <span data-dojo-attach-point="closeText" class="closeText" title="${buttonCloseText}">x</span>
+        </span>
+    </div>
+    <div class="dijitDialogPaneContent">
+        <div data-dojo-attach-point="containerNode" class="dijitDialogPaneContentArea" data-dojo-attach-event="onclick:_onContainerNodeClick"></div>
+        <div data-dojo-attach-point="buttonContainerNode" class="dijitDialogPaneActionBar clearfix">
+            <button data-dojo-attach-point="doneButtonNode" data-dojo-type="dijit/form/Button" type="button">${buttonDoneText}</button>
+        </div>
+    </div>
+</div>

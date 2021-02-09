@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/widget/viewmodel/LinkEditorViewModel",["dojo/_base/array","dojo/_base/declare","dojo/_base/Deferred","dojo/_base/lang","dojo/io-query","dojo/topic","dojo/Stateful","dojo/when","epi/dependency"],function(_1,_2,_3,_4,_5,_6,_7,_8,_9){return _2([_7],{_isEmptyObject:function(_a){for(var i in _a){if(_a[i]&&_a[i]!==""){return false;}}return true;}});});

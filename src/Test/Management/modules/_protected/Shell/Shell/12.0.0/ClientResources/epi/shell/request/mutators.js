@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/request/mutators",["dojo/when"],function(_1){var _2=[];var _3=function(){return _2.concat();};_3.add=function(_4){_2.push(_4);};_3.remove=function(_5){var _6=_2.indexOf(_5);if(_6!==-1){return _2.splice(_6,1)[0];}return null;};_3.execute=function(_7,_8){var _9=_1(_8);_2.forEach(function(_a){var _b=_a[_7];_9=_b?_9.then(_b.bind(_a)):_9;});return _9;};return _3;});

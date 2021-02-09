@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/form/SuggestionSelectionEditor",["dojo/_base/declare","epi/shell/store/JsonRest","dijit/form/ComboBox"],function(_1,_2,_3){return _1([_3],{postMixInProperties:function(){var _4=new _2({target:this.storeurl});this.set("store",_4);this.inherited(arguments);}});});

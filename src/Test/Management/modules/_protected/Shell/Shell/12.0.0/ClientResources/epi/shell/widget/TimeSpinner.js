@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/TimeSpinner",["dojo/_base/declare","epi/datetime","dojox/form/TimeSpinner"],function(_1,_2,_3){return _1([_3],{smallDelta:60,largeDelta:360,_arrowPressed:function(_4,_5,_6){this.inherited(arguments);this.onChange(this.get("value"));}});});

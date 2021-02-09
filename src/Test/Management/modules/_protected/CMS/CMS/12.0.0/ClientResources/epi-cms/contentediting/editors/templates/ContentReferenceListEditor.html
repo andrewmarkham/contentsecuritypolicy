@@ -1,0 +1,19 @@
+﻿<div class="dijitInline" tabindex="-1" role="presentation">
+    <div class="epi-content-area-header-block">
+        <div data-dojo-type="epi-cms/contentediting/AllowedTypesList"
+             data-dojo-props="allowedTypes: this.allowedTypes, restrictedTypes: this.restrictedTypes"
+             data-dojo-attach-point="allowedTypesHeader"></div>
+    </div>
+    <div class="epi-content-area-editor--wide epi-content-area-editor"
+         data-dojo-attach-point="dndAreaWrapper">
+        <div data-dojo-type="epi-cms/contentediting/ContentReferenceList"
+             data-dojo-props="allowedTypes: this.allowedTypes,
+                          restrictedTypes: this.restrictedTypes,
+                          commandSource: this.model,
+                          store: this.model.valueStore,
+                          readOnly: this.readOnly,
+                          query: this.model.query"
+             data-dojo-attach-point="list"></div>
+        <div data-dojo-attach-point="dropContainer" class="epi-content-area-actionscontainer"></div>
+    </div>
+</div>

@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/request/xhr",["dojo/_base/xhr","dojo/request/util","./Extender","./mutators"],function(_1,_2,_3,_4){var _5=new _3(_1,_4);var _6=function(_7,_8){return _5.xhr.apply(_5,arguments);};_2.addCommonMethods(_6);return _6;});

@@ -1,0 +1,329 @@
+@import "variables.less";
+
+.dnd() {
+    box-sizing: border-box;
+    display: table;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.dnd-content() {
+    background: url("images/drop-stuff-small.png") no-repeat 50% 50%;
+    display: table-cell;
+    font-style: italic;
+    padding-top: 54px;
+    text-align: center;
+    vertical-align: middle;
+    color: @text-color-secondary;
+}
+
+.Sleek {
+    .epi-project-notification {
+        &__content {
+            margin-left: 5px;
+        }
+    }
+
+    .epi-project-item-list {
+
+        .epi-statusIndicatorIcon {
+            margin: 1px 3px 0 0;  // Fixing margins set in Statuses.less
+        }
+
+        .dijitButton {
+            .dijitButtonNode {
+                padding: 1px 4px;
+            }
+        }
+
+        &__container {
+            position: relative;
+
+            .dgrid {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        &__dnd-area {
+            .dnd;
+            background: rgba(255, 255, 255, 0.8);
+            display: none;
+
+            .epi-project-item-list__dnd-area-content {
+                .dnd-content;
+            }
+        }
+
+        &--activities-visible {
+
+            .epi-card-list {
+                display: inline-block;
+                width: 60%;
+            }
+
+            .epi-activity-section {
+                display: inline-block;
+                height: 100%;
+                width: 40%;
+            }
+        }
+
+        .epi-project-item-list__dnd-area.projectVisible {
+            display: table;
+        }
+    }
+
+    // Project gadget specific styles
+    .epi-project-gadget__placeholder {
+        background-color: @epi-gadget-background;
+        box-sizing: border-box;
+        display: table;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        top: 0;
+        z-index: 100;
+
+        .epi-project-gadget__placeholder-content {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            color: @text-color-secondary;
+
+            .epi-project-gadget__placeholder-info {
+                font-style: italic;
+                padding-top: 20px;
+            }
+
+            /* TODO: Remove when the new button style has been merged */
+            .dijitButton {
+                .dijitButtonNode {
+                    padding: 2px 12px;
+                }
+            }
+        }
+    }
+
+    // dijitTabContainer specific styles
+    .dijitTabContainer {
+        .epi-project-item-list {
+            &__toolbar {
+                //When placed in a dijitTabContainer, the toolbar needs a divider because of the gradient
+                border-top: 1px solid @pane-border-color;
+            }
+        }
+    }
+
+    .epi-project-component {
+        .epi-project-selector .dijitButtonText {
+            width: 100px;
+            overflow: hidden;
+            text-align: left;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dgrid-no-data {
+            .dnd;
+            display: table;
+            margin: 2px 0;
+            padding: 0;
+
+            &__content {
+                .dnd-content;
+            }
+        }
+
+        // Internet Explorer fix (first row of list loses a pixel and descenders of texts get cropped)
+        .dgrid-row .dojoxEllipsis {
+            height: 16px;
+        }
+    }
+
+    &.dojoDndMove,
+    &.dojoDndCopy {
+
+        .epi-project-item-list__dnd-area {
+            display: table;
+        }
+        .epi-project-gadget__placeholder,
+        .epi-project-item-list .dgrid-no-data {
+            display: none;
+        }
+    }
+
+    .epi-chromeless.epi-project-selector-list__default-option {
+        display: block;
+        padding: 2px 7px;
+        margin: 0;
+
+        &.dijitFocused {
+            background: @epi-selected-item;
+        }
+
+        // Remove the focus outline
+        .dijitButtonContents:focus {
+            outline: none;
+        }
+
+        .epi-radio-icon--secondary {
+            // Specific style to have the default button align with the grid
+            margin: 3px 0 0;
+        }
+
+        .dijitButtonNode {
+            display: block;
+            text-align: left;
+        }
+    }
+
+    .epi-project-mode-toolbar {
+        background: @pane-background-color;
+        border-top: 1px solid @border-color;
+        padding: 6px 8px;
+
+        &__icon-node {
+            border-radius: @button-border-radius;
+            height: 16px;
+            margin-right: 6px;
+            padding: 4px;
+            transition: background-color 0.5s ease-out, opacity 0.5s ease-out, width 0.5s ease-out;
+            width: 16px;
+
+            .dijitIcon {
+                vertical-align: top;
+            }
+        }
+
+        &__selector {
+            .dijitButtonText {
+                padding-right: 0px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 550px;
+            }
+        }
+
+        &__contextmenu {
+           margin-left: 8px;
+        }
+
+        .dijitDropDownButton {
+            .dijitButtonText {
+                transition: color 1.3s .32s ease-out;
+            }
+            margin: 0;
+        }
+        .dijitButton {
+            .dijitButtonText {
+                margin-left: 10px;
+                font-weight: normal;
+            }
+        }
+        .dijitButton, .dijitDropDownButton {
+            .dijitButtonNode {
+                padding: 0;
+            }
+            .dijitButtonText {
+                text-decoration: underline;
+            }
+        }
+        &--flash {
+            -webkit-animation: bar-flash .3s 4 alternate ease-out;
+            animation: bar-flash .3s 4 alternate ease-out;
+
+            @-webkit-keyframes bar-flash {
+              0%   { background: @grey5; }
+              100% { background: @blue3; }
+            }
+            @keyframes bar-flash {
+              0%   { background: @grey5; }
+              100% { background: @blue3; }
+            }
+
+            .dijitDropDownButton  .dijitButtonText {
+                color: @blue3;
+                transition: color .2s 1s ease-out;
+            }
+        }
+        &--project-selected {
+            .epi-project-mode-toolbar__icon-node {
+                background: @epi-selected-item;
+            }
+        }
+
+        &.epi-project-mode-toolbar--project-deleted {
+            background: @red4;
+            .epi-project-mode-toolbar__warning-label {
+                display: inline-block;
+            }
+            .epi-project-mode-toolbar__icon-node {
+                background: #686A70;
+            }
+        }
+
+        .epi-project-mode-toolbar__warning-label {
+            display: none;
+        }
+    }
+
+    .epi-project-mode-project-deleted-warning {
+        padding: 8px;
+        background: @danger;
+        color: @text-color-white;
+        margin-bottom: 16px;
+    }
+
+    .epi-project-overview {
+        &__toolbar {
+            min-height: 32px;
+            padding: 0 200px 2px 8px;
+            position: relative;
+
+            h2 {
+                margin: 0;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                width: 100%;
+            }
+
+            &__trailing {
+                position: absolute;
+                top: 0;
+                right: 5px;
+            }
+        }
+
+        .epi-project-item-list {
+            &__toolbar {
+                border-top: 1px solid @pane-border-color;
+            }
+
+            &__item-count-message-node {
+                float: left;
+                margin-top: 6px;
+            }
+
+            .dgrid-content {
+                border-right: 1px solid @pane-border-color;
+                background-color: @epi-white;
+                box-sizing: border-box;
+                padding: 12px;
+            }
+        }
+    }
+
+    .epi-project-comment-feed.epi-activity-feed {
+        .dgrid {
+            height: calc(~"100% - 43px");
+        }
+    }
+}

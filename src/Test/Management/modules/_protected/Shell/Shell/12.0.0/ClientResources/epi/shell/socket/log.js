@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/socket/log",["dojo/_base/lang","./hub","../logger"],function(_1,_2,_3){var _4=null;var _5={enabled:false,enable:function(){if(!_4){_4=[];Object.keys(_2.statusTopic).forEach(function(_6){var _7=_2.statusTopic[_6];_4.push(_2.subscribe(_7,_1.hitch(_3,"info",_7)));});this.enabled=true;}return this;},disable:function(){if(_4){_4.forEach(function(_8){_8.remove();});_4=null;}this.enabled=false;return this;}};_5.enable();return _5;});

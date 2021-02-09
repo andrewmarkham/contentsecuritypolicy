@@ -1,0 +1,17 @@
+﻿<div class="dijitTreeNode epi-tree-mngr--group" role="presentation" data-dojo-attach-point="rowNode">
+    <div class="dijitTreeRow dijitInline epi-tree-mngr--group-header" role="presentation">
+        <div data-dojo-attach-point="indentNode" class="dijitInline"></div>
+        <img src="${_blankGif}" alt="" data-dojo-attach-point="expandoNode" class="dijitTreeExpando" role="presentation"/>
+        <span data-dojo-attach-point="expandoNodeText" class="dijitExpandoText" role="presentation"></span>
+        <span data-dojo-attach-point="contentNode" class="dijitTreeContent" role="presentation">
+            <span data-dojo-attach-point="extraIconsContainer" class="epi-extraIconsContainer" role="presentation">
+                <span data-dojo-attach-point="iconNodeMenu" class="epi-extraIcon epi-pt-contextMenu" role="presentation">&nbsp;</span>
+            </span>
+            <img src="${_blankGif}" alt="" data-dojo-attach-point="iconNode" class="dijitIcon dijitTreeIcon epi-iconUsers" role="presentation"/>
+            <span data-dojo-attach-point="labelNode" class="dijitTreeLabel" role="treeitem" tabindex="-1" aria-selected="false"></span>
+        </span>
+    </div>
+    <hr />
+    <span data-dojo-attach-point="dropMoreMessageNode" class="epi-tip epi-tip--block">${resources.groupdropmoremessage}</span>
+    <div data-dojo-attach-point="containerNode" class="dijitTreeContainer" role="presentation" style="display: none;"></div>
+</div>

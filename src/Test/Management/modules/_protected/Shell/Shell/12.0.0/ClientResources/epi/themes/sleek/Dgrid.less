@@ -1,0 +1,598 @@
+@import "variables";
+
+.Sleek {
+
+  // DEFAULT GRID
+  //=================================================================================================================
+    @cell-padding: 5px;
+
+    .dojoxExpandoRight .dojoxGridHeader .dojoxGridCell {
+        border-top: none;
+    }
+
+    .dgrid {
+        @header-height: 0;
+
+        border: 0px solid @epi-grid-header-border;
+
+        .epi-timestamp {
+            .epi-timestampReset;
+        }
+
+        .epi-iconContextMenu {
+            visibility: hidden;
+        }
+
+        .dgrid-selected .epi-visibleLink {
+            color: @text-color;
+        }
+
+        .dgrid-focus,
+        .dgrid-row:hover {
+            .epi-iconContextMenu {
+                cursor: pointer;
+                visibility: visible;
+            }
+        }
+
+        .epi-mediaContent {
+            padding-top: 0;
+            padding-bottom: 0;
+            line-height: 32px;
+
+            .epi-thumbnail {
+                width: 32px;
+                height: 32px;
+                float: left;
+                margin-right: 3px;
+            }
+        }
+
+        &.epi-grid--with-border { border-top-width: 0px; }
+
+        &.epi-grid--no-alternating-rows {
+            .dgrid-row.dgrid-row-even,
+            .dgrid-row.dgrid-selected.ui-state-active {
+                background: @epi-grid-row-odd;
+
+                &:focus {
+                    .epi-selectedItemBackground;
+                }
+            }
+        }
+
+        &.epi-grid-height--300 {
+            .grid-set-height-mixin(300);
+        }
+        &.epi-grid-height--700 {
+            .grid-set-height-mixin(700);
+        }
+
+        &.epi-grid-max-height--300 {
+            .grid-set-max-height-mixin(300);
+        }
+        &.epi-grid-max-height--700 {
+            .grid-set-max-height-mixin(700);
+        }
+
+        &--centered-no-data-message .dgrid-no-data {
+            box-sizing: border-box;
+            left: 0;
+            padding: 0 24px;
+            position: absolute;
+            top: 45%;
+            width: 100%;
+        }
+
+        //Cherry picked a fix from dgrid: https://github.com/SitePen/dgrid/commit/e96de77d95ae79122126e6013f4b6d8036e2f195#diff-64391878c84526bdeee0f728e8060429
+        // And added the dojoDnd source to handle when target is disabled
+        .dgrid-header .dojoDndSource .dgrid-cell,
+        .dgrid-header .dojoDndTarget .dgrid-cell {
+            display: table-cell; /* override any spurious dojoDndItem settings elsewhere */
+        }
+    }
+    .dgrid-list .dgrid-row {
+        padding: @cell-padding;
+    }
+
+    .dgrid-cell-padding:first-child {
+        padding: 3px 3px 3px 3px + @cell-padding;
+    }
+
+    .epi-dgrid-multiselect {
+        .epi-dgrid-multiselect--multiple-selection {
+            .dgrid-row.ui-state-active {
+                .epi-iconContextMenu {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .dgrid-header-hidden ~ .dgrid-scroller {
+        overflow: auto;
+
+        .dgrid-content {
+            width: auto !important;
+        }
+    }
+
+    .dgrid-header-hidden,
+    .dgrid-header-hidden ~ .dgrid-header-scroll {
+        display: none;
+    }
+
+    .dgrid-header {
+        background: #e4e4e4;
+        padding-right: 9px;
+        right: 0;
+    }
+
+    .dgrid-header table{
+        border-collapse: separate;
+    }
+
+    .dgrid-header .dgrid-cell,
+    .ui-widget-header.dgrid-header-scroll {
+        border: 1px solid @epi-grid-header-border;
+        border-right: none;
+        box-sizing: border-box;
+        background: @epi-gadget-background;
+        font-weight: normal;
+    }
+
+    .dgrid-header .dgrid-cell:first-child,
+    .ui-widget-header.dgrid-header-scroll {
+        border-left: none;
+    }
+
+    .dgrid-cell {
+        border: none;
+    }
+
+    .ui-widget-content {
+        background: #fff;
+        border: none;
+        width: auto !important;
+    }
+    .epi-pinnablePane .ui-widget-content {
+        background: @epi-gadget-background;
+    }
+
+    .ui-widget-header {
+        border: none;
+        font-weight: normal;
+        height: 25px;
+    }
+
+    .ui-state-default,
+    .ui-widget-content .ui-state-default {
+        background: #fafafa;
+        background-image: none;
+        border: none;
+    }
+
+    .dgrid-row.dgrid-selected.ui-state-active,
+    .dgrid-row.dgrid-row-published.ui-state-active {
+        border: none;
+        .epi-selectedItemInactiveBackground;
+    }
+
+    .epi-focused .ui-state-active,
+    .epi-focused .ui-widget-content .ui-state-active,
+    .epi-focused .dgrid-row.dgrid-selected.ui-state-active,
+    .epi-focused .dgrid-row.dgrid-row-published.ui-state-active {
+        border: none;
+        .epi-selectedItemBackground;
+    }
+
+    .dgrid-row {
+        background: #fafafa;
+        background-image: none;
+        padding: @cell-padding 0;
+        cursor: pointer;
+
+        .dijitPlaceHolder {
+            cursor: text;
+        }
+
+        .epi-objectIcon {
+            float: left;
+            margin-right: 3px;
+        }
+
+        .dojoxEllipsis {
+            width: auto;
+        }
+        // to keep the label inline
+    }
+
+    .epi-componentContainer .dgrid-row {
+    }
+
+    .dgrid-row.dgrid-row-even {
+        background: @epi-grid-row-even;
+    }
+
+    .dgrid-row.dgrid-row-odd {
+        background: @epi-grid-row-odd;
+    }
+
+    .dgrid-no-data {
+            color: @text-color-secondary;
+            font-style: italic;
+        padding: 5px;
+            text-align: center;
+    }
+
+
+
+    // CHROMELESS GRID
+    //===============================================================================================================================
+    .dgrid.epi-chromeless {
+        @header-height: 35px;
+
+        border: none;
+
+        &.dgrid {
+            height: auto;
+        }
+        &.dgrid .dgrid-scroller {
+            position: relative;
+            margin-top: @header-height;
+            overflow: auto;
+        }
+
+        .ui-widget-header {
+            height: auto;
+
+            &.dgrid-header-scroll {
+                height: @header-height - 1;
+            }
+        }
+
+        .dgrid-header,
+        .ui-widget-header.dgrid-header-scroll {
+            background: transparent none;
+            border: none;
+        }
+
+        .dgrid-header {
+            th {
+                background: transparent;
+                background-image: none;
+                border: none;
+                color: @text-color;
+                padding: 12px 6px;
+                .serif();
+
+                &.dgrid-sort-down,
+                &.dgrid-sort-up {
+                    color: @text-color;
+                    font-weight: normal;
+                    .border-radius(3px);
+                }
+
+                &:first-child { padding-left: 7px; }
+                &:last-child { padding-right: 7px; }
+            }
+            right: 0;
+        }
+
+        .dgrid-row { padding: 0; }
+        .dgrid-row.dgrid-row-even {
+            background: transparent;
+        }
+
+        .dgrid-row.dgrid-row-odd {
+            background: transparent;
+        }
+        .dgrid-row.dgrid-row-odd {
+            &,
+            &.dgrid-selected.ui-state-active {
+                border: none;
+            }
+        }
+        .dgrid-selected.ui-state-active {
+            border: none;
+            .epi-selectedItemBackground;
+        }
+
+        .dgrid-cell {
+            @cell-padding--horizontal: 8px;
+            @cell-padding--vertical: 8px;
+
+                padding: @cell-padding--vertical @cell-padding--horizontal;
+
+                &.dgrid-column-checkbox {
+                    padding-left: 9px;
+                }
+                &.epi-columnIcon16x16 {
+                    padding-left: 0;
+                    padding-right: 0;
+                    width: 16px;
+                }
+
+                &.epi-columnPadding--top {
+                    box-sizing: content-box;
+                    padding-top: @cell-padding--vertical;
+                }
+                &.epi-columnPadding--right {
+                    box-sizing: content-box;
+                    padding-right: @cell-padding--horizontal;
+                }
+                &.epi-columnPadding--bottom {
+                    box-sizing: content-box;
+                    padding-bottom: @cell-padding--vertical;
+                }
+                &.epi-columnPadding--left {
+                    box-sizing: content-box;
+                    padding-left: @cell-padding--horizontal;
+                }
+            }
+        .dgrid-no-data, .dgrid-loading {
+            background: transparent;
+            color: @text-color-secondary;
+            line-height: 30px;
+            min-height: 30px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        &.epi-chromeless--no-header {
+            .ui-widget-header { display: none; }
+            .dgrid-scroller { margin-top: 0; }
+        }
+
+        &.epi-chromeless--with-pointer {
+          .dgrid-row { cursor: pointer; }
+        }
+
+        &.epi-grid-height--300 {
+            .grid-set-height-mixin(300);
+        }
+        &.epi-grid-height--700 {
+            .grid-set-height-mixin(700);
+        }
+
+        &.epi-grid-max-height--300 {
+            .grid-set-max-height-mixin(300);
+        }
+        &.epi-grid-max-height--700 {
+            .grid-set-max-height-mixin(700);
+        }
+    }
+
+
+    // PLAIN GRID
+    //===============================================================================================================================
+    .epi-plain-grid {
+        @epi-grid-row-odd-border: #e5e3d5;
+
+        @header-height: 43px;
+
+        border: 0px solid @epi-grid-row-odd-border;
+
+        &.dgrid {
+            &.epi-grid--with-border { border-top-width: 1px; }
+        }
+        &.dgrid .dgrid-scroller {
+            margin-top: @header-height;
+        }
+
+        .ui-widget-header {
+            background: @epi-grid-row-odd;
+            height: @header-height;
+            border-bottom: 1px solid @surface400;
+
+            &.dgrid-header-scroll {
+                background: transparent;
+                height: @header-height;
+            }
+        }
+
+        .dgrid-header,
+        .ui-widget-header.dgrid-header-scroll {
+            border: none;
+        }
+
+        .dgrid-header {
+            th {
+                background: transparent;
+                background-image: none;
+                border: none;
+                color: @text-color;
+                font-size: 1.1em;
+                padding: 12px 8px;
+                font-weight: 500;
+                line-height: 1.1em;
+
+                &.dgrid-sort-down,
+                &.dgrid-sort-up {
+                    color: @text-color;
+                    font-weight: 500;
+                    .border-radius(3px);
+                }
+
+                &:first-child { padding-left: 7px; }
+                &:last-child { padding-right: 7px; }
+
+                .epi-chromeless.dijitButton {
+                    top: -6px;
+                }
+            }
+        }
+
+        .dgrid-row { padding: 0; }
+
+        .dgrid-row.dgrid-row-odd {
+            background: @epi-grid-row-odd;
+        }
+        .dgrid-row.dgrid-row-odd {
+            &,
+            &.dgrid-selected.ui-state-active {
+                border: none;
+            }
+        }
+
+        .dgrid-cell {
+            @cell-padding--horizontal: 8px;
+            @cell-padding--vertical: 8px;
+
+            padding: @cell-padding--vertical @cell-padding--horizontal;
+
+            &.dgrid-column-checkbox {
+                padding-left: 9px;
+            }
+            &.epi-columnIcon16x16 {
+                padding-left: 0;
+                padding-right: 0;
+                width: 16px;
+            }
+
+            &.epi-columnPadding--top {
+                box-sizing: content-box;
+                padding-top: @cell-padding--vertical;
+            }
+            &.epi-columnPadding--right {
+                box-sizing: content-box;
+                padding-right: @cell-padding--horizontal;
+            }
+            &.epi-columnPadding--bottom {
+                box-sizing: content-box;
+                padding-bottom: @cell-padding--vertical;
+            }
+            &.epi-columnPadding--left {
+                box-sizing: content-box;
+                padding-left: @cell-padding--horizontal;
+            }
+        }
+        .dgrid-no-data, .dgrid-loading {
+            background: darken(@epi-grid-row-odd, 3%);
+            color: @text-color-secondary;
+            line-height: 30px;
+            min-height: 30px;
+            text-align: center;
+            font-style: italic;
+        }
+
+
+
+        &.epi-grid-height--300 {
+            .grid-set-height-mixin(300);
+        }
+        &.epi-grid-height--700 {
+            .grid-set-height-mixin(700);
+        }
+
+        &.epi-grid-max-height--300 {
+            .grid-set-max-height-mixin(300);
+        }
+        &.epi-grid-max-height--700 {
+            .grid-set-max-height-mixin(700);
+        }
+    }
+
+    // GRID MODIFIERS
+    //===============================================================================================================================
+
+    //Grid Modifiers
+    .dgrid.epi-grid-height--auto {
+        height: auto;
+
+        .dgrid-scroller {
+            overflow: visible;
+            position: relative;
+        }
+    }
+
+
+    // Used inside each grid definition to grab correct @header-height variable
+    .grid-set-height-mixin(@height) {
+        height: auto;
+        max-height: @height + 0px;
+
+        .dgrid-scroller {
+            height: @height - @header-height + 0px;
+            max-height: none;
+            position: relative;
+        }
+    }
+
+    // Used inside each grid definition to grab correct @header-height variable
+    .grid-set-max-height-mixin(@height) {
+        height: auto;
+
+        .dgrid-scroller {
+            max-height: @height - @header-height + 0px;
+            position: relative;
+        }
+    }
+
+    .epi-grid--with-border { border-width: 1px; }
+
+
+    // Column Modifiers
+    .epi-grid-column--centered { text-align: center; }
+    .epi-grid-column--right { text-align: right; }
+    .epi-grid-column--bold { font-weight: bold; }
+
+
+    .epi-grid-column--positive { color: #8ca218; }
+    .epi-grid-column--negative { color: #ec3f09; }
+    .epi-grid-column--positive {
+        .epi-grid-column--bold;
+        color: @green4;
+    }
+    .dgrid-selected .epi-grid-column--positive {
+        color: darken(@green4,10%);
+    }
+    .epi-grid-column--negative {
+        .epi-grid-column--bold;
+        color: @red4;
+    }
+
+
+    .epi-columnVeryNarrow { width: 2.5em; }
+    .epi-columnNarrow { width: 6em; }
+    .epi-columnWide { width: 25em; }
+    .epi-grid-column--snug { width: 22px; }
+
+    .epi-grid-column--icon16x16 {
+        padding-left: 4px;
+        padding-right: 0px;
+        width:20px;
+    }
+
+    .epi-grid--5     { width: 5% }
+    .epi-grid--10    { width:10% }
+    .epi-grid--13    { width:12.5% }     // 1/8
+    .epi-grid--15    { width:15% }
+    .epi-grid--20    { width:20% }
+    .epi-grid--25    { width:25% }       // 1/4
+    .epi-grid--30    { width:30% }
+    .epi-grid--33    { width:33.333% }   // 1/3
+    .epi-grid--35    { width:35% }
+    .epi-grid--37    { width:37.5% }     // 3/8
+    .epi-grid--40    { width:40% }
+    .epi-grid--45    { width:45% }
+    .epi-grid--50    { width:50% }       // 1/2
+    .epi-grid--55    { width:55% }
+    .epi-grid--60    { width:60% }
+    .epi-grid--62    { width:62.5% }     // 5/8
+    .epi-grid--65    { width:65% }
+    .epi-grid--66    { width:66.666% }   // 2/3
+    .epi-grid--70    { width:70% }
+    .epi-grid--75    { width:75% }       // 3/4
+    .epi-grid--80    { width:80% }
+    .epi-grid--85    { width:85% }
+    .epi-grid--87    { width:87.5% }     // 7/8
+    .epi-grid--90    { width:90% }
+    .epi-grid--95    { width:95% }
+
+
+    // Wrapper for numbered rows
+    .epi-row-number {
+      margin-right: 6px;
+    }
+}

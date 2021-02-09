@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/command/_ContentCommandBase",["dojo/_base/declare","dojo/_base/lang","epi/shell/command/_PropertyWatchCommand"],function(_1,_2,_3){return _1([_3],{_isChangingContentStatusHandle:null,checkDeleted:true,propertiesToWatch:["isChangingContentStatus"],_canExecuteGetter:function(){if(!this.model||!this.model.contentData){return false;}var _4=this.model.contentData;return this.canExecute&&(!this.checkDeleted||(_4&&!_4.isDeleted));},_onPropertyChanged:function(){this.set("canExecute",this.get("canExecute"));}});});

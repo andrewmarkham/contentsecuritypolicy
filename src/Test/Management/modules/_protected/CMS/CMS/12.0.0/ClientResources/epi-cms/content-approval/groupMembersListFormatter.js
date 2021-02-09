@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/content-approval/groupMembersListFormatter",["dojo/_base/lang"],function(_1){var _2="<span class='epi-reviewer__name'>{name}</span></span>";var _3={renderList:function(_4){var _5=[];_4.forEach(function(u){_5.push(_1.replace(_2,{name:u}));});return _5.join(" ");}};return _3;});

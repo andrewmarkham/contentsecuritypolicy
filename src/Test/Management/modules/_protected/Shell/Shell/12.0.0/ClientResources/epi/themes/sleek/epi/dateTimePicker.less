@@ -1,0 +1,31 @@
+﻿@import "../variables";
+
+.Sleek .epi-dateTimeWrapper {
+	background-color: @calendar-background-color;
+	border:solid 1px @border-color;
+
+    padding: 12px;
+}
+
+.Sleek .epi-dateTimeWrapper {
+    .dijitCalendar {
+        background: none;
+        border: none;
+        .border-radius(0px);
+        padding: 0 0 5px 0;
+    }
+    .epi-timePickerWrapper {
+        border-top: 1px solid #eaeef4;
+        .box-shadow-specific(0px,-1px,0px,0px,200,210,223,1);
+    }
+    .epi-timePickerWrapper .dijitIcon { margin-right: 5px; }
+    .dijitTextBox.dijitSpinner { width: 100px; }
+
+    .epi-timeZoneInfo {
+        display: block;
+        font-size: 0.8em;
+        font-weight: bold;
+        color: @text-color;
+        padding-top: 10px;
+    }
+}

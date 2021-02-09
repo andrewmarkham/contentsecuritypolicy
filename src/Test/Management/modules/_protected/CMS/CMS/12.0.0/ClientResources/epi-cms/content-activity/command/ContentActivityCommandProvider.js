@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/content-activity/command/ContentActivityCommandProvider",["dojo/_base/declare","dijit/form/ToggleButton","epi-cms/component/command/_GlobalToolbarCommandProvider","epi-cms/content-activity/command/ContentActivityCommand"],function(_1,_2,_3,_4){return _1([_3],{model:null,postscript:function(){this.inherited(arguments);var _5={widget:_2,"class":"epi-chromeless epi-mediumButton"};this.addToTrailing(new _4({model:this.model,order:-10001}),_5);}});});

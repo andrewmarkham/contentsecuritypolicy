@@ -1,0 +1,96 @@
+/* 
+	Context menu classes 
+	These classes are also duplicated in system.css.
+*/
+.ContextMenu
+{
+	text-align: left;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-weight: normal;
+	font-size: 11px;
+	color: #fff;
+	position: absolute;
+	display: none;
+	border: 1px solid #a8a8a8;
+    background: #555b61;
+	cursor: default;
+	padding: 0.3em 0;
+	top: 0px;
+	left: 0px;
+	min-width: 190px;
+	_width: 190px;
+	z-index: 300001;
+	-moz-user-select: none;
+	-moz-border-radius: 6px; 
+	-webkit-border-radius: 6px;
+	-moz-box-shadow: #333 0px 3px 16px -7px;
+    -webkit-box-shadow: #333 0px 3px 16px -7px;
+}
+
+/* In IE6 an iframe is used to cover selectlists and such */
+.ContextMenuCover
+{
+	position: absolute;
+	display: none;
+	border: none;
+	top: 0px;
+	left: 0px;
+	min-width: 190px;
+	_width: 190px;
+	z-index: 300000;
+	-moz-user-select: none;
+	overflow:hidden;
+}
+
+.ContextMenuItem, 
+.ContextMenuItem-Active, 
+.ContextMenuItemDisabled,
+.ContextMenuItemDisabled-Active
+{
+	position: relative;
+	font-size: 11px;
+	line-height: 17px;
+	cursor: default;
+	height: 17px;
+	background-repeat: no-repeat;
+	background-position:4px 1px;
+	padding: 3px 0 1px 25px;
+	white-space: nowrap;
+}
+
+.ContextMenuItem-Active
+{
+	background-color: #c4d600;
+	cursor: pointer;
+	color: #333;
+}
+
+.ContextMenuItemDisabled, .ContextMenuItemDisabled-Active
+{
+	color: gray;
+}
+
+.ContextMenuItemDisabled-Active
+{
+	background-color: #6e767e;
+}
+
+.ContextMenuItem-Separator 
+{
+	position: relative;
+	font-size: 1px;
+	margin:	1px 0px;
+	overflow: hidden;
+	border-top:	1px solid #666f7a;
+	height: 1px;
+}
+
+.ArrowMenuImage
+{
+	position: relative;
+	float: right;
+	margin-right: 5px;
+	margin-left: 1px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}

@@ -1,0 +1,13 @@
+﻿@import "variables.less";
+
+.Sleek {
+	.dijitError.epi-legacyFormEditor .dijitTextBox,
+    .dijitError.epi-legacyFormEditor .dijitButton {
+        border-color: @error-border-color;
+
+    }
+	.dijitFocused.epi-legacyFormEditor .dijitTextBox,
+	.dijitFocused.epi-legacyFormEditor .dijitButton {
+		.epi-focused();
+    }
+}

@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/command/CancelAndEdit",["dojo/_base/declare","dojo/_base/lang","epi-cms/contentediting/ContentActionSupport","epi-cms/contentediting/command/_ChangeContentStatus","epi/i18n!epi/cms/nls/episerver.cms.contentediting.toolbar.buttons.cancelandedit"],function(_1,_2,_3,_4,_5){return _1([_4],{label:_5.label,tooltip:_5.title,iconClass:"epi-iconPen",action:_3.saveAction.CheckOut|_3.saveAction.ForceCurrentVersion});});

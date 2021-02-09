@@ -1,0 +1,33 @@
+#MonthNavigator {
+    display: inline;
+}
+
+.dateTable {
+	width: 175px;
+	background-color: gray;
+	border: 1px solid #8B8B8B;
+	border-width: 0px 1px 0px 1px;
+}
+
+.weekDay, .date {
+	background-color: white;
+	width: 22px;
+	height: 22px;
+	text-align: center;
+	vertical-align: middle;
+	cursor:	 default;
+}
+
+.date {
+	width: 25px;
+	height:	18px;
+}
+
+.panel {
+	background-color: #E3E3E3;
+	color: black;
+    text-align: center;
+    vertical-align: top;
+	padding: 4px;
+	border: 1px solid #8B8B8B;
+}

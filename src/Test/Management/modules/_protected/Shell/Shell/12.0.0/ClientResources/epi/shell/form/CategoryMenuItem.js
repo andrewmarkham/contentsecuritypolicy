@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/form/CategoryMenuItem",["dojo/_base/declare","dojo/dom","dijit/_WidgetBase","dijit/_TemplatedMixin","dijit/_Contained"],function(_1,_2,_3,_4,_5){return _1([_3,_4,_5],{baseClass:"dijitMenuItemGroup",templateString:"<tr class=\"dijitMenuItemGroup\"><td colspan=\"4\" data-dojo-attach-point=\"containerNode\"></td></tr>",_setLabelAttr:{node:"containerNode",type:"innerHTML"},buildRendering:function(){this.inherited(arguments);_2.setSelectable(this.domNode,false);},isFocusable:function(){return false;}});});

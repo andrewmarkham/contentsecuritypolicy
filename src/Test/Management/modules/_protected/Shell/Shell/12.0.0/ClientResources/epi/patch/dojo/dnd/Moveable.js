@@ -1,0 +1,2 @@
+//>>built
+define("epi/patch/dojo/dnd/Moveable",["dojo/_base/lang","dojo/dnd/common","dojo/dnd/Moveable","dojo/touch","dojo/on"],function(_1,_2,_3,_4,on){_1.mixin(_3.prototype,{onMouseDown:function(e){if(this.skip&&_2.isFormElement(e)){return;}if(this.delay){this.events.push(on(this.handle,_4.move,_1.hitch(this,"onMouseMove")),on(this.handle,_4.release,_1.hitch(this,"onMouseUp")));this._lastX=e.pageX;this._lastY=e.pageY;}else{this.onDragDetected(e);}e.preventDefault();}});_3.prototype.onMouseDown.nom="onMouseDown";});

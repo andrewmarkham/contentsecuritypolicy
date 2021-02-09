@@ -1,0 +1,81 @@
+﻿@import "../variables.less";
+
+.Sleek {
+	.epi-notificationBar {
+	    .border-box;
+		background: @epi-notificationBar-background;
+		border-bottom: 1px solid @pane-outer-border;
+		color: @text-color;
+		padding: 0;
+		.text-shadow-specific(0, 1px, 0, 255, 255, 255, 0.25);
+		vertical-align: middle;
+
+		&.epi-status-bar--error {
+			.epi-danger();
+
+			.epi-chromelessButton {
+				.dijitButtonNode {
+					.dijitButtonText {
+						color: #fff;
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+	}
+    .epi-notificationBarWithBorders {
+        border: 1px solid @epi-notificationBar-border;
+    }
+	.epi-notificationBarWithoutBorder {
+	    border-bottom: none;
+	}
+
+	.epi-notificationBarItem {
+		.border-box;
+	    display: table;
+        padding: 0 8px;
+	    width: 100%;
+	    
+		.epi-notificationBarText {
+			display: table-cell;
+			vertical-align: middle;
+			
+			p {
+                margin: 0;
+                overflow: hidden;
+                padding: 5px 0;
+	        }
+
+            .epi-chromelessButton {
+                float: left;
+				position: relative;
+				top: 2px;
+            }
+		}
+		.epi-notificationBarButtonContainer {
+			display: table-cell;
+		    height: 30px;
+			overflow: visible;	
+			text-align: right;
+			white-space: nowrap;
+			vertical-align: middle;
+			.dijitButton {
+				margin: 0;
+			}
+		}
+
+		a,
+		a:hover {
+			text-decoration: underline;
+			cursor: pointer;
+		}
+
+	}
+	.epi-notificationBarItemNotExpiring {
+	    .epi-success();
+	    
+	}
+	.epi-notificationBarItemExpiring {
+	    .epi-danger();
+	}
+}

@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/ClipboardManager",["dojo/_base/declare","dojo/Stateful"],function(_1,_2){return _1(_2,{copy:true,data:null,constructor:function(){this.data=[];},clear:function(){this.set("data",null);},isCopy:function(){return this.get("copy");},setDataObject:function(_3,_4){this.set("copy",_4);this.set("data",_3);},getDataObject:function(){return this.data;},containsData:function(){return !!this.data;}});});

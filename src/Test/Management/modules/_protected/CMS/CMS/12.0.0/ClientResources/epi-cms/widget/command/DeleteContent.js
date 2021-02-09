@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/widget/command/DeleteContent",["dojo/_base/declare","epi/shell/command/_Command"],function(_1,_2){return _1([_2],{contentId:null,_execute:function(){this.model.deleteContent(this.contentId);},_onModelChange:function(){var _3=this.model&&!!this.contentId;this.set("canExecute",_3);}});});

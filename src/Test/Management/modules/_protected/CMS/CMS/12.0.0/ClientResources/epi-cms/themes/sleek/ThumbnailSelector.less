@@ -1,0 +1,107 @@
+﻿@import "variables.less";
+
+.Sleek {
+    &.dojoDndCopy .dojoDndTarget.thumbnail-editor .thumbnail-button {
+        border-style: dashed;
+        border-color: @focused-border-color;
+    }
+
+    .thumbnail-editor {
+        position: relative;
+        width: 198px;
+        height: 123px;
+        text-align: center;
+
+        figure {
+            margin: 0;
+
+            figcaption {
+                width: 170px;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .dijitProgressBar {
+            position: absolute;
+            left: 5px;
+            right: 5px;
+            height: 5px;
+            bottom: 0;
+            display: none;
+        }
+
+        .thumbnail-button {
+            width: 100%;
+            height: 100%;
+            padding: 8px;
+            display: table;
+            box-sizing: border-box;
+            background-color: @grey1;
+
+            &:focus {
+                border: 1px solid @focused-border-color;
+                outline: none;
+            }
+        }
+
+        .epi-content-area-actionscontainer {
+            margin-top: 10px;
+            color: #333;
+        }
+
+        .epi-clearButton {
+            background-color: transparent;
+            top: 3px;
+            right: 3px;
+            cursor: pointer;
+        }
+
+        .epi-assetsDropZone {
+            font-size: .9em;
+            box-sizing: border-box;
+        }
+
+        &.dijitError {
+            .thumbnail-button {
+                border-color: @error-border-color;
+            }
+        }
+
+        &.dijitReadOnly {
+            .epi-assetsDropZone.epi-dragOver, .epi-assetsDropZone.epi-dragStart {
+                display: none;
+            }
+
+            .epi-content-area-actionscontainer {
+                display: none;
+            }
+
+            .thumbnail-button:focus {
+                border: @epi-input-border;
+            }
+        }
+
+        img {
+            width: 150px;
+            height: 80px;
+        }
+
+        &.uploading {
+            .dijitProgressBar {
+                display: block;
+            }
+
+            .epi-clearButton {
+                display: none;
+            }
+
+            img {
+                opacity: 0.1;
+            }
+
+            figure {
+                font-style: italic;
+            }
+        }
+    }
+}

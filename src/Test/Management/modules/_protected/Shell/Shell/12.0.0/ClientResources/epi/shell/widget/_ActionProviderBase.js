@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/_ActionProviderBase",["epi","dojo"],function(_1,_2){return _2.declare(null,{getActions:function(){return [];},onActionAdded:function(_3){},onActionRemoved:function(_4){},onActionPropertyChanged:function(_5,_6,_7){}});});

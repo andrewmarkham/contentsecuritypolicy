@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/editors/propertyvaluelist/command/AddPropertyValue",["dojo/_base/declare","epi/i18n!epi/nls/episerver.shared.action","epi/shell/command/_PropertyWatchCommand"],function(_1,_2,_3){return _1([_3],{label:_2.add,iconClass:"epi-iconPlus",propertiesToWatch:["readOnly","value"],_execute:function(){this.model.addItem();},_onPropertyChanged:function(){var _4=!this.model.maxLength||(this.model.get("value")&&this.model.get("value").length<this.model.maxLength);var _5=!this.model.readOnly&&_4;this.set({canExecute:_5,isAvailable:_5});}});});

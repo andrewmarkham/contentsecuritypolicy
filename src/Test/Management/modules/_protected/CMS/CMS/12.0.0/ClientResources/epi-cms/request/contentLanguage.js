@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/request/contentLanguage",["dojo/Deferred","dojo/when","epi/dependency"],function(_1,_2,_3){return {beforeSend:function(_4){var _5=new _1();var _6=_4.options;if(!(_6.preventLocalizationHeader||_6.isProfileRequest)){var _7=_3.resolve("epi.shell.Profile");_2(_7.getContentLanguage()).then(function(_8){if(_8){_6.headers["X-EPiContentLanguage"]=_8;}_5.resolve(_4);});return _5.promise;}_5.resolve(_4);return _5.promise;}};});

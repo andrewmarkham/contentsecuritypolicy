@@ -1,0 +1,29 @@
+﻿<ul class="epi-form-container__section">
+    <ul data-dojo-type="epi/shell/layout/SimpleContainer" data-dojo-attach-point="widgetContainer"></ul>
+    <li class="epi-form-container__section__row">
+        <label>${resources.visibleto.title}</label>
+        <div class="epi-previewableTextBox-wrapper dijitInline">
+            <span data-dojo-attach-point="visibleToNode" class="epi-previewableTextBox-text dojoxEllipsis dijitInline"></span>
+            <div data-dojo-type="dijit/form/Button" data-dojo-attach-point="manageAccessRightsButton" data-dojo-attach-event="onClick: _onManageAccessRightsClick" class="epi-chromelessButton epi-chromelessLinkButton epi-functionLink epi-valign--top">${resources.manage}</div>
+        </div>
+    </li>
+    <li class="epi-form-container__section__row">
+        <label>${resources.existinglanguages}</label>
+        <span data-dojo-attach-point="languagesNode" class="epi-previewableTextBox-text dijitInline"></span>
+    </li>
+    <li class="epi-form-container__section__row">
+        <label>${resources.idandtypename}</label>
+        <div class="epi-previewableTextBox-wrapper dijitInline">
+            <span class="epi-previewableTextBox-text dojoxEllipsis dijitInline">
+                <span data-dojo-attach-point="idNode"></span>, <span data-dojo-attach-point="typeNode"></span>
+            </span>
+        </div>
+    </li>
+    <li class="epi-form-container__section__row">
+        <label></label>
+        <div data-dojo-attach-point="dropdownButton" data-dojo-type="dijit/form/DropDownButton" class="dijit dijitReset dijitInline epi-mediumButton">
+            <span>${resources.toolsbutton.label}</span>
+            <div data-dojo-type="dijit/DropDownMenu" data-dojo-attach-point="additionalActionsMenu"></div>
+        </div>
+    </li>
+</ul>

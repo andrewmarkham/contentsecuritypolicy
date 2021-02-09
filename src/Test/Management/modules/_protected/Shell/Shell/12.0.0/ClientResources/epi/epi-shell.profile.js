@@ -1,0 +1,2 @@
+//>>built
+var profile=(function(){function _1(_2){var _3={"epi/shell/shell":1,"epi/themes/sleek/compile":1};var _4=["epi/shell","epi/patch","epi/themes","epi/dnd","epi/layers"];return (_2.toLowerCase() in _3)||((_2.split("/").length>2)&&!dojo.some(_4,function(_5){return _2.indexOf(_5)===0;}));};return {resourceTags:{test:function(_6,_7){return false;},copyOnly:function(_8,_9){return (_1(_9)&&!/\.css$/.test(_8))||/Sleek\.css$/.test(_8);},amd:function(_a,_b){return !_1(_b)&&/\.js$/.test(_a);}},trees:[[".",".",/(\/\.)|(~$)/]]};})();

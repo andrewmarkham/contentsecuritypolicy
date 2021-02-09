@@ -1,0 +1,2 @@
+//>>built
+require({cache:{"url:epi/shell/widget/templates/MenuGroup.htm":"<li class=\"epi-menugGoup\">\r\n    <span data-dojo-attach-point=\"containerNode\"></span>\r\n</li>"}});define("epi/shell/widget/MenuGroup",["dojo","dijit/MenuSeparator","dojo/text!./templates/MenuGroup.htm"],function(_1,_2,_3){return _1.declare([_2],{templateString:_3,label:"",_setLabelAttr:{node:"containerNode",type:"innerHTML"}});});

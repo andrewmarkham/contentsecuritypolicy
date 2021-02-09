@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/contentediting/_Renderer",["epi","dojo"],function(_1,_2){return _2.declare(null,{constructor:function(_3){_2.mixin(this,_3);},render:function(_4,_5,_6,_7){throw new Error("Abstract method _render must be overridden in a derived class");}});});

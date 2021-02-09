@@ -1,0 +1,2 @@
+//>>built
+define("epi/shell/widget/command/RemoveGadget",["dojo/_base/declare","dojo/_base/lang","epi/i18n!epi/shell/ui/nls/episerver.shell.ui.resources.gadgetchrome","epi/shell/command/_Command"],function(_1,_2,_3,_4){return _1([_4],{label:_3.deletemenuitemlabel,category:"setting",order:1000,canExecute:true,_execute:function(){this.model.onClose();}});});

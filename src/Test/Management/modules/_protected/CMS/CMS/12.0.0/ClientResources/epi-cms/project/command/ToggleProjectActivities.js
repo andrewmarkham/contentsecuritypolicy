@@ -1,0 +1,2 @@
+//>>built
+define("epi-cms/project/command/ToggleProjectActivities",["dojo/_base/declare","epi/shell/command/ToggleCommand","epi/i18n!epi/cms/nls/episerver.cms.activities.togglecommand.label"],function(_1,_2,_3){return _1([_2],{canExecute:true,category:"projectButton",iconClass:"epi-iconBubble",label:_3.show,property:"isActivitiesVisible",_activeSetter:function(_4){this.active=_4;this.set("label",_4?_3.hide:_3.show);}});});
