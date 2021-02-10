@@ -3,8 +3,6 @@ src/.vs/
 
 src/Jhoose.Security.Admin/bin/
 
-src/Jhoose.Security.Admin/dist/
-
 src/Jhoose.Security.Admin/node_modules/
 
 src/Jhoose.Security.Admin/obj/
@@ -20,3 +18,5 @@ src/Test/Management/obj/
 src/Test/Test.ContentDomain/bin/
 
 src/Test/Test.ContentDomain/obj/
+
+src/Jhoose.Security.Admin/dist/Jhoose.Security/ClientResources/
