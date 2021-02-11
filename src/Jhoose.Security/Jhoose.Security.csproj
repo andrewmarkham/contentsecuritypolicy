@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <PackageId>Jhoose.Security.Admin</PackageId>
+    <Version>0.1.0-alpha.13</Version>
+    <Authors>Andrew Markham</Authors>
+  
+    <Title></Title>
+    <Description></Description>
+    <Tags>Jhoose;Episerver;Content Security Policy</Tags>
+    <ReleaseNotes></ReleaseNotes>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <RestoreSources>
+      $(RestoreSources);
+      /Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Core/bin/Debug;
+    </RestoreSources>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+<ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="EPiServer.CMS.Web" Version="12.0.0-inte-016445" />
+    <PackageReference Include="Jhoose.Security.Core" Version="0.1.0-alpha.1" />
+</ItemGroup>
+
+<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="npm run publish" />
+</Target>
+
+<ItemGroup Label="Packaging">
+
+  <Content Remove="src\**" />
+  <Content Remove="node_modules\**" />
+  <Content Remove="dist\**" />
+  <Content Remove="modules\**" />
+  <Content Remove="*.json" /> 
+
+  <Content Include="build\net5.0\Jhoose.Security.Admin.targets" PackagePath="build\net5.0\Jhoose.Security.Admin.targets"  />
+  <Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
+    <Pack>true</Pack>
+    <PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
+    <PackageCopyToOutput>true</PackageCopyToOutput>
+  </Content>
+</ItemGroup>
+
+</Project>

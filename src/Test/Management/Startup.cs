@@ -12,7 +12,7 @@ using EPiServer.Web.Internal;
 using EPiServer.Web.Routing;
 using EpiserverAdmin.Extensions;
 using EpiserverAdmin.Filter;
-using Jhoose.Security.Admin.DependencyInjection;
+using Jhoose.Security.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -70,7 +70,7 @@ namespace EpiserverAdmin
             services.AddAlloy();
             services.AddCms();
 
-            services.AddSecurity();
+            services.AddJhooseSecurity();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -107,7 +107,7 @@ namespace EpiserverAdmin
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseContentSecuriyPolicy();
+            app.UseJhooseSecurity();
             
             app.UseEndpoints(endpoints =>
             {

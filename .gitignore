@@ -1,11 +1,11 @@
 
 src/.vs/
 
-src/Jhoose.Security.Admin/bin/
+src/Jhoose.Security/bin/
 
-src/Jhoose.Security.Admin/node_modules/
+src/Jhoose.Security/node_modules/
 
-src/Jhoose.Security.Admin/obj/
+src/Jhoose.Security/obj/
 
 src/Jhoose.Security.Core/bin/
 

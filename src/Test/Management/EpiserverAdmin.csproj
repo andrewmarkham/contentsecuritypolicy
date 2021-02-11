@@ -8,7 +8,7 @@
     
     <RestoreSources>
       $(RestoreSources);
-      /Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Admin/bin/Debug;
+      /Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security/bin/Debug;
     </RestoreSources>
 
   </PropertyGroup>
@@ -18,7 +18,7 @@
     <PackageReference Include="EPiServer.CMS.UI.AspNetIdentity" Version="12.0.0-inte-016445" />
     <PackageReference Include="EPiServer.CMS.Web" Version="12.0.0-inte-016445" />
     <PackageReference Include="Wangkanai.Detection" Version="2.0.1" />
-    <PackageReference Include="Jhoose.Security.Admin" Version="0.0.8-alpha.5" />
+    <PackageReference Include="Jhoose.Security.Admin" Version="0.1.0-alpha.13" />
   </ItemGroup>
 
   <ItemGroup>
