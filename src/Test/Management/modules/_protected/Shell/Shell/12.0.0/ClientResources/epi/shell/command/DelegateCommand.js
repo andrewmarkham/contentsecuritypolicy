@@ -1,2 +1,0 @@
-//>>built
-define("epi/shell/command/DelegateCommand",["dojo/_base/declare","epi/shell/command/_Command"],function(_1,_2){return _1([_2],{delegate:null,_execute:function(){return this.delegate?this.delegate.apply(this,[this].concat(arguments)):null;}});});

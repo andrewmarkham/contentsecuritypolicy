@@ -1,12 +1,15 @@
+using System.Collections.Generic;
 using Jhoose.Security.Core.Models;
 
 namespace Jhoose.Security.Core.Provider
 {
     public interface ICspProvider
     {
-         string HeaderValue();
-         void Initialize();
+        CspSettings Settings {get;}
+        IEnumerable<CspPolicyHeader> PolicyHeaders();
 
-         string GenerateNonce();
+        void Initialize();
+
+        string GenerateNonce();
     }
 }

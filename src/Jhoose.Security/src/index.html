@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://fonts.googleapis.com/css?family=Barlow:400,500,700" rel="stylesheet" />
-
+    <base href="/" />
+    
     <style>
         body {
             margin: 0;
@@ -25,7 +26,7 @@
     <div @Html.Raw(Html.ApplyFullscreenPlatformNavigation())>
         <!-- Content -->
     </div>
-    <div id="root"></div>
+    <div id="csp-root"></div>
 </body>
-    <script src="/dist/clientresources/app.js"> </script>
+    <script src="dist/clientresources/csp-app.js"> </script>
 </html>

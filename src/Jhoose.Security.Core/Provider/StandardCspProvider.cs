@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Repository;
@@ -17,27 +19,45 @@ namespace Jhoose.Security.Core.Provider
             this.nonceValue = Guid.NewGuid().ToString();
         }
 
+        public CspSettings Settings {
+            get {
+                return this.policyRepository.Settings();
+            }
+        }
+
         public string GenerateNonce() {
             return this.nonceValue;
         }
 
-        public string HeaderValue()
+        public IEnumerable<CspPolicyHeader> PolicyHeaders()
         {
-            var sb = new StringBuilder();
             var policies = this.policyRepository.List();
-
-            foreach (var p in policies)
+            
+            // for global report only
+            if (this.Settings.Mode.Equals("report"))
             {
-                var v = this.PolicyValue(p);
-                if (string.IsNullOrEmpty(v))
-                { 
-                    continue;
-                }
-
-                sb.Append(v);
+                yield return new CspPolicyHeader {
+                    Header = CspPolicyHeader.ReadonlyHeaderName,
+                    Policies = policies
+                }; 
             }
+            else
+            {
+                yield return new CspPolicyHeader {
+                    Header = CspPolicyHeader.HeaderName,
+                    Policies = policies.Where(p => !p.ReportOnly).ToList()
+                };
 
-            return sb.ToString();
+                var reportPolicies = policies.Where(p => p.ReportOnly).ToList();
+
+                if (reportPolicies.Any())
+                {
+                    yield return new CspPolicyHeader {
+                        Header = CspPolicyHeader.ReadonlyHeaderName,
+                        Policies = reportPolicies
+                    };
+                }  
+            }
         }
 
         public void Initialize()
@@ -45,30 +65,5 @@ namespace Jhoose.Security.Core.Provider
             this.policyRepository.Bootstrap();
         }
 
-        public string PolicyValue(CspPolicy policy) 
-        {
-            var sb = new StringBuilder();
-            if (policy.Options.None | policy.Options.Wildcard | policy.Options.Self | policy.Options.Data | !string.IsNullOrEmpty(policy.Value))
-            {
-                sb.AppendFormat($"{policy.PolicyName} ");
-                if (policy.Options.None)
-                {
-                    sb.Append("'none'; ");
-                    return sb.ToString();
-                }
-
-                if(policy.Options.Wildcard) sb.Append("* ");
-                if(policy.Options.Self) sb.Append("'self' ");
-                if(policy.Options.Data) sb.Append("data: ");
-
-                if (policy.PolicyName.Equals("script-src", StringComparison.InvariantCultureIgnoreCase) || policy.PolicyName.Equals("style-src", StringComparison.InvariantCultureIgnoreCase)) {
-                    sb.Append("'nonce-{0}' ");
-                }
-                
-                sb.AppendFormat($"{policy.Value}; ");
-            }
-
-            return sb.ToString();
-        }
     }
 }

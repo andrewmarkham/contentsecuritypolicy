@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <PackageId>Jhoose.Security.Admin</PackageId>
-    <Version>0.1.0-alpha.13</Version>
+    <Version>0.1.0-alpha.15</Version>
     <Authors>Andrew Markham</Authors>
   
     <Title></Title>
@@ -17,6 +17,8 @@
     <RestoreSources>
       $(RestoreSources);
       /Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Core/bin/Debug;
+      https://api.nuget.org/v3/index.json;
+      https://pkgs.dev.azure.com/EpiserverEngineering/netCore/_packaging/beta-program/nuget/v3/index.json;
     </RestoreSources>
   </PropertyGroup>
 
@@ -27,9 +29,16 @@
 <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="EPiServer.CMS.Web" Version="12.0.0-inte-016445" />
+    <PackageReference Include="EPiServer.CMS.Web" Version="12.0.0-inte-017361" />
+    <!--
     <PackageReference Include="Jhoose.Security.Core" Version="0.1.0-alpha.1" />
+    -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
 </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
+  </ItemGroup>
 
 <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="npm run publish" />
@@ -43,7 +52,7 @@
   <Content Remove="modules\**" />
   <Content Remove="*.json" /> 
 
-  <Content Include="build\net5.0\Jhoose.Security.Admin.targets" PackagePath="build\net5.0\Jhoose.Security.Admin.targets"  />
+  <Content Include="build\net5.0\Jhoose.Security.Admin.targets" PackagePath="build\net5.0\Jhoose.Security.Admin.targets" />
   <Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
     <Pack>true</Pack>
     <PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>

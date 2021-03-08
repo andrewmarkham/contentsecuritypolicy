@@ -1,2 +1,0 @@
-//>>built
-define("epi-cms/content-approval/command/RemoveApprovalStep",["dojo/_base/declare","epi/i18n!epi/nls/episerver.cms.contentapproval.command.removeapprovalstep","epi/shell/command/_PropertyWatchCommand"],function(_1,_2,_3){return _1([_3],{label:_2.label,iconClass:"epi-iconClose",category:"remove",propertiesToWatch:["canBeDeleted","isReadOnly"],_execute:function(){this.model.removeApprovalStep();},_onPropertyChanged:function(){var _4=this.model,_5=!_4.isReadOnly&&_4.canBeDeleted;this.set({canExecute:_5,isAvailable:_5});}});});

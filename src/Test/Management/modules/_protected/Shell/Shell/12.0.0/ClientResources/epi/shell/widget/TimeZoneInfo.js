@@ -1,2 +1,0 @@
-//>>built
-define("epi/shell/widget/TimeZoneInfo",["dojo/_base/declare","dijit/_Widget","dijit/_TemplatedMixin","epi/shell/TimeZoneUtils"],function(_1,_2,_3,_4){return _1([_2,_3],{templateString:"<div data-dojo-attach-point='timeZone' class='epi-timeZoneInfo'></div>",updateOffset:function(_5){_5=_5?_5:new Date();var _6=Intl.DateTimeFormat().resolvedOptions().timeZone;var _7=_4.getOffset(_5);this.timeZone.innerText=(_6?_6.replace("_"," ")+" ":"")+"("+_7+")";}});});

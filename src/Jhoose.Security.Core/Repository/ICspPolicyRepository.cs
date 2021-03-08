@@ -8,6 +8,12 @@ namespace Jhoose.Security.Core.Repository
     {
          List<CspPolicy> List();
          CspPolicy Update(CspPolicy policy);
+
+
+         CspSettings Settings();
+         
+         bool SaveSettings(CspSettings settings);
+
          void Bootstrap();
     }
 }

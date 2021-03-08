@@ -1,2 +1,0 @@
-//>>built
-function copyOnly(_1){var _2={"epi-cms/epi.cms.profile":1,"epi-cms/package.json":1,"epi-cms/communicationinjector":1,"epi-cms/edit-region-observer":1};return (_1.toLowerCase() in _2);};function isAmd(_3){return (/\.js$/).test(_3);};var profile={resourceTags:{test:function(_4,_5){return false;},copyOnly:function(_6,_7){return copyOnly(_7);},amd:function(_8,_9){return !copyOnly(_9)&&isAmd(_8);}},trees:[[".",".",/(\/\.)|(~$)/]]};

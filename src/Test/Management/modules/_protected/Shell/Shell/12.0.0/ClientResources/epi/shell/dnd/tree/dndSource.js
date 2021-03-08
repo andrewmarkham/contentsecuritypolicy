@@ -1,2 +1,0 @@
-//>>built
-define("epi/shell/dnd/tree/dndSource",["dojo/_base/declare","./multiDndSource"],function(_1,_2){return _1([_2],{singular:true,userSelect:function(_3){this.inherited(arguments,[_3,false,false]);}});});

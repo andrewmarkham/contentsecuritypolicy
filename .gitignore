@@ -20,3 +20,9 @@ src/Test/Test.ContentDomain/bin/
 src/Test/Test.ContentDomain/obj/
 
 src/Jhoose.Security.Admin/dist/Jhoose.Security/ClientResources/
+
+src/Jhoose.Security/dist/Jhoose.Security/ClientResources/
+
+src/Tests/Jhoose.Security.Tests/bin/
+
+src/Tests/Jhoose.Security.Tests/obj/

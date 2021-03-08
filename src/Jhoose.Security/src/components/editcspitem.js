@@ -1,135 +1,153 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Checkbox,TextField, Dialog, GridCell, GridRow } from "@episerver/ui-framework";
+import { CspOptions } from './CspOptions';
+import { SchemaSource } from './SchemaSource';
 
 export function EditCspItem(props) {
 
     const [isOpen, setIsOpen] = useState(props.isOpen);
 
-    const {policy} = {...props};
+    const [policy, setPolicy] = useState(props.policy);
     
     const [value, setValue] = useState(policy.value);
 
-    const [none, setNone] = useState(policy.options.none);
-    const [wildcard, setWildcard] = useState(policy.options.wildcard);
-    const [data, setData] = useState(policy.options.data);
-    const [self, setSelf] = useState(policy.options.self);
-
     const title = `Edit Policy`;
 
-    function setPolicyValue(key, value){
+    function setOptions(options){
 
-        console.log(`key:  ${key} value:  ${value}`)
+        var newPolicy = {
+            ...policy,
+            options: {...options},
+            schemaSource: {...policy.schemaSource}
+        }
+
+        setPolicy(newPolicy);
+    }
+
+    function setSchemaSource(schemaSource){
+
+        var newPolicy = {
+            ...policy,
+            options: {...policy.options},
+            schemaSource: {...schemaSource}
+        }
+
+        setPolicy(newPolicy);
+    }
+    
+    function setPolicyValue(key, value) {
+        var newPolicy = {
+            ...policy,
+            options: {...policy.options},
+            schemaSource: {...policy.schemaSource}
+        }
 
         switch (key) {
             case "value":
+                newPolicy.value = value;
                 setValue(value);
                 break;
-            
-            case "none":
-                setNone(!none);
-                break;
-
-            case "wildcard":
-                setWildcard(!wildcard);
-                break;
-
-            case "self":
-                setSelf(!self);
-                break;
-
-            case "data":
-                setData(!data);
-                break;
+            case "mode":
+                    newPolicy.reportOnly = !policy.reportOnly;
+                    break;      
             default:
                 break;
         }
-    };
+
+        setPolicy(newPolicy);
+        
+    }
 
     const calculatedPolicy = useMemo(() => {
 
         var v = `${policy.policyName} `;
 
-        if (none) {
+        if (policy.options.none) {
             v+= "'none'";
         } else 
         {
-            v = wildcard ? v+= "* " : v;
-            v = data ? v+= "data: " : v;
-            v = self ? v+= "'self' " : v;
+            // options
+            v = policy.options.wildcard ? v+= "* " : v;
+            v = policy.options.self ? v+= "'self' " : v;
 
+            v = policy.options.unsafeEval ? v+= "'unsafe-eval' " : v;
+            v = policy.options.unsafeHashes ? v+= "'unsafe-hashes' " : v;
+            v = policy.options.unsafeInline ? v+= "'unsafe-inline' " : v;
+            v = policy.options.strictDynamic ? v+= "'strict-dynamic' " : v;
+            v = policy.options.nonce ? v+= "'nonce-<base64-value>' " : v;
+
+            //schemaSource
+            v = policy.schemaSource.http ? v+= "http: " : v;
+            v = policy.schemaSource.https ? v+= "https: " : v;
+            v = policy.schemaSource.data ? v+= "data: " : v;
+            v = policy.schemaSource.mediastream ? v+= "mediastream: " : v;
+            v = policy.schemaSource.blob ? v+= "blob: " : v;
+            v = policy.schemaSource.filesystem ? v+= "filesystem: " : v;
+      
             v+= value;
         }
 
         return v;
 
-    }, [none,wildcard,data,self,value]);
+    }, [policy.options,policy.schemaSource,value]);
 
+    const  isScriptPolicy = useMemo(() => {
+
+        if(policy.policyName === "script-src" | policy.policyName === "style-src") {
+            return true;
+        }        
+
+        return false;
+
+    }, [policy.policyName]);
 
     return(
-        <Dialog open={isOpen}
+        <Dialog className="editDialog" open={isOpen}
             title={title}
             dismissLabel="Cancel"
             confirmLabel="OK"
             enableConfirm={true}
             onInteraction={(e) => props.onClose(e, () => {
-
-                var newPolicy = Object.assign(policy, { value: value});
-                newPolicy.options.none = none;
-                newPolicy.options.wildcard = wildcard;
-                newPolicy.options.self = self;
-                newPolicy.options.data = data;
-
-                return newPolicy;
+                return policy;
             })}>
-
                 <GridRow>
                     <GridCell span={12}>
                         <h3>{policy.policyName}</h3>
-                        <div dangerouslySetInnerHTML={{__html: policy.summaryText}}></div>
+                        <div className="summary" dangerouslySetInnerHTML={{__html: policy.summaryText}}></div>
                     </GridCell>
-                </GridRow>
-                <GridRow>
                     <GridCell span={12}>
                         <fieldset>
-                        <legend>Options</legend>
-                            <GridRow>
-                                <GridCell span={6}>
-                                    <Checkbox checked={none} onChange={(e) => {
-                                            setPolicyValue("none", e.currentTarget.value);
-                                        }}>None</Checkbox>
-                                </GridCell>
-                                <GridCell span={6}>
-                                    <Checkbox disabled={none} checked={wildcard} onChange={(e) => {
-                                            setPolicyValue("wildcard", e.currentTarget.value);
-                                        }}>Wildcard</Checkbox>
-                                </GridCell>
-                            </GridRow>
-                            <GridRow>
-                                <GridCell span={6}>
-                                    <Checkbox disabled={none}  checked={self} onChange={(e) => {
-                                            setPolicyValue("self", e.currentTarget.value);
-                                        }}>Self</Checkbox>
-                                </GridCell>
-                                <GridCell span={6}>
-                                    <Checkbox disabled={none} checked={data} onChange={(e) => {
-                                            setPolicyValue("data", e.currentTarget.value);
-                                        }}>Data</Checkbox>
-                                </GridCell>
-                            </GridRow>
+                            <legend>Mode</legend>
+                            <Checkbox checked={policy.reportOnly} onChange={(e) => {
+                            setPolicyValue("mode", e.currentTarget.value);
+                        }}>Report Only</Checkbox>
                         </fieldset>
+                    </GridCell>
+                    <GridCell span={12}>
+                        <CspOptions 
+                            options={policy.options}
+                            showScriptOptions={isScriptPolicy}
+                            update={setOptions}
+                            ></CspOptions>
+                    </GridCell>
+                    <GridCell span={12}>
+                        <SchemaSource 
+                            schemaSource={policy.schemaSource}
+                            update={setSchemaSource}>
+                            </SchemaSource>
                     </GridCell>
                 </GridRow>
                 <GridRow>
                     <GridCell span={12}>
                         <TextField
-                            disabled={none} 
-                            label="Policy Value"
+                            disabled={policy.options.none} 
+                            label="Host Source"
                             className="fullwidth"
                             textarea
                             outlined
                             value={value}
                             onChange={(e) => {
-                                setPolicyValue("value", e.currentTarget.value);
+                                setPolicyValue("value",e.currentTarget.value);
                             }}/>
                         <pre>{calculatedPolicy}</pre>
                     </GridCell>
@@ -137,3 +155,4 @@ export function EditCspItem(props) {
         </Dialog>
     )
 }
+

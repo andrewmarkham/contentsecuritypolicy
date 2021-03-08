@@ -1,2 +1,0 @@
-//>>built
-define("epi-cms/project/ContentReferenceGridModel",["dojo/_base/declare","dojo/Stateful"],function(_1,_2){return _1([_2],{onItemClicked:function(_3){},resultSummary:"",notificationText:"",store:null,query:null,columns:null,totalItems:null});});

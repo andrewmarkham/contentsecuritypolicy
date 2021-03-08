@@ -1,2 +1,0 @@
-//>>built
-define("epi/RequireModule",["epi/obsolete","dojo/when","epi/dependency"],function(_1,_2,_3){return {load:function(id,_4,_5){_1("epi/RequireModule","Use epi/ModuleManager instead","12");var _6=_3.resolve("epi.ModuleManager");_2(_6.startModules(id),function(){return _5(_6.getModule(id));});}};});

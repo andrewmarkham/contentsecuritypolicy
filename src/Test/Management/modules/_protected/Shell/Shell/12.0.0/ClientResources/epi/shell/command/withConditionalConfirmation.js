@@ -1,2 +1,0 @@
-//>>built
-define("epi/shell/command/withConditionalConfirmation",["dojo/Deferred","dojo/when","epi/shell/DialogService"],function(_1,_2,_3){return function(_4,_5){var _6=_4._execute,_7=_5.property||"requiresConfirmation";_4._execute=function(){var _8=_4[_7]?_3.confirmation(_5):new _1().resolve();return _8.then(function(){return _2(_6.apply(_4,arguments));});};return _4;};});

@@ -1,2 +1,0 @@
-//>>built
-define("epi/patch/dijit/Destroyable",["dojo/_base/lang","dijit/Destroyable"],function(_1,_2){_1.mixin(_2.prototype,{destroy:function(_3){this.inherited(arguments);this._destroyed=true;}});_2.prototype.destroy.nom="destroy";});

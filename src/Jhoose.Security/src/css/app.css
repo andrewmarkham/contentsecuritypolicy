@@ -30,3 +30,31 @@ fieldset {
 .toaster .mdc-typography--headline4 {
     color: white !important;
 }
+
+.wide-text {
+    width: 600px;
+}
+
+#csp-root {
+    height:100vh;
+    padding-top: 70px;
+}
+
+.content-end {
+    justify-content: flex-end;
+}
+
+.linkButton {
+    border: none;
+    background-color:inherit;
+    cursor: pointer;
+}
+
+.linkButton:hover{
+    background-color: inherit;
+    text-decoration: underline;
+}
+
+.editDialog .summary {
+    min-width: 40vw;
+}

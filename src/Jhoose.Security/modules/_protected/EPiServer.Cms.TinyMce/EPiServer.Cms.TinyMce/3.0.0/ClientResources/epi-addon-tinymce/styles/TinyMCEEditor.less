@@ -1,0 +1,182 @@
+@primary500: #1456F1;
+@surface400: #DEDEDE;
+
+@border-color: @surface400;
+@error-border-color: #d46464;
+@focused-border-color: @primary500;
+@epi-drag-border-active: @primary500;
+
+.Sleek {
+
+    .mce-tooltip-inner {
+        word-break: break-word;
+        overflow: hidden;
+    }
+
+    .epi-tinymce-inline-toolbar {
+        position: absolute;
+        z-index: 600;
+    }
+
+    &.epi-addon-tinymce--fullscreen {
+        // TinyMCE has multiple issues open relating to their getPos function when the body is not static
+        // https://github.com/tinymce/tinymce/issues/3248
+        // https://github.com/tinymce/tinymce/issues/3802
+        position: static;
+
+        .dijitAlignBottom,
+        .dijitAlignTop,
+        .dijitSplitter,
+        .epi-localToolbar,
+        .epi-navigation-container,
+        .epi-pinnable,
+        .epi-static-node{
+            z-index: -1 !important;
+        }
+        .epi-form-container .dijitTabContainer {
+            overflow: hidden;
+        }
+        .epi-iframe--overflow {
+            z-index: 0;
+        }
+
+        .epiTinyMCEInlineEditor .editor-notification-container {
+            .mce-notification {
+                position: fixed;
+                top: 139px !important;
+            }
+        }
+    }
+
+    .dashed-drop-border {
+        border-color: @epi-drag-border-active;
+        border-style: dashed;
+        box-shadow: none;
+    }
+
+    .solid-drop-border {
+        border-color: @epi-drag-border-active;
+        border-style: solid;
+    }
+
+    // A bug on _CssStateMixin: It always set baseClass to domNode even if we state the stateNode
+    .epiTinyMCEEditor.dijitContainer {
+        display: inline-block;
+        overflow: visible; // Needed for focus border
+        position: relative; // Needed for overlay positioning
+
+        .epiTinyMCEEditor {
+            border: 2px solid @border-color;
+
+            .mce-tinymce {
+                border: none;
+                box-shadow: none;
+            }
+
+            &.epiTinyMCEEditorFocused {
+                border-color: @focused-border-color;
+                box-shadow: 0 0 0 1px @focused-border-color;
+
+                transition-duration: .1s;
+            }
+
+            &.epiTinyMCEEditorError {
+                border-color: @error-border-color;
+            }
+
+            &.epiTinyMCEEditorAllowed {
+                .dashed-drop-border;
+            }
+
+            &.epiTinyMCEEditorDragged {
+                .solid-drop-border;
+            }
+        }
+
+        &.epiTinyMCEEditorFullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+        }
+    }
+
+    .epiTinyMCEInlineEditor {
+
+        .epiTinyMCEInlineEditorError {
+            border: solid 1px @error-border-color;
+        }
+
+        .mce-tinymce.mce-container.mce-panel {
+            &,
+            .mce-edit-area {
+                // Override the inline 'border-width: 1px;' style from tinyMCE
+                border-width: 0 !important;
+            }
+        }
+    }
+
+    .epiTinyMCEEditorWrapper {
+        .epi-overlay-item-container {
+            &.epiTinyMCEEditorAllowed {
+                .dashed-drop-border;
+            }
+
+            &.epiTinyMCEEditorDragged {
+                .solid-drop-border;
+            }
+        }
+    }
+
+    .mce-toolbar {
+        .mce-active {
+            .mce-ico.epi-iconUsers {
+                background-position-x: -16px;
+            }
+        }
+    }
+
+    .epi-collection-editor--dialog .epiTinyMCEEditor table.mceLayout {
+        // This is needed to keep TinyMCE editors inside the dialog width
+        // We are using !important because the original width is defined in inline styles
+        max-width: 461px !important;
+    }
+
+    .epi-lfw-dialog .epiTinyMCEEditor.dijitContainer {
+        display: block;
+    }
+
+    &.dojoDndCopy,
+    &.dojoDndMove {
+        .epiTinyMCEEditor .epiTinyMCEEditor {
+            border-color: @epi-drag-border-active;
+            border-style: dashed;
+
+            &.epiTinyMCEEditorFocused {
+                box-shadow: none;
+            }
+
+            &.epi-dropTargetDisabled {
+                border-color: @border-color;
+                border-style: solid;
+            }
+        }
+    }
+
+    .epiTinyMCEInlineEditor .editor-notification-container,
+    .epiTinyMCEEditor .editor-notification-container {
+        position: absolute;
+        padding: 5px;
+        left: 0;
+        right: 0;
+
+        .mce-notification {
+            position: relative;
+            width: 100%;
+            left: inherit !important;
+            top: inherit !important;
+            max-width: inherit !important;
+        }
+    }
+}

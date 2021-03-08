@@ -1,2 +1,0 @@
-//>>built
-define("epi-cms/content-approval/command/AbortReview",["dojo/_base/declare","epi/i18n!epi/nls/episerver.cms.contentapproval.command.abortreview","epi-cms/contentediting/ContentActionSupport","epi-cms/contentediting/command/_ChangeContentStatus"],function(_1,_2,_3,_4){return _1([_4],{label:_2.label,iconClass:"epi-iconWarning",action:_3.saveAction.CheckOut|_3.saveAction.SkipValidation});});

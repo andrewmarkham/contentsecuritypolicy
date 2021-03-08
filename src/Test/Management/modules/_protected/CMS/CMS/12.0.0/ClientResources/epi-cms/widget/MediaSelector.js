@@ -1,2 +1,0 @@
-//>>built
-define("epi-cms/widget/MediaSelector",["dojo/_base/declare","dojo/on","dojo/when","epi-cms/widget/ContentSelector","epi-cms/widget/SelectableMediaComponent"],function(_1,on,_2,_3,_4){return _1([_3],{contentClass:"epi-wrapped epi-mediaSelector",dialogClass:null,createDialogContent:function(){var _5=new _4({repositoryKey:this.repositoryKey,allowedTypes:this.allowedTypes});this.own(on(_5,"data-changed",function(_6){this._setDialogButtonState(_6);}.bind(this)));return _5;},setInitialValue:function(){this.contentSelectorDialog.setInitialValue();}});});

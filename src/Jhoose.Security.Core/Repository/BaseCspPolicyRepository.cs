@@ -42,5 +42,9 @@ namespace Jhoose.Security.Core.Repository
                 this.Update(p);
             }
         }
+
+        public abstract CspSettings Settings();
+
+        public abstract bool SaveSettings(CspSettings settings);
     }
 }

@@ -1,2 +1,0 @@
-//>>built
-define("epi/assign",[],function(){if(typeof Object.assign!=="function"){Object.defineProperty(Object,"assign",{value:function assign(_1,_2){"use strict";if(_1==null){throw new TypeError("Cannot convert undefined or null to object");}var to=Object(_1);for(var _3=1;_3<arguments.length;_3++){var _4=arguments[_3];if(_4!=null){for(var _5 in _4){if(Object.prototype.hasOwnProperty.call(_4,_5)){to[_5]=_4[_5];}}}}return to;},writable:true,configurable:true});}return Object.assign;});

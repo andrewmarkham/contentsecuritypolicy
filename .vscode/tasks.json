@@ -5,7 +5,8 @@
             "label": "BuildAll",
             "dependsOrder": "sequence",
             "dependsOn": [
-                "build"
+                "build",
+                "copy"
             ],
             "problemMatcher": []
         },
@@ -18,6 +19,17 @@
                 "${workspaceFolder}/src/Test/Management/EpiserverAdmin.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "copy",
+            "command": "cp",
+            "type": "shell",
+            "args": [
+                "-R",
+                "'${workspaceFolder}/src/Jhoose.Security/dist/Jhoose.Security'",
+                "'${workspaceFolder}/src/Test/Management/modules/_protected'"
             ],
             "problemMatcher": "$msCompile"
         },

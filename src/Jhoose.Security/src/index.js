@@ -30,6 +30,15 @@ app.get('/api/csp', async (req, res) => {
   res.json(policies);
 })
 
+app.get('/api/csp/settings', async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  var settings = {mode: "on", reportingUrl: "http://www.bbc.co.uk/"  }
+
+  await snooze(1500);
+  res.json(settings);
+})
+
 var jsonParser = bodyParser.json()
 app.post('/api/csp',jsonParser, async (req, res) => {
   
@@ -37,6 +46,17 @@ app.post('/api/csp',jsonParser, async (req, res) => {
   var data = req.body;
 
   policiesCol.update(data);
+  
+  res.setHeader('Content-Type', 'application/json');
+
+  await snooze(1500);
+  res.json(data);
+})
+
+app.post('/api/csp/settings',jsonParser, async (req, res) => {
+  
+  var data = req.body;
+  console.log(data);
   
   res.setHeader('Content-Type', 'application/json');
 

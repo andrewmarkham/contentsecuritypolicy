@@ -39,5 +39,24 @@ namespace Jhoose.Security.Controllers
         {
             return Ok(this.policyRepository.Update(policy)) ;
         }
+
+
+        [HttpGet]
+        [ProducesResponseType(typeof(CspSettings),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CspSettings),StatusCodes.Status500InternalServerError)]
+        [Route("settings")]
+        public ActionResult<CspSettings> Settings()
+        {
+            return Ok(this.policyRepository.Settings());
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(CspSettings),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CspSettings),StatusCodes.Status500InternalServerError)]
+        [Route("settings")]
+        public ActionResult<CspSettings> Settings(CspSettings settings)
+        {
+            return Ok(this.policyRepository.SaveSettings(settings));
+        }
     }
 }

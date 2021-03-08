@@ -28,7 +28,8 @@ using Test.ContentDomain;
 namespace EpiserverAdmin
 {
     public class Startup
-    {        private readonly IWebHostEnvironment _webHostingEnvironment;
+    {
+        private readonly IWebHostEnvironment _webHostingEnvironment;
         private readonly IConfiguration _configuration;
 
         public Startup(IWebHostEnvironment webHostingEnvironment, IConfiguration configuration)
@@ -49,7 +50,7 @@ namespace EpiserverAdmin
                 o.SetConnectionString(connectionstring);
             });
 
-            services.Configure<ClientResourceOptions>(o => 
+            services.Configure<ClientResourceOptions>(o =>
             {
                 o.Debug = true;
             });
@@ -70,7 +71,7 @@ namespace EpiserverAdmin
             services.AddAlloy();
             services.AddCms();
 
-            services.AddJhooseSecurity();
+            services.AddJhooseSecurity(_configuration);
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -98,7 +99,7 @@ namespace EpiserverAdmin
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -108,7 +109,7 @@ namespace EpiserverAdmin
             app.UseAuthorization();
 
             app.UseJhooseSecurity();
-            
+
             app.UseEndpoints(endpoints =>
             {
 

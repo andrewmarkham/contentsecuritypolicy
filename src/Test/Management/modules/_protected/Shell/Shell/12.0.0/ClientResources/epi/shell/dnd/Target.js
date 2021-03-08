@@ -1,2 +1,0 @@
-//>>built
-define("epi/shell/dnd/Target",["dojo/_base/declare","dojo/dom-class","./Source"],function(_1,_2,_3){return _1([_3],{allowMultipleItems:false,checkAcceptance:function(_4,_5){if(!this.allowMultipleItems&&_5.length>1){return false;}else{return this.inherited(arguments);}},constructor:function(_6,_7){this.isSource=false;_2.remove(this.node,"dojoDndSource");}});});
