@@ -36,8 +36,8 @@ fieldset {
 }
 
 #csp-root {
-    height:100vh;
-    padding-top: 70px;
+    height:calc(100vh - 70px);
+    padding-top: 0px;
 }
 
 .content-end {
@@ -57,4 +57,12 @@ fieldset {
 
 .editDialog .summary {
     min-width: 40vw;
+}
+
+pre {
+    word-break: break-all; 
+word-wrap: break-word;
+white-space: pre;
+white-space: -moz-pre-wrap; 
+white-space: pre-wrap;
 }

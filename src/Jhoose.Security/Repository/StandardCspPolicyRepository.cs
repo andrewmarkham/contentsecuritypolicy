@@ -41,6 +41,7 @@ namespace Jhoose.Security.Repository
         {
             this.cache = cache;
             this.dataStoreFactory = dataStoreFactory;
+            
         }
 
         public override void Bootstrap()
@@ -50,12 +51,15 @@ namespace Jhoose.Security.Repository
             Remap<CspOptions>();
             Remap<SchemaSource>();
             Remap<CspSettings>();
-
+            Remap<SandboxOptions>();
+            
             base.Bootstrap();
         }
         
         public override List<CspPolicy> List()
         {
+ 
+            //store.Value.DeleteAll();
             var policies = store.Value.LoadAll<CspPolicy>();
 
             return policies.ToList();

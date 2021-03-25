@@ -6,7 +6,12 @@ import { EditCspItem } from './editcspitem';
 
 export function CspDataGrid(props) {
 
-    const dummy = { "id": "a5780475-6944-429d-bf5c-ac417d274e11", "policyName": "default-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>The default-src directive defines the default policy for fetching resources such as JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media. Not all directives fallback to default-src.</p>" }; 
+    const dummy = { "id": "a5780475-6944-429d-bf5c-ac417d274e11", "policyName": "default-src","reportOnly": false, 
+        "schemaSource": null, 
+        "value": "", 
+        "options": null, 
+        "summaryText": "<p>The default-src directive defines the default policy for fetching resources such as JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media. Not all directives fallback to default-src.</p>" }; 
+    
     const {data, save} = {...props};
     const [isEditOpen, setIsEditOpen] = useState(false);
 
@@ -15,13 +20,6 @@ export function CspDataGrid(props) {
     return(
         <>
         <DataTable disabled={props.disabled} >
-            {/*}
-            <DataTableToolbar>
-                <DataTableToolbarPrimaryActions>
-
-                </DataTableToolbarPrimaryActions>
-            </DataTableToolbar>
-            */}
             <DataTableContent>
                 <DataTableHeaderRow>
                     <DataTableColumnHeaderCell>

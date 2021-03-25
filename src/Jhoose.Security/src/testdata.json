@@ -1,5 +1,5 @@
 [
-    { "id": "a5780475-6944-429d-bf5c-ac417d274e11", "policyName": "default-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>The default-src directive defines the default policy for fetching resources such as JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media. Not all directives fallback to default-src.</p>" },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e10", "policyName": "default-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>The default-src directive defines the default policy for fetching resources such as JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media. Not all directives fallback to default-src.</p>" },
     { "id": "a5780475-6944-429d-bf5c-ac417d274e12", "policyName": "script-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources of JavaScript.</p>"  },
     { "id": "a5780475-6944-429d-bf5c-ac417d274e13", "policyName": "style-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources of stylesheets or CSS.</p>"  },
 
@@ -9,13 +9,55 @@
     { "id": "a5780475-6944-429d-bf5c-ac417d274e16", "policyName": "font-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources of font resources (loaded via @font-face).</p>"  },
     { "id": "a5780475-6944-429d-bf5c-ac417d274e17", "policyName": "object-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources of plugins, eg <object>, <embed> or <applet>.</p>"  },
     { "id": "a5780475-6944-429d-bf5c-ac417d274e18", "policyName": "media-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources of audio and video, eg HTML5 <audio>, <video> elements.</p>"  },
-    { "id": "a5780475-6944-429d-bf5c-ac417d274e19", "policyName": "frame-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources for loading frames. In CSP Level 2 frame-src was deprecated in favor of the child-src directive. CSP Level 3, has undeprecated frame-src and it will continue to defer to child-src if not present.</p>"  },
-    { "id": "a5780475-6944-429d-bf5c-ac417d274e20", "policyName": "sandbox","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Enables a sandbox for the requested resource similar to the iframe sandbox attribute. The sandbox applies a same origin policy, prevents popups, plugins and script execution is blocked. You can keep the sandbox value empty to keep all restrictions in place, or add values: allow-forms allow-same-origin allow-scripts allow-popups, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-presentation, allow-popups-to-escape-sandbox, and allow-top-navigation</p>"  },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e19", 
+        "policyName": "frame-src",
+        "reportOnly": false, 
+        "schemaSource": { 
+            "enabled": false, 
+            "http": false, 
+            "https": false, 
+            "data": false, 
+            "mediastream": false, 
+            "blob": false, 
+            "filesystem": false 
+        }, 
+            "value": "", 
+            "options": { 
+                "wildcard": false, 
+                "none": false, 
+                "self": false, 
+                "unsafeEval": false, 
+                "unsafeHashes": false, 
+                "unsafeInline": false, 
+                "strictDynamic": false, 
+                "nonce": false 
+                }, 
+            "summaryText": "<p>Defines valid sources for loading frames. In CSP Level 2 frame-src was deprecated in favor of the child-src directive. CSP Level 3, has undeprecated frame-src and it will continue to defer to child-src if not present.</p>"  
+        },
+
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e20", 
+        "policyName": "sandbox",
+        "reportOnly": false, 
+        "sandboxOptions": {
+            "enabled": false,
+            "allowForms": false ,
+            "allowSameOrigin" : false, 
+            "allowScripts" : false ,
+            "allowPopups": false  ,
+            "allowModals": false ,
+            "allowOrientationLock": false,  
+            "allowPointerLock": false ,
+            "allowPresentation": false ,
+            "allowPopupsToEscapeSandbox": false, 
+            "allowTopNavigation": false ,
+            "allowTopNavigationByUserActivation": false 
+        },
+        "summaryText": "<p>Enables a sandbox for the requested resource similar to the iframe sandbox attribute. The sandbox applies a same origin policy, prevents popups, plugins and script execution is blocked. You can keep the sandbox value empty to keep all restrictions in place, or add values: allow-forms allow-same-origin allow-scripts allow-popups, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-presentation, allow-popups-to-escape-sandbox, and allow-top-navigation</p>"  },
+
     { "id": "a5780475-6944-429d-bf5c-ac417d274e21", "policyName": "child-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources for web workers and nested browsing contexts loaded using elements such as <frame> and <iframe></p>"  },
 
     { "id": "a5780475-6944-429d-bf5c-ac417d274e22", "policyName": "form-action","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources that can be used as an HTML <form> action.</p>"  },
     { "id": "a5780475-6944-429d-bf5c-ac417d274e23", "policyName": "frame-ancestors","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources for embedding the resource using <frame> <iframe> <object> <embed> <applet>. Setting this directive to 'none' should be roughly equivalent to X-Frame-Options: DENY</p>"  },
-    { "id": "a5780475-6944-429d-bf5c-ac417d274e24", "policyName": "plugin-types","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid MIME types for plugins invoked via <object> and <embed>. To load an <applet> you must specify application/x-java-applet.</p>"  },
     { "id": "a5780475-6944-429d-bf5c-ac417d274e25", "policyName": "base-uri","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines a set of allowed URLs which can be used in the src attribute of a HTML base tag.</p>"  },
 
     { "id": "a5780475-6944-429d-bf5c-ac417d274e26", "policyName": "worker-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Restricts the URLs which may be loaded as a Worker, SharedWorker or ServiceWorker.</p>"  },

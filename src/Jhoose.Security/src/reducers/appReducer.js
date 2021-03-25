@@ -12,7 +12,7 @@ export const appReducer = (state, action) => {
       }
     } else if (action.actionType === "saved") { 
 
-      var newPolicies = merge(state.data);
+      var newPolicies = merge(state.data, action.data);
 
       return {
         ...state,
@@ -96,12 +96,15 @@ export const appReducer = (state, action) => {
     return state;
   };
   
-  function merge(data) {
+  function merge(data, updatedRecord) {
     return data.map(p => {
-        if (p.id === data.id){
-          var newPolicy = Object.assign(p, data);
-          newPolicy.options = Object.assign(p.options, data.options);
-  
+        if (p.id === updatedRecord.id){
+
+          var newPolicy = Object.assign(p, updatedRecord);
+          newPolicy.options = updatedRecord.options != null ? Object.assign(p.options, updatedRecord.options) : null;
+          newPolicy.sandboxOptions = updatedRecord.sandboxOptions != null ? Object.assign(p.sandboxOptions, updatedRecord.sandboxOptions) : null;
+          newPolicy.schemaSource = updatedRecord.schemaSource != null ? Object.assign(p.schemaSource, updatedRecord.schemaSource) : null;
+
           return newPolicy;
   
         } else {
