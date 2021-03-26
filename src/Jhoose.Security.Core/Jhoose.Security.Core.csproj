@@ -17,8 +17,8 @@
     <RestoreSources>
       $(RestoreSources);
       https://pkgs.dev.azure.com/EpiserverEngineering/netCore/_packaging/beta-program/nuget/v3/index.json;
-      https://api.nuget.org/v3/index.json
-      http://nuget.episerver.com/feed/packages.svc
+      https://api.nuget.org/v3/index.json;
+      http://nuget.episerver.com/feed/packages.svc;
     </RestoreSources>
 
   </PropertyGroup>
