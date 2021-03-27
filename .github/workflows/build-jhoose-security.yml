@@ -17,7 +17,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-              
+
     - name: Build
       working-directory: ./src/Jhoose.Security
       run: dotnet build --configuration Release
@@ -36,6 +36,6 @@ jobs:
         # user account
         gh-user: 'andrewmarkham'
         # access token
-        token: ${{ secrets.PACKAGE_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         # skip publishing duplicated package(s)
         skip-duplicate: true
