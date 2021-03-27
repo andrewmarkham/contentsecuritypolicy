@@ -35,9 +35,9 @@ jobs:
         # Path of NuPkg
         nupkg-path: ./**/Jhoose.Security.Core*.nupkg
         # package repository owner
-        repo-owner: '@andrewmarkham'
+        repo-owner: 'andrewmarkham'
         # user account
-        gh-user: '@andrewmarkham'
+        gh-user: 'andrewmarkham'
         # access token
         token: ${{ secrets.PACKAGE_TOKEN }}
         # skip publishing duplicated package(s)
