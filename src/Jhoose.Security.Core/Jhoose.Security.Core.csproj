@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
 
     <PackageId>Jhoose.Security.Core</PackageId>
+    <RepositoryUrl>https://nuget.pkg.github.com/andrewmarkham</RepositoryUrl>
     <Version>0.1.0-alpha.1</Version>
     <Authors>Andrew Markham</Authors>
     
@@ -28,3 +29,6 @@
   <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.2.0" />
 </ItemGroup>
 </Project>
+
+
+d74b27612e5ef9eafaaf23cb29d60621622227cd
