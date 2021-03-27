@@ -18,12 +18,12 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      working-directory: ./src/Jhoose.Security.Core
+      working-directory: ./src/Jhoose.Security
       run: dotnet restore
       
     - name: Build
-      working-directory: ./src/Jhoose.Security.Core
-      run: dotnet build --no-restore
+      working-directory: ./src/Jhoose.Security
+      run: dotnet build --configuration Release --no-restore
       
     - name: Test
       working-directory: ./src
@@ -33,7 +33,7 @@ jobs:
       uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
       with:
         # Path of NuPkg
-        nupkg-path: ./**/Jhoose.Security.Core*.nupkg
+        nupkg-path: ./**/Jhoose.Security*.nupkg
         # package repository owner
         repo-owner: 'andrewmarkham'
         # user account
