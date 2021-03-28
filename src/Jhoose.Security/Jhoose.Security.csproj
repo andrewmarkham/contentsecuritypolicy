@@ -40,7 +40,7 @@
     <ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
   </ItemGroup>
 
-<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
     <Exec Command="npm run publish" />
 </Target>
 
