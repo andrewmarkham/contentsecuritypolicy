@@ -23,12 +23,15 @@ jobs:
       run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
 
     - name: Use Node.js 14.4.0
-      working-directory: ./src/Jhoose.Security
       uses: actions/setup-node@v1
       with:
         node-version: 14.4.0  
-    - run: npm install 
-    - run: npm run publish
+
+    - name: Run node
+      working-directory: ./src/Jhoose.Security
+    - run: |
+       npm install 
+       npm run publish
 
     - name: Build
       working-directory: ./src/Jhoose.Security
