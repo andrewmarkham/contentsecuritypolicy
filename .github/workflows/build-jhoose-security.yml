@@ -29,7 +29,8 @@ jobs:
 
     - name: Client Packages
       working-directory: ./src/Jhoose.Security
-      run: npm run publish
+    - run: npm install 
+    - run: npm run publish
 
     - name: Build
       working-directory: ./src/Jhoose.Security
