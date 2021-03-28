@@ -17,13 +17,10 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Restore dependencies
-      working-directory: ./src/Jhoose.Security.Core
-      run: dotnet restore
-      
+
     - name: Build
       working-directory: ./src/Jhoose.Security.Core
-      run: dotnet build --no-restore
+      run: dotnet build --configuration Release
       
     - name: Test
       working-directory: ./src
@@ -39,6 +36,6 @@ jobs:
         # user account
         gh-user: 'andrewmarkham'
         # access token
-        token: ${{ secrets.PACKAGE_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         # skip publishing duplicated package(s)
         skip-duplicate: true

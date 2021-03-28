@@ -1,0 +1,56 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+
+    - name: Configure Source
+      working-directory: ./src/Jhoose.Security
+      run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
+
+    - name: Use Node.js 14.4.0
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.4.0  
+
+    - name: Run node
+      working-directory: ./src/Jhoose.Security
+      run: |
+       npm install 
+       npm run publish
+
+    - name: Build
+      working-directory: ./src/Jhoose.Security
+      run: dotnet build --configuration Release
+      
+    - name: Test
+      working-directory: ./src
+      run: dotnet test --no-build --verbosity normal
+      
+    - name: Push Nupkg to GitHub Packages
+      uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
+      with:
+        # Path of NuPkg
+        nupkg-path: ./**/Jhoose.Security*.nupkg
+        # package repository owner
+        repo-owner: 'andrewmarkham'
+        # user account
+        gh-user: 'andrewmarkham'
+        # access token
+        token: ${{ secrets.GITHUB_TOKEN }}
+        # skip publishing duplicated package(s)
+        skip-duplicate: true

@@ -4,7 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
 
     <PackageId>Jhoose.Security.Core</PackageId>
-    <RepositoryUrl>https://nuget.pkg.github.com/andrewmarkham</RepositoryUrl>
+    <RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
     <Version>0.1.0-alpha.1</Version>
     <Authors>Andrew Markham</Authors>
     
