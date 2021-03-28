@@ -20,7 +20,7 @@ jobs:
 
     - name: Configure Source
       working-directory: ./src/Jhoose.Security
-      run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --username andrewmarkham --password ${{ secrets.GITHUB_TOKEN }}
+      run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
 
     - name: Build
       working-directory: ./src/Jhoose.Security
