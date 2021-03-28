@@ -24,11 +24,9 @@ jobs:
 
     - name: Use Node.js 14.4.0
       uses: actions/setup-node@v1
+      working-directory: ./src/Jhoose.Security
       with:
         node-version: 14.4.0
-
-    - name: Client Packages
-      working-directory: ./src/Jhoose.Security
     - run: npm install 
     - run: npm run publish
 
