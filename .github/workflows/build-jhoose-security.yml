@@ -29,7 +29,7 @@ jobs:
 
     - name: Run node
       working-directory: ./src/Jhoose.Security
-    - run: |
+      run: |
        npm install 
        npm run publish
 
