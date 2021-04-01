@@ -15,8 +15,11 @@ namespace Jhoose.Security.DependencyInjection
 {
     public static class SecurityExtensions
     {
-        public static IServiceCollection AddJhooseSecurity(this IServiceCollection services, IConfiguration configuration, Action<SecurityOptions> options = null)
+        public static IServiceCollection AddJhooseSecurity(this IServiceCollection services, 
+                IConfiguration configuration, 
+                Action<SecurityOptions> options = null)
         {
+            Action<SecurityOptions> defaultOptions = (op) =>  op.ExclusionPaths = new List<string> { "/episerver", "/admin" };
 
             services.AddHostedService<InitialiseHostedService>();
 
@@ -26,7 +29,14 @@ namespace Jhoose.Security.DependencyInjection
             }
             else
             {
-                services.Configure<SecurityOptions>(configuration.GetSection(SecurityOptions.JhooseSecurity));
+                var configOptions = configuration.GetSection(SecurityOptions.JhooseSecurity);
+
+                if (configOptions.Value == null) {
+                    services.Configure<SecurityOptions>(defaultOptions);
+                }
+                else {
+                    services.Configure<SecurityOptions>(configOptions);
+                }
             }
 
             services.Configure<ProtectedModuleOptions>(m =>

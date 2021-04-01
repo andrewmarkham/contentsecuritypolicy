@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  BUILD_NO: 1.0.0
+  BUILD_NO: 1.0.0.r${{GITHUB_RUN_NUMBER}}
 
 jobs:
   build:
