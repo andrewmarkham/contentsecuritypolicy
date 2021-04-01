@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
  
 env:
   BUILD_NO: 1.0.0.r${{GITHUB_RUN_NUMBER}}
