@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_NO: 1.0.0.r${{ github.run_number }}
-
+  BUILD_NO: 1.0.0-rc.${{ github.run_number }}
+  
 jobs:
   build:
 
