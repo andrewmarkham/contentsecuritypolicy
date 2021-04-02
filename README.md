@@ -60,5 +60,11 @@ It is possible to get a nonce added to your inline `<script>` and `<style>` tags
 ----
 
 ## Admin Interface
+
+
+![image](./documentation/images/policies.png)
+
+![image](./documentation/images/edit-policy.png)
+
 ![image](./documentation/images/settings.png)
 
