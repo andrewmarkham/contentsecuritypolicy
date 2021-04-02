@@ -56,3 +56,9 @@ It is possible to get a nonce added to your inline `<script>` and `<style>` tags
 ``` html
 <script nonce src="/assets/js/jquery.min.js"></script>
 ```
+
+----
+
+## Admin Interface
+![image](./documentation/images/settings.png)
+
