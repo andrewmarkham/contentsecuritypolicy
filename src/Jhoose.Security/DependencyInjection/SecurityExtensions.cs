@@ -19,7 +19,7 @@ namespace Jhoose.Security.DependencyInjection
                 IConfiguration configuration, 
                 Action<SecurityOptions> options = null)
         {
-            Action<SecurityOptions> defaultOptions = (op) =>  op.ExclusionPaths = new List<string> { "/episerver", "/admin" };
+            Action<SecurityOptions> defaultOptions = (op) =>  op.ExclusionPaths = new List<string> { "/episerver" };
 
             services.AddHostedService<InitialiseHostedService>();
 
