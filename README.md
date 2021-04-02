@@ -61,10 +61,29 @@ It is possible to get a nonce added to your inline `<script>` and `<style>` tags
 
 ## Admin Interface
 
+### Policies
+Display all the policies and view a summary of the settings for each one.
+
 
 ![image](./documentation/images/policies.png)
 
+
+----
+
+### Edit Policy
+
+sdfsdf
+
 ![image](./documentation/images/edit-policy.png)
+
+
+----
+
+### Settings
+
+sdf
 
 ![image](./documentation/images/settings.png)
 
+
+sdf
