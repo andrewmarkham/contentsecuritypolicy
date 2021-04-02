@@ -64,24 +64,20 @@ It is possible to get a nonce added to your inline `<script>` and `<style>` tags
 ### Policies
 Display all the policies and view a summary of the settings for each one.
 
-
 ![image](./documentation/images/policies.png)
-
 
 ----
 
 ### Edit Policy
-
-sdfsdf
+Dialog box to edit an individual policy.
 
 ![image](./documentation/images/edit-policy.png)
-
 
 ----
 
 ### Settings
 
-sdf
+Settings of the admin tool.
 
 ![image](./documentation/images/settings.png)
 
