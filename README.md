@@ -14,9 +14,6 @@ This repository contains an Episerver plugin to manage and deliver the content s
   
 ----
 
-## License
-TODO
-
 ## Installation
 
 Install the package directly from the Episerver Nuget repository.  This will install the admin interface along with the middleware to add the CSP header to the response.  
