@@ -12,6 +12,8 @@ This repository contains an Episerver plugin to manage and deliver the content s
 - Global '*report only*' mode, or specify for each policy.
 - Ability to specify paths which are excluded from outputting the policy header.
   
+Review the [Admin Interface](./documentation/admin-interface.md) documentation for more detail on how to manage the policies.
+
 ----
 
 ## Installation
