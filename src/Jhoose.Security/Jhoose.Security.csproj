@@ -1,26 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <PackageId>Jhoose.Security.Admin</PackageId>
     <RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
-    <Version>0.1.0-alpha.15</Version>
+    <Version>1.0.0</Version>
     <Authors>Andrew Markham</Authors>
+	<Description>Interface to manage Content Security Policy </Description>
   
     <Title></Title>
-    <Description></Description>
-    <Tags>Jhoose;Episerver;Content Security Policy</Tags>
-    <ReleaseNotes></ReleaseNotes>
+    <Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
+    <ReleaseNotes>
+		Initial Release
+	</ReleaseNotes>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
     <RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
-      $(RestoreSources);
-      /Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Core/bin/Debug;
-      https://api.nuget.org/v3/index.json;
-      https://pkgs.dev.azure.com/EpiserverEngineering/netCore/_packaging/beta-program/nuget/v3/index.json;
-    </RestoreSources>
+		$(RestoreSources);
+		../Jhoose.Security.Core/bin/Debug;
+		https://api.nuget.org/v3/index.json;
+		https://nuget.optimizely.com/feed/packages.svc;
+	</RestoreSources>
 
   </PropertyGroup>
 
@@ -29,19 +31,20 @@
   </ItemGroup>
 
 <ItemGroup>
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="EPiServer.CMS.Web" Version="12.0.0-inte-020292" />
-    <PackageReference Include="Jhoose.Security.Core" Version="1.*"  Condition=" '$(Configuration)' == 'Release' " />
+    <PackageReference Include="EPiServer.Framework" Version="12.0.3" />
+    <PackageReference Include="Jhoose.Security.Core" Version="1.*" Condition=" '$(Configuration)' == 'Release' " />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
 </ItemGroup>
 
-  <ItemGroup  Condition=" '$(Configuration)' == 'Debug' ">
+  <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
   </ItemGroup>
 
 <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
-    <Exec Command="npm run publish" />
+	<Exec Command="npm run publish" />
 </Target>
 
 <ItemGroup Label="Packaging">

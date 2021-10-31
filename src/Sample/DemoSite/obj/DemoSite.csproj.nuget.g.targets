@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)jhoose.security.admin\1.0.0\build\net5.0\Jhoose.Security.Admin.targets" Condition="Exists('$(NuGetPackageRoot)jhoose.security.admin\1.0.0\build\net5.0\Jhoose.Security.Admin.targets')" />
+    <Import Project="$(NuGetPackageRoot)episerver.cms.ui.visitorgroups\12.0.3\build\net5.0\EPiServer.Cms.UI.VisitorGroups.targets" Condition="Exists('$(NuGetPackageRoot)episerver.cms.ui.visitorgroups\12.0.3\build\net5.0\EPiServer.Cms.UI.VisitorGroups.targets')" />
+    <Import Project="$(NuGetPackageRoot)episerver.cms.ui.settings\12.0.3\build\net5.0\EPiServer.Cms.UI.Settings.targets" Condition="Exists('$(NuGetPackageRoot)episerver.cms.ui.settings\12.0.3\build\net5.0\EPiServer.Cms.UI.Settings.targets')" />
+    <Import Project="$(NuGetPackageRoot)episerver.cms.ui.admin\12.0.3\build\net5.0\EPiServer.Cms.UI.Admin.targets" Condition="Exists('$(NuGetPackageRoot)episerver.cms.ui.admin\12.0.3\build\net5.0\EPiServer.Cms.UI.Admin.targets')" />
+    <Import Project="$(NuGetPackageRoot)episerver.cms.ui\12.0.3\build\net5.0\EPiServer.Cms.UI.targets" Condition="Exists('$(NuGetPackageRoot)episerver.cms.ui\12.0.3\build\net5.0\EPiServer.Cms.UI.targets')" />
+    <Import Project="$(NuGetPackageRoot)episerver.cms.tinymce\3.0.1\build\net5.0\Episerver.Cms.TinyMce.targets" Condition="Exists('$(NuGetPackageRoot)episerver.cms.tinymce\3.0.1\build\net5.0\Episerver.Cms.TinyMce.targets')" />
+  </ImportGroup>
+</Project>

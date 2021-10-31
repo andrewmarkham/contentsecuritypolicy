@@ -1,0 +1,30 @@
+@model List<DemoSite.Models.Pages.ArticlePage>
+
+@foreach (var article in Model)
+{
+    <!-- Post -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2><a href="@Url.ContentUrl(article.ContentLink)">@article.Heading</a></h2>
+                <p>@article.Strapline</p>
+            </div>
+            <div class="meta">
+                <time class="published" datetime='@article.ArticleDate.ToString("yyyy-MM-dd")'>@article.ArticleDate.ToString("MMMM d, yyyy")</time>
+                <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
+            </div>
+        </header>
+        <a href="@Url.ContentUrl(article.ContentLink)" class="image featured">
+            <picture image-reference=article.HeadingImage></picture>
+        </a>
+        <p>@article.Summary</p>
+        
+        <footer>    
+            <ul class="actions">
+                <li><a href="@Url.ContentUrl(article.ContentLink)" class="button large">Continue Reading</a></li>
+            </ul>
+        </footer>
+    </article>
+
+<!-- Post -->
+}
