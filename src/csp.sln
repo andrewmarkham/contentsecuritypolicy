@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jhoose.Security", "Jhoose.Security\Jhoose.Security.csproj", "{3F5EDEDA-79C3-4332-9CAE-7701C0501819}"
 EndProject
@@ -14,6 +14,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{2D7BE326-A9E7-47B0-80F5-3EC293A2B43A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoSite", "Sample\DemoSite\DemoSite.csproj", "{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B5450611-495D-48F0-A1E1-967F51FFEF71}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github", "Github", "{7257D1FA-9515-4055-83D0-4A4DC1CF91E7}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\build-jhoose-security-core.yml = ..\.github\workflows\build-jhoose-security-core.yml
+		..\.github\workflows\build-jhoose-security.yml = ..\.github\workflows\build-jhoose-security.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
