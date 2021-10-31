@@ -1,6 +1,6 @@
 # Content Security Policy for Episerver
 
-This repository contains an Episerver plugin to manage and deliver the content security policy for your site.
+This repository contains an Optimizley plugin to manage and deliver the content security policy for your site.
 
 [![Jhoose Security](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security.yml/badge.svg?branch=main)](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security.yml)
 [![Jhoose Security Core](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security-core.yml/badge.svg?branch=main)](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security-core.yml)
@@ -18,7 +18,7 @@ Review the [Admin Interface](./documentation/admin-interface.md) documentation f
 
 ## Installation
 
-Install the package directly from the Episerver Nuget repository.  This will install the admin interface along with the middleware to add the CSP header to the response.  
+Install the package directly from the Optimizley Nuget repository.  This will install the admin interface along with the middleware to add the CSP header to the response.  
 
 ``` 
 dotnet add package Jhoose.Security.Admin
