@@ -1,4 +1,4 @@
-# Content Security Policy for Episerver
+# Content Security Policy for Optimizley
 
 This repository contains an Optimizley plugin to manage and deliver the content security policy for your site.
 
@@ -57,4 +57,52 @@ It is possible to get a nonce added to your inline `<script>` and `<style>` tags
 
 ``` html
 <script nonce src="/assets/js/jquery.min.js"></script>
+```
+## Recommended Security Headers
+
+The following recommended security headers are now automatically output
+
+```
+Strict-Transport-Security: max-age=31536000;
+X-Frame-Options: deny
+X-Content-Type-Options: nosniff
+X-Permitted-Cross-Domain-Policies: none
+Referrer-Policy: strict-origin-when-cross-origin
+Cross-Origin-Embedder-Policy: require-corp
+Cross-Origin-Opener-Policy: same-origin
+Cross-Origin-Resource-Policy: same-origin
+```
+
+If you need to change the headers, then these are controlled in SecurityOptions class
+
+``` json
+{
+   "ExclusionPaths":[
+      "/episerver"
+   ],
+   "HttpsRedirection":true,
+   "StrictTransportSecurity":{
+      "MaxAge":31536000,
+      "IncludeSubDomains":true
+   },
+   "XFrameOptions":{
+      "Mode":0,
+      "Domain":""
+   },
+   "XPermittedCrossDomainPolicies":{
+      "Mode":0
+   },
+   "ReferrerPolicy":{
+      "Mode":0
+   },
+   "CrossOriginEmbedderPolicy":{
+      "Mode":1
+   },
+   "CrossOriginOpenerPolicy":{
+      "Mode":2
+   },
+   "CrossOriginResourcePolicy":{
+      "Mode":1
+   }
+}
 ```

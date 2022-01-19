@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Jhoose.Security.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Jhoose.Security.Core.Models;
+using Jhoose.Security;
 
 namespace DemoSite
 {
@@ -36,7 +38,9 @@ namespace DemoSite
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
-            services.AddJhooseSecurity(_configuration);
+            services.AddJhooseSecurity(_configuration, options => {
+                options.ReferrerPolicy.Mode = ReferrerPolicyEnum.StrictOriginWhenCrossOrigin;
+            });
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -64,6 +68,10 @@ namespace DemoSite
             {
                 endpoints.MapContent();
             });
+
+            var so = new SecurityOptions();
+            var f = System.Text.Json.JsonSerializer.Serialize<SecurityOptions>(so);
+            
         }
     }
 }

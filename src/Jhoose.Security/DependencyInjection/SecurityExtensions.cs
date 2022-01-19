@@ -59,10 +59,18 @@ namespace Jhoose.Security.DependencyInjection
         {
             var securityOptions = applicationBuilder.ApplicationServices.GetService<IOptions<SecurityOptions>>();
             
-            return applicationBuilder.UseWhen(c => IsValidPath(c, securityOptions.Value.ExclusionPaths), ab =>
+            applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c, securityOptions.Value.ExclusionPaths), ab =>
             {
-                ab.UseMiddleware<SecurityMiddleware>();
+                ab = ab.UseMiddleware<ContentSecurityPolicyMiddleware>();
+                ab.UseMiddleware<SecurityHeadersMiddleware>();
             });
+
+            if (securityOptions.Value.HttpsRedirection)
+            {
+                applicationBuilder.UseHttpsRedirection();
+            }
+            
+            return applicationBuilder;
         }
 
 

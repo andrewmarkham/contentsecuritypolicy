@@ -12,11 +12,11 @@ using System.Collections.Generic;
 
 namespace Jhoose.Security.DependencyInjection
 {
-    public class SecurityMiddleware
+    public class ContentSecurityPolicyMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public SecurityMiddleware(RequestDelegate next)
+        public ContentSecurityPolicyMiddleware(RequestDelegate next)
         {
             _next = next;
         }
