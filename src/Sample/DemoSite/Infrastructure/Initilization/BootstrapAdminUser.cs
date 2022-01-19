@@ -16,9 +16,9 @@ namespace DemoSite.Infrastructure.Initilization
         private readonly UIRoleProvider _uIRoleProvider;
         private readonly UISignInManager _uISignInManager;
 
-        public BootstrapAdminUser(UIUserProvider uIUserProvider, 
+        public BootstrapAdminUser(UIUserProvider uIUserProvider,
             UIUserManager uIUserManager,
-            UISignInManager uISignInManager, 
+            UISignInManager uISignInManager,
             UIRoleProvider uIRoleProvider)
         {
             _uIUserProvider = uIUserProvider;
@@ -29,11 +29,11 @@ namespace DemoSite.Infrastructure.Initilization
 
         public bool CanRunInParallel => false;
 
-        public async Task InitializeAsync(HttpContext httpContext) 
+        public async Task InitializeAsync(HttpContext httpContext)
         {
             if (await IsAnyUserRegistered())
             {
-                
+
                 return;
             }
 
@@ -45,7 +45,7 @@ namespace DemoSite.Infrastructure.Initilization
             var result = await _uIUserProvider.CreateUserAsync(username, "Episerver123!", email, null, null, true);
             if (result.Status == UIUserCreateStatus.Success)
             {
-                foreach(var role in roles)
+                foreach (var role in roles)
                 {
                     var exists = await _uIRoleProvider.RoleExistsAsync(role);
                     if (!exists)
@@ -62,9 +62,9 @@ namespace DemoSite.Infrastructure.Initilization
         private async Task<bool> IsAnyUserRegistered()
         {
             var res = await _uIUserProvider.GetAllUsersAsync(0, 1).ToListAsync();
-           // await _uIUserManager.UnlockUserAsync(res.First());
-           // await _uIUserManager.ResetPasswordAsync(res.First(), "Episerver123!");
-            return res.Count() > 0;
+            // await _uIUserManager.UnlockUserAsync(res.First());
+            // await _uIUserManager.ResetPasswordAsync(res.First(), "Episerver123!");
+            return res.Count > 0;
         }
     }
 }

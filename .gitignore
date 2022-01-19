@@ -26,3 +26,17 @@ src/Jhoose.Security/dist/Jhoose.Security/ClientResources/
 src/Tests/Jhoose.Security.Tests/bin/
 
 src/Tests/Jhoose.Security.Tests/obj/
+
+src/Sample/DemoSite/bin/
+
+src/Sample/DemoSite/modules/
+
+src/Sample/DemoSite/obj/
+
+src/Sample/DemoSite/log.txt
+
+src/Tests/Jhoose.Security.Core.Tests/bin/
+
+src/Tests/Jhoose.Security.Core.Tests/obj/
+
+src/Test/Management/modules/
