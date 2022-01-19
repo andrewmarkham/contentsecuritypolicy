@@ -16,7 +16,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Test/Management/EpiserverAdmin.csproj",
+                "${workspaceFolder}/src/Sample/DemoSite/DemoSite.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -52,7 +52,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/Test/Management/EpiserverAdmin.csproj",
+                "${workspaceFolder}/src/Sample/DemoSite/DemoSite.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

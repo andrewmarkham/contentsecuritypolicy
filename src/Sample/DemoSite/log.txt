@@ -1,2 +1,0 @@
-2021-07-04 21:33:35.897 +01:00 [INF] Running create-cms-database command.
-2021-07-04 21:33:37.683 +01:00 [INF] create-cms-database has completed.
