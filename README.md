@@ -106,3 +106,31 @@ If you need to change the headers, then these are controlled in SecurityOptions 
    }
 }
 ```
+
+### Server Header
+This isn't removed, the reason being twofold
+1. When hosting within Optimizley DXP, the CDN will obfuscate this value anyway.
+2. The approach is different depending on how you are hosintg your site.
+
+#### Kestrel
+``` c#
+    // program.cs
+    .ConfigureWebHostDefaults(webBuilder =>
+    {
+        webBuilder.ConfigureKestrel(o => o.AddServerHeader = false);
+        webBuilder.UseStartup<Startup>();
+    });
+```
+
+#### IIS 10
+``` xml
+<!-- web.config -->
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <security>
+            <requestFiltering removeServerHeader="true" />
+        </security>
+    </system.webServer>
+</configuration>
+```
