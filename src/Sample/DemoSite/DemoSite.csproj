@@ -9,6 +9,7 @@
 		  ../../Jhoose.Security.Core/bin/Debug;
 		  https://api.nuget.org/v3/index.json;
 		  https://nuget.optimizely.com/feed/packages.svc;
+      https://nuget.pkg.github.com/andrewmarkham/index.json;
 	  </RestoreSources>
 	  
   </PropertyGroup>
@@ -25,6 +26,6 @@
     
     <Folder Include="wwwroot\" />
     
-    <PackageReference Include="jhoose.security.admin" Version="1.1.0.2" />
+    <PackageReference Include="jhoose.security.admin" Version="1.1.0.79" />
   </ItemGroup>
 </Project>

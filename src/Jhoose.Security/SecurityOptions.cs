@@ -16,5 +16,18 @@ namespace Jhoose.Security
         public CrossOriginEmbedderPolicyHeader CrossOriginEmbedderPolicy {get;set;} = new CrossOriginEmbedderPolicyHeader();
         public CrossOriginOpenerPolicyHeader CrossOriginOpenerPolicy {get;set;} = new CrossOriginOpenerPolicyHeader();
         public CrossOriginResourcePolicyHeader CrossOriginResourcePolicy{get;set;} = new CrossOriginResourcePolicyHeader();
+
+        public IEnumerable<ResponseHeader> Headers {
+            get {
+                yield return this.StrictTransportSecurity;
+                yield return this.XFrameOptions;
+                yield return this.XContentTypeOptions;
+                yield return this.XPermittedCrossDomainPolicies;
+                yield return this.ReferrerPolicy;
+                yield return this.CrossOriginEmbedderPolicy;
+                yield return this.CrossOriginOpenerPolicy;
+                yield return this.CrossOriginResourcePolicy;
+            }
+        }
     }
 }
