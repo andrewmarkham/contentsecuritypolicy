@@ -86,6 +86,7 @@ If you need to change the headers, then these are controlled in SecurityOptions 
       "IncludeSubDomains":true
    },
    "XFrameOptions":{
+      "Enabled": true,
       "Mode":0,
       "Domain":""
    },
