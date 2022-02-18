@@ -14,18 +14,25 @@
 	  
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="33.0.2" />
-    <PackageReference Include="EPiServer.CMS" Version="12.2.1" />
-    <PackageReference Include="EPiServer.Framework" Version="12.2.0" />
-    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.2.1" />
-    <PackageReference Include="EPiServer.CMS.UI" Version="12.2.1" />
+    <PackageReference Include="Bogus" Version="34.0.1" />
+    <PackageReference Include="EPiServer.CMS" Version="12.3.1" />
+    <PackageReference Include="EPiServer.Framework" Version="12.3.0" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.3.1" />
+    <PackageReference Include="EPiServer.CMS.UI" Version="12.3.1" />
     
-    <PackageReference Include="EPiServer.CMS.UI.VisitorGroups" Version="12.2.1" />
-    <PackageReference Include="EPiServer.CMS.TinyMce" Version="3.0.1" />
-    <PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.2.0" />
+    <PackageReference Include="EPiServer.CMS.UI.VisitorGroups" Version="12.3.1" />
+    <PackageReference Include="EPiServer.CMS.TinyMce" Version="3.1.0" />
+    <PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.3.0" />
     
     <Folder Include="wwwroot\" />
     
-    <PackageReference Include="jhoose.security.admin" Version="1.1.0.79" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

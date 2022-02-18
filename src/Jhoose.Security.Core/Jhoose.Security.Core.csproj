@@ -27,8 +27,8 @@
   </PropertyGroup>
 
 <ItemGroup>
-  <PackageReference Include="EPiServer.Framework" Version="12.2.*" /> 
-  <PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.2.*" /> 
+  <PackageReference Include="EPiServer.Framework" Version="12.*" /> 
+  <PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.*" /> 
   
   <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.*" />
 </ItemGroup>

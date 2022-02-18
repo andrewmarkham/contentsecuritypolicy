@@ -17,26 +17,19 @@ namespace Jhoose.Security.DependencyInjection
     {
         public static IServiceCollection AddJhooseSecurity(this IServiceCollection services, 
                 IConfiguration configuration, 
-                Action<SecurityOptions> options = null)
+                Action<JhooseSecurityOptions> options = null)
         {
-            Action<SecurityOptions> defaultOptions = (op) =>  op.ExclusionPaths = new List<string> { "/episerver" };
+            //Action<JhooseSecurityOptions> defaultOptions = (op) =>  op.ExclusionPaths = new List<string> { "/episerver" };
 
             services.AddHostedService<InitialiseHostedService>();
 
             if (options != null)
             {
-                services.Configure<SecurityOptions>(options);
+                services.Configure<JhooseSecurityOptions>(options);
             }
             else
             {
-                var configOptions = configuration.GetSection(SecurityOptions.JhooseSecurity);
-
-                if (configOptions.Value == null) {
-                    services.Configure<SecurityOptions>(defaultOptions);
-                }
-                else {
-                    services.Configure<SecurityOptions>(configOptions);
-                }
+                services.Configure<JhooseSecurityOptions>(configuration.GetSection(JhooseSecurityOptions.JhooseSecurity));
             }
 
             services.Configure<ProtectedModuleOptions>(m =>
@@ -57,7 +50,7 @@ namespace Jhoose.Security.DependencyInjection
 
         public static IApplicationBuilder UseJhooseSecurity(this IApplicationBuilder applicationBuilder)
         {
-            var securityOptions = applicationBuilder.ApplicationServices.GetService<IOptions<SecurityOptions>>();
+            var securityOptions = applicationBuilder.ApplicationServices.GetService<IOptions<JhooseSecurityOptions>>();
             
             applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c, securityOptions.Value.ExclusionPaths), ab =>
             {

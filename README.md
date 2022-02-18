@@ -76,7 +76,7 @@ Cross-Origin-Resource-Policy: same-origin
 If you need to change the headers, then these are controlled in SecurityOptions class
 
 ``` json
-{
+"JhooseSecurity": {
    "ExclusionPaths":[
       "/episerver"
    ],

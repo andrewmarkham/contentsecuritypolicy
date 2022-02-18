@@ -15,7 +15,7 @@ namespace Jhoose.Security.DependencyInjection
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, IOptions<SecurityOptions> options)
+        public async Task InvokeAsync(HttpContext context, IOptions<JhooseSecurityOptions> options)
         {
             var securityOptions = options.Value;
             
