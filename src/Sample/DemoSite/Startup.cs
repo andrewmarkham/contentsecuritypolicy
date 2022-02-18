@@ -38,9 +38,7 @@ namespace DemoSite
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
-            services.AddJhooseSecurity(_configuration, options => {
-                options.ReferrerPolicy.Mode = ReferrerPolicyEnum.StrictOriginWhenCrossOrigin;
-            });
+            services.AddJhooseSecurity(_configuration);
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -68,10 +66,6 @@ namespace DemoSite
             {
                 endpoints.MapContent();
             });
-
-            var so = new SecurityOptions();
-            var f = System.Text.Json.JsonSerializer.Serialize<SecurityOptions>(so);
-            
         }
     }
 }
