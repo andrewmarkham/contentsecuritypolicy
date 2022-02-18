@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Jhoose.Security.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using Jhoose.Security.Core.Models;
+using Jhoose.Security;
 
 namespace DemoSite
 {

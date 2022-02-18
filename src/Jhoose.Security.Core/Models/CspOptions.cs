@@ -44,7 +44,7 @@ namespace Jhoose.Security.Core.Models
             if(this.UnsafeInline) sb.Append("'unsafe-inline' ");
             if(this.StrictDynamic) sb.Append("'strict-dynamic' ");
 
-            if(this.Nonce) sb.Append("''nonce-{0}'' ");
+            if(this.Nonce) sb.Append("'nonce-{0}' ");
 
             return sb.ToString();
         }

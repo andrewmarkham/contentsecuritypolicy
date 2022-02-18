@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "BuildAll",
-            "program": "${workspaceFolder}/src/Test/Management/bin/Debug/net5.0/EpiserverAdmin.dll",
+            "program": "${workspaceFolder}/src/Sample/DemoSite/bin/Debug/net5.0/DemoSite.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Test/Management",
+            "cwd": "${workspaceFolder}/src/Sample/DemoSite",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

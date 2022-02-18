@@ -14,7 +14,7 @@
   "dependencies": {
     "@episerver/platform-navigation": "^0.8.6",
     "@episerver/ui-framework": "^0.14.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2",
     "body-parser": "^1.19.0",

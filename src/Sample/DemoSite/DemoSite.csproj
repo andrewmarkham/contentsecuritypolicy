@@ -9,16 +9,30 @@
 		  ../../Jhoose.Security.Core/bin/Debug;
 		  https://api.nuget.org/v3/index.json;
 		  https://nuget.optimizely.com/feed/packages.svc;
+      https://nuget.pkg.github.com/andrewmarkham/index.json;
 	  </RestoreSources>
 	  
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Bogus" Version="33.0.2" />
-    <PackageReference Include="EPiServer.CMS" Version="12.0.3" />
-    <PackageReference Include="EPiServer.CMS.UI" Version="12.0.3" />
-    <PackageReference Include="EPiServer.CMS.UI.VisitorGroups" Version="12.0.3" />
-    <PackageReference Include="EPiServer.CMS.TinyMce" Version="3.0.1" />
-	  <PackageReference Include="Jhoose.Security.Admin" Version="1.*" />
+    <PackageReference Include="Bogus" Version="34.0.1" />
+    <PackageReference Include="EPiServer.CMS" Version="12.3.1" />
+    <PackageReference Include="EPiServer.Framework" Version="12.3.0" />
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.3.1" />
+    <PackageReference Include="EPiServer.CMS.UI" Version="12.3.1" />
+    
+    <PackageReference Include="EPiServer.CMS.UI.VisitorGroups" Version="12.3.1" />
+    <PackageReference Include="EPiServer.CMS.TinyMce" Version="3.1.0" />
+    <PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.3.0" />
+    
     <Folder Include="wwwroot\" />
+    
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

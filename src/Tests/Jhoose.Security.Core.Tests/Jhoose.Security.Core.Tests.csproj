@@ -11,18 +11,18 @@
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.13.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
 
-        <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.*" />
+  <ItemGroup>
+    <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.*" />
     <PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.*" /> 
     <PackageReference Include="EPiServer.Framework" Version="12.*" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="NUnit" Version="3.13.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Include="coverlet.collector" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj" />
+    <ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
   </ItemGroup>
-
 </Project>
