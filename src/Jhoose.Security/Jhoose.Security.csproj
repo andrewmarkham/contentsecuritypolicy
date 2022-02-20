@@ -38,7 +38,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0" />
     
-    <PackageReference Include="Jhoose.Security.Core" Version="[1.1.1,2)" Condition=" '$(Configuration)' == 'Release' " />
+    <PackageReference Include="Jhoose.Security.Core" Version="[1.1.1.88,2)" Condition=" '$(Configuration)' == 'Release' " />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0" />
 </ItemGroup>
 
