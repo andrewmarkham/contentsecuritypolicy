@@ -1,3 +1,4 @@
+#if NET5_0_OR_GREATER
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using EPiServer.Shell.Modules;
@@ -10,6 +11,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using System;
 using Jhoose.Security.Core.Cache;
+using Jhoose.Security.Middleware;
+using Jhoose.Security.Services;
 
 namespace Jhoose.Security.DependencyInjection
 {
@@ -19,8 +22,6 @@ namespace Jhoose.Security.DependencyInjection
                 IConfiguration configuration, 
                 Action<JhooseSecurityOptions> options = null)
         {
-            //Action<JhooseSecurityOptions> defaultOptions = (op) =>  op.ExclusionPaths = new List<string> { "/episerver" };
-
             services.AddHostedService<InitialiseHostedService>();
 
             if (options != null)
@@ -44,6 +45,7 @@ namespace Jhoose.Security.DependencyInjection
             services.AddScoped<ICspPolicyRepository, StandardCspPolicyRepository>();
             services.AddScoped<ICspProvider, StandardCspProvider>();
             services.AddSingleton<ICacheManager, EpiserverCacheManager>();
+            services.AddScoped<IJhooseSecurityService,JhooseSecurityService>();
 
             return services;
         }
@@ -82,3 +84,4 @@ namespace Jhoose.Security.DependencyInjection
         }
     }
 }
+#endif

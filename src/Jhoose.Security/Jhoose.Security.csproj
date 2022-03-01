@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net461;net5.0</TargetFrameworks>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <PackageId>Jhoose.Security.Admin</PackageId>
     <RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
@@ -13,7 +13,7 @@
     <Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
     <ReleaseNotes>
 		1.1.0 - Added the ability to output the recommended security headers.
-    1.1.1 - Added option to disable any of the recommended security headers.
+        1.1.1 - Added option to disable any of the recommended security headers.
 	</ReleaseNotes>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -27,14 +27,11 @@
 
   </PropertyGroup>
 
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-<ItemGroup>
+<ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
     <PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.0.3,13)" />
     <PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.0.3,13)" /> 
     <PackageReference Include="EPiServer.Framework" Version="[12.0.3,13)" />
+	
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0" />
     
@@ -42,6 +39,16 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0" />
 </ItemGroup>
 
+	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+		<PackageReference Include="EPiServer.Framework" Version="[11.1.0,12)" />
+		<PackageReference Include="EPiServer.Framework.AspNet" Version="[11.1.0,12)" />
+		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[11.1.0,12)" />
+		<PackageReference Include="EPiServer.ServiceLocation.StructureMap" Version="2.0.3" />
+		<PackageReference Include="Newtonsoft.Json" Version="[9.0.1,14)" />
+
+		<PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
+	</ItemGroup>
+	
   <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
   </ItemGroup>
