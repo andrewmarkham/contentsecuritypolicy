@@ -41,3 +41,4 @@ src/Tests/Jhoose.Security.Core.Tests/obj/
 
 src/Test/Management/modules/
 /.vs
+/src/packages

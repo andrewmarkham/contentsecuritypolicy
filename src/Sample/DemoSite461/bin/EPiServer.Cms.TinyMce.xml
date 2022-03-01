@@ -1,0 +1,567 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EPiServer.Cms.TinyMce</name>
+    </assembly>
+    <members>
+        <member name="T:EPiServer.Cms.TinyMce.Controllers.Internal.ResourceResolverController">
+            <summary>
+            Internal controller that returns the javascript resources for the requested culture
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Controllers.Internal.ResourceResolverController.#ctor(EPiServer.Cms.TinyMce.Core.Internal.IResourceResolver)">
+            <summary>
+            Creates a new instance of <see cref="T:EPiServer.Cms.TinyMce.Controllers.Internal.ResourceResolverController"/>.
+            </summary>
+            <param name="resourceResolver">The language resolver to use</param>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Controllers.Internal.ResourceResolverController.#ctor">
+            <summary>
+            This ctor is only here to handle the case when a webforms site hasn't configured
+            the MVC Dependency resolver
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Controllers.Internal.ResourceResolverController.Index(System.String)">
+            <summary>
+            Returns the javascript containing the resources for the provider culture
+            </summary>
+            <param name="culture">The culture to return the resources for</param>
+            <returns><code>tinymce.addI18n('it-it',{"key": "value"})</code></returns>
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.DefaultValues">
+            <summary>
+            Contains the values used when configuring the default <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/>.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.DefaultValues.Height">
+            <summary>
+            The height setting.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.DefaultValues.Width">
+            <summary>
+            The width setting.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.DefaultValues.EpiserverPlugins">
+            <summary>
+            The Episerver plugins used by the plugins setting.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.DefaultValues.TinyMcePlugins">
+            <summary>
+            The TinyMCE plugins used by the plugins setting.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.DefaultValues.Toolbar">
+            <summary>
+            The toolbar setting.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.DefaultValues.ImageTools">
+            <summary>
+            The image tools.
+            </summary>
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.Internal.IResourceResolver">
+            <summary>
+            Internal interface for loading TinyMCE language files
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.Internal.IResourceResolver.Resolve(System.String)">
+            <summary>
+            Returns the javascript containing the resources for the provider culture
+            </summary>
+            <param name="culture">The culture to return the resources for</param>
+            <returns><code>tinymce.addI18n('it-it',{"key": "value"})</code></returns>
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.Internal.ResourceResolver">
+            <summary>
+            Internal class to load the TinyMCE language files from the assembly resource stream
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.Internal.ResourceResolver.#ctor">
+            <summary>
+            Creates a new instance of <see cref="T:EPiServer.Cms.TinyMce.Core.Internal.ResourceResolver"/>.
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.Internal.ResourceResolver.Resolve(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory">
+            <summary>
+            Factory for personalized content
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory.#ctor(EPiServer.Personalization.IPersonalizedContentFactory)">
+            <summary>
+            Initializes a new instance of the <see cref="T:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory"/> class.
+            </summary>
+            <param name="defaultPersonalizedContentFactory">Default factory implementation</param>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory.#ctor(EPiServer.Framework.Localization.LocalizationService,EPiServer.Personalization.IPersonalizedContentFactory)">
+            <summary>
+            Initializes a new instance of the <see cref="T:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory"/> class.
+            </summary>
+            <param name="localizationService">Localization service</param>
+            <param name="defaultPersonalizedContentFactory">Default factory implementation</param>
+        </member>
+        <member name="P:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory.ContentHolderClassName">
+            <inheritdoc />
+        </member>
+        <member name="P:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory.IdentifyingClassName">
+            <inheritdoc />
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory.GetViewFormat(EPiServer.Core.Html.StringParsing.StringFragmentCollection,EPiServer.Core.Html.StringParsing.ISecuredFragmentMarkupGenerator)">
+            <inheritdoc />
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory.GetInternalFormat(EPiServer.Core.Html.StringParsing.StringFragmentCollection,EPiServer.Core.Html.StringParsing.ISecuredFragmentMarkupGenerator)">
+            <inheritdoc />
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.PersonalizedContentFactory.GetMarkupForEditor(EPiServer.Core.Html.StringParsing.StringFragmentCollection,EPiServer.Core.Html.StringParsing.ISecuredFragmentMarkupGenerator)">
+            <inheritdoc />
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.SettingsTransform">
+            <summary>
+            A transform action that will run when the settings is received for a specific <see cref="T:EPiServer.Core.IContent"/> instance
+            </summary>
+            <param name="settings">The settings object to modify</param>
+            <param name="content">The current content item, could be null</param>
+            <param name="propertyName">The name of the property</param>
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration">
+            <summary>
+            Options class for configuring TinyMCE settings usage.
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration.#ctor(EPiServer.Framework.Serialization.IObjectSerializerFactory)">
+            <summary>
+            Creates a new instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration"/>.
+            </summary>
+            <param name="objectSerializerFactory">The factory for creating an object serializer.</param>
+        </member>
+        <member name="P:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration.InheritSettingsFromAncestor">
+            <summary>
+            If set to true the setting set on the closest ancestor will be used unless a specific setting has been configured
+            If set to false the default setting will be used unless a specific setting has been configured
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration.Default">
+            <summary>
+            Gets a <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> containing the default settings.
+            </summary>
+            <returns>A <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> containing the default settings.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration.Empty">
+            <summary>
+            Gets a empty instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/>
+            </summary>
+            <returns>An empty <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> instance</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration.Get``1(``0,System.String)">
+            <summary>
+            Gets a clone of the <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> for the given property on the given content type.
+            </summary>
+            <remarks>If no settings are configured for the given model property, then a clone of the default settings will be returned.</remarks>
+            <param name="model">The model instance.</param>
+            <param name="propertyName">The name of the property.</param>
+            <typeparam name="T">The type of the content containing the given property.</typeparam>
+            <returns>A clone of the <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> for the given model property if configured; otherwise a clone of the default settings.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration.For``1(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},EPiServer.Cms.TinyMce.Core.TinyMceSettings)">
+            <summary>
+            Sets the <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> for a given property on a given content type.
+            </summary>
+            <param name="property">The property to configure to a settings instance for.</param>
+            <param name="copyFrom">The <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> to use for the given model property. This will override any previous configuration.</param>
+            <typeparam name="T">The type of the content containing the given property.</typeparam>
+            <returns>
+            The <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> that were configured for the given property. If the copyFrom
+            parameter is set then a clone of this will be returned. Otherwise it will return the settings
+            instance associated with the property; falling back to a clone of the default settings if
+            nothing has been previously configured.
+            </returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration.Use``2(System.Linq.Expressions.Expression{System.Func{``0,System.Object}},System.Linq.Expressions.Expression{System.Func{``1,System.Object}})">
+            <summary>
+            Use the <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> from one property for another property.
+            </summary>
+            <param name="from">The property containing the <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> to use.</param>
+            <param name="to">The property to configure.</param>
+            <typeparam name="T">The type of the content containing the source property.</typeparam>
+            <typeparam name="TF">The type of the content containing the target property.</typeparam>
+            <exception cref="T:System.InvalidOperationException">An exception will be thrown when there is no <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> configured for the source property.</exception>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceConfiguration.GetInheritedSettings(System.Type,System.String)">
+            <summary>
+            Get the settings for the original type. If that does not exists try to find it for the closest ancestor.
+            If none of those exists return the Default()
+            </summary>
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.TinyMceInitialization">
+            <summary>
+            The initialization module for the TinyMCE addon.
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceInitialization.Initialize(EPiServer.Framework.Initialization.InitializationEngine)">
+            <inheritdoc />
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceInitialization.Uninitialize(EPiServer.Framework.Initialization.InitializationEngine)">
+            <inheritdoc />
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceInitialization.ConfigureContainer(EPiServer.ServiceLocation.ServiceConfigurationContext)">
+            <inheritdoc />
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.TinyMceResize">
+            <summary>
+            An enumeration of resize values for TinyMCE.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.TinyMceResize.None">
+            <summary>
+            The editor can not be resized.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.TinyMceResize.Vertical">
+            <summary>
+            The editor can be resized only vertically.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.TinyMceResize.Both">
+            <summary>
+            The editor can be resized both horizontally and vertically.
+            </summary>
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.TinyMceSchema">
+            <summary>
+            An enumeration of schema values for TinyMCE.
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.TinyMceSchema.Html5">
+            <summary>
+            HTML5 schema
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.TinyMceSchema.Html4">
+            <summary>
+            HTML4 schema
+            </summary>
+        </member>
+        <member name="F:EPiServer.Cms.TinyMce.Core.TinyMceSchema.Html5Strict">
+            <summary>
+            HTML5 strict schema
+            </summary>
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings">
+            <summary>
+            Configuration options from TinyMCE.
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.#ctor(EPiServer.Framework.Serialization.IObjectSerializerFactory)">
+            <summary>
+            Creates a new instance of TinyMceSettings.
+            </summary>
+            <param name="objectSerializerFactory">SerializationFactory to create object serializer</param>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.#ctor(EPiServer.Cms.TinyMce.Core.TinyMceSettings)">
+            <summary>
+            Creates a new instance of TinyMceSettings.
+            </summary>
+        </member>
+        <member name="P:EPiServer.Cms.TinyMce.Core.TinyMceSettings.SettingsTransforms">
+            <summary>
+            A list of all setting transformations registered for this instance
+            </summary>
+        </member>
+        <member name="P:EPiServer.Cms.TinyMce.Core.TinyMceSettings.PluginSettingsTransforms">
+            <summary>
+            A list of all setting transformations registered for the plugins in this instance
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Clone">
+            <summary>
+            Clones an new instance of TinyMceSettings.
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.AddSetting(System.String,System.Object)">
+            <summary>
+            Adds a setting to this TinyMceSettings instance.
+            </summary>
+            <param name="key">The setting key (e.g. "external_plugins"). Prefer to use a specific method if it exists (e.g. <see cref="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.BodyClass(System.String)"/>).</param>
+            <param name="value">The setting value.</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.BodyClass(System.String)">
+            <summary>
+            CSS class for body of the editor
+            </summary>
+            <param name="bodyClass"></param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.ContentCss(System.String[])">
+            <summary>
+            Extend css into the editable area
+            </summary>
+            <param name="contentCss"></param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.InitializationScript(System.String)">
+            <summary>
+             Add a path to an AMD module that will run on the client when the editor is initialized.
+            </summary>
+            <param name="modulePath">the path to the AMD Module, e.g. app/initscript</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.AddSettingsTransform(System.String,EPiServer.Cms.TinyMce.Core.SettingsTransform)">
+            <summary>
+            Add a transform action that will run when the settings is received for a specific <see cref="T:EPiServer.Core.IContent"/> instance
+            </summary>
+            <param name="name">The name of the transformation</param>
+            <param name="transform">The transformation to run, it will be called with the current <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/>, <see cref="T:EPiServer.Core.IContent"/> and the property name</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.RemoveSettingsTransform(System.String)">
+            <summary>
+            Removes a specific <see cref="T:EPiServer.Cms.TinyMce.Core.SettingsTransform"/>
+            </summary>
+            <param name="name">the name of the transform to remove</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Schema(System.String)">
+            <summary>
+            Schema allows to switch between the HTML4 and HTML5 schema
+            </summary>
+            <param name="schema"></param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Schema(EPiServer.Cms.TinyMce.Core.TinyMceSchema)">
+            <summary>
+            Schema allows to switch between the HTML4 and HTML5 schema
+            </summary>
+            <param name="schema"></param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.AddPlugin(System.String)">
+            <summary>
+            Add plugin to plugins list
+            </summary>
+            <param name="pluginName">The name of the plugin</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.AddPlugin(System.String[])">
+            <summary>
+            Add plugins to plugins list
+            </summary>
+            <param name="plugins">List of plugins to be added</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.AddPlugin(System.String,EPiServer.Cms.TinyMce.Core.SettingsTransform)">
+            <summary>
+            Add plugin to plugins list
+            </summary>
+            <param name="pluginName">The name of the plugin</param>
+            <param name="transform">The transformation to run, it will be called with the current <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/>, <see cref="T:EPiServer.Core.IContent"/> and the property name</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.RemovePlugin(System.String)">
+            <summary>
+            Remove plugin from plugins list and the corresponding <see cref="T:EPiServer.Cms.TinyMce.Core.SettingsTransform"/> if one has been registered with the given pluginName
+            </summary>
+            <param name="pluginName">The name of the plugin</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.ClearPlugins">
+            <summary>
+            Clears the plugins list
+            </summary>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Plugins(System.String[])">
+            <summary>
+            Set plugins list
+            </summary>
+            <param name="plugins"></param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Plugins(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Set plugins list
+            </summary>
+            <param name="plugins"></param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+            <remarks>The <see cref="T:EPiServer.Cms.TinyMce.Core.SettingsTransform"/> that have been registered for the plugins that will removed will also be removed</remarks>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.AddExternalPlugin(System.String,System.String)">
+            <summary>
+            Add an external plugin
+            </summary>
+            <param name="pluginName">Plugin name</param>
+            <param name="pluginPath">An absolute path to the plugin definition file.</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.AddExternalPlugin(System.String,System.String,EPiServer.Cms.TinyMce.Core.SettingsTransform)">
+            <summary>
+            Add an external plugin
+            </summary>
+            <param name="pluginName">Plugin name</param>
+            <param name="pluginPath">An absolute path to the plugin definition file.</param>
+            <param name="transform">The transformation to run, it will be called with the current <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/>, <see cref="T:EPiServer.Core.IContent"/> and the property name</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.DisableMenubar">
+            <summary>
+            Disable the menu bar
+            </summary>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Menubar(System.String)">
+            <summary>
+            Set menu bar actions
+            </summary>
+            <param name="actions">Space separated list of menus</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.RemoveMenuItems(System.String)">
+            <summary>
+            Remove items from menubar
+            </summary>
+            <param name="actions">Space separated list of menus to remove</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.DisableToolbar">
+            <summary>
+            Disable the toolbar
+            </summary>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Toolbar(System.String[])">
+            <summary>
+            Set the toolbar(s)
+            </summary>
+            <param name="toolbar">The toolbars to set</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.AppendToolbar(System.String,System.Int32)">
+            <summary>
+            Add <see paramref="pluginName"/> to the toolbar specified by <see paramref="toolbarIndex"/>
+            </summary>
+            <param name="pluginName">Plugin name</param>
+            <param name="toolbarIndex">Toolbar index</param>
+            <exception cref="T:System.IndexOutOfRangeException">Thrown when <see paramref="toolbarIndex"/> is out of toolbars array range</exception>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.StyleFormats(System.Object[])">
+            <summary>
+            Sets custom style formats
+            </summary>
+            <param name="styleFormats"></param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.BlockFormats(System.String)">
+            <summary>
+            Sets custom block formats
+            </summary>
+            <param name="blockFormats">The block formats to set</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.RawSettings(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Adds or updates settings with the items from the dictionary parameter.
+            </summary>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.RawSettings(System.String)">
+            <summary>
+            Adds or updates settings with the items from the serialized settings JSON string.
+            </summary>
+            <param name="json">A JSON representation of the settings to be applied.</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Width(System.Int32)">
+            <summary>
+            Sets width
+            </summary>
+            <param name="width"></param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Height(System.Int32)">
+            <summary>
+            Sets width
+            </summary>
+            <param name="height"></param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.Resize(EPiServer.Cms.TinyMce.Core.TinyMceResize)">
+            <summary>
+            Sets how the TinyMCE editor can be resized.
+            </summary>
+            <param name="resize">The resize value.</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.AddTransformationError(System.String,EPiServer.Core.IContent,System.String,System.Exception)">
+            <summary>
+            Adds a transformation error
+            </summary>
+            <param name="transformKey">The transformation key</param>
+            <param name="content">The content item</param>
+            <param name="propertyName">The name of the property</param>
+            <param name="exception">The exception</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettings.GetPlugins">
+            <summary>
+            Get the plugins as a list
+            </summary>
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.TinyMceSettingsExtensions">
+            <summary>
+            Extension methods for adding or removing settings for specific features.
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettingsExtensions.EnableImageTools(EPiServer.Cms.TinyMce.Core.TinyMceSettings)">
+            <summary>
+            Enables the Episerver image tools.
+            </summary>
+            <param name="settings">The settings instance.</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettingsExtensions.DisableImageTools(EPiServer.Cms.TinyMce.Core.TinyMceSettings)">
+            <summary>
+            Disables the Episerver image tools.
+            </summary>
+            <param name="settings">The settings instance.</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.TinyMceSettingsExtensions.AddEpiserverSupport(EPiServer.Cms.TinyMce.Core.TinyMceSettings)">
+            <summary>
+            Adds default Episerver settings for plugins and styles
+            </summary>
+            <param name="settings">The settings instance.</param>
+            <returns>The same instance of <see cref="T:EPiServer.Cms.TinyMce.Core.TinyMceSettings"/> modified with the new setting.</returns>
+        </member>
+        <member name="T:EPiServer.Cms.TinyMce.Core.XhtmlStringEditorDescriptor">
+            <summary>
+            Editor descriptor that will configure TinyMCE as the editor for XhtmlString properties.
+            </summary>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.XhtmlStringEditorDescriptor.#ctor(EPiServer.ServiceLocation.ServiceAccessor{EPiServer.Cms.TinyMce.Core.TinyMceConfiguration})">
+            <summary>
+            Initializes a new instance of the <see cref="T:EPiServer.Cms.TinyMce.Core.XhtmlStringEditorDescriptor"/> class.
+            </summary>
+            <param name="tinyMceConfiguration"></param>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.XhtmlStringEditorDescriptor.ModifyMetadata(EPiServer.Shell.ObjectEditing.ExtendedMetadata,System.Collections.Generic.IEnumerable{System.Attribute})">
+            <summary>
+            Modifies the metadata, adding any custom data, validators.
+            </summary>
+            <param name="metadata">The metadata.</param>
+            <param name="attributes">The custom attributes attached to the model class.</param>
+        </member>
+        <member name="M:EPiServer.Cms.TinyMce.Core.XhtmlStringEditorDescriptor.GetOwnerContent(EPiServer.Shell.ObjectEditing.ExtendedMetadata)">
+            <summary>
+            Get the closest owner that is a <see cref="T:EPiServer.Core.IContentData"/>.
+            </summary>
+            <param name="metadata">The metadata.</param>
+        </member>
+    </members>
+</doc>
