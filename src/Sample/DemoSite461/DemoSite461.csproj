@@ -21,7 +21,7 @@
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44323</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -355,7 +355,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj">
+      <Project>{bdb081d5-0c6a-436b-8e99-6e6b57854a2c}</Project>
+      <Name>Jhoose.Security.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
+      <Project>{3f5ededa-79c3-4332-9cae-7701c0501819}</Project>
+      <Name>Jhoose.Security</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\EPiServerDB_13705f33.mdf" />
     <Content Include="App_Data\EPiServerDB_13705f33_log.ldf">
@@ -368,6 +377,7 @@
     <Content Include="favicon.ico" />
     <Content Include="IndexingService\IndexingService.svc" />
     <Content Include="modules\_protected\EPiServer.Search.Cms\IndexContent.aspx" />
+    <Content Include="modules\_protected\Jhoose.Security\ClientResources\csp-app.js" />
     <Content Include="Resources\LanguageFiles\ContentTypeNames.xml" />
     <Content Include="Resources\LanguageFiles\Display.xml" />
     <Content Include="Resources\LanguageFiles\EditorHints.xml" />
@@ -427,6 +437,9 @@
     <Content Include="modules\_protected\EPiServer.Cms.TinyMce\EPiServer.Cms.TinyMce.zip" />
     <Content Include="modules\_protected\EPiServer.Search.Cms\module.config" />
     <Content Include="module.config" />
+    <Content Include="modules\_protected\Jhoose.Security\module.config" />
+    <Content Include="modules\_protected\Jhoose.Security\Views\JhooseSecurityAdmin\index.cshtml" />
+    <Content Include="modules\_protected\Jhoose.Security\Views\Web.config" />
     <None Include="packages.config" />
     <Content Include="Views\SearchPage\Index.cshtml" />
     <Content Include="Views\_viewstart.cshtml" />
@@ -482,7 +495,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61766/</IISUrl>
+          <IISUrl>https://localhost:44323/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

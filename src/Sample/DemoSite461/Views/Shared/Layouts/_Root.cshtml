@@ -1,6 +1,8 @@
 @using System.Web.Optimization
 @using EPiServer.Framework.Web.Mvc.Html
 @using DemoSite.Business
+@using Jhoose.Security.Core.HtmlHelpers;
+
 @model IPageViewModel<SitePageData>
 <!DOCTYPE html>
 <html lang="@Model.CurrentPage.LanguageBranch">
@@ -24,6 +26,10 @@
         @Scripts.Render("~/bundles/js")
         @Html.RequiredClientResources("Header") @*Enable components to require resources. For an example, see the view for VideoBlock.*@
         @Html.RenderEPiServerQuickNavigator()
+
+        <script @Html.AddNonce() @Html.EditAttributes("kk")>
+
+        </script>
     </head>
 
     <body>

@@ -1,0 +1,33 @@
+@using EPiServer.Shell.Navigation
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Content Security Policy</title>
+    <base href="/EPiServer/Jhoose.Security/jhoosesecurityadmin" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Barlow:400,500,700" rel="stylesheet" />
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        input[type='text'] {
+            border: 0 !important;
+            background: none !important;
+        }
+    </style>
+</head>
+<body class="epi-workspace">
+    @Html.Raw(Html.CreatePlatformNavigationMenu())
+    <div @Html.Raw(Html.ApplyPlatformNavigation())>
+        <div id="csp-root"></div>
+    </div>
+
+</body>
+    <script src="/EPiServer/Jhoose.Security/clientresources/csp-app.js"> </script>
+</html>

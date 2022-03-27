@@ -27,7 +27,7 @@ namespace Jhoose.Security
             {
                 SortIndex = SortIndex.First + 25,
 #if NET461
-                IsAvailable = (request) => this.principalAccessor.Principal.IsInRole("cmsadmin"),
+                IsAvailable = (request) => true, //this.principalAccessor.Principal.IsInRole("CmsAdmin"),
 #elif NET5_0_OR_GREATER
                 IsAvailable = (request) => true,
                 AuthorizationPolicy = "episerver:cmsadmin"
@@ -40,7 +40,7 @@ namespace Jhoose.Security
             {
                 SortIndex = SortIndex.First + 25,
 #if NET461
-                IsAvailable = (request) => this.principalAccessor.Principal.IsInRole("cmsadmin"),
+                IsAvailable = (request) => true, //this.principalAccessor.Principal.IsInRole("CmsAdmin"),
 #elif NET5_0_OR_GREATER
                 IsAvailable = (request) => true,
                 AuthorizationPolicy = "episerver:cmsadmin"

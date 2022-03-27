@@ -1,7 +1,12 @@
 ﻿#if NET461
 
+using EPiServer.ServiceLocation;
+using Jhoose.Security.Configuration;
+using Jhoose.Security.DependencyInjection;
+using Jhoose.Security.Services;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 
 
@@ -24,7 +29,38 @@ namespace Jhoose.Security.HttpModules
 
         private void Context_EndRequest(object sender, EventArgs e)
         {
- 
+            HttpContext context = ((HttpApplication)sender).Context;
+            HttpResponse httpResponse = context?.Response;
+            HttpRequest httpRequest = context?.Request;;
+
+            var securityOptions = ConfigurationManager.GetSection("JhooseSecurity/Options") as OptionsSection;
+            var securityHeaders = ConfigurationManager.GetSection("JhooseSecurity/Headers") as HeadersSection;
+
+            IJhooseSecurityService securityService = ServiceLocator.Current.GetInstance<IJhooseSecurityService>();  
+
+            if (httpRequest != null)
+            {
+                var exclusinPaths = securityOptions.ExclusionPaths?
+                                                    .OfType<ExcludeElement>()?
+                                                    .Select(x => x.Path) ?? Enumerable.Empty<string>();
+
+                var isValidPath = SecurityExtensions.IsValidPath(httpRequest, exclusinPaths);
+
+                if (httpResponse != null && isValidPath)
+                {
+                    securityService.AddContentSecurityPolicy(httpResponse);
+                    securityService.AddHeaders(httpResponse, securityHeaders.Headers);
+                }
+
+                if (securityOptions.HttpsRedirection)
+                {
+                    if (!httpRequest.IsSecureConnection)
+                    {
+                        var url = httpRequest.Url.AbsoluteUri;;
+                        httpResponse.Redirect(url.Replace("http://", "https://"));
+                    }
+                }
+            }
         }
     }
 }

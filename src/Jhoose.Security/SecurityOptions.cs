@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using Jhoose.Security.Core.Models;
 
+#if NET461
+using System.Configuration;
+#endif
+
 namespace Jhoose.Security
 {
     public class JhooseSecurityOptions
@@ -43,3 +47,4 @@ namespace Jhoose.Security
         }
     }
 }
+

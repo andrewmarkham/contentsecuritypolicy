@@ -42,3 +42,9 @@ src/Tests/Jhoose.Security.Core.Tests/obj/
 src/Test/Management/modules/
 /.vs
 /src/packages
+
+src/Sample/DemoSite461/obj/
+
+src/Sample/DemoSite461/bin/
+
+*.log
