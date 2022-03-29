@@ -13,8 +13,8 @@ env:
 jobs:
   build:
   
-    runs-on: ubuntu-latest
-
+    runs-on: windows-latest
+s
     steps:
     - uses: actions/checkout@v2
 
