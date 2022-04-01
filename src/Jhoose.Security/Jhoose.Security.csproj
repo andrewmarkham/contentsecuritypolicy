@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;net5.0</TargetFrameworks>
+    <TargetFrameworks>net471;net5.0</TargetFrameworks>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <PackageId>Jhoose.Security.Admin</PackageId>
     <RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
@@ -40,7 +40,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0" />
 </ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net461'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net471'">
 		<PackageReference Include="EPiServer.Framework" Version="[11.1.0,12)" />
 		<PackageReference Include="EPiServer.Framework.AspNet" Version="[11.1.0,12)" />
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[11.1.0,12)" />
