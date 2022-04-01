@@ -25,6 +25,10 @@ jobs:
       working-directory: ./src/Jhoose.Security
       run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "Github" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
 
+    - name: Nuget Restore
+      working-directory: ./src/Jhoose.Security
+      run: dotnet restore
+
     - name: Use Node.js 14.4.0
       uses: actions/setup-node@v1
       with:
@@ -42,7 +46,7 @@ jobs:
       
     - name: Build app for release
       working-directory: ./src/Jhoose.Security
-      run: msbuild Jhoose.Security.csproj -t:rebuild -property:Configuration=Release -p:Version=${BUILD_NO}
+      run: msbuild Jhoose.Security.csproj -t:rebuild -property:Configuration=Release -property:Version=${BUILD_NO} -p:Version=${BUILD_NO}
 
     - name: Test
       working-directory: ./src

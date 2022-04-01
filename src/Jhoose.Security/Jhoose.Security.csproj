@@ -13,7 +13,7 @@
     <Title></Title>
     <Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
     <ReleaseNotes>
-		1.1.0 - Added the ability to output the recommended security headers.
+		    1.1.0 - Added the ability to output the recommended security headers.
         1.1.1 - Added option to disable any of the recommended security headers.
 	</ReleaseNotes>
 
