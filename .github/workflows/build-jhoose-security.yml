@@ -51,7 +51,7 @@ jobs:
       
     - name: Build app for release
       working-directory: ./src/Jhoose.Security
-      run: msbuild Jhoose.Security.csproj -t:rebuild -property:Configuration=Release -property:Version=${BUILD_NO};NuGetVersion=${BUILD_NO} -p:Version=${BUILD_NO};NuGetVersion=${BUILD_NO}
+      run: msbuild Jhoose.Security.csproj -t:rebuild -property:Configuration=Release -property:NuGetVersion=${BUILD_NO} -p:Version=NuGetVersion=${BUILD_NO}
 
     - name: Test
       working-directory: ./src
