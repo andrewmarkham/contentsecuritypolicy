@@ -32,7 +32,7 @@ jobs:
 
     - name: Nuget Restore
       working-directory: ./src/Jhoose.Security
-      run: dotnet restore
+      run: dotnet restore --ignore-failed-sources 
 
     - name: Use Node.js 14.4.0
       uses: actions/setup-node@v1
