@@ -23,16 +23,12 @@ jobs:
       with:
         dotnet-version: 5.0.x
 
-    - name: setup-msbuild
-      uses: microsoft/setup-msbuild@v1.1
+    #- name: setup-msbuild
+    #  uses: microsoft/setup-msbuild@v1.1
 
     - name: Configure Source
       working-directory: ./src/Jhoose.Security
       run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "Github" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
-
-    - name: Nuget Restore
-      working-directory: ./src/Jhoose.Security
-      run: dotnet restore --ignore-failed-sources 
 
     - name: Use Node.js 14.4.0
       uses: actions/setup-node@v1
@@ -45,13 +41,13 @@ jobs:
        npm install 
        npm run publish
 
-    #- name: Build
-    #  run: dotnet build --configuration Release -p:Version=${BUILD_NO}
-    #  working-directory: ./src/Jhoose.Security
-      
-    - name: Build app for release
+    - name: Build
+      run: dotnet build --configuration Release -p:Version=${BUILD_NO}
       working-directory: ./src/Jhoose.Security
-      run: msbuild Jhoose.Security.csproj -t:rebuild -property:Configuration=Release -property:NuGetVersion=${BUILD_NO} -p:Version=NuGetVersion=${BUILD_NO}
+      
+    #- name: Build app for release
+    #  working-directory: ./src/Jhoose.Security
+    #  run: msbuild Jhoose.Security.csproj -t:rebuild -property:Configuration=Release -property:NuGetVersion=${BUILD_NO} -p:Version=NuGetVersion=${BUILD_NO}
 
     - name: Test
       working-directory: ./src
