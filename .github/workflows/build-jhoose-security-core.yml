@@ -24,15 +24,15 @@ jobs:
 
     - name: Build
       working-directory: ./src/Jhoose.Security.Core
-      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }}
+      run: dotnet build --configuration Release -p:Version=1.2.0.0
       
     - name: Test
-      working-directory: ./src/Jhoose.Security.Core
-      run: dotnet test --configuration Release --no-build --verbosity normal
+      working-directory: ./src
+      run: dotnet test --no-build --verbosity normal
       
     - name: Push Nupkg to GitHub Packages
-      working-directory: ./src/Jhoose.Security.Core
       uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
+      working-directory: ./src/Jhoose.Security.Core
       with:
         # Path of NuPkg
         nupkg-path: ./**/Jhoose.Security.Core*.nupkg
