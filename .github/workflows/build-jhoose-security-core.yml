@@ -30,17 +30,23 @@ jobs:
       working-directory: ./src
       run: dotnet test --no-build --verbosity normal
       
-    - name: Push Nupkg to GitHub Packages
-      uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
+    - name: nuget push
       working-directory: ./src/Jhoose.Security.Core
-      with:
-        # Path of NuPkg
-        nupkg-path: ./**/Jhoose.Security.Core*.nupkg
-        # package repository owner
-        repo-owner: 'andrewmarkham'
-        # user account
-        gh-user: 'andrewmarkham'
-        # access token
-        token: ${{ secrets.GITHUB_TOKEN }}
-        # skip publishing duplicated package(s)
-        skip-duplicate: true
+      run: dotnet nuget push ./**/Jhoose.Security.Core*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    #- name: Push Nupkg to GitHub Packages
+    #  uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
+    #  working-directory: ./src/Jhoose.Security.Core
+    #  with:
+    #    # Path of NuPkg
+    #    nupkg-path: ./**/Jhoose.Security.Core*.nupkg
+    #    # package repository owner
+    #    repo-owner: 'andrewmarkham'
+    #    # user account
+    #    gh-user: 'andrewmarkham'
+    #    # access token
+    #    token: ${{ secrets.GITHUB_TOKEN }}
+    #    # skip publishing duplicated package(s)
+    #    skip-duplicate: true
