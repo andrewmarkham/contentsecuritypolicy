@@ -20,11 +20,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
     <RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
-	
-		../Jhoose.Security.Core/bin/Debug;
-		https://api.nuget.org/v3/index.json;
-		https://nuget.optimizely.com/feed/packages.svc;
-	</RestoreSources>
+		  ../Jhoose.Security.Core/bin/Debug;
+		  https://api.nuget.org/v3/index.json;
+		  https://nuget.optimizely.com/feed/packages.svc;
+	  </RestoreSources>
 
   </PropertyGroup>
 
