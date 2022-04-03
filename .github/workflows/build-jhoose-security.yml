@@ -53,7 +53,8 @@ jobs:
       working-directory: ./src
       run: dotnet test --no-build --verbosity normal
     
-   #   - name: nuget push
-   #     run: dotnet nuget push ./**/Jhoose.Security*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
-   #     env:
-   #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: nuget push
+        working-directory: ./src/Jhoose.Security.Core
+        run: dotnet nuget push ./**/Jhoose.Security*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -31,6 +31,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       
     - name: Push Nupkg to GitHub Packages
+      working-directory: ./src/Jhoose.Security.Core
       uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
       with:
         # Path of NuPkg
