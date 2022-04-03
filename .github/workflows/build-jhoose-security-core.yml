@@ -32,7 +32,7 @@ jobs:
       
     - name: nuget push
       working-directory: ./src/Jhoose.Security.Core
-      run: dotnet nuget push ./**/Jhoose.Security.Core*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
+      run: dotnet nuget push ./**/Jhoose.Security.Core*.nupkg -k ${{ env.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
