@@ -42,7 +42,7 @@ jobs:
        npm run publish
 
     - name: Build
-      run: dotnet build --configuration Release -p:Version=1.2.0.0
+      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }}
       working-directory: ./src/Jhoose.Security
       
     #- name: Build app for release
@@ -50,8 +50,8 @@ jobs:
     #  run: msbuild Jhoose.Security.csproj -t:rebuild -property:Configuration=Release -property:NuGetVersion=${BUILD_NO} -p:Version=NuGetVersion=${BUILD_NO}
 
     - name: Test
-      working-directory: ./src
-      run: dotnet test --no-build --verbosity normal
+      working-directory: ./src/Jhoose.Security
+      run: dotnet test --configuration Release  --no-build --verbosity normal
     
       - name: nuget push
         working-directory: ./src/Jhoose.Security.Core

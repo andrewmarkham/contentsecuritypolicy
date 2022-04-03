@@ -24,11 +24,11 @@ jobs:
 
     - name: Build
       working-directory: ./src/Jhoose.Security.Core
-      run: dotnet build --configuration Release -p:Version=1.2.0.0
+      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }}
       
     - name: Test
-      working-directory: ./src
-      run: dotnet test --no-build --verbosity normal
+      working-directory: ./src/Jhoose.Security.Core
+      run: dotnet test --configuration Release --no-build --verbosity normal
       
     - name: Push Nupkg to GitHub Packages
       working-directory: ./src/Jhoose.Security.Core
