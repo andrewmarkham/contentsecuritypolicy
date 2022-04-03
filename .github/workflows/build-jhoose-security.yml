@@ -42,7 +42,7 @@ jobs:
        npm run publish
 
     - name: Build
-      run: dotnet build --configuration Release -p:Version=${{BUILD_NO}}
+      run: dotnet build --configuration Release -p:Version=1.2.0.0
       working-directory: ./src/Jhoose.Security
       
     #- name: Build app for release

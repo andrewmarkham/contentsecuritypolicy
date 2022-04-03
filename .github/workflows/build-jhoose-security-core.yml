@@ -24,7 +24,7 @@ jobs:
 
     - name: Build
       working-directory: ./src/Jhoose.Security.Core
-      run: dotnet build --configuration Release -p:Version=${{BUILD_NO}}
+      run: dotnet build --configuration Release -p:Version=1.2.0.0
       
     - name: Test
       working-directory: ./src
