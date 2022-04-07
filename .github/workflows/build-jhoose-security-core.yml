@@ -8,12 +8,12 @@ on:
   workflow_dispatch:
  
 env:
-  BUILD_NO: 1.1.2.${{ github.run_number }}
+  BUILD_NO: 1.2.0.${{ github.run_number }}
 
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
 
     steps:
     - uses: actions/checkout@v2
@@ -24,22 +24,29 @@ jobs:
 
     - name: Build
       working-directory: ./src/Jhoose.Security.Core
-      run: dotnet build --configuration Release -p:Version=${BUILD_NO}
+      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }}
       
     - name: Test
-      working-directory: ./src
+      working-directory: ./src/Jhoose.Security.Core
       run: dotnet test --no-build --verbosity normal
       
-    - name: Push Nupkg to GitHub Packages
-      uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
-      with:
-        # Path of NuPkg
-        nupkg-path: ./**/Jhoose.Security.Core*.nupkg
-        # package repository owner
-        repo-owner: 'andrewmarkham'
-        # user account
-        gh-user: 'andrewmarkham'
-        # access token
-        token: ${{ secrets.GITHUB_TOKEN }}
-        # skip publishing duplicated package(s)
-        skip-duplicate: true
+    - name: nuget push
+      working-directory: ./src/Jhoose.Security.Core
+      run: dotnet nuget push "**/Jhoose.Security.Core.*.nupkg" -k ${{ env.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    #- name: Push Nupkg to GitHub Packages
+    #  uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
+    #  working-directory: ./src/Jhoose.Security.Core
+    #  with:
+    #    # Path of NuPkg
+    #    nupkg-path: ./**/Jhoose.Security.Core*.nupkg
+    #    # package repository owner
+    #    repo-owner: 'andrewmarkham'
+    #    # user account
+    #    gh-user: 'andrewmarkham'
+    #    # access token
+    #    token: ${{ secrets.GITHUB_TOKEN }}
+    #    # skip publishing duplicated package(s)
+    #    skip-duplicate: true

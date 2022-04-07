@@ -26,8 +26,12 @@ namespace Jhoose.Security
                 Paths.ToResource(base.GetType(),"jhoosesecurityadmin"))
             {
                 SortIndex = SortIndex.First + 25,
-                IsAvailable = (request) => true,//this.principalAccessor.Principal.IsInRole("securityadmin"),
+#if NET461
+                IsAvailable = (request) => true, //this.principalAccessor.Principal.IsInRole("CmsAdmin"),
+#elif NET5_0_OR_GREATER
+                IsAvailable = (request) => true,
                 AuthorizationPolicy = "episerver:cmsadmin"
+#endif
             });
 
             menuItems.Add(new UrlMenuItem("Content Security",
@@ -35,8 +39,12 @@ namespace Jhoose.Security
                 Paths.ToResource(base.GetType(),"jhoosesecurityadmin#/csp"))
             {
                 SortIndex = SortIndex.First + 25,
+#if NET461
+                IsAvailable = (request) => true, //this.principalAccessor.Principal.IsInRole("CmsAdmin"),
+#elif NET5_0_OR_GREATER
                 IsAvailable = (request) => true,
                 AuthorizationPolicy = "episerver:cmsadmin"
+#endif
             });
 
             return menuItems;

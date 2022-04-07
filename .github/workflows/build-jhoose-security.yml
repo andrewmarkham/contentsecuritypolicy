@@ -8,19 +8,23 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_NO: 1.1.2.${{ github.run_number }}
-  
+  BUILD_NO: 1.2.0.${{ github.run_number }}  
+
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-
+  
+    runs-on: windows-2019
+    
     steps:
     - uses: actions/checkout@v2
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
+
+    #- name: setup-msbuild
+    #  uses: microsoft/setup-msbuild@v1.1
 
     - name: Configure Source
       working-directory: ./src/Jhoose.Security
@@ -38,14 +42,19 @@ jobs:
        npm run publish
 
     - name: Build
+      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }}
       working-directory: ./src/Jhoose.Security
-      run: dotnet build --configuration Release -p:Version=${BUILD_NO}
       
+    #- name: Build app for release
+    #  working-directory: ./src/Jhoose.Security
+    #  run: msbuild Jhoose.Security.csproj -t:rebuild -property:Configuration=Release -property:NuGetVersion=${BUILD_NO} -p:Version=NuGetVersion=${BUILD_NO}
+
     - name: Test
-      working-directory: ./src
-      run: dotnet test --no-build --verbosity normal
+      working-directory: ./src/Jhoose.Security
+      run: dotnet test --configuration Release  --no-build --verbosity normal
     
     - name: nuget push
-      run: dotnet nuget push ./**/Jhoose.Security*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
+      working-directory: ./src/Jhoose.Security
+      run: dotnet nuget push "**/Jhoose.Security*.nupkg" -k ${{ env.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

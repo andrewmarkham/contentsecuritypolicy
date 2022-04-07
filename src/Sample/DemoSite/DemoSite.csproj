@@ -13,6 +13,18 @@
 	  </RestoreSources>
 	  
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="modules\_protected\Jhoose.Security\ClientResources\csp-app.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="modules\_protected\Jhoose.Security\ClientResources\csp-app.js">
+      <PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <Pack>true</Pack>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Bogus" Version="34.0.1" />
     <PackageReference Include="EPiServer.CMS" Version="12.3.1" />
@@ -30,9 +42,18 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+      <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="modules\_protected\Jhoose.Security\module.config">
+      <PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <Pack>true</Pack>
+    </Content>
   </ItemGroup>
 </Project>

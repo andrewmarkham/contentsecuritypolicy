@@ -7,7 +7,6 @@ using Jhoose.Security.Core;
 using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Repository;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Jhoose.Security.Repository
 {
