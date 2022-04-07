@@ -5,15 +5,15 @@
 	  
     <PackageId>Jhoose.Security.Core</PackageId>
     <RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
-    <Version>1.1.1.3</Version>
+    <Version>1.2.0.0</Version>
     <Authors>Andrew Markham</Authors>
-    
     <Title></Title>
     <Description></Description>
-	<Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
+	  <Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
 	  <ReleaseNotes>
 		1.1.0 - Added the ability to output the recommended security headers.
 		1.1.1 - Added option to disable any of the recommended security headers.
+    1.2.0 - Target .Net Framework and Episerver 11
 	  </ReleaseNotes>
 
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
