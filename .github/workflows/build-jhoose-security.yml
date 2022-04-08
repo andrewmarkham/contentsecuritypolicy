@@ -9,10 +9,11 @@ on:
 
 env:
   BUILD_NO: 1.2.0.${{ github.run_number }}  
+  BUILD_NO_PRE: 1.2.0-rc.${{ github.run_number }} 
 
 jobs:
   build:
-  
+
     runs-on: windows-2019
     
     steps:
@@ -41,19 +42,26 @@ jobs:
        npm install 
        npm run publish
 
-    - name: Build
+    - name: Build (Production)
+      if: github.ref == 'refs/heads/main'
       run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }}
       working-directory: ./src/Jhoose.Security
-      
-    #- name: Build app for release
-    #  working-directory: ./src/Jhoose.Security
-    #  run: msbuild Jhoose.Security.csproj -t:rebuild -property:Configuration=Release -property:NuGetVersion=${BUILD_NO} -p:Version=NuGetVersion=${BUILD_NO}
+
+    - name: Build (Pre Release)
+      if: github.ref != 'refs/heads/main'
+      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO_PRE }}
+      working-directory: ./src/Jhoose.Security
+
 
     - name: Test
       working-directory: ./src/Jhoose.Security
       run: dotnet test --configuration Release  --no-build --verbosity normal
     
     - name: nuget push
+      if: contains('
+        refs/heads/main
+        refs/heads/release
+      ', github.ref)
       working-directory: ./src/Jhoose.Security
       run: dotnet nuget push "**/Jhoose.Security*.nupkg" -k ${{ env.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
       env:

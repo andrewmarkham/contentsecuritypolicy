@@ -9,6 +9,7 @@ on:
  
 env:
   BUILD_NO: 1.2.0.${{ github.run_number }}
+  BUILD_NO_PRE: 1.2.0-rc.${{ github.run_number }}
 
 jobs:
   build:
@@ -22,31 +23,27 @@ jobs:
       with:
         dotnet-version: 5.0.x
 
-    - name: Build
+    - name: Build (Production)
+      if: github.ref == 'refs/heads/main'
       working-directory: ./src/Jhoose.Security.Core
       run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }}
-      
+
+    - name: Build (Pre Release)
+      if: github.ref != 'refs/heads/main'
+      working-directory: ./src/Jhoose.Security.Core
+      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO_PRE }}
+
     - name: Test
+      
       working-directory: ./src/Jhoose.Security.Core
       run: dotnet test --no-build --verbosity normal
       
     - name: nuget push
+      if: contains('
+        refs/heads/main
+        refs/heads/release
+      ', github.ref)    
       working-directory: ./src/Jhoose.Security.Core
       run: dotnet nuget push "**/Jhoose.Security.Core.*.nupkg" -k ${{ env.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    #- name: Push Nupkg to GitHub Packages
-    #  uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
-    #  working-directory: ./src/Jhoose.Security.Core
-    #  with:
-    #    # Path of NuPkg
-    #    nupkg-path: ./**/Jhoose.Security.Core*.nupkg
-    #    # package repository owner
-    #    repo-owner: 'andrewmarkham'
-    #    # user account
-    #    gh-user: 'andrewmarkham'
-    #    # access token
-    #    token: ${{ secrets.GITHUB_TOKEN }}
-    #    # skip publishing duplicated package(s)
-    #    skip-duplicate: true
