@@ -22,7 +22,7 @@ namespace Jhoose.Security.Controllers
     [Authorize]
     
     //
-#if NET461
+#if NET461_OR_GREATER
     [RoutePrefix("api/csp")]
 #else
     [Route("api/[controller]")]
@@ -36,7 +36,7 @@ namespace Jhoose.Security.Controllers
     {
         private readonly ICspPolicyRepository policyRepository;
 
-        #if NET461
+        #if NET461_OR_GREATER
         public CspController()
         {
             this.policyRepository = ServiceLocator.Current.GetInstance<ICspPolicyRepository>();

@@ -1,4 +1,5 @@
-﻿#if NET461
+﻿#if NET461_OR_GREATER
+
 using EPiServer.Enterprise;
 using EPiServer.Framework;
 using EPiServer.Framework.Initialization;

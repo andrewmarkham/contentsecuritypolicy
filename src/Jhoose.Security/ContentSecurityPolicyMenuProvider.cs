@@ -26,7 +26,7 @@ namespace Jhoose.Security
                 Paths.ToResource(base.GetType(),"jhoosesecurityadmin"))
             {
                 SortIndex = SortIndex.First + 25,
-#if NET461
+#if NET461_OR_GREATER
                 IsAvailable = (request) => true, //this.principalAccessor.Principal.IsInRole("CmsAdmin"),
 #elif NET5_0_OR_GREATER
                 IsAvailable = (request) => true,
@@ -39,7 +39,7 @@ namespace Jhoose.Security
                 Paths.ToResource(base.GetType(),"jhoosesecurityadmin#/csp"))
             {
                 SortIndex = SortIndex.First + 25,
-#if NET461
+#if NET461_OR_GREATER
                 IsAvailable = (request) => true, //this.principalAccessor.Principal.IsInRole("CmsAdmin"),
 #elif NET5_0_OR_GREATER
                 IsAvailable = (request) => true,

@@ -1,4 +1,4 @@
-﻿#if NET461
+﻿#if NET461_OR_GREATER
 using System.Configuration;
 
 namespace Jhoose.Security.Configuration

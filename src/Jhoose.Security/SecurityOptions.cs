@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Jhoose.Security.Core.Models;
 
-#if NET461
+#if NET461_OR_GREATER
 using System.Configuration;
 #endif
 

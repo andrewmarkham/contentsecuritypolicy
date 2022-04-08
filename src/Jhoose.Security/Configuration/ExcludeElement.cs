@@ -1,11 +1,11 @@
 ﻿
-#if NET461
+#if NET461_OR_GREATER
 using System.Configuration;
 #endif
 
 namespace Jhoose.Security.Configuration
 {
-#if NET461
+#if NET461_OR_GREATER
 
     public class ExcludeElement : ConfigurationElement
     {
