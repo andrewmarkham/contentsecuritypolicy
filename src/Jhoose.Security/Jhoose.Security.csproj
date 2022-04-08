@@ -69,9 +69,16 @@
   <Content Remove="*.json" /> 
 
   <Content Include="build\net5.0\Jhoose.Security.Admin.targets" PackagePath="build\net5.0\Jhoose.Security.Admin.targets" />
+  
   <Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
     <Pack>true</Pack>
     <PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
+    <PackageCopyToOutput>true</PackageCopyToOutput>
+  </Content>
+
+  <Content Include="Jhoose.Security.Views\Views\**" Exclude="src\**\*">
+    <Pack>true</Pack>
+    <PackagePath>content\any\any\modules\_protected\Jhoose.Security\Views;contentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
     <PackageCopyToOutput>true</PackageCopyToOutput>
   </Content>
 </ItemGroup>
