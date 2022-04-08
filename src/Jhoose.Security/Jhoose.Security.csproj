@@ -25,6 +25,12 @@
 		  https://nuget.optimizely.com/feed/packages.svc;
 	  </RestoreSources>
 
+    <RestoreSources Condition=" '$(Configuration)' == 'Release' ">
+		  https://api.nuget.org/v3/index.json;
+		  https://nuget.optimizely.com/feed/packages.svc;
+      https://nuget.pkg.github.com/andrewmarkham/index.json
+	  </RestoreSources>
+
   </PropertyGroup>
 
 <ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
@@ -35,7 +41,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0" />
     
-    <PackageReference Include="Jhoose.Security.Core" Version="[1.2.*,2)" Condition=" '$(Configuration)' == 'Release' " />
+    <PackageReference Include="Jhoose.Security.Core" Version="[1.2.0-rc.*,2)" Condition=" '$(Configuration)' == 'Release' " />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0" />
 </ItemGroup>
 
@@ -49,7 +55,7 @@
 		<PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
 		<PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.7" />
 
-    <PackageReference Include="Jhoose.Security.Core" Version="[1.2.*,2)" Condition=" '$(Configuration)' == 'Release' " />
+    <PackageReference Include="Jhoose.Security.Core" Version="[1.2.0-rc.*,2)" Condition=" '$(Configuration)' == 'Release' " />
 	</ItemGroup>
 	
   <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -68,6 +74,8 @@
   <Content Remove="modules\**" />
   <Content Remove="*.json" /> 
 
+  <Content Remove="Jhoose.Security.Views\**" /> 
+
   <Content Include="build\net5.0\Jhoose.Security.Admin.targets" PackagePath="build\net5.0\Jhoose.Security.Admin.targets" />
   
   <Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
@@ -81,6 +89,7 @@
     <PackagePath>content\any\any\modules\_protected\Jhoose.Security\Views;contentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
     <PackageCopyToOutput>true</PackageCopyToOutput>
   </Content>
+  
 </ItemGroup>
 
 </Project>
