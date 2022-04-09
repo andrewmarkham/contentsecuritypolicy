@@ -8,15 +8,17 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_NO: 1.1.2.${{ github.run_number }}
-  
+  BUILD_NO: 1.2.0.${{ github.run_number }}  
+  BUILD_NO_PRE: 1.2.0-rc.${{ github.run_number }} 
+
 jobs:
   build:
 
-    runs-on: ubuntu-latest
-
+    runs-on: windows-2019
+    
     steps:
     - uses: actions/checkout@v2
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
@@ -24,7 +26,7 @@ jobs:
 
     - name: Configure Source
       working-directory: ./src/Jhoose.Security
-      run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "Github" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
+      run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "GithubBuild" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
 
     - name: Use Node.js 14.4.0
       uses: actions/setup-node@v1
@@ -37,15 +39,24 @@ jobs:
        npm install 
        npm run publish
 
-    - name: Build
+    - name: Build (Production)
+      if: github.ref == 'refs/heads/main'
+      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }}
       working-directory: ./src/Jhoose.Security
-      run: dotnet build --configuration Release -p:Version=${BUILD_NO}
-      
+
+    - name: Build (Pre Release)
+      if: github.ref != 'refs/heads/main'
+      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO_PRE }}
+      working-directory: ./src/Jhoose.Security
+
+
     - name: Test
-      working-directory: ./src
-      run: dotnet test --no-build --verbosity normal
+      working-directory: ./src/Jhoose.Security
+      run: dotnet test --configuration Release  --no-build --verbosity normal
     
     - name: nuget push
-      run: dotnet nuget push ./**/Jhoose.Security*.nupkg -k ${GITHUB_TOKEN} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
+      if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release')
+      working-directory: ./src/Jhoose.Security
+      run: dotnet nuget push "**/Jhoose.Security*.nupkg" -k ${{ env.GITHUB_TOKEN }} -s https://nuget.pkg.github.com/andrewmarkham/index.json --skip-duplicate
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

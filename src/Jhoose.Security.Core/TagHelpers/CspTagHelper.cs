@@ -1,3 +1,4 @@
+#if NET5_0_OR_GREATER
 using System;
 using Jhoose.Security.Core.Provider;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -18,3 +19,4 @@ namespace Jhoose.Security.Core.TagHelpers
         }
     }
 }
+#endif

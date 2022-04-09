@@ -1,5 +1,10 @@
 using Jhoose.Security.Core.Repository;
-using Microsoft.AspNetCore.Mvc;
+
+#if NET5_0_OR_GREATER
+    using Microsoft.AspNetCore.Mvc;
+#else
+    using System.Web.Mvc;
+#endif
 
 namespace Jhoose.Security.Controllers
 {
