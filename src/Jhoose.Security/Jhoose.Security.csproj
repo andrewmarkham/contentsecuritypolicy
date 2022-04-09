@@ -77,7 +77,8 @@
   <Content Remove="Jhoose.Security.Views\**" /> 
 
   <Content Include="build\net5.0\Jhoose.Security.Admin.targets" PackagePath="build\net5.0\Jhoose.Security.Admin.targets" />
-  
+  <Content Include="build\net461\Jhoose.Security.Admin.targets" PackagePath="build\net461\Jhoose.Security.Admin.targets" />
+
   <Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
     <Pack>true</Pack>
     <PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
