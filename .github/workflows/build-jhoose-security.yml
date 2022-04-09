@@ -29,7 +29,7 @@ jobs:
 
     - name: Configure Source
       working-directory: ./src/Jhoose.Security
-      run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "Github-Build" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
+      run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "GithubBuild" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
 
     - name: Use Node.js 14.4.0
       uses: actions/setup-node@v1
