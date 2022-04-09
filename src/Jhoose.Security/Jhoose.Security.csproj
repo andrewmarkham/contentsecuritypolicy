@@ -5,7 +5,7 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <PackageId>Jhoose.Security.Admin</PackageId>
     <RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
-    <Version>1.2.0.0</Version>
+    <Version>1.2.1.0</Version>
     <Authors>Andrew Markham</Authors>
 	  <Description>Interface to manage Content Security Policy </Description>
   
@@ -41,7 +41,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0" />
     
-    <PackageReference Include="Jhoose.Security.Core" Version="[1.2.0-rc.*,2)" Condition=" '$(Configuration)' == 'Release' " />
+    <PackageReference Include="Jhoose.Security.Core" Version="[1.2.1,2)" Condition=" '$(Configuration)' == 'Release' " />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0" />
 </ItemGroup>
 
@@ -55,7 +55,7 @@
 		<PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
 		<PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.7" />
 
-    <PackageReference Include="Jhoose.Security.Core" Version="[1.2.0-rc.*,2)" Condition=" '$(Configuration)' == 'Release' " />
+    <PackageReference Include="Jhoose.Security.Core" Version="[1.2.1,2)" Condition=" '$(Configuration)' == 'Release' " />
 	</ItemGroup>
 	
   <ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
