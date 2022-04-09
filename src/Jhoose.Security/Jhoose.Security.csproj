@@ -94,7 +94,7 @@
   
   <Content Include="deploy\**" Exclude="src\**\*">
     <Pack>true</Pack>
-    <PackagePath>content\any\any\</PackagePath>
+    <PackagePath>content</PackagePath>
     <PackageCopyToOutput>true</PackageCopyToOutput>
   </Content>
 
