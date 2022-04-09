@@ -24,9 +24,6 @@ jobs:
       with:
         dotnet-version: 5.0.x
 
-    #- name: setup-msbuild
-    #  uses: microsoft/setup-msbuild@v1.1
-
     - name: Configure Source
       working-directory: ./src/Jhoose.Security
       run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "GithubBuild" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
