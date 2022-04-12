@@ -38,7 +38,7 @@ namespace Jhoose.Security.Services
                 response.Headers.Add(header.Name, header.Value);
             }
 
-            response.Headers.Remove("X-Powered-By");
+            //response.Headers.Remove("X-Powered-By");
             response.Headers.Remove("X-AspNet-Version");
             response.Headers.Remove("X-AspNetMvc-Version");
         }

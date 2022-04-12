@@ -133,6 +133,13 @@ X-AspNet-Version:
 X-AspNetMvc-Version: 
 ```
 
+The following headers cannot be removed programatically, but information about how to modify the web.config.
+
+```
+X-Powered-By: 
+Server: 
+```
+
 ### Configuration (.NET 5.0)
 
 If you need to change the headers, then these are controlled in SecurityOptions class
@@ -167,9 +174,9 @@ If you need to change the headers, then these are controlled in SecurityOptions 
 }
 ```
 
-#### Server Header
-This isn't removed, the reason being twofold
-1. When hosting within Optimizley DXP, the CDN will obfuscate the server header value anyway.
+#### Server Header and X-Powered-By Header
+These aren't removed, the reason being
+1. When hosting within Optimizley DXP, the CDN will obfuscate the searver value anyway.
 2. The approach is different depending on how you are hosintg your site.
 
 ##### Kestrel
@@ -191,6 +198,13 @@ This isn't removed, the reason being twofold
         <security>
             <requestFiltering removeServerHeader="true" />
         </security>
+
+        <httpProtocol>
+            <customHeaders>
+                <clear />
+                <remove name="X-Powered-By" />
+            </customHeaders>
+        </httpProtocol>
     </system.webServer>
 </configuration>
 ```
@@ -214,9 +228,9 @@ The headers can be controlled within the web.config
 </JhooseSecurity>
 ```
 
-#### Server Header
-This isn't removed, the reason being
-1. When hosting within Optimizley DXP, the CDN will obfuscate this value anyway.
+#### Server Header and X-Powered-By Header
+These aren't removed, the reason being
+1. When hosting within Optimizley DXP, the CDN will obfuscate the searver value anyway.
 2. The header cannot be removed programatically.
 
 ##### IIS 10
@@ -224,11 +238,17 @@ This isn't removed, the reason being
 <!-- web.config -->
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-   
     <system.webServer>
         <security>
             <requestFiltering removeServerHeader="true" />
         </security>
+
+        <httpProtocol>
+            <customHeaders>
+                <clear />
+                <remove name="X-Powered-By" />
+            </customHeaders>
+        </httpProtocol>
     </system.webServer>
 </configuration>
 ```
