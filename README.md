@@ -133,7 +133,7 @@ X-AspNet-Version:
 X-AspNetMvc-Version: 
 ```
 
-The following headers cannot be removed programatically, but information about how to modify the web.config.
+The following headers cannot be removed programatically, but information about how to modify the web.config is contained below.
 
 ```
 X-Powered-By: 
@@ -259,4 +259,4 @@ These aren't removed, the reason being
  |:---|:---------------|
  |1.0|Initial Release|
  |1.1|Added Recommended Security Headers|
- |1.2|Ported to support Episerver 11 and .Net Framework 4.7.1<br/>Automatically remove (_X-Powered-By, X-AspNet-Version, X-AspNetMvc-Version_)|
+ |1.2|Ported to support Episerver 11 and .Net Framework 4.7.1<br/>Automatically remove (_X-AspNet-Version, X-AspNetMvc-Version_)|
