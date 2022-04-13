@@ -7,6 +7,12 @@
 		</sectionGroup>
 	</configSections>
 
+	<system.webServer>
+		<modules>
+			<add name="JhooseSecurityModule" type="Jhoose.Security.HttpModules.JhooseSecurityModule, Jhoose.Security" xdt:Transform="Insert" />
+		</modules>
+	</system.webServer>
+
     <JhooseSecurity  xdt:Transform="Insert">
 		<Options httpsRedirect="true">
 			<Exclusions>
