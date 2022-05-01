@@ -1,26 +1,35 @@
+#if NET5_0_OR_GREATER
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
+using Jhoose.Security.Middleware;
+#endif
+
 using EPiServer.Shell.Modules;
 using Jhoose.Security.Core.Repository;
 using Jhoose.Security.Core.Provider;
 using Jhoose.Security.Repository;
-using Microsoft.AspNetCore.Http;
+
 using System.Collections.Generic;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
+
 using System;
 using Jhoose.Security.Core.Cache;
+
+using Jhoose.Security.Services;
+using System.Web;
 
 namespace Jhoose.Security.DependencyInjection
 {
     public static class SecurityExtensions
     {
+#if NET5_0_OR_GREATER
+
         public static IServiceCollection AddJhooseSecurity(this IServiceCollection services, 
                 IConfiguration configuration, 
                 Action<JhooseSecurityOptions> options = null)
         {
-            //Action<JhooseSecurityOptions> defaultOptions = (op) =>  op.ExclusionPaths = new List<string> { "/episerver" };
-
             services.AddHostedService<InitialiseHostedService>();
 
             if (options != null)
@@ -44,6 +53,7 @@ namespace Jhoose.Security.DependencyInjection
             services.AddScoped<ICspPolicyRepository, StandardCspPolicyRepository>();
             services.AddScoped<ICspProvider, StandardCspProvider>();
             services.AddSingleton<ICacheManager, EpiserverCacheManager>();
+            services.AddScoped<IJhooseSecurityService,JhooseSecurityService>();
 
             return services;
         }
@@ -52,7 +62,7 @@ namespace Jhoose.Security.DependencyInjection
         {
             var securityOptions = applicationBuilder.ApplicationServices.GetService<IOptions<JhooseSecurityOptions>>();
             
-            applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c, securityOptions.Value.ExclusionPaths), ab =>
+            applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c.Request, securityOptions.Value.ExclusionPaths), ab =>
             {
                 ab = ab.UseMiddleware<ContentSecurityPolicyMiddleware>();
                 ab.UseMiddleware<SecurityHeadersMiddleware>();
@@ -65,17 +75,24 @@ namespace Jhoose.Security.DependencyInjection
             
             return applicationBuilder;
         }
+#endif
 
-
-        public static bool IsValidPath(HttpContext context, IEnumerable<string> exclusionPaths)
+        public static bool IsValidPath(HttpRequest request, IEnumerable<string> exclusionPaths)
         {
 
             foreach (var path in exclusionPaths)
             {
-                if (context.Request.Path.StartsWithSegments(path, System.StringComparison.InvariantCultureIgnoreCase))
+#if NET5_0_OR_GREATER
+                if (request.Path.StartsWithSegments(path, System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     return false;
                 }
+#else
+                if (request.Path.StartsWith(path, System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return false;
+                }
+#endif
             }
 
             return true;

@@ -26,7 +26,7 @@ namespace Jhoose.Security.Tests.DependencyInjection
 
             context.Request.Path = path;
 
-            return SecurityExtensions.IsValidPath(context, exclusionPaths);
+            return SecurityExtensions.IsValidPath(context.Request, exclusionPaths);
         }
     }
 

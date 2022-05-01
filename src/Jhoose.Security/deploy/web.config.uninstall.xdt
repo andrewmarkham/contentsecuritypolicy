@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+	<configSections>
+		<sectionGroup name="JhooseSecurity" type="Jhoose.Security.Configuration.JhooseSecurityOptionsConfigurationSectionGroup, Jhoose.Security"  xdt:Transform="Remove">
+			<section name="Headers" type="Jhoose.Security.Configuration.HeadersSection, Jhoose.Security" />
+			<section name="Options" type="Jhoose.Security.Configuration.OptionsSection, Jhoose.Security" />
+		</sectionGroup>
+	</configSections>
+
+	<system.webServer>
+		<modules>
+			<add name="JhooseSecurityModule" type="Jhoose.Security.HttpModules.JhooseSecurityModule, Jhoose.Security" xdt:Transform="Remove" />
+		</modules>
+	</system.webServer>
+
+    <JhooseSecurity  xdt:Transform="Remove">
+	</JhooseSecurity>
+</configuration>
