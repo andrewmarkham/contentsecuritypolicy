@@ -5,7 +5,7 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <PackageId>Jhoose.Security.Admin</PackageId>
     <RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
-    <Version>1.2.2.0</Version>
+    <Version>1.2.3.0</Version>
     <Authors>Andrew Markham</Authors>
 	  <Description>Interface to manage Content Security Policy </Description>
   
