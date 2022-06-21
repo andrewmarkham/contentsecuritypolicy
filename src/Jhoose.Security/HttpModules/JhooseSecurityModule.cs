@@ -46,7 +46,7 @@ namespace Jhoose.Security.HttpModules
 
                 var isValidPath = SecurityExtensions.IsValidPath(httpRequest, exclusinPaths);
 
-                if (httpResponse != null && isValidPath)
+                if (httpResponse != null && !httpResponse.HeadersWritten && isValidPath)
                 {
                     securityService.AddContentSecurityPolicy(httpResponse);
                     securityService.AddHeaders(httpResponse, securityHeaders.Headers);

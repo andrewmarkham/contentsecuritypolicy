@@ -25,8 +25,10 @@ namespace Jhoose.Security.Middleware
 
         public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService)
         {
-            securityService.AddContentSecurityPolicy(context.Response);
-
+            if (!context.Response.HasStarted)
+            { 
+                securityService.AddContentSecurityPolicy(context.Response);
+            }
             await _next(context);
         }
     }
