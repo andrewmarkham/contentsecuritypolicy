@@ -19,7 +19,10 @@ namespace Jhoose.Security.Middleware
 
         public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService, IOptions<JhooseSecurityOptions> options)
         {
-            securityService.AddHeaders(context.Response,options.Value.Headers);
+            if (!context.Response.HasStarted)
+            {
+                securityService.AddHeaders(context.Response,options.Value.Headers);
+            }
 
             await _next(context);
         }
