@@ -1,5 +1,11 @@
+
 using System;
+
+#if NET5_0_OR_GREATER
 using System.Text.Json.Serialization;
+#else
+    using Newtonsoft.Json;
+#endif
 
 namespace Jhoose.Security.Core.Models
 {

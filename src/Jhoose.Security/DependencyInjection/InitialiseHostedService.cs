@@ -1,3 +1,4 @@
+#if NET5_0_OR_GREATER
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,3 +25,4 @@ namespace Jhoose.Security.DependencyInjection
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
     }
 }
+#endif
