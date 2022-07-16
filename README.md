@@ -5,7 +5,7 @@ This module adds several security features to an Optimizely website.
  - User interface to manage the CSP policy for your site. 
  - Add Recommended Security headers to the response headers.
 
- This module fully supports Episerver 11, .Net Framework 4.7.1 and Optimizely 12, .NET 5.0
+ This module fully supports Episerver 11, .Net Framework 4.7.1 and Optimizely 12, .NET 5.0 and .Net 6.0
 
 [![Jhoose Security](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security.yml/badge.svg?branch=main)](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security.yml)
 [![Jhoose Security Core](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security-core.yml/badge.svg?branch=main)](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security-core.yml)
@@ -37,7 +37,9 @@ Review the [Admin Interface](./documentation/admin-interface.md) documentation f
 
 *Startup.cs*
 ``` c#
-services.AddJhooseSecurity(IConfiguration configuration, Action<SecurityOptions> options = null);
+using Jhoose.Security.DependencyInjection;
+...
+services.AddJhooseSecurity(_configuration);
 ```
 
 The `Action<SecurityOptions> options` is optional and if not specified then the default will be used.
@@ -176,7 +178,7 @@ If you need to change the headers, then these are controlled in SecurityOptions 
 
 #### Server Header and X-Powered-By Header
 These aren't removed, the reason being
-1. When hosting within Optimizley DXP, the CDN will obfuscate the searver value anyway.
+1. When hosting within Optimizley DXP, the CDN will obfuscate the server value anyway.
 2. The approach is different depending on how you are hosintg your site.
 
 ##### Kestrel
@@ -231,7 +233,7 @@ The headers can be controlled within the web.config
 #### Server Header and X-Powered-By Header
 These aren't removed, the reason being
 1. When hosting within Optimizley DXP, the CDN will obfuscate the searver value anyway.
-2. The header cannot be removed programatically.
+2. The headers cannot be removed programatically.
 
 ##### IIS 10
 ``` xml
@@ -260,3 +262,4 @@ These aren't removed, the reason being
  |1.0|Initial Release|
  |1.1|Added Recommended Security Headers|
  |1.2|Ported to support Episerver 11 and .Net Framework 4.7.1<br/>Automatically remove (_X-AspNet-Version, X-AspNetMvc-Version_)|
+ |1.3|Added .Net6 Support|
