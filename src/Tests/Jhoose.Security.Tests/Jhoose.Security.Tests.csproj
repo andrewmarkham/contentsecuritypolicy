@@ -1,28 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-
-    <IsPackable>false</IsPackable>
-
-    <RestoreSources>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+		<RestoreSources>
 		$(RestoreSources);
 		https://api.nuget.org/v3/index.json;
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.13.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
-
-        <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.*" />
-    <PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.*" /> 
-    <PackageReference Include="EPiServer.Framework" Version="12.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj" />
-  </ItemGroup>
-
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="NUnit" Version="3.13.1" />
+		<PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+		<PackageReference Include="EPiServer.CMS.UI.Core" Version="12.9.0" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.8.0" />
+		<PackageReference Include="EPiServer.Framework" Version="12.8.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj" />
+	</ItemGroup>
 </Project>
