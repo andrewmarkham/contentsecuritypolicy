@@ -26,10 +26,11 @@ namespace Jhoose.Security.DependencyInjection
     {
 #if NET5_0_OR_GREATER
 
-        public static IServiceCollection AddJhooseSecurity(this IServiceCollection services, 
-                IConfiguration configuration, 
+        public static IServiceCollection AddJhooseSecurity(this IServiceCollection services,
+                IConfiguration configuration,
                 Action<JhooseSecurityOptions> options = null)
         {
+
             services.AddHostedService<InitialiseHostedService>();
 
             if (options != null)
@@ -53,7 +54,7 @@ namespace Jhoose.Security.DependencyInjection
             services.AddScoped<ICspPolicyRepository, StandardCspPolicyRepository>();
             services.AddScoped<ICspProvider, StandardCspProvider>();
             services.AddSingleton<ICacheManager, EpiserverCacheManager>();
-            services.AddScoped<IJhooseSecurityService,JhooseSecurityService>();
+            services.AddScoped<IJhooseSecurityService, JhooseSecurityService>();
 
             return services;
         }
@@ -61,7 +62,7 @@ namespace Jhoose.Security.DependencyInjection
         public static IApplicationBuilder UseJhooseSecurity(this IApplicationBuilder applicationBuilder)
         {
             var securityOptions = applicationBuilder.ApplicationServices.GetService<IOptions<JhooseSecurityOptions>>();
-            
+
             applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c.Request, securityOptions.Value.ExclusionPaths), ab =>
             {
                 ab = ab.UseMiddleware<ContentSecurityPolicyMiddleware>();
@@ -72,7 +73,7 @@ namespace Jhoose.Security.DependencyInjection
             {
                 applicationBuilder.UseHttpsRedirection();
             }
-            
+
             return applicationBuilder;
         }
 #endif

@@ -259,6 +259,16 @@
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -359,10 +369,12 @@
     <ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj">
       <Project>{bdb081d5-0c6a-436b-8e99-6e6b57854a2c}</Project>
       <Name>Jhoose.Security.Core</Name>
+      <HintPath>..\..\packages\Jhoose.Security.Core.1.2.3.163\lib\net471\Jhoose.Security.Core.dll</HintPath>
     </ProjectReference>
     <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
       <Project>{3f5ededa-79c3-4332-9cae-7701c0501819}</Project>
       <Name>Jhoose.Security</Name>
+      <HintPath>..\..\packages\Jhoose.Security.Admin.1.2.3.152\lib\net471\Jhoose.Security.dll</HintPath>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -486,6 +498,10 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="any\any\modules\_protected\Jhoose.Security\Views\Web.config" />
+    <Content Include="any\any\modules\_protected\Jhoose.Security\Views\JhooseSecurityAdmin\index.cshtml" />
+    <Content Include="any\any\modules\_protected\Jhoose.Security\module.config" />
+    <Content Include="any\any\modules\_protected\Jhoose.Security\ClientResources\csp-app.js" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
@@ -517,4 +533,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="..\..\packages\Jhoose.Security.Admin.1.2.3.152\build\net461\Jhoose.Security.Admin.targets" Condition="Exists('..\..\packages\Jhoose.Security.Admin.1.2.3.152\build\net461\Jhoose.Security.Admin.targets')" />
 </Project>
