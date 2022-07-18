@@ -31,13 +31,18 @@
 	  </RestoreSources>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0' or '$(TargetFramework)' == 'net6.0'">
-		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.0.3,13)" />
-		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.0.3,13)" />
-		<PackageReference Include="EPiServer.Framework" Version="[12.0.3,13)" />
+		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
+		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0" />
 		<PackageReference Include="Jhoose.Security.Core" Version="[1.3.0,2)" Condition=" '$(Configuration)' == 'Release' " />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net5.0'">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net471'">
 		<PackageReference Include="EPiServer.Framework" Version="[11.1.0,12)" />
