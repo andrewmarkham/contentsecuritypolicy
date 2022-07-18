@@ -6,7 +6,7 @@
 		<PackageId>Jhoose.Security.Admin</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
-		<Version>1.3.1.0</Version>
+		<Version>1.4.0.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy </Description>
 		<Title>
@@ -17,6 +17,7 @@
 			1.1.1 - Added option to disable any of the recommended security headers.
 			1.2.0 - Target .Net Framework and Episerver 11
 			1.3.0 - Add .Net 6 Support
+			1.4.0 - Included support for the Optimizely nonce service.
 	</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
