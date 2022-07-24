@@ -35,7 +35,7 @@
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
-		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0" />
 		<PackageReference Include="Jhoose.Security.Core" Version="[1.4.0,2)" Condition=" '$(Configuration)' == 'Release' " />
 	</ItemGroup>
