@@ -32,7 +32,6 @@ Install-Package Jhoose.Security.Admin
   
 Review the [Admin Interface](./documentation/admin-interface.md) documentation for more detail on how to manage the policies.
 
-
 ### Configuration (.NET 5.0)
 
 *Startup.cs*
@@ -263,3 +262,4 @@ These aren't removed, the reason being
  |1.1|Added Recommended Security Headers|
  |1.2|Ported to support Episerver 11 and .Net Framework 4.7.1<br/>Automatically remove (_X-AspNet-Version, X-AspNetMvc-Version_)|
  |1.3|Added .Net6 Support|
+ |1.4|Included support for the Optimizely nonce service|
