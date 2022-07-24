@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Jhoose.Security.Middleware;
+using EPiServer.Shell.Modules;
 #endif
 
-using EPiServer.Shell.Modules;
 using Jhoose.Security.Core.Repository;
 using Jhoose.Security.Core.Provider;
 using Jhoose.Security.Repository;
@@ -30,7 +30,6 @@ namespace Jhoose.Security.DependencyInjection
                 IConfiguration configuration,
                 Action<JhooseSecurityOptions> options = null)
         {
-
             services.AddHostedService<InitialiseHostedService>();
 
             if (options != null)
@@ -55,6 +54,9 @@ namespace Jhoose.Security.DependencyInjection
             services.AddScoped<ICspProvider, StandardCspProvider>();
             services.AddSingleton<ICacheManager, EpiserverCacheManager>();
             services.AddScoped<IJhooseSecurityService, JhooseSecurityService>();
+
+            //hook in the csp nonce generation to the optimizely internal services, so the same value is always used
+            services.AddContentSecurityPolicyNonce(sp => sp.GetRequiredService<ICspProvider>().GenerateNonce());
 
             return services;
         }

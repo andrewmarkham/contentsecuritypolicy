@@ -5,6 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="/assets/css/main.css" />
+
+    @Html.RequiredClientResources("Header")
 </head>
 <body class="is-preload">
     <!-- Wrapper -->
@@ -233,7 +235,7 @@
     <script src="/assets/js/util.js"></script>
     <script src="/assets/js/main.js"></script>
 
-    <script nonce>alert("Hello world");</script>
+    @Html.RequiredClientResources("Footer")
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

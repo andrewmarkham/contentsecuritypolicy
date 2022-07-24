@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Jhoose.Security.DependencyInjection;
 using Microsoft.Extensions.Configuration;
+using EPiServer.Framework.Web.Resources;
 
 namespace DemoSite
 {
@@ -33,6 +34,13 @@ namespace DemoSite
             services.AddMvc();
             services.AddCms()
                 .AddCmsAspNetIdentity<ApplicationUser>();
+
+
+            services.Configure<ClientResourceOptions>(o =>
+            {
+                o.Debug = true;
+            });
+
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
@@ -63,6 +71,7 @@ namespace DemoSite
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapContent();
+                endpoints.MapControllers();
             });
         }
     }
