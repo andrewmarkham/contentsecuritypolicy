@@ -18,6 +18,7 @@
 		<PackageReference Include="EPiServer.Framework" Version="12.8.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj" />
+	  <ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
+	  <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj" />
 	</ItemGroup>
 </Project>

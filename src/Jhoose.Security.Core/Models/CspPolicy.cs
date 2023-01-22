@@ -1,8 +1,17 @@
 using System;
 using System.Text;
+#if NET461_OR_GREATER
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+#endif
 
 namespace Jhoose.Security.Core.Models
 {
+#if NET461_OR_GREATER
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+#endif
+
     public class CspPolicy
     {
         public CspPolicy()
@@ -20,32 +29,37 @@ namespace Jhoose.Security.Core.Models
 
         }
 
-        public Guid Id {get; set;}
-        public int Order {get;set;}
-        public CspPolicyLevel Level {get;set;} 
-        public string PolicyName {get;set;}
-        public bool ReportOnly {get;set;}
+        public Guid Id { get; set; }
+        public int Order { get; set; }
 
-        public SandboxOptions SandboxOptions {get;set;}
+#if NET461_OR_GREATER
+        [JsonConverter(typeof(StringEnumConverter))]
+#endif
 
-        public CspOptions Options {get;set;}
+        public CspPolicyLevel Level { get; set; }
+        public string PolicyName { get; set; }
+        public bool ReportOnly { get; set; }
 
-        public SchemaSource SchemaSource {get;set;}
+        public SandboxOptions SandboxOptions { get; set; }
 
-        public string Value {get;set;}
+        public CspOptions Options { get; set; }
 
-        public string SummaryText {get;set;}
+        public SchemaSource SchemaSource { get; set; }
+
+        public string Value { get; set; }
+
+        public string SummaryText { get; set; }
 
         public override string ToString()
         {
             var sb = new StringBuilder();
-            
-            if ((this.Options?.HasOptions ?? false) | 
+
+            if ((this.Options?.HasOptions ?? false) |
                 (this.SchemaSource?.HasSchemaSource ?? false) |
                 (this.SandboxOptions?.Enabled ?? false) | !string.IsNullOrEmpty(this.Value))
             {
                 sb.AppendFormat($"{this.PolicyName} ");
-                
+
                 sb.Append(this.Options?.ToString());
                 sb.Append(this.SchemaSource?.ToString());
                 sb.Append(this.SandboxOptions?.ToString());

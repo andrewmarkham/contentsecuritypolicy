@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Jhoose.Security.DependencyInjection;
+
 using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
+
+using Jhoose.Security.DependencyInjection;
 
 namespace Jhoose.Security.Tests.DependencyInjection
 {

@@ -48,6 +48,8 @@ namespace Jhoose.Security.Initilization
                 // Attribute routing
                 config.MapHttpAttributeRoutes();
 
+                /*
+                 * Legacy approach
                 var formatters = GlobalConfiguration.Configuration.Formatters;
                 var jsonFormatter = formatters.JsonFormatter;
                 var settings = jsonFormatter.SerializerSettings;
@@ -59,6 +61,7 @@ namespace Jhoose.Security.Initilization
                 jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
                 config.Formatters.Remove(config.Formatters.XmlFormatter);
+                */
 
                 config.Routes.MapHttpRoute(
                     name: "JhooseSecurityApi",

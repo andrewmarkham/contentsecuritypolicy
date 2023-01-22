@@ -1,8 +1,14 @@
 using System.Text;
-
+#if NET461_OR_GREATER
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+#endif
 namespace Jhoose.Security.Core.Models
 {
-    public class CspOptions 
+#if NET461_OR_GREATER
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+#endif
+    public class CspOptions
     {
         public CspOptions()
         {
@@ -17,14 +23,14 @@ namespace Jhoose.Security.Core.Models
             this.Nonce = false;
         }
 
-        public bool None {get;set;}
-        public bool Wildcard {get;set;}
-        public bool Self {get;set;}
-        public bool UnsafeEval {get;set;}
-        public bool UnsafeHashes {get;set;}
-        public bool UnsafeInline {get;set;}
-        public bool StrictDynamic {get;set;}
-        public bool Nonce {get;set;}
+        public bool None { get; set; }
+        public bool Wildcard { get; set; }
+        public bool Self { get; set; }
+        public bool UnsafeEval { get; set; }
+        public bool UnsafeHashes { get; set; }
+        public bool UnsafeInline { get; set; }
+        public bool StrictDynamic { get; set; }
+        public bool Nonce { get; set; }
 
         public override string ToString()
         {
@@ -36,15 +42,15 @@ namespace Jhoose.Security.Core.Models
                 return sb.ToString();
             }
 
-            if(this.Wildcard) sb.Append("* ");
-            if(this.Self) sb.Append("'self' ");
+            if (this.Wildcard) sb.Append("* ");
+            if (this.Self) sb.Append("'self' ");
 
-            if(this.UnsafeEval) sb.Append("'unsafe-eval' ");
-            if(this.UnsafeHashes) sb.Append("'unsafe-hashes' ");
-            if(this.UnsafeInline) sb.Append("'unsafe-inline' ");
-            if(this.StrictDynamic) sb.Append("'strict-dynamic' ");
+            if (this.UnsafeEval) sb.Append("'unsafe-eval' ");
+            if (this.UnsafeHashes) sb.Append("'unsafe-hashes' ");
+            if (this.UnsafeInline) sb.Append("'unsafe-inline' ");
+            if (this.StrictDynamic) sb.Append("'strict-dynamic' ");
 
-            if(this.Nonce) sb.Append("'nonce-{0}' ");
+            if (this.Nonce) sb.Append("'nonce-{0}' ");
 
             return sb.ToString();
         }
