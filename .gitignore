@@ -48,3 +48,5 @@ src/Sample/DemoSite461/bin/
 
 *.log
 
+
+src/Sample/DemoSite/App_Data/blobs/
