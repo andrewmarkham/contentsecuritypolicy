@@ -7,26 +7,27 @@ namespace Jhoose.Security.Core.Models
     {
         public static string HeaderName = "Content-Security-Policy";
         public static string ReadonlyHeaderName = "Content-Security-Policy-Report-Only";
-        
+
         public CspPolicyHeader()
         {
         }
 
-        public string Header {get;set;}
-        public string BuildValue(string reportUrl, string nonceValue) 
-        { 
+        public string Header { get; set; }
+        public string BuildValue(string reportUrl, string nonceValue)
+        {
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             this.Policies.ForEach(p => sb.Append(p.ToString()));
 
-            if (!(string.IsNullOrEmpty(reportUrl))) {
+            if (!(string.IsNullOrEmpty(reportUrl)))
+            {
                 sb.Append($" report-uri {reportUrl}; ");
-                sb.Append( $" report-to {reportUrl}; ");
+                sb.Append($" report-to {reportUrl}; ");
             }
 
-            return string.Format(sb.ToString(), nonceValue); 
+            return string.Format(sb.ToString(), nonceValue);
         }
 
-        public List<CspPolicy> Policies {get;set;}
+        public List<CspPolicy> Policies { get; set; }
     }
 }
