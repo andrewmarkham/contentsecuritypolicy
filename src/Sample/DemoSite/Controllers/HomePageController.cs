@@ -13,20 +13,24 @@ namespace DemoSite.Controllers
         private readonly ILogger<HomePageController> _logger;
         private readonly IContentRepository contentRepository;
 
+        //private readonly BootstrapData bootstrapData;
+
         public HomePageController(ILogger<HomePageController> logger,
             IContentRepository contentRepository,
-            IClientResourceService clientResourceService)
+            IClientResourceService clientResourceService//,
+                                                        //BootstrapData bootstrapData
+            )
         {
             _logger = logger;
             this.contentRepository = contentRepository;
             var f = clientResourceService.GetClientResources("Header");
+
+            //this.bootstrapData = bootstrapData;
         }
 
         public IActionResult Index(HomePage currentPage)
         {
-
-
-
+            //this.bootstrapData.Run();
 
             var vm = new PageViewModel<HomePage>(currentPage);
 

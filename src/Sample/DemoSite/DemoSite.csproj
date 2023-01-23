@@ -18,6 +18,7 @@
 		<None Remove="Microsoft.Extensions.DependencyInjection" />
 		<None Remove="Microsoft.Extensions.DependencyModel" />
 		<None Remove="Jhoose.Security.Admin" />
+		<None Remove="Microsoft.AspNetCore.Http.Abstractions" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="modules\_protected\Jhoose.Security\ClientResources\csp-app.js">
@@ -39,13 +40,16 @@
 		<PackageReference Include="UNRVLD.ODP.VisitorGroups" Version="1.2.0.23" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="6.0.0" />
-		<PackageReference Include="Jhoose.Security.Admin" Version="1.4.0-rc.171" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj">
 			<GlobalPropertiesToRemove>
 			</GlobalPropertiesToRemove>
 			<Private>True</Private>
+		</ProjectReference>
+		<ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
+		  <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>
 	<ItemGroup>
