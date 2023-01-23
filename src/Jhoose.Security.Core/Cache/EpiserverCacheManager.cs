@@ -6,15 +6,16 @@ namespace Jhoose.Security.Core.Cache
     public class EpiserverCacheManager : ICacheManager
     {
         private readonly ISynchronizedObjectInstanceCache cache;
+        private static object lockObject = new object();
 
         public EpiserverCacheManager(ISynchronizedObjectInstanceCache cache)
         {
             this.cache = cache;
         }
-        
+
         public void Insert(string cacheKey, object value, TimeSpan duration)
         {
-            CacheEvictionPolicy cacheEvictionPolicy = new CacheEvictionPolicy(duration, CacheTimeoutType.Absolute );
+            CacheEvictionPolicy cacheEvictionPolicy = new CacheEvictionPolicy(duration, CacheTimeoutType.Absolute);
 
             this.cache.Insert(cacheKey, value, cacheEvictionPolicy);
         }
@@ -24,18 +25,21 @@ namespace Jhoose.Security.Core.Cache
             return this.cache.Get<T>(cacheKey, ReadStrategy.Wait);
         }
 
-        public T Get<T>(string cacheKey, Func<T> getValue, TimeSpan duration ) where T : class
+        public T Get<T>(string cacheKey, Func<T> getValue, TimeSpan duration) where T : class
         {
-            T cachedValue = this.cache.Get<T>(cacheKey, ReadStrategy.Wait);
-
-            if (cachedValue == null)
+            lock (lockObject)
             {
-                cachedValue = getValue();
-                
-                this.Insert(cacheKey, cachedValue, duration);
-            }
+                T cachedValue = this.cache.Get<T>(cacheKey, ReadStrategy.Wait);
 
-            return cachedValue;
+                if (cachedValue == null)
+                {
+                    cachedValue = getValue();
+
+                    this.Insert(cacheKey, cachedValue, duration);
+                }
+
+                return cachedValue;
+            }
         }
 
         public void Remove(string cacheKey)
