@@ -11,9 +11,11 @@ using Jhoose.Security.Core;
 
 
 #if NET5_0_OR_GREATER
-    using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 #else
-    using System.Web;
+using System.Web;
+using EPiServer.Logging;
 #endif
 
 namespace Jhoose.Security.Services
@@ -23,43 +25,120 @@ namespace Jhoose.Security.Services
         private readonly ICspProvider cspProvider;
         private readonly ICacheManager cache;
 
-        public JhooseSecurityService(ICspProvider cspProvider, ICacheManager cache)
+#if NET5_0_OR_GREATER
+        private readonly ILogger<JhooseSecurityService> logger;
+#else
+        private static readonly ILogger logger = LogManager.GetLogger();
+#endif
+
+#if NET5_0_OR_GREATER
+        public JhooseSecurityService(ICspProvider cspProvider,
+            ICacheManager cache,
+            ILogger<JhooseSecurityService> logger)
+        {
+            this.cspProvider = cspProvider;
+            this.cache = cache;
+            this.logger = logger;
+        }
+#else
+        public JhooseSecurityService(ICspProvider cspProvider,
+            ICacheManager cache)
         {
             this.cspProvider = cspProvider;
             this.cache = cache;
         }
-
+#endif
         public void AddHeaders(HttpResponse response, IEnumerable<ResponseHeader> headers)
         {
-            var enabledHeaders = headers.Where(h => h.Enabled);
-
-            foreach (var header in enabledHeaders)
+            try
             {
-                response.Headers.Add(header.Name, header.Value);
-            }
+                var enabledHeaders = headers.Where(h => h.Enabled);
 
-            //response.Headers.Remove("X-Powered-By");
-            response.Headers.Remove("X-AspNet-Version");
-            response.Headers.Remove("X-AspNetMvc-Version");
+                foreach (var header in enabledHeaders)
+                {
+
+                    if (response.Headers.ContainsKey(header.Name))
+                    {
+#if NET5_0_OR_GREATER
+                        logger.LogWarning($"Header : {header.Name} already exists in the reponse, the Jhoose CSP module will not override this");
+#else
+                        logger.Warning($"Header : {header.Name} already exists in the reponse, the Jhoose CSP module will not override this");
+#endif
+                    }
+                    else
+                    {
+                        response.Headers.Add(header.Name, header.Value);
+                    }
+                }
+
+                //response.Headers.Remove("X-Powered-By");
+                response.Headers.Remove("X-AspNet-Version");
+                response.Headers.Remove("X-AspNetMvc-Version");
+
+            }
+            catch (Exception ex)
+            {
+                // Error is logged, but will not stop execution.
+#if NET5_0_OR_GREATER
+                logger.LogError(ex, "Failed to add header");
+#else
+                logger.Error("Failed to add header", ex);
+#endif
+            }
         }
 
         public void AddContentSecurityPolicy(HttpResponse response)
         {
-            // get the policy settings
-            var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => cspProvider.Settings, new TimeSpan(1, 0, 0));
-
-
-            if (policySettings.IsEnabled)
+            try
             {
-                // get the policy
-                var headerValues = cache.Get<IEnumerable<CspPolicyHeader>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders(), new TimeSpan(1, 0, 0));
+                // get the policy settings
+                var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => cspProvider.Settings, new TimeSpan(1, 0, 0));
 
-                foreach (var header in headerValues)
+                if (policySettings.IsEnabled)
                 {
-                    response.Headers.Add(header.Header, header.BuildValue(policySettings.ReportingUrl, cspProvider.GenerateNonce()));
+                    // get the policy
+                    var headerValues = cache.Get<IEnumerable<CspPolicyHeader>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders(), new TimeSpan(1, 0, 0));
+
+                    foreach (var header in headerValues)
+                    {
+                        if (response.Headers.ContainsKey(header.Header))
+                        {
+
+#if NET5_0_OR_GREATER
+                            logger.LogWarning($"Header : {header.Header} already exists in the reponse, the Jhoose CSP module will not override this");
+
+#else
+                            logger.Warning($"Header : {header.Header} already exists in the reponse, the Jhoose CSP module will not override this");
+
+#endif
+                        }
+                        else
+                        {
+                            response.Headers.Add(header.Header, header.BuildValue(policySettings.ReportingUrl, cspProvider.GenerateNonce()));
+                        }
+                    }
                 }
 
             }
+            catch (Exception ex)
+            {
+                // Error is logged, but will not stop execution.
+#if NET5_0_OR_GREATER
+                logger.LogError(ex, "Failed to add header");
+#else
+                logger.Error("Failed to add header", ex);
+#endif
+            }
         }
     }
+
+#if NET461_OR_GREATER
+    public static class NameValueCollectionEx
+    {
+        public static bool ContainsKey(this System.Collections.Specialized.NameValueCollection collection, string keyName)
+        {
+            return collection[keyName] != null;
+        }
+    }
+#endif
 }
