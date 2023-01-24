@@ -31,7 +31,7 @@ jobs:
     - name: Build (Pre Release)
       if: github.ref != 'refs/heads/main'
       working-directory: ./src/Jhoose.Security.Core
-      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO_PRE }}
+      run: dotnet build --configuration PreRelease -p:Version=${{ env.BUILD_NO_PRE }}
 
     - name: Test
       
