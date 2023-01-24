@@ -29,7 +29,7 @@
 		  https://api.nuget.org/v3/index.json;
 		  https://nuget.optimizely.com/feed/packages.svc;
 	  </RestoreSources>
-		<RestoreSources Condition=" '$(Configuration)' == 'Release' ">
+		<RestoreSources Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'PreRelease' ">
 		  https://api.nuget.org/v3/index.json;
 		  https://nuget.optimizely.com/feed/packages.svc;
       https://nuget.pkg.github.com/andrewmarkham/index.json
@@ -37,17 +37,20 @@
 		<Configurations>Debug;Release;PreRelease</Configurations>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-	  <Optimize>true</Optimize>
+		<Optimize>true</Optimize>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PreRelease|AnyCPU' ">
-	  <DebugType></DebugType>
-	  <Optimize>false</Optimize>
-	  <OutputPath>bin\PreRelease</OutputPath>
-	  <DefineConstants></DefineConstants>
-	  <WarningLevel>4</WarningLevel>
-	  <NoStdLib>true</NoStdLib>
-	  <IntermediateOutputPath>obj\PreRelease</IntermediateOutputPath>
-	  <NoWarn></NoWarn>
+		<DebugType>
+		</DebugType>
+		<Optimize>false</Optimize>
+		<OutputPath>bin\PreRelease</OutputPath>
+		<DefineConstants>
+		</DefineConstants>
+		<WarningLevel>4</WarningLevel>
+		<NoStdLib>true</NoStdLib>
+		<IntermediateOutputPath>obj\PreRelease</IntermediateOutputPath>
+		<NoWarn>
+		</NoWarn>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
@@ -69,7 +72,8 @@
 		<PackageReference Include="Newtonsoft.Json" Version="[9.0.1,14)" />
 		<PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
 		<PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.7" />
-		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.*-rc.*,2)" Condition=" '$(Configuration)' == 'Release' " />
+		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.*-rc.*,2)" Condition=" '$(Configuration)' == 'PreRelease' " />
+		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.*,2)" Condition=" '$(Configuration)' == 'Release' " />
 	</ItemGroup>
 	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
 		<ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
