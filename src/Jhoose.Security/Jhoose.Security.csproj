@@ -34,6 +34,20 @@
 		  https://nuget.optimizely.com/feed/packages.svc;
       https://nuget.pkg.github.com/andrewmarkham/index.json
 	  </RestoreSources>
+		<Configurations>Debug;Release;PreRelease</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <Optimize>true</Optimize>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PreRelease|AnyCPU' ">
+	  <DebugType></DebugType>
+	  <Optimize>false</Optimize>
+	  <OutputPath>bin\PreRelease</OutputPath>
+	  <DefineConstants></DefineConstants>
+	  <WarningLevel>4</WarningLevel>
+	  <NoStdLib>true</NoStdLib>
+	  <IntermediateOutputPath>obj\PreRelease</IntermediateOutputPath>
+	  <NoWarn></NoWarn>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
