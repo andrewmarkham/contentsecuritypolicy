@@ -57,11 +57,9 @@
 		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
 		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.*-rc.*,2)" Condition=" '$(Configuration)' == 'PreRelease' " />
 		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.*,2)" Condition=" '$(Configuration)' == 'Release' " />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0" />
