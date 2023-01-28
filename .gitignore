@@ -50,3 +50,5 @@ src/Sample/DemoSite461/bin/
 
 
 src/Sample/DemoSite/App_Data/blobs/
+/src/Sample/DemoSite461/App_Data/EPiServerDB_13705f33.mdf
+/src/Sample/DemoSite461/App_Data/EPiServerDB_13705f33_log.ldf
