@@ -2,12 +2,10 @@
   "solution": {
     "path": "csp.sln",
     "projects": [
+      "Jhoose.Security.Core\\Jhoose.Security.Core.csproj",
+      "Jhoose.Security\\Jhoose.Security.csproj",
       "Sample\\DemoSite461\\DemoSite461.csproj",
       "Sample\\DemoSite\\DemoSite.csproj",
-
-      "Jhoose.Security\\Jhoose.Security.csproj",
-      "Jhoose.Security.Core\\Jhoose.Security.Core.csproj",
-
       "Tests\\Jhoose.Security.Tests\\Jhoose.Security.Tests.csproj"
     ]
   }

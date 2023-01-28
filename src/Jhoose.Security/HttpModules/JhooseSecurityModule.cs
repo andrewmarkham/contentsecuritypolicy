@@ -33,10 +33,10 @@ namespace Jhoose.Security.HttpModules
             HttpResponse httpResponse = context?.Response;
             HttpRequest httpRequest = context?.Request;;
 
-            var securityOptions = ConfigurationManager.GetSection("JhooseSecurity/Options") as OptionsSection;
-            var securityHeaders = ConfigurationManager.GetSection("JhooseSecurity/Headers") as HeadersSection;
+            var securityOptions = ConfigurationManager.GetSection("JhooseSecurity/Options") as OptionsSection ?? new OptionsSection();
+            var securityHeaders = ConfigurationManager.GetSection("JhooseSecurity/Headers") as HeadersSection ?? new HeadersSection();
 
-            IJhooseSecurityService securityService = ServiceLocator.Current.GetInstance<IJhooseSecurityService>();  
+            IJhooseSecurityService securityService = ServiceLocator.Current.GetInstance<IJhooseSecurityService>();
 
             if (httpRequest != null)
             {
