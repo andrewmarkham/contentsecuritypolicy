@@ -50,6 +50,8 @@ namespace DemoSite
             {
                 options.LoginPath = "/util/Login";
             });
+
+            //services.AddTransient<BootstrapData, BootstrapData>();
         }
 
 
@@ -73,6 +75,7 @@ namespace DemoSite
                 endpoints.MapContent();
                 endpoints.MapControllers();
             });
+
         }
     }
 }
