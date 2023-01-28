@@ -19,44 +19,58 @@ namespace Jhoose.Security.Core.Provider
             this.nonceValue = Guid.NewGuid().ToString();
         }
 
-        public CspSettings Settings {
-            get {
+        public CspSettings Settings
+        {
+            get
+            {
                 return this.policyRepository.Settings();
             }
         }
 
-        public string GenerateNonce() {
+        public string GenerateNonce()
+        {
             return this.nonceValue;
         }
 
-        public IEnumerable<CspPolicyHeader> PolicyHeaders()
+        public IEnumerable<CspPolicyHeaderBase> PolicyHeaders()
         {
             var policies = this.policyRepository.List();
-            
+
+            if (!string.IsNullOrEmpty(this.Settings.ReportingUrl))
+            {
+                yield return new ReportingEndpointHeader(this.Settings.ReportingUrl);
+
+            }
+
             // for global report only
             if (this.Settings.Mode.Equals("report"))
             {
-                yield return new CspPolicyHeader {
-                    Header = CspPolicyHeader.ReadonlyHeaderName,
+                yield return new CspPolicyReportHeader(this.Settings.ReportingUrl)
+                {
                     Policies = policies
-                }; 
+                };
             }
             else
             {
-                yield return new CspPolicyHeader {
-                    Header = CspPolicyHeader.HeaderName,
-                    Policies = policies.Where(p => !p.ReportOnly).ToList()
-                };
+                var actionPolicies = policies.Where(p => !p.ReportOnly).ToList();
+
+                if (actionPolicies.Any())
+                {
+                    yield return new CspPolicyHeader(this.Settings.ReportingUrl)
+                    {
+                        Policies = actionPolicies
+                    };
+                }
 
                 var reportPolicies = policies.Where(p => p.ReportOnly).ToList();
 
                 if (reportPolicies.Any())
                 {
-                    yield return new CspPolicyHeader {
-                        Header = CspPolicyHeader.ReadonlyHeaderName,
+                    yield return new CspPolicyReportHeader(this.Settings.ReportingUrl)
+                    {
                         Policies = reportPolicies
                     };
-                }  
+                }
             }
         }
 

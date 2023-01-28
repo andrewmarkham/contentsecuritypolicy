@@ -1,16 +1,15 @@
 #if NET5_0_OR_GREATER
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-
-using Jhoose.Security.Core.Provider;
-using Microsoft.Extensions.Caching.Memory;
-using EPiServer.Framework.Cache;
 using System;
-using Jhoose.Security.Core;
-using Jhoose.Security.Core.Models;
-using Jhoose.Security.Core.Cache;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using EPiServer.Framework.Cache;
+using Jhoose.Security.Core;
+using Jhoose.Security.Core.Cache;
+using Jhoose.Security.Core.Models;
+using Jhoose.Security.Core.Provider;
 using Jhoose.Security.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Jhoose.Security.Middleware
 {
@@ -26,7 +25,7 @@ namespace Jhoose.Security.Middleware
         public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService)
         {
             if (!context.Response.HasStarted)
-            { 
+            {
                 securityService.AddContentSecurityPolicy(context.Response);
             }
             await _next(context);

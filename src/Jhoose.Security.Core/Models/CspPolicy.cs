@@ -64,7 +64,9 @@ namespace Jhoose.Security.Core.Models
                 sb.Append(this.SchemaSource?.ToString());
                 sb.Append(this.SandboxOptions?.ToString());
 
-                sb.AppendFormat($"{this.Value}; ");
+                var value = this.Value.Replace(Environment.NewLine, " ");
+
+                sb.AppendFormat($"{value}; ");
             }
 
             return sb.ToString();

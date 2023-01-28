@@ -3,30 +3,25 @@ using System.Text;
 
 namespace Jhoose.Security.Core.Models
 {
-    public class CspPolicyHeader
+
+    public class CspPolicyHeader : CspPolicyHeaderBase
     {
-        public static string HeaderName = "Content-Security-Policy";
-        public static string ReadonlyHeaderName = "Content-Security-Policy-Report-Only";
-        
-        public CspPolicyHeader()
+        public CspPolicyHeader(string reportUrl) : base(reportUrl)
         {
         }
 
-        public string Header {get;set;}
-        public string BuildValue(string reportUrl, string nonceValue) 
-        { 
+        public override string Name => "Content-Security-Policy";
+    }
 
-            StringBuilder sb = new StringBuilder();
-            this.Policies.ForEach(p => sb.Append(p.ToString()));
 
-            if (!(string.IsNullOrEmpty(reportUrl))) {
-                sb.Append($" report-uri {reportUrl}; ");
-                sb.Append( $" report-to {reportUrl}; ");
-            }
-
-            return string.Format(sb.ToString(), nonceValue); 
+    public class ReportingEndpointHeader : CspPolicyHeaderBase
+    {
+        public ReportingEndpointHeader(string reportUrl) : base(reportUrl)
+        {
         }
 
-        public List<CspPolicy> Policies {get;set;}
+        public override string Name => "Reporting-Endpoints";
+
+        public override string Value => $"main-endpoint=\"{this.reportUrl}\", default=\"{this.reportUrl}\"";
     }
 }
