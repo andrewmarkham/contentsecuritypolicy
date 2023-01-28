@@ -44,13 +44,12 @@ namespace Jhoose.Security.Tests.Services
             var cspProvider = Substitute.For<ICspProvider>();
 
             // configure csp policy header
-            cacheManager.Get<IEnumerable<CspPolicyHeader>>(Constants.PolicyCacheKey, Arg.Any<Func<IEnumerable<CspPolicyHeader>>>(), Arg.Any<TimeSpan>())
+            cacheManager.Get<IEnumerable<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, Arg.Any<Func<IEnumerable<CspPolicyHeaderBase>>>(), Arg.Any<TimeSpan>())
                         .Returns(new
-                            List<CspPolicyHeader>()
+                            List<CspPolicyHeaderBase>()
                             {
-                                new CspPolicyHeader
+                                new CspPolicyHeader(string.Empty)
                                     {
-                                        Header = "Content-Security-Policy",
                                         Policies = new List<CspPolicy>()
                                     }
                             });
@@ -80,9 +79,8 @@ namespace Jhoose.Security.Tests.Services
                         .Returns(new
                             List<CspPolicyHeader>()
                             {
-                                new CspPolicyHeader
+                                new CspPolicyHeader(string.Empty)
                                     {
-                                        Header = "Content-Security-Policy",
                                         Policies = new List<CspPolicy>()
                                     }
                             });

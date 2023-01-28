@@ -97,24 +97,26 @@ namespace Jhoose.Security.Services
                 if (policySettings.IsEnabled)
                 {
                     // get the policy
-                    var headerValues = cache.Get<IEnumerable<CspPolicyHeader>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders(), new TimeSpan(1, 0, 0));
+                    var headerValues = cache.Get<IEnumerable<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders(), new TimeSpan(1, 0, 0));
 
                     foreach (var header in headerValues)
                     {
-                        if (response.Headers.ContainsKey(header.Header))
+                        header.NonceValue = this.cspProvider.GenerateNonce();
+
+                        if (response.Headers.ContainsKey(header.Name))
                         {
 
 #if NET5_0_OR_GREATER
-                            logger.LogWarning($"Header : {header.Header} already exists in the reponse, the Jhoose CSP module will not override this");
+                            logger.LogWarning($"Header : {header.Name} already exists in the reponse, the Jhoose CSP module will not override this");
 
 #else
-                            logger.Warning($"Header : {header.Header} already exists in the reponse, the Jhoose CSP module will not override this");
+                            logger.Warning($"Header : {header.Name} already exists in the reponse, the Jhoose CSP module will not override this");
 
 #endif
                         }
                         else
                         {
-                            response.Headers.Add(header.Header, header.BuildValue(policySettings.ReportingUrl, cspProvider.GenerateNonce()));
+                            response.Headers.Add(header.Name, header.Value);
                         }
                     }
                 }

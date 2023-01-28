@@ -5,8 +5,8 @@ namespace Jhoose.Security.Core.Provider
 {
     public interface ICspProvider
     {
-        CspSettings Settings {get;}
-        IEnumerable<CspPolicyHeader> PolicyHeaders();
+        CspSettings Settings { get; }
+        IEnumerable<CspPolicyHeaderBase> PolicyHeaders();
 
         void Initialize();
 
