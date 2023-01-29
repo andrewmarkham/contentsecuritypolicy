@@ -5,12 +5,10 @@
 		<PackageId>Jhoose.Security.Core</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
-		<Version>1.5.0.0</Version>
+		<Version>1.5.1.0</Version>
 		<Authors>Andrew Markham</Authors>
-		<Title>
-		</Title>
-		<Description>
-		</Description>
+		<Title>Jhoose Security Core</Title>
+		<Description>Core package used by the Jhoose Security module</Description>
 		<Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
 		<ReleaseNotes>
 		1.1.0 - Added the ability to output the recommended security headers.
