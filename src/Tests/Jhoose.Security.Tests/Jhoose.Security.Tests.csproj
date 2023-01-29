@@ -35,4 +35,14 @@
 	<ItemGroup>
 	  <Folder Include="Services\" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Services\" />
+	  <None Remove="Microsoft.AspNetCore.Http.Abstractions" />
+	  <None Remove="Castle.Core" />
+	  <None Remove="NSubstitute" />
+	  <None Remove="Microsoft.Extensions.Logging.Abstractions" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Services\" />
+	</ItemGroup>
 </Project>
