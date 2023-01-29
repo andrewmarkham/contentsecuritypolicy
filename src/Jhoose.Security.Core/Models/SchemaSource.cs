@@ -1,10 +1,16 @@
 using System.Text;
-
+#if NET461_OR_GREATER
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+#endif
 namespace Jhoose.Security.Core.Models
 {
-    public class SchemaSource 
+#if NET461_OR_GREATER
+    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
+#endif
+    public class SchemaSource
     {
-        public SchemaSource() 
+        public SchemaSource()
         {
             this.Http = false;
             this.Https = false;
@@ -14,25 +20,25 @@ namespace Jhoose.Security.Core.Models
             this.Filesystem = false;
         }
 
-        public bool Http {get;set;}
-        public bool Https {get;set;}
-        public bool Data {get;set;}
-        public bool Mediastream {get;set;}
-        public bool Blob {get;set;}
-        public bool Filesystem {get;set;}
+        public bool Http { get; set; }
+        public bool Https { get; set; }
+        public bool Data { get; set; }
+        public bool Mediastream { get; set; }
+        public bool Blob { get; set; }
+        public bool Filesystem { get; set; }
 
 
         public override string ToString()
         {
             var sb = new StringBuilder();
 
-            if(this.Http) sb.Append("http: ");
-            if(this.Https) sb.Append("https: ");
+            if (this.Http) sb.Append("http: ");
+            if (this.Https) sb.Append("https: ");
 
-            if(this.Data) sb.Append("data: ");
-            if(this.Mediastream) sb.Append("mediastream: ");
-            if(this.Blob) sb.Append("blob: ");
-            if(this.Filesystem) sb.Append("filesystem: ");
+            if (this.Data) sb.Append("data: ");
+            if (this.Mediastream) sb.Append("mediastream: ");
+            if (this.Blob) sb.Append("blob: ");
+            if (this.Filesystem) sb.Append("filesystem: ");
 
             return sb.ToString();
         }

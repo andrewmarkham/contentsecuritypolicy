@@ -22,7 +22,18 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.3" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj" />
+	  <ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
+	  <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Remove="Services\" />
+	  <None Remove="Microsoft.AspNetCore.Http.Abstractions" />
+	  <None Remove="Castle.Core" />
+	  <None Remove="NSubstitute" />
+	  <None Remove="Microsoft.Extensions.Logging.Abstractions" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Services\" />
 	</ItemGroup>
 	<ItemGroup>
 	  <None Remove="Services\" />

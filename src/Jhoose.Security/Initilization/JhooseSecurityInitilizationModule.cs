@@ -48,18 +48,6 @@ namespace Jhoose.Security.Initilization
                 // Attribute routing
                 config.MapHttpAttributeRoutes();
 
-                var formatters = GlobalConfiguration.Configuration.Formatters;
-                var jsonFormatter = formatters.JsonFormatter;
-                var settings = jsonFormatter.SerializerSettings;
-
-                var enumConverter = new Newtonsoft.Json.Converters.StringEnumConverter();
-                jsonFormatter.SerializerSettings.Converters.Add(enumConverter);
-
-                settings.Formatting = Formatting.Indented;
-                jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-
-                config.Formatters.Remove(config.Formatters.XmlFormatter);
-
                 config.Routes.MapHttpRoute(
                     name: "JhooseSecurityApi",
                     routeTemplate: "api/{controller}/{id}",
