@@ -1,4 +1,4 @@
-namespace Jhoose.Security.Core.Models
+namespace Jhoose.Security.Core.Models.SecurityHeaders
 {
     public class CrossOriginEmbedderPolicyHeader : ResponseHeader
     {
@@ -20,6 +20,6 @@ namespace Jhoose.Security.Core.Models
 
         public override string Value => DetermineValue(Mode);
 
-        public CrossOriginEmbedderPolicyEnum Mode {get;set;} = CrossOriginEmbedderPolicyEnum.RequireCorp;
+        public CrossOriginEmbedderPolicyEnum Mode { get; set; } = CrossOriginEmbedderPolicyEnum.RequireCorp;
     }
 }

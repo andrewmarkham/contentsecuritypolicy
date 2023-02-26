@@ -3,7 +3,7 @@ using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 #endif
-namespace Jhoose.Security.Core.Models
+namespace Jhoose.Security.Core.Models.CSP
 {
 #if NET461_OR_GREATER
     [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]

@@ -6,6 +6,8 @@ import "./css/app.css";
 
 import {ContentArea,WorkItemNavigation,Typography,Workspace,ContextualToolbar, List, ListItem } from "@episerver/ui-framework";
 
+import { SecurityHeaders } from './components/SecurityHeaders';
+
 import { CspDataGrid } from './components/cspdatagrid';
 import { CspSettings } from './components/cspsettings';
 
@@ -70,6 +72,10 @@ function App(props) {
 
             <Route exact path="/csp">
                 <CspDataGrid data={state.data} save={save} disabled={state.loading | state.saving} />
+            </Route>
+
+            <Route exact path="/headers">
+                <SecurityHeaders data={state.data} save={save} disabled={state.loading | state.saving} />
             </Route>
 
             <Route path="/csp/settings">

@@ -1,4 +1,4 @@
-namespace Jhoose.Security.Core.Models
+namespace Jhoose.Security.Core.Models.SecurityHeaders
 {
     public class XPermittedCrossDomainPoliciesHeader : ResponseHeader
     {
@@ -23,6 +23,6 @@ namespace Jhoose.Security.Core.Models
 
         public override string Value => DetermineValue(Mode);
 
-        public XPermittedCrossDomainPoliciesEnum Mode {get;set;} = XPermittedCrossDomainPoliciesEnum.None;
+        public XPermittedCrossDomainPoliciesEnum Mode { get; set; } = XPermittedCrossDomainPoliciesEnum.None;
     }
 }

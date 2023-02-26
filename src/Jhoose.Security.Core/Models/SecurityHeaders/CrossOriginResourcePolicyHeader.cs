@@ -1,4 +1,4 @@
-namespace Jhoose.Security.Core.Models
+namespace Jhoose.Security.Core.Models.SecurityHeaders
 {
     public class CrossOriginResourcePolicyHeader : ResponseHeader
     {
@@ -21,6 +21,6 @@ namespace Jhoose.Security.Core.Models
 
         public override string Value => DetermineValue(Mode);
 
-        public CrossOriginResourcePolicyEnum Mode {get;set;} = CrossOriginResourcePolicyEnum.SameOrigin;
+        public CrossOriginResourcePolicyEnum Mode { get; set; } = CrossOriginResourcePolicyEnum.SameOrigin;
     }
 }

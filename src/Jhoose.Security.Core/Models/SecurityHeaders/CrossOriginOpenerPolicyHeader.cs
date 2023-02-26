@@ -1,4 +1,4 @@
-namespace Jhoose.Security.Core.Models
+namespace Jhoose.Security.Core.Models.SecurityHeaders
 {
     public class CrossOriginOpenerPolicyHeader : ResponseHeader
     {
@@ -21,6 +21,6 @@ namespace Jhoose.Security.Core.Models
 
         public override string Value => DetermineValue(Mode);
 
-        public CrossOriginOpenerPolicyEnum Mode {get;set;} = CrossOriginOpenerPolicyEnum.SameOrigin;
+        public CrossOriginOpenerPolicyEnum Mode { get; set; } = CrossOriginOpenerPolicyEnum.SameOrigin;
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jhoose.Security.Core.Models
+namespace Jhoose.Security.Core.Models.CSP
 {
 
     public class CspPolicyHeader : CspPolicyHeaderBase

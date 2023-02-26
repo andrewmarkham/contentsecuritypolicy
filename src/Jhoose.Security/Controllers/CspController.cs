@@ -15,12 +15,12 @@ using System.Collections.Generic;
 
 using Jhoose.Security.Core.Repository;
 using Jhoose.Security.Core.Models;
-
+using Jhoose.Security.Core.Models.CSP;
 
 namespace Jhoose.Security.Controllers
 {
     [Authorize]
-    
+
     //
 #if NET461_OR_GREATER
     [RoutePrefix("api/csp")]
@@ -36,13 +36,13 @@ namespace Jhoose.Security.Controllers
     {
         private readonly ICspPolicyRepository policyRepository;
 
-        #if NET461_OR_GREATER
+#if NET461_OR_GREATER
         public CspController()
         {
             this.policyRepository = ServiceLocator.Current.GetInstance<ICspPolicyRepository>();
         }
 
-        #endif
+#endif
         public CspController(ICspPolicyRepository policyRepository)
         {
             this.policyRepository = policyRepository;
@@ -78,7 +78,7 @@ namespace Jhoose.Security.Controllers
         public IHttpActionResult Update(CspPolicy policy)
 #endif
         {
-            return Ok(this.policyRepository.Update(policy)) ;
+            return Ok(this.policyRepository.Update(policy));
         }
 
 
@@ -112,7 +112,7 @@ namespace Jhoose.Security.Controllers
 
         {
             var result = this.policyRepository.SaveSettings(settings);
-            
+
             if (result)
                 return Ok(settings);
             else

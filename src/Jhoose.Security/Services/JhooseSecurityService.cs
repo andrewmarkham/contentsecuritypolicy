@@ -8,6 +8,7 @@ using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Provider;
 using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core;
+using Jhoose.Security.Core.Models.CSP;
 
 
 #if NET5_0_OR_GREATER

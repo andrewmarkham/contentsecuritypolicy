@@ -1,4 +1,4 @@
-namespace Jhoose.Security.Core.Models
+namespace Jhoose.Security.Core.Models.SecurityHeaders
 {
     public class XFrameOptionsHeader : ResponseHeader
     {
@@ -21,7 +21,7 @@ namespace Jhoose.Security.Core.Models
 
         public override string Value => DetermineValue(Mode, Domain);
 
-        public XFrameOptionsEnum Mode {get;set;} = XFrameOptionsEnum.Deny;
-        public string Domain {get;set;} 
+        public XFrameOptionsEnum Mode { get; set; } = XFrameOptionsEnum.Deny;
+        public string Domain { get; set; }
     }
 }

@@ -19,6 +19,8 @@ using System.Net.Http;
 using System.IO;
 using System.Threading.Tasks;
 using EPiServer;
+using Jhoose.Security.Core.Models.CSP;
+using Jhoose.Security.Core.Models.SecurityHeaders;
 
 namespace Jhoose.Security.Tests.Services
 {

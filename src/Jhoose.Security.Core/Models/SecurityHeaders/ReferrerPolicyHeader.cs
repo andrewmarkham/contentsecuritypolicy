@@ -1,4 +1,4 @@
-namespace Jhoose.Security.Core.Models
+namespace Jhoose.Security.Core.Models.SecurityHeaders
 {
     public class ReferrerPolicyHeader : ResponseHeader
     {
@@ -19,9 +19,9 @@ namespace Jhoose.Security.Core.Models
                 case ReferrerPolicyEnum.SameOrigin:
                     return "same-origin";
                 case ReferrerPolicyEnum.StrictOrigin:
-                    return "strict-origin"; 
+                    return "strict-origin";
                 case ReferrerPolicyEnum.StrictOriginWhenCrossOrigin:
-                    return "strict-origin-when-cross-origin"; 
+                    return "strict-origin-when-cross-origin";
                 case ReferrerPolicyEnum.UnsafeUrl:
                     return "unsafe-url";
                 default:
@@ -31,6 +31,6 @@ namespace Jhoose.Security.Core.Models
 
         public override string Value => DetermineValue(Mode);
 
-        public ReferrerPolicyEnum Mode {get;set;} = ReferrerPolicyEnum.NoReferrer;
+        public ReferrerPolicyEnum Mode { get; set; } = ReferrerPolicyEnum.NoReferrer;
     }
 }

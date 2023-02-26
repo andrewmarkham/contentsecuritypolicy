@@ -1,6 +1,7 @@
 ﻿
 #if NET461_OR_GREATER
 using Jhoose.Security.Core.Models;
+using Jhoose.Security.Core.Models.SecurityHeaders;
 using System;
 using System.Configuration;
 
@@ -24,7 +25,7 @@ namespace Jhoose.Security.Configuration
     }
 
 
-    
+
 
 }
 #endif

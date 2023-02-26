@@ -6,29 +6,32 @@ using EPiServer.Framework.Cache;
 using Jhoose.Security.Core;
 using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Models;
+using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Repository;
 
 namespace Jhoose.Security.Repository
 {
-    public class StandardCspPolicyRepository: BaseCspPolicyRepository
+    public class StandardCspPolicyRepository : BaseCspPolicyRepository
     {
         protected readonly DynamicDataStoreFactory dataStoreFactory;
         protected readonly ICacheManager cache;
-        protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() => {
+        protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() =>
+        {
 
             var storeParams = new StoreDefinitionParameters();
             storeParams.IndexNames.Add("Id");
-            
-            return dataStoreFactory.CreateStore(typeof(CspPolicy), storeParams); 
+
+            return dataStoreFactory.CreateStore(typeof(CspPolicy), storeParams);
 
         }, false);
 
-        protected Lazy<DynamicDataStore> settingsStore => new Lazy<DynamicDataStore>(() => {
+        protected Lazy<DynamicDataStore> settingsStore => new Lazy<DynamicDataStore>(() =>
+        {
 
             var storeParams = new StoreDefinitionParameters();
             storeParams.IndexNames.Add("Id");
 
-            return dataStoreFactory.CreateStore(typeof(CspSettings), storeParams); 
+            return dataStoreFactory.CreateStore(typeof(CspSettings), storeParams);
 
         }, false);
 
@@ -40,7 +43,7 @@ namespace Jhoose.Security.Repository
         {
             this.cache = cache;
             this.dataStoreFactory = dataStoreFactory;
-            
+
         }
 
         public override void Bootstrap()
@@ -51,13 +54,13 @@ namespace Jhoose.Security.Repository
             Remap<SchemaSource>();
             Remap<CspSettings>();
             Remap<SandboxOptions>();
-            
+
             base.Bootstrap();
         }
-        
+
         public override List<CspPolicy> List()
         {
- 
+
             //store.Value.DeleteAll();
             var policies = store.Value.LoadAll<CspPolicy>();
 
@@ -75,7 +78,8 @@ namespace Jhoose.Security.Repository
 
         public override CspSettings Settings()
         {
-            return settingsStore.Value.Load<CspSettings>(EPiServer.Data.Identity.NewIdentity(Guid.Parse("3f15cad4-cd57-41c3-95c8-f7f62a2759ea"))) ?? new CspSettings {
+            return settingsStore.Value.Load<CspSettings>(EPiServer.Data.Identity.NewIdentity(Guid.Parse("3f15cad4-cd57-41c3-95c8-f7f62a2759ea"))) ?? new CspSettings
+            {
                 Mode = "report",
                 ReportingUrl = string.Empty
             };
@@ -84,11 +88,13 @@ namespace Jhoose.Security.Repository
         public override bool SaveSettings(CspSettings settings)
         {
             this.cache.Remove(Constants.SettingsCacheKey);
-            
-            try {
+
+            try
+            {
                 settingsStore.Value.Save(settings);
                 return true;
-            } catch(Exception)
+            }
+            catch (Exception)
             {
                 return false;
             }
@@ -97,8 +103,9 @@ namespace Jhoose.Security.Repository
         private void Remap<T>()
         {
             var definition = StoreDefinition.Get(typeof(T).FullName);
-            
-            if (definition != null) {
+
+            if (definition != null)
+            {
                 definition.Remap(typeof(T));
                 definition.CommitChanges();
             }
