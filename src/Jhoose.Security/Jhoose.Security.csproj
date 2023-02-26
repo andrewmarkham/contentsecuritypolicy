@@ -6,7 +6,7 @@
 		<PackageId>Jhoose.Security.Admin</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
-		<Version>1.5.1.0</Version>
+		<Version>1.5.2.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy and OWASP Recomended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -21,7 +21,9 @@
 			        Handle duplicate headers as this caused site to crash
 					Handle CRLF in header value, changed to Space
 					Make caching threadsafe
-			1.5.1 - Removed Global Serialization settings for .Net Framework see issue #52 
+			1.5.1 - Removed Global Serialization settings for .Net Framework see issue #52
+			1.5.2 - Add support for ws and wss protocols
+			        Add support for seperate report-uri and report-to endpoints
 	</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
