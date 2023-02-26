@@ -264,3 +264,4 @@ These aren't removed, the reason being
  |1.3|Added .Net6 Support|
  |1.4|Included support for the Optimizely nonce service|
  |1.5|#64, #65 Resolved issue with duplicate headers being added and crashing the solution<br/>#70 Resolved issue the report-to directive being incorectly configured|
+ |1.5.2|Add support for ws and wss protocols<br/>Add support for seperate report-uri and report-to endpoints|

@@ -48,7 +48,7 @@ namespace Jhoose.Security.Tests.Services
                         .Returns(new
                             List<CspPolicyHeaderBase>()
                             {
-                                new CspPolicyHeader(string.Empty)
+                                new CspPolicyHeader(new CspSettings())
                                     {
                                         Policies = new List<CspPolicy>()
                                     }
@@ -79,7 +79,7 @@ namespace Jhoose.Security.Tests.Services
                         .Returns(new
                             List<CspPolicyHeader>()
                             {
-                                new CspPolicyHeader(string.Empty)
+                                new CspPolicyHeader(new CspSettings())
                                     {
                                         Policies = new List<CspPolicy>()
                                     }

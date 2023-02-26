@@ -5,11 +5,11 @@ namespace Jhoose.Security.Core.Models
 {
     public abstract class CspPolicyHeaderBase : ResponseHeader
     {
-        protected readonly string reportUrl;
+        protected readonly CspSettings settings;
 
-        protected CspPolicyHeaderBase(string reportUrl)
+        protected CspPolicyHeaderBase(CspSettings settings)
         {
-            this.reportUrl = reportUrl;
+            this.settings = settings;
         }
 
         protected virtual string BuildValue(string reportUrl, string nonceValue)
@@ -21,7 +21,11 @@ namespace Jhoose.Security.Core.Models
             if (!(string.IsNullOrEmpty(reportUrl)))
             {
                 sb.Append($" report-uri {reportUrl}; ");
-                sb.Append($" report-to main-endpoint; ");
+
+                if (!string.IsNullOrEmpty(this.settings.ReportToUrl))
+                {
+                    sb.Append($" report-to csp-endpoint; ");
+                }
             }
 
             return string.Format(sb.ToString(), nonceValue);
@@ -30,6 +34,6 @@ namespace Jhoose.Security.Core.Models
         public string NonceValue { get; set; }
         public List<CspPolicy> Policies { get; set; }
 
-        public override string Value => this.BuildValue(this.reportUrl, this.NonceValue);
+        public override string Value => this.BuildValue(this.settings.ReportingUrl, this.NonceValue);
     }
 }
