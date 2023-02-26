@@ -36,16 +36,16 @@ namespace Jhoose.Security.Core.Provider
         {
             var policies = this.policyRepository.List();
 
-            if (!string.IsNullOrEmpty(this.Settings.ReportingUrl))
+            if (!string.IsNullOrEmpty(this.Settings.ReportToUrl))
             {
-                yield return new ReportingEndpointHeader(this.Settings.ReportingUrl);
+                yield return new ReportingEndpointHeader(this.Settings);
 
             }
 
             // for global report only
             if (this.Settings.Mode.Equals("report"))
             {
-                yield return new CspPolicyReportHeader(this.Settings.ReportingUrl)
+                yield return new CspPolicyReportHeader(this.Settings)
                 {
                     Policies = policies
                 };
@@ -56,7 +56,7 @@ namespace Jhoose.Security.Core.Provider
 
                 if (actionPolicies.Any())
                 {
-                    yield return new CspPolicyHeader(this.Settings.ReportingUrl)
+                    yield return new CspPolicyHeader(this.Settings)
                     {
                         Policies = actionPolicies
                     };
@@ -66,7 +66,7 @@ namespace Jhoose.Security.Core.Provider
 
                 if (reportPolicies.Any())
                 {
-                    yield return new CspPolicyReportHeader(this.Settings.ReportingUrl)
+                    yield return new CspPolicyReportHeader(this.Settings)
                     {
                         Policies = reportPolicies
                     };

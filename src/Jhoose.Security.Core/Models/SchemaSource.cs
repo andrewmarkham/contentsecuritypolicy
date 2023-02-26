@@ -14,10 +14,14 @@ namespace Jhoose.Security.Core.Models
         {
             this.Http = false;
             this.Https = false;
+
             this.Data = false;
             this.Mediastream = false;
             this.Blob = false;
             this.Filesystem = false;
+
+            this.Ws = false;
+            this.Wss = false;
         }
 
         public bool Http { get; set; }
@@ -27,6 +31,8 @@ namespace Jhoose.Security.Core.Models
         public bool Blob { get; set; }
         public bool Filesystem { get; set; }
 
+        public bool Ws { get; set; }
+        public bool Wss { get; set; }
 
         public override string ToString()
         {
@@ -40,9 +46,12 @@ namespace Jhoose.Security.Core.Models
             if (this.Blob) sb.Append("blob: ");
             if (this.Filesystem) sb.Append("filesystem: ");
 
+            if (this.Ws) sb.Append("ws: ");
+            if (this.Wss) sb.Append("wss: ");
+
             return sb.ToString();
         }
 
-        public bool HasSchemaSource => this.Http | this.Https | this.Data | this.Mediastream | this.Blob | this.Filesystem;
+        public bool HasSchemaSource => this.Http | this.Https | this.Data | this.Mediastream | this.Blob | this.Filesystem | this.Ws | this.Wss;
     }
 }

@@ -2,7 +2,7 @@
 {
     public class CspPolicyReportHeader : CspPolicyHeaderBase
     {
-        public CspPolicyReportHeader(string reportUrl) : base(reportUrl)
+        public CspPolicyReportHeader(CspSettings settings) : base(settings)
         {
         }
 

@@ -58,6 +58,9 @@ export function CspDataRow(props) {
             v = policy.schemaSource.mediastream ? v+= "mediastream: " : v;
             v = policy.schemaSource.blob ? v+= "blob: " : v;
             v = policy.schemaSource.filesystem ? v+= "filesystem: " : v;
+
+            v = policy.schemaSource.ws ? v+= "ws: " : v;
+            v = policy.schemaSource.wss ? v+= "wss: " : v;
         }
 
         return v;

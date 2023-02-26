@@ -51,6 +51,16 @@ export function SchemaSource(props) {
                     setPolicyValue("filesystem", e.currentTarget.value);
                 }}>filesystem</Checkbox>
             </GridCell>
+                        <GridCell span={3}>
+                <Checkbox checked={schemaSource.ws} onChange={(e) => {
+                    setPolicyValue("ws", e.currentTarget.value);
+                }}>ws</Checkbox>
+            </GridCell>
+            <GridCell span={3}>
+                <Checkbox checked={schemaSource.wss} onChange={(e) => {
+                    setPolicyValue("wss", e.currentTarget.value);
+                }}>wss</Checkbox>
+            </GridCell>
         </GridRow>
     </fieldset>);
 }

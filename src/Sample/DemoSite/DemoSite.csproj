@@ -49,7 +49,8 @@
 			<Private>True</Private>
 		</ProjectReference>
 		<ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
-		  <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+			<GlobalPropertiesToRemove>
+			</GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>
 	<ItemGroup>

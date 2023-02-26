@@ -119,6 +119,9 @@ export function EditCspItem(props) {
             v = policy.schemaSource?.blob ? v+= "blob: " : v;
             v = policy.schemaSource?.filesystem ? v+= "filesystem: " : v;
       
+            v = policy.schemaSource?.ws ? v+= "ws: " : v;
+            v = policy.schemaSource?.wss ? v+= "wss: " : v;
+
             v+= value ?? "";
         }
 

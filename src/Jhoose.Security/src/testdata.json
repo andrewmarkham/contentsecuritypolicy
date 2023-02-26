@@ -19,7 +19,9 @@
             "data": false, 
             "mediastream": false, 
             "blob": false, 
-            "filesystem": false 
+            "filesystem": false,
+            "ws": false, 
+            "wss": false
         }, 
             "value": "", 
             "options": { 
