@@ -56,8 +56,8 @@
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
-		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.*-rc.*,2)" Condition=" '$(Configuration)' == 'PreRelease' " />
-		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.*,2)" Condition=" '$(Configuration)' == 'Release' " />
+		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.2.*-rc.*,2)" Condition=" '$(Configuration)' == 'PreRelease' " />
+		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.2.*,2)" Condition=" '$(Configuration)' == 'Release' " />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0" />
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net471'">
@@ -68,8 +68,8 @@
 		<PackageReference Include="Newtonsoft.Json" Version="[9.0.1,14)" />
 		<PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
 		<PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.7" />
-		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.*-rc.*,2)" Condition=" '$(Configuration)' == 'PreRelease' " />
-		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.*,2)" Condition=" '$(Configuration)' == 'Release' " />
+		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.2.*-rc.*,2)" Condition=" '$(Configuration)' == 'PreRelease' " />
+		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.2.*,2)" Condition=" '$(Configuration)' == 'Release' " />
 	</ItemGroup>
 	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
 		<ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
@@ -85,7 +85,7 @@
 		<Content Remove="*.json" />
 		<Content Remove="Jhoose.Security.Views\**" />
 		<!--  -->
-		<Content Include="build\net5.0\Jhoose.Security.Admin.targets" PackagePath="build\net5.0\Jhoose.Security.Admin.targets" />
+		<Content Include="build\net6.0\Jhoose.Security.Admin.targets" PackagePath="build\net6.0\Jhoose.Security.Admin.targets" />
 		<Content Include="build\net461\Jhoose.Security.Admin.targets" PackagePath="build\net461\Jhoose.Security.Admin.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
