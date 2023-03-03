@@ -39,6 +39,23 @@ app.get('/api/csp/settings', async (req, res) => {
   res.json(settings);
 })
 
+app.get('/api/csp/header', async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  const data = [
+    { "id": 1, "header": "Cross-Origin-Embedder-Policy", "enabled": true, "mode": 0, "label": "" },
+    { "id": 2, "header": "Cross-Origin-Opener-Policy", "enabled": true, "mode": 0, "label": "" },
+    { "id": 3, "header": "Cross-Origin-Resource-Policy", "enabled": true, "mode": 0, "label": "" },
+    { "id": 4, "header": "Referrer-Policy", "enabled": true, "mode": 0, "label": "" },
+    { "id": 5, "header": "Strict-Transport-Security", "enabled": true, "includeSubDomains": false, "maxage": 31536000 },
+    { "id": 6, "header": "X-Frame-Options", "enabled": true, "domain":"" },
+    { "id": 7, "header": "X-Content-Type-Options", "enabled": true, "label": "nosniff" },
+    { "id": 8, "header": "X-Permitted-Cross-Domain-Policies", "enabled": true, "mode": 0, "label": "" }
+];
+  await snooze(1500);
+  res.json(data);
+})
+
 var jsonParser = bodyParser.json()
 app.post('/api/csp',jsonParser, async (req, res) => {
   

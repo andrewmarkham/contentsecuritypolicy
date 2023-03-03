@@ -6,10 +6,10 @@ import "./css/app.css";
 
 import {ContentArea,WorkItemNavigation,Typography,Workspace,ContextualToolbar, List, ListItem } from "@episerver/ui-framework";
 
-import { SecurityHeaders } from './components/SecurityHeaders';
+import { SecurityHeaders } from './components/securityheaders/SecurityHeaders';
 
-import { CspDataGrid } from './components/cspdatagrid';
-import { CspSettings } from './components/cspsettings';
+import { CspDataGrid } from './components/csp/cspdatagrid';
+import { CspSettings } from './components/csp/cspsettings';
 
 import { Toaster } from './components/toaster';
 import { appReducer } from './reducers/appReducer';
@@ -25,6 +25,7 @@ function App(props) {
     loading: false,
     saving: false,
     data: [],
+    headerData: [],
     settingsSaved: true,
     settings: { mode: "on", reportingUrl: "" }
   };
@@ -43,10 +44,14 @@ function App(props) {
     dispatch({actionType: 'settingsSave', data: settings, dispatcher: dispatch});
   }
 
+  function saveHeader(requestHeaders) {
+    dispatch({actionType: 'headerSave', data: requestHeaders, dispatcher: dispatch});
+  }
   
   function load() {
     dispatch({actionType: 'load', data:null, dispatcher: dispatch});
     dispatch({actionType: 'settingsLoad', data:null, dispatcher: dispatch});
+    dispatch({actionType: 'headerLoad', data:null, dispatcher: dispatch});
   }
 
     return (
@@ -56,7 +61,8 @@ function App(props) {
         <ContentArea>    
           <WorkItemNavigation>
             <List>
-              <ListItem><Link to="/csp">Policy</Link></ListItem>
+              <ListItem><Link to="/csp">Content Security Policy</Link></ListItem>
+              <ListItem><Link to="/headers">Response Headers</Link></ListItem>
               <ListItem><Link to="/csp/settings">Settings</Link></ListItem>
             </List>
           </WorkItemNavigation>
@@ -75,7 +81,7 @@ function App(props) {
             </Route>
 
             <Route exact path="/headers">
-                <SecurityHeaders data={state.data} save={save} disabled={state.loading | state.saving} />
+                <SecurityHeaders data={state.headerData} save={saveHeader} disabled={state.loading | state.saving} />
             </Route>
 
             <Route path="/csp/settings">

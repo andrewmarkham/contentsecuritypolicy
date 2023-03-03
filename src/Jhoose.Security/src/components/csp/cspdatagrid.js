@@ -37,7 +37,7 @@ export function CspDataGrid(props) {
                 </DataTableHeaderRow>
 
                 <DataTableBody>
-                    {data.map(r => {
+                    {data?.map(r => {
                         return <CspDataRow 
                                     key={r.id}  
                                     row={r} 
