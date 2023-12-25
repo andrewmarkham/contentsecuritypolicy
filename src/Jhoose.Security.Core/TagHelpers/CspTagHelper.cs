@@ -1,4 +1,3 @@
-#if NET5_0_OR_GREATER
 using System;
 using Jhoose.Security.Core.Provider;
 using Microsoft.AspNetCore.Razor.TagHelpers;
@@ -10,7 +9,8 @@ namespace Jhoose.Security.Core.TagHelpers
     public class CspTagHelper : TagHelper
     {
         private readonly ICspProvider provider;
-        public CspTagHelper(ICspProvider provider) {
+        public CspTagHelper(ICspProvider provider)
+        {
             this.provider = provider;
         }
         public override void Process(TagHelperContext context, TagHelperOutput output)
@@ -19,4 +19,3 @@ namespace Jhoose.Security.Core.TagHelpers
         }
     }
 }
-#endif

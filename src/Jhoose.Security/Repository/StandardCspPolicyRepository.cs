@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EPiServer.Data.Dynamic;
-using EPiServer.Framework.Cache;
 using Jhoose.Security.Core;
 using Jhoose.Security.Core.Cache;
-using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Repository;
 

@@ -66,3 +66,15 @@ white-space: pre;
 white-space: -moz-pre-wrap; 
 white-space: pre-wrap;
 }
+
+tab-container {
+    padding: 10px 30px 10px 5px;
+}
+
+div.title {
+    padding: 10px;
+}
+
+div.notenabled {
+    padding: 10px;
+}

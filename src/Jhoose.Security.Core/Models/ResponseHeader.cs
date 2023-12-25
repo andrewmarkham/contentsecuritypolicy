@@ -1,9 +1,14 @@
+using System;
+
 namespace Jhoose.Security.Core.Models
 {
-    public abstract class ResponseHeader
+
+    public class ResponseHeader : IResponseHeader
     {
-        public bool Enabled {get; set;} = true;
-        public abstract string Name {get;}
-        public abstract string Value {get;}
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public bool Enabled { get; set; } = true;
+
+        public virtual string Name { get; set; } = string.Empty;
+        public virtual string Value { get; set; } = string.Empty;
     }
 }

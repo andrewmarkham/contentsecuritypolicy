@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 	<PropertyGroup>
-		<TargetFrameworks>net471;net6.0</TargetFrameworks>
+		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<Nullable>enable</Nullable>
 		<PackageId>Jhoose.Security.Admin</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
@@ -50,7 +51,16 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
 		<DebugType>embedded</DebugType>
 	</PropertyGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PreRelease|AnyCPU' ">
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+	<ItemGroup>
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
@@ -59,17 +69,6 @@
 		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.2.*-rc.*,2)" Condition=" '$(Configuration)' == 'PreRelease' " />
 		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.2.*,2)" Condition=" '$(Configuration)' == 'Release' " />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net471'">
-		<PackageReference Include="EPiServer.Framework" Version="[11.1.0,12)" />
-		<PackageReference Include="EPiServer.Framework.AspNet" Version="[11.1.0,12)" />
-		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[11.1.0,12)" />
-		<PackageReference Include="EPiServer.ServiceLocation.StructureMap" Version="2.0.3" />
-		<PackageReference Include="Newtonsoft.Json" Version="[9.0.1,14)" />
-		<PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
-		<PackageReference Include="Microsoft.AspNet.WebApi.WebHost" Version="5.2.7" />
-		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.2.*-rc.*,2)" Condition=" '$(Configuration)' == 'PreRelease' " />
-		<PackageReference Include="Jhoose.Security.Core" Version="[1.5.2.*,2)" Condition=" '$(Configuration)' == 'Release' " />
 	</ItemGroup>
 	<ItemGroup Condition=" '$(Configuration)' == 'Debug' ">
 		<ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
@@ -86,7 +85,6 @@
 		<Content Remove="Jhoose.Security.Views\**" />
 		<!--  -->
 		<Content Include="build\net6.0\Jhoose.Security.Admin.targets" PackagePath="build\net6.0\Jhoose.Security.Admin.targets" />
-		<Content Include="build\net461\Jhoose.Security.Admin.targets" PackagePath="build\net461\Jhoose.Security.Admin.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
 			<PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
@@ -105,8 +103,12 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Microsoft.Extensions.Options.ConfigurationExtensions" />
+		<None Remove="Provider\" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Provider\" />
 	</ItemGroup>
 </Project>

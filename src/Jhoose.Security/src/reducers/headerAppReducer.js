@@ -7,6 +7,7 @@ export const headerAppReducer = (state, action) => {
   
         return {
           ...state,
+          showUi: true,
           saving: true,
           settings: {...state.settings},
           headerData: [...state.headerData],
@@ -15,12 +16,14 @@ export const headerAppReducer = (state, action) => {
         }
       } else if (action.actionType === "headerSaved") { 
 
+        var newHeaderData = merge(state.headerData, action.data);
+
         return {
           ...state,
           saving: false,
-          settings: {...state.data},
+          settings: {...state.settings},
           settingsSaved: true,
-          headerData: [...action.data],
+          headerData: [...newHeaderData],
           data: [...state.data]
         }
     } else if (action.actionType === "headerLoad") { 
@@ -37,9 +40,10 @@ export const headerAppReducer = (state, action) => {
 
       return {
         ...state,
+        useHeadersUI: action.data.useHeadersUI,
         loading: false,
         settings: {...state.settings},
-        headerData: [...action.data],
+        headerData: [...action.data.headers],
         data: [...state.data]
       }
     } 
@@ -47,6 +51,16 @@ export const headerAppReducer = (state, action) => {
     return state;
   };
   
+  function merge(data, updatedRecord) {
+    return data.map(p => {
+        if (p.id === updatedRecord.id){
+          return Object.assign(p, updatedRecord);
+        } else {
+          return p;
+        }
+      });
+  }
+
   function loadRequest(dispatcher) {
     axios.get('/api/csp/header')
           .then((r) =>

@@ -1,93 +1,103 @@
-import React, { useState } from 'react';
-import { DataTable, DataTableContent, DataTableHeaderRow, DataTableColumnHeaderCell, DataTableBody, DataTableRow, DataTableCell , Checkbox, Typography, ExposedDropdownMenu , GridRow, GridCell} from "@episerver/ui-framework";
-import {EditSecurityHeader} from './EditSecurityHeader';
+import React, { useEffect, useState } from 'react';
+import { DataTable, DataTableContent, DataTableHeaderRow, DataTableColumnHeaderCell, DataTableBody, DataTableRow, DataTableCell, Checkbox, Typography, ExposedDropdownMenu, GridRow, GridCell } from "@episerver/ui-framework";
+import { EditSecurityHeader } from './EditSecurityHeader';
+import { getLabelForHeaderOption } from './SecurityHeaderHelper';
+import { ErrorBoundary } from '../errorBoundry';
 
 export function SecurityHeaders(props) {
 
-    const dummy = { "id": -1, "header": "", "enabled": true, "mode": 0, "label": "" };
+    const dummy = { "id": "-1", "name": "", "enabled": true, "mode": 0, "value": "" };
 
-    const {data, save} = {...props};
+    const { data, save } = { ...props };
     const [isEditOpen, setIsEditOpen] = useState(false);
 
     const [currentHeader, setCurrentHeader] = useState(dummy);
 
-    const divStyle = {
-        width: '40px'
-      };
-
     function getValue(row) {
 
-        const {label, includeSubDomains, maxage, domain} = {...row};
+        const { mode, includeSubDomains, maxAge, domain } = { ...row };
 
-        if (typeof(label) === "undefined") {
-
-            if (typeof(domain) === "undefined") {
-                return `includeSubDomains : ${includeSubDomains} maxage : ${maxage}`
-            }
-
-            return domain;
+        if (row.name === "X-Content-Type-Options") {
+            return row.value;
         }
 
-        return label;
+        if (row.name === "Strict-Transport-Security") { 
+            return `includeSubDomains : ${includeSubDomains}; maxage : ${maxAge}`
+        }
+        
+        if (row.name === "X-Frame-Options") { 
+
+            var modelLabel = getLabelForHeaderOption(row.name, mode);
+
+            if (domain != null) 
+                return `${modelLabel}; domain : ${domain}`;
+            else
+                return modelLabel;
+        }
+
+        if (mode != "undefined") {
+            return getLabelForHeaderOption(row.name, mode);
+        }
     }
 
-    return(
+    useEffect(() => {
+        props.setTitle("Security Headers")
+    })
+
+
+    return (
         <>
-        <h2>Edit Security Headers</h2>
-        <DataTable>
-            <DataTableContent>
-                <DataTableHeaderRow>
-                    <DataTableColumnHeaderCell style={divStyle}>
-                        &nbsp;
-                    </DataTableColumnHeaderCell>
-                    <DataTableColumnHeaderCell>
-                        Header
-                    </DataTableColumnHeaderCell>
-                    <DataTableColumnHeaderCell>
-                        Configuration
-                    </DataTableColumnHeaderCell>
-                </DataTableHeaderRow>
+                <ErrorBoundary>
+                <DataTable>
+                    <DataTableContent>
+                        <DataTableHeaderRow>
+                            <DataTableColumnHeaderCell>
+                                Header
+                            </DataTableColumnHeaderCell>
+                            <DataTableColumnHeaderCell>
+                                Configuration
+                            </DataTableColumnHeaderCell>
+                        </DataTableHeaderRow>
 
-                <DataTableBody>
-                    {data?.map(r => {
-                        return (
-                            <DataTableRow key={r.id}>
-                                <DataTableCell style={divStyle}>
-                                    <Checkbox disabled={true} 
-                                        checked={r.enabled}
-                                        ></Checkbox>
-                                </DataTableCell>
-                                <DataTableCell>
-                                    <button className="linkButton" onClick={() => {
-                                            setCurrentHeader(r);
-                                            setIsEditOpen(true);
-                                            console.log(r.header);
-                                        }}>{r.header}</button>
-                                </DataTableCell>
-                                <DataTableCell>{getValue(r)}</DataTableCell>
-                            </DataTableRow>
-                        );
-                    })}
-                </DataTableBody>
-            </DataTableContent>
-        </DataTable>
+                        <DataTableBody>
+                            {data?.map(r => {
+                                return (
+                                    <DataTableRow key={r.id}>
+                                        <DataTableCell>
+                                            <button className="linkButton" onClick={() => {
+                                                setCurrentHeader(r);
+                                                setIsEditOpen(true);
+                                            }}>{r.name}</button>
+                                        </DataTableCell>
+                                        <DataTableCell>{getValue(r)}</DataTableCell>
+                                    </DataTableRow>
+                                );
+                            })}
+                        </DataTableBody>
+                    </DataTableContent>
+                </DataTable>
+                </ErrorBoundary>
 
-        <EditSecurityHeader
-            key={currentHeader.id} 
-            isOpen={isEditOpen} 
-            header={currentHeader} 
-            onClose={(e, p) => {
+                <ErrorBoundary>
+                <EditSecurityHeader
+                    key={currentHeader.id}
+                    isOpen={isEditOpen}
+                    header={currentHeader}
+                    onClose={(e, p) => {
 
-                console.log("Closing");
+                        console.log("Closing");
 
-                setIsEditOpen(false);
-                setCurrentHeader(dummy);
+                        setIsEditOpen(false);
+                        setCurrentHeader(dummy);
 
-                // ok, lets save the data
-                if (e.detail.action === "confirm") {
-                    save(p());
-                }
-            }}/>
+                        // ok, lets save the data
+                        if (e.detail.action === "confirm") {
+                            save(p());
+                        }
+                    }} />
+                    </ErrorBoundary>
+
+            
         </>
     );
 }

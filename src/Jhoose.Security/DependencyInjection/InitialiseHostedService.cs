@@ -1,4 +1,4 @@
-#if NET5_0_OR_GREATER
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,13 +16,16 @@ namespace Jhoose.Security.DependencyInjection
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            return Task.Run(() => {
+            return Task.Run(() =>
+            {
                 var provider = this.serviceProvider.GetService(typeof(ICspProvider)) as ICspProvider;
-                provider.Initialize();
-            });
+                provider?.Initialize();
+
+                var p = this.serviceProvider.GetService(typeof(IResponseHeadersProvider)) as IResponseHeadersProvider;
+                p?.Initialize();
+            }, cancellationToken);
         }
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
     }
 }
-#endif

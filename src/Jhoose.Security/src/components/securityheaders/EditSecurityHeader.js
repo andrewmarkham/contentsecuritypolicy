@@ -1,76 +1,65 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { ExposedDropdownMenu,Checkbox,TextField, Dialog, GridCell, GridRow } from "@episerver/ui-framework";
+import { ExposedDropdownMenu, Checkbox, TextField, Dialog, GridCell, GridRow } from "@episerver/ui-framework";
+import { getHeaderOptions } from './SecurityHeaderHelper';
 
 export function EditSecurityHeader(props) {
 
     const [isOpen, setIsOpen] = useState(props.isOpen);
 
     const [header, setHeader] = useState(props.header);
-    
+
     //const [value, setValue] = useState(policy.value);
 
     const title = `Edit Response Header`;
 
-    function isEmpty(obj) {
-        return Object.keys(obj ?? {}).length === 0;
+    function showOptions(header) {
+        const { mode } = { ...header };
+
+        return typeof (mode) === "undefined" ? false : true;
     }
 
-    function getOptions(header, mode) {
+    function showHSTS(header) {
+        const { maxAge } = { ...header };
 
-        var options = {
-            "Cross-Origin-Embedder-Policy": [
-                { label: "UnSafeNone", value: 0 },
-                { label: "RequireCorp", value: 1 }
-            ],
+        return typeof (maxAge) === "undefined" ? false : true;
+    }
 
-            "Cross-Origin-Opener-Policy": [
-                { label: "UnSafeNone", value: 0 },
-                { label: "SameOriginAllowPopups", value: 1 },
-                { label: "SameOrigin", value: 2 }
-            ],
+    function showDomain(header) {
+        const { domain } = { ...header };
 
-            "Cross-Origin-Resource-Policy": [
-                { label: "SameSite", value: 0 },
-                { label: "SameOrigin", value: 1 },
-                { label: "CrossOrigin", value: 2 }
-            ],
+        return typeof (domain) === "undefined" ? false : true;
+    }
 
-            "Referrer-Policy": [
-                { label: "NoReferrer", value: 0 },
-                { label: "NoReferrerWhenDownGrade", value: 1 },
-                { label: "Origin", value: 2 },
-                { label: "OriginWhenCrossOrigin", value: 3 },
-                { label: "SameOrigin", value: 4 },
-                { label: "StrictOrigin", value: 5 },
-                { label: "StrictOriginWhenCrossOrigin", value: 6 },
-                { label: "UnsafeUrl", value: 7 }
-            ],
+    function setHeaderValue(key, value) {
+        //setIsDirty(true);
 
-            "X-Frame-Options": [
-                { label: "Deny", value: 0 },
-                { label: "SameOrigin", value: 1 },
-                { label: "AllowFrom", value: 2 }
-            ],
+        var newHeader = { ...header };
 
-            "X-Permitted-Cross-Domain-Policies": [
-                { label: "None", value: 0 },
-                { label: "MasterOnly", value: 1 },
-                { label: "ByContentType", value: 2 },
-                { label: "All", value: 3 }
-            ]
-            
+        switch (key) {
+            case "mode":
+                newHeader.mode = parseInt(value);
+                break;
+
+            case "enabled":
+                newHeader.enabled = value = !newHeader.enabled;
+                break;
+
+            case "includeSubDomains":
+                newHeader.includeSubDomains = !newHeader.includeSubDomains;
+                break;
+            case "maxage":
+                newHeader.maxAge = parseInt(value);
+                break;
+            case "domain":
+                newHeader.domain = value;
+                break;
+            default:
+                break;
         }
 
-        return options[header];
+        setHeader(newHeader);
     }
-
-    function showOptions(header) {
-        const {mode} = {...header};
-
-        return typeof(mode) === "undefined" ? false : true;
-    }
-
-    return(
+    return (
         <Dialog className="editDialog" open={isOpen}
             title={title}
             dismissLabel="Cancel"
@@ -79,32 +68,68 @@ export function EditSecurityHeader(props) {
             onInteraction={(e) => props.onClose(e, () => {
                 return header;
             })}>
-                <GridRow>
-                    <GridCell span={12}>
-                        <h3>{header.header}</h3>
-                    </GridCell>
-                    <GridCell span={12}>
-                        <Checkbox checked={header.enabled}>Enabled</Checkbox>
-                    </GridCell>
-                   
-                    { showOptions(header) &&
-                    <>
-                     <GridCell span={12}>
-                        <ExposedDropdownMenu
-                                label="Mode"
-                                options={getOptions(header.header, header.mode)}
-                                value={header.mode}
-                               >
-                        </ExposedDropdownMenu>
-                        </GridCell>
-                        </>
-                    }
-                    { !isEmpty(header) &&
-                    <>
+            <GridRow>
+                <GridCell span={12}>
+                    <h3>{header.name}</h3>
+                </GridCell>
+                <GridCell span={12}>
+                    <Checkbox checked={header.enabled}
+                        onChange={(e) => {
+                            setHeaderValue("enabled", e.currentTarget.value);
+                        }}>Enabled</Checkbox>
+                </GridCell>
 
+                {showOptions(header) &&
+                    <>
+                        <GridCell span={12}>
+                            <ExposedDropdownMenu
+                                label="Mode"
+                                options={getHeaderOptions(header.name)}
+                                value={header.mode.toString()}
+                                onValueChange={(value) => {
+                                    setHeaderValue("mode", value);
+                                }}
+                            >
+                            </ExposedDropdownMenu>
+                        </GridCell>
                     </>
-                    }
-                </GridRow>
+                }
+                {showHSTS(header) &&
+                    <>
+                        <GridCell span={12}>
+                            <Checkbox
+                                checked={header.includeSubDomains}
+                                onChange={(e) => {
+                                    setHeaderValue("includeSubDomains", e.currentTarget.value);
+                                }}>Include SubDomains</Checkbox>
+                        </GridCell>
+
+                        <GridCell span={12}>
+                            <TextField outlined="true"
+                                value={header.maxAge}
+                                inputMode='numeric'
+                                label='Max Age'
+                                onChange={(e) => {
+                                    setHeaderValue("maxage", e.currentTarget.value);
+                                }}></TextField>
+                        </GridCell>
+                    </>
+                }
+
+                {showDomain(header) &&
+                    <>
+                        <GridCell span={12}>
+                            <TextField outlined="true"
+                                value={header.domain ?? ""}
+                                label='Domain'
+                                inputMode='url'
+                                onChange={(e) => {
+                                    setHeaderValue("domain", e.currentTarget.value);
+                                }}></TextField>
+                        </GridCell>
+                    </>
+                }
+            </GridRow>
         </Dialog>
     )
 }

@@ -1,3 +1,5 @@
+using EPiServer.Data.Dynamic;
+
 namespace Jhoose.Security.Core.Models.SecurityHeaders
 {
     public class StrictTransportSecurityHeader : ResponseHeader

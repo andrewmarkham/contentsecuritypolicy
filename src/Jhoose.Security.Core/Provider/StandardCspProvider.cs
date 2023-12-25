@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+
 using System.Linq;
 using System.Text;
 using Jhoose.Security.Core.Models;

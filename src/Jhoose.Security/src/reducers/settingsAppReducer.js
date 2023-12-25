@@ -60,7 +60,7 @@ export const settingsAppReducer = (state, action) => {
           });
   }
   
-  function savesRequest(dispatcher,policyData) {
+  function saveRequest(dispatcher,policyData) {
     axios.post('/api/csp/settings',policyData)
           .then((r) =>
           {

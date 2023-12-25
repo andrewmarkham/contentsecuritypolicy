@@ -1,17 +1,8 @@
 using System;
 using System.Text;
-#if NET461_OR_GREATER
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-#endif
 
 namespace Jhoose.Security.Core.Models.CSP
 {
-#if NET461_OR_GREATER
-    [JsonObject(NamingStrategyType = typeof(CamelCaseNamingStrategy))]
-#endif
-
     public class CspPolicy
     {
         public CspPolicy()
@@ -31,10 +22,6 @@ namespace Jhoose.Security.Core.Models.CSP
 
         public Guid Id { get; set; }
         public int Order { get; set; }
-
-#if NET461_OR_GREATER
-        [JsonConverter(typeof(StringEnumConverter))]
-#endif
 
         public CspPolicyLevel Level { get; set; }
         public string PolicyName { get; set; }
