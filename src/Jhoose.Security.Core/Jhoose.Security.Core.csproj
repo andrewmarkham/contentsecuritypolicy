@@ -6,7 +6,7 @@
 		<PackageId>Jhoose.Security.Core</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
-		<Version>1.5.2.0</Version>
+		<Version>2.0.0.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Title>Jhoose Security Core</Title>
 		<Description>Core package used by the Jhoose Security module</Description>
@@ -24,6 +24,9 @@
 		1.5.1 - Removed Global Serialization settings for .Net Framework see issue #52
 		1.5.2 - Add support for ws and wss protocols
 			    Add support for seperate report-uri and report-to endpoints
+		2.0.0 - Removed support for CMS 11/.Net Framework
+			    Added support for .NET7 and .NET8
+				New  interface for managing security headers
 	  </ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources>
@@ -45,9 +48,9 @@
 	</ItemGroup>
 	<ItemGroup />
 	<ItemGroup>
-	  <None Remove="Binders\" />
+		<None Remove="Binders\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Binders\" />
+		<Folder Include="Binders\" />
 	</ItemGroup>
 </Project>
