@@ -23,11 +23,11 @@ namespace DemoSite
         {
             if (isDevelopment)
             {
-                //Development configuration can be addded here, like local logging.
+                //Development configuration can be addded he re, like local logging.
                 return Host.CreateDefaultBuilder(args)
-        
+
                     .ConfigureCmsDefaults()
-                    
+
                     .ConfigureWebHostDefaults(webBuilder =>
                     {
 

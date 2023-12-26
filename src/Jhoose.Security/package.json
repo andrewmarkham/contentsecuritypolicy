@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "npx webpack --config webpack.config.js",
-    "dev": "npx webpack --config webpack.config.js && node ./src/index.js"
+    "dev": "npx webpack --config webpack.config.js && node ./src/index.js",
+    "watch": "npx webpack --watch --config webpack.config.js && node ./src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -39,3 +40,4 @@
     "webpack-cli": "^4.7.2"
   }
 }
+

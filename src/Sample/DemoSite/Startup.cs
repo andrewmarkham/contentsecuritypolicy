@@ -44,7 +44,11 @@ namespace DemoSite
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
-            services.AddJhooseSecurity(_configuration);
+            services.AddJhooseSecurity(_configuration, (o) =>
+            {
+                o.UseHeadersUI = true;
+                o.XFrameOptions.Mode = Jhoose.Security.Core.Models.SecurityHeaders.XFrameOptionsEnum.AllowFrom;
+            });
 
             services.ConfigureApplicationCookie(options =>
             {

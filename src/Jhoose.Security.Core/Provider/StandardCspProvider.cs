@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+
 using System.Linq;
 using System.Text;
 using Jhoose.Security.Core.Models;
+using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Repository;
 
 namespace Jhoose.Security.Core.Provider

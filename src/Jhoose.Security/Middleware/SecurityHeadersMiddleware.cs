@@ -1,4 +1,3 @@
-#if NET5_0_OR_GREATER
 using System.Threading.Tasks;
 using System;
 using Microsoft.Extensions.Options;
@@ -21,11 +20,10 @@ namespace Jhoose.Security.Middleware
         {
             if (!context.Response.HasStarted)
             {
-                securityService.AddHeaders(context.Response,options.Value.Headers);
+                securityService.AddHeaders(context.Response);
             }
 
             await _next(context);
         }
     }
 }
-#endif
