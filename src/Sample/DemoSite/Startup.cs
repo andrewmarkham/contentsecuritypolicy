@@ -1,4 +1,4 @@
-﻿using DemoSite.Infrastructure.Initilization;
+using DemoSite.Infrastructure.Initilization;
 using EPiServer.Cms.UI.AspNetIdentity;
 using EPiServer.Web;
 using EPiServer.Web.Routing;
