@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
@@ -10,7 +10,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Version>2.0.0.0</Version>
 		<Authors>Andrew Markham</Authors>
-		<Description>Interface to manage Content Security Policy and OWASP Recomended response headers</Description>
+		<Description>Interface to manage Content Security Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
 		<Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
 		<ReleaseNotes>
@@ -20,12 +20,12 @@
 			1.3.0 - Add .Net 6 Support
 			1.4.0 - Included support for the Optimizely nonce service.
 			1.5.0 - Remove .Net 5 Support
-			        Handle duplicate headers as this caused site to crash
+			        Handle duplicate headers as this caused the site to crash
 					Handle CRLF in header value, changed to Space
 					Make caching threadsafe
 			1.5.1 - Removed Global Serialization settings for .Net Framework see issue #52
 			1.5.2 - Add support for ws and wss protocols
-			        Add support for seperate report-uri and report-to endpoints
+			        Add support for separate report-uri and report-to endpoints
 			2.0.0 - Removed support for CMS 11/.Net Framework
 					Added support for .NET7 and .NET8
 					New  interface for managing security headers
