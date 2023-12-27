@@ -44,10 +44,10 @@ namespace DemoSite
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
-            services.AddJhooseSecurity(_configuration, (o) =>
+            services.AddJhooseSecurity(_configuration,
+            configurePolicy: (p) =>
             {
-                o.UseHeadersUI = false;
-                o.XFrameOptions.Mode = Jhoose.Security.Core.Models.SecurityHeaders.XFrameOptionsEnum.SameOrigin;
+                p.RequireRole("CspAdmin");
             });
 
             services.ConfigureApplicationCookie(options =>

@@ -15,15 +15,15 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Jhoose.Security.Authorization;
 
 namespace Jhoose.Security.Controllers
 {
-    [Authorize]
-
     //
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = Constants.PolicyName)]
     public class CspController : ControllerBase
     {
         private readonly ICspPolicyRepository policyRepository;

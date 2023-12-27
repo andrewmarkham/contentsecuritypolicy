@@ -192,6 +192,17 @@ These aren't removed, the reason being
 </configuration>
 ```
 
+##Authentication
+By default any user with the 'CmsAdmins' role can access the module, this can be changed at startup if you need to further restrict access.
+
+``` C#
+services.AddJhooseSecurity(_configuration,
+    configurePolicy:   (p) =>
+    {
+        p.RequireRole("CspAdmin");
+    });
+```
+
 
  ---
  ## Version History
@@ -206,4 +217,4 @@ These aren't removed, the reason being
  |1.5|#64, #65 Resolved issue with duplicate headers being added and crashing the solution<br/>#70 Resolved issue the report-to directive being incorectly configured|
  |1.5.2|Add support for ws and wss protocols<br/>Add support for seperate report-uri and report-to endpoints|
  |2.0.0|Removed support for CMS 11/.Net Framework<br/>Added support for .NET7 and .NET8<br/>New  interface for managing security headers (#74)<br/>Fix issues #79, #80, #81 (Supports Readonly mode)|
- 
+ |2.1.0|Add ability to customise the access policy for the module|

@@ -18,14 +18,20 @@ using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Services;
 using Jhoose.Security.Core.Binders;
 using System.Linq;
+using Jhoose.Security.Authorization;
+using Microsoft.AspNetCore.Authorization;
+using EPiServer.Authorization;
 
 namespace Jhoose.Security.DependencyInjection
 {
     public static class SecurityExtensions
     {
+        private static readonly Action<AuthorizationPolicyBuilder> DefaultPolicy = p => p.RequireRole(Roles.CmsAdmins);
+
         public static IServiceCollection AddJhooseSecurity(this IServiceCollection services,
                 IConfiguration configuration,
-                Action<JhooseSecurityOptions>? options = null)
+                Action<JhooseSecurityOptions>? options = null,
+                Action<AuthorizationPolicyBuilder>? configurePolicy = null)
         {
             services.AddHostedService<InitialiseHostedService>();
 
@@ -74,6 +80,11 @@ namespace Jhoose.Security.DependencyInjection
             services.AddControllers(options =>
             {
                 options.ModelBinderProviders.Insert(0, new ResponseHeaderModelBinderProvider());
+            });
+
+            services.AddAuthorization(c =>
+            {
+                c.AddPolicy(Constants.PolicyName, configurePolicy ?? DefaultPolicy);
             });
 
             return services;
