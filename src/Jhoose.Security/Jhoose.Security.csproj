@@ -26,8 +26,8 @@
 			1.5.2 - Add support for ws and wss protocols
 			        Add support for seperate report-uri and report-to endpoints
 			2.0.0 - Removed support for CMS 11/.Net Framework
-			    Added support for .NET7 and .NET8
-				New  interface for managing security headers
+					Added support for .NET7 and .NET8
+					New  interface for managing security headers
 	</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">

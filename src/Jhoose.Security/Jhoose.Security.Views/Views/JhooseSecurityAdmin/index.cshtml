@@ -23,6 +23,7 @@
     </style>
 </head>
 <body class="epi-workspace">
+    @Html.AntiForgeryToken()
     @Html.Raw(Html.CreatePlatformNavigationMenu())
     <div @Html.Raw(Html.ApplyPlatformNavigation())>
         <div id="csp-root"></div>

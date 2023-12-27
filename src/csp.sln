@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jhoose.Security", "Jhoose.Security\Jhoose.Security.csproj", "{3F5EDEDA-79C3-4332-9CAE-7701C0501819}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jhoose.Security", "Jhoose.Security\Jhoose.Security.csproj", "{3F5EDEDA-79C3-4332-9CAE-7701C0501819}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jhoose.Security.Core", "Jhoose.Security.Core\Jhoose.Security.Core.csproj", "{BDB081D5-0C6A-436B-8E99-6E6B57854A2C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jhoose.Security.Core", "Jhoose.Security.Core\Jhoose.Security.Core.csproj", "{BDB081D5-0C6A-436B-8E99-6E6B57854A2C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{BDB51695-6CB4-4F7F-9823-11A610CF6013}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jhoose.Security.Tests", "Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{2D7BE326-A9E7-47B0-80F5-3EC293A2B43A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoSite", "Sample\DemoSite\DemoSite.csproj", "{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSite", "Sample\DemoSite\DemoSite.csproj", "{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Github", "Github", "{7257D1FA-9515-4055-83D0-4A4DC1CF91E7}"
 	ProjectSection(SolutionItems) = preProject
@@ -25,9 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 	ProjectSection(SolutionItems) = preProject
 		..\documentation\admin-interface.md = ..\documentation\admin-interface.md
 		..\README.md = ..\README.md
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSite461", "Sample\DemoSite461\DemoSite461.csproj", "{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "DemoSite461", "Sample\DemoSite461\DemoSite461.csproj", "{646405B5-6258-403A-9277-F35AAB564F41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,18 +88,18 @@ Global
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}.Release|x64.Build.0 = Release|Any CPU
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}.Release|x86.ActiveCfg = Release|Any CPU
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}.Release|x86.Build.0 = Release|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Debug|x64.Build.0 = Debug|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Debug|x86.Build.0 = Debug|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Release|x64.ActiveCfg = Release|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Release|x64.Build.0 = Release|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Release|x86.ActiveCfg = Release|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Release|x86.Build.0 = Release|Any CPU
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|x64.Build.0 = Debug|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|x86.Build.0 = Debug|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Release|x64.ActiveCfg = Release|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Release|x64.Build.0 = Release|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Release|x86.ActiveCfg = Release|Any CPU
+		{646405B5-6258-403A-9277-F35AAB564F41}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,7 +107,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DF0BA3EF-6087-45E7-B3AE-79E6C8009550} = {BDB51695-6CB4-4F7F-9823-11A610CF6013}
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E} = {2D7BE326-A9E7-47B0-80F5-3EC293A2B43A}
-		{AFB17DE9-C385-4CAA-A4C5-CB051AD27C72} = {2D7BE326-A9E7-47B0-80F5-3EC293A2B43A}
+		{646405B5-6258-403A-9277-F35AAB564F41} = {2D7BE326-A9E7-47B0-80F5-3EC293A2B43A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D6AE7B6-18F7-43EA-A3FB-0A1E1C3FDD48}
