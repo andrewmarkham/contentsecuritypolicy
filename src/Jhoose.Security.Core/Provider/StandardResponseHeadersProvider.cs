@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Repository;
-using Microsoft.Extensions.Options;
 
 namespace Jhoose.Security.Core.Provider
 {

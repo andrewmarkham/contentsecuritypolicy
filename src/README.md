@@ -2,13 +2,10 @@
 
 This module adds several security features to an Optimizely website.
 
- - User interface to manage the Content Secutiry Policy (CSP) policy for your site. 
- - User interface to manage the Recommended Security headers and add to the response headers.
+ - User interface to manage the CSP policy for your site. 
+ - Add Recommended Security headers to the response headers.
 
- This module fully supports
-  - Optimizely 12, .NET (6.0-8.0) 
-  - Episerver 11, .Net Framework 4.7.1 and Optimizely 12, .NET 5.0 [Legacy Documentation](./documentation/Legacy%20README.md)
-
+ This module fully supports Episerver 11, .Net Framework 4.7.1 and Optimizely 12, .NET 5.0 and .Net 6.0
 
 [![Jhoose Security](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security.yml/badge.svg?branch=main)](https://github.com/andrewmarkham/contentsecuritypolicy/actions/workflows/build-jhoose-security.yml)
 
@@ -34,7 +31,7 @@ Install-Package Jhoose.Security.Admin
   
 Review the [Admin Interface](./documentation/admin-interface.md) documentation for more detail on how to manage the policies.
 
-### Configuration
+### Configuration (.NET 6.0)
 
 *Startup.cs*
 ``` c#
@@ -71,11 +68,52 @@ It is possible to get a nonce added to your inline `<script>` and `<style>` tags
 <script nonce src="/assets/js/jquery.min.js"></script>
 ```
 
+### Configuration (.Net Framework)
+The following nodes will be added to the web.config file within your solution.
+``` xml
+<configSections>
+	<sectionGroup name="JhooseSecurity" type="Jhoose.Security.Configuration.JhooseSecurityOptionsConfigurationSectionGroup, Jhoose.Security">
+		<section name="Headers" type="Jhoose.Security.Configuration.HeadersSection, Jhoose.Security" />
+		<section name="Options" type="Jhoose.Security.Configuration.OptionsSection, Jhoose.Security" />
+	</sectionGroup>
+</configSections>
+```
+Register the module with the .Net pipeline
+``` xml
+<system.webServer>
+	<modules runAllManagedModulesForAllRequests="true">
+		<add name="JhooseSecurityModule" type="Jhoose.Security.HttpModules.JhooseSecurityModule, Jhoose.Security" />
+	</modules>
+</system.webServer>   
+```
+
+Configuration options for the module
+``` xml
+<JhooseSecurity>
+	<Options httpsRedirect="true">
+		<Exclusions>
+			<add path="/episerver" />
+		</Exclusions>
+	</Options>
+</JhooseSecurity>
+```
+
+*Exclusions:* Any request which starts with a path specified in this property will not include the CSP header.
+*httpsRedirect:* This attribute controls whether all requests should be upgraded to HTTPS.
+
+#### Nonce HTML helper
+It is possible to get a nonce added to your inline `<script>` and `<style>` tags.
+
+
+``` html
+@using Jhoose.Security.Core.HtmlHelpers;
+
+<script @Html.AddNonce() src="/assets/js/jquery.min.js"></script>
+```
+
 ## Recommended Security Headers
 
 The following recommended security headers are now automatically added to the response header.
-
-The headers can be managed directly via configuration, or via a user interface.
 
 ```
 Strict-Transport-Security: max-age=31536000;
@@ -102,30 +140,9 @@ X-Powered-By:
 Server: 
 ```
 
-### User Interface
-When the user interface is enabled, the options set by the configuration method are ignored.
+### Configuration (.NET 6.0)
 
-``` c#
-services.AddJhooseSecurity(_configuration, (o) =>
-{
-    o.UseHeadersUI = true;
-});
-```
-![image](./documentation/images/response-headers.png)
-
-### Configuration
-
-If you want to manage the headers via configuration then you will need to disable the interface first.
-
-The values can be set using appSettings.json, or directly in the startup using the  SecurityOptions class.
-
-``` c#
-services.AddJhooseSecurity(_configuration, (o) =>
-{
-    o.UseHeadersUI = false;
-    o.XFrameOptions.Mode = Jhoose.Security.Core.Models.SecurityHeaders.XFrameOptionsEnum.SameOrigin;
-});
-```
+If you need to change the headers, then these are controlled in SecurityOptions class
 
 ``` json
 "JhooseSecurity": {
@@ -192,7 +209,49 @@ These aren't removed, the reason being
 </configuration>
 ```
 
+### Configuration (.Net Framework)
 
+The headers can be controlled within the web.config
+
+``` xml
+<JhooseSecurity>
+	<Headers>
+		<StrictTransportSecurityHeader enabled="true" maxAge="31536000" />
+		<XFrameOptionsHeader enabled="true" mode="Deny|SameOrigin|AllowFrom" domain=""/>
+		<XContentTypeOptionsHeader enabled="true" />
+		<XPermittedCrossDomainPoliciesHeader enabled="true" mode="None|MasterOnly|ByContentType|All"/>
+		<ReferrerPolicyHeader enabled="true" mode="NoReferrer|NoReferrerWhenDownGrade|Origin|OriginWhenCrossOrigin|SameOrigin|StrictOrigin|StrictOriginWhenCrossOrigin|UnsafeUrl"/>
+		<CrossOriginEmbedderPolicyHeader enabled="true" mode ="UnSafeNone|RequireCorp"/>
+		<CrossOriginOpenerPolicyHeader  enabled="true" mode="UnSafeNone|SameOriginAllowPopups|SameOrigin"/>
+		<CrossOriginResourcePolicyHeader enabled="true" mode="SameSite|SameOrigin|CrossOrigin" />
+	</Headers>
+</JhooseSecurity>
+```
+
+#### Server Header and X-Powered-By Header
+These aren't removed, the reason being
+1. When hosting within Optimizley DXP, the CDN will obfuscate the searver value anyway.
+2. The headers cannot be removed programatically.
+
+##### IIS 10
+``` xml
+<!-- web.config -->
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <security>
+            <requestFiltering removeServerHeader="true" />
+        </security>
+
+        <httpProtocol>
+            <customHeaders>
+                <clear />
+                <remove name="X-Powered-By" />
+            </customHeaders>
+        </httpProtocol>
+    </system.webServer>
+</configuration>
+```
  ---
  ## Version History
 
@@ -205,5 +264,5 @@ These aren't removed, the reason being
  |1.4|Included support for the Optimizely nonce service|
  |1.5|#64, #65 Resolved issue with duplicate headers being added and crashing the solution<br/>#70 Resolved issue the report-to directive being incorectly configured|
  |1.5.2|Add support for ws and wss protocols<br/>Add support for seperate report-uri and report-to endpoints|
- |2.0.0|Removed support for CMS 11/.Net Framework<br/>Added support for .NET7 and .NET8<br/>New  interface for managing security headers (#74)<br/>Fix issues #79, #80, #81 (Supports Readonly mode)|
+ |2.0.0|Removed support for CMS 11/.Net Framework<br/>Added support for .NET7 and .NET8<br/>New  interface for managing security headers (#74)<br/>Fix issues #79, #80, #81|
  

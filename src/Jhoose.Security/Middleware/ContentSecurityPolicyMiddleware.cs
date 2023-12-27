@@ -1,14 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using EPiServer.Framework.Cache;
-using Jhoose.Security.Core;
-using Jhoose.Security.Core.Cache;
-using Jhoose.Security.Core.Models;
-using Jhoose.Security.Core.Provider;
 using Jhoose.Security.Services;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Caching.Memory;
 
 namespace Jhoose.Security.Middleware
 {

@@ -22,6 +22,6 @@ namespace Jhoose.Security.Core.Models.SecurityHeaders
         public override string Value => DetermineValue(Mode, Domain);
 
         public XFrameOptionsEnum Mode { get; set; } = XFrameOptionsEnum.Deny;
-        public string Domain { get; set; }
+        public string Domain { get; set; } = string.Empty;
     }
 }

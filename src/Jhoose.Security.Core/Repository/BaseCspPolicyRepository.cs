@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.CSP;
 
 namespace Jhoose.Security.Core.Repository

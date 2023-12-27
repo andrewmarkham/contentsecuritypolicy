@@ -46,7 +46,7 @@ app.get('/api/csp/header', async (req, res) => {
   //var headers = headersCol.data;
 
   var resp = {
-    useHeadersUI: false,
+    useHeadersUI: true,
     headers: headersCol.data
   }
 
@@ -92,7 +92,7 @@ app.post('/api/csp/header',jsonParser, async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   await snooze(1500);
-  res.json(headerCol.data);
+  res.json(data);
 })
 
 app.get('/EPiServer/Shell/epiplatformnavigation', async(req, res) => {

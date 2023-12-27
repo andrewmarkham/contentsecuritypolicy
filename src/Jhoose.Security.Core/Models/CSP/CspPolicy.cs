@@ -27,11 +27,11 @@ namespace Jhoose.Security.Core.Models.CSP
         public string PolicyName { get; set; }
         public bool ReportOnly { get; set; }
 
-        public SandboxOptions SandboxOptions { get; set; }
+        public SandboxOptions? SandboxOptions { get; set; }
 
-        public CspOptions Options { get; set; }
+        public CspOptions? Options { get; set; }
 
-        public SchemaSource SchemaSource { get; set; }
+        public SchemaSource? SchemaSource { get; set; }
 
         public string Value { get; set; }
 

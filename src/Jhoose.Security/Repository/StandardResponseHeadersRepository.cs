@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -18,60 +18,29 @@ namespace Jhoose.Security.Repository
         protected readonly DynamicDataStoreFactory dataStoreFactory;
         protected readonly ICacheManager cache;
 
-        /*
-        private readonly Dictionary<string, Type> storeTypes = new Dictionary<string, Type>
-            {
-                { nameof(StrictTransportSecurityHeader),  typeof(StrictTransportSecurityHeader) },
-                { nameof(XFrameOptionsHeader), typeof(XFrameOptionsHeader) },
-                { nameof(XContentTypeOptionsHeader), typeof(XContentTypeOptionsHeader) },
-                { nameof(XPermittedCrossDomainPoliciesHeader), typeof(XPermittedCrossDomainPoliciesHeader) },
-                { nameof(ReferrerPolicyHeader), typeof(ReferrerPolicyHeader) },
-                { nameof(CrossOriginEmbedderPolicyHeader), typeof(CrossOriginEmbedderPolicyHeader) },
-                { nameof(CrossOriginOpenerPolicyHeader), typeof(CrossOriginOpenerPolicyHeader) },
-                { nameof(CrossOriginResourcePolicyHeader), typeof(CrossOriginResourcePolicyHeader) }
-            };
-        */
+        private readonly IDatabaseMode databaseMode;
         protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() =>
         {
 
             var storeParams = new StoreDefinitionParameters();
             storeParams.IndexNames.Add("Id");
-
-            //return dataStoreFactory.CreateStore(nameof(ResponseHeader), storeTypes, storeParams);
             return dataStoreFactory.CreateStore(nameof(ResponseHeader), typeof(ResponseHeaderStorageItem<>), storeParams);
 
         }, false);
 
-        /*
-        protected Lazy<DynamicDataStore> settingsStore => new Lazy<DynamicDataStore>(() =>
-        {
-
-
-            var storeParams = new StoreDefinitionParameters();
-            storeParams.IndexNames.Add("Id");
-
-            return dataStoreFactory.CreateStore(nameof(ResponseHeader), storeTypes, storeParams);
-
-        }, false);
-        */
-
-        /*
-        public StandardResponseHeadersRepository()
-        {
-        }
-        */
-
         public StandardResponseHeadersRepository(DynamicDataStoreFactory dataStoreFactory,
-            ICacheManager cache)
+            ICacheManager cache,
+            IDatabaseMode databaseMode)
         {
             this.cache = cache;
+            this.databaseMode = databaseMode;
             this.dataStoreFactory = dataStoreFactory;
-
         }
 
         public void Bootstrap()
         {
-            this.dataStoreFactory.DeleteStore(nameof(ResponseHeader), true);
+            if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
+                return;
 
             Remap<ResponseHeader>();
 
@@ -89,22 +58,15 @@ namespace Jhoose.Security.Repository
 
         public IEnumerable<ResponseHeader> List()
         {
-
             var policies = store.Value.LoadAll<ResponseHeaderStorageItem<ResponseHeader>>();
 
-            foreach (var p in policies)
+            foreach (ResponseHeaderStorageItem<ResponseHeader> p in policies)
             {
-                var json = p.SerializedValue;
+                string json = p.SerializedValue;
+                Type t = Type.GetType(p.TypeName)!;
 
-                Type t = Type.GetType(p.TypeName);
-                var dt = (ResponseHeader)JsonConvert.DeserializeObject(json, t);
-
-                yield return dt;
-
+                yield return (ResponseHeader)JsonConvert.DeserializeObject(json, t)!;
             }
-
-            //return policies.Select(p => p.Header).ToList();
-
         }
 
         public T Update<T>(T policy) where T : ResponseHeader
@@ -120,6 +82,9 @@ namespace Jhoose.Security.Repository
 
         private void Remap<T>()
         {
+            if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
+                return;
+
             var definition = StoreDefinition.Get(typeof(T).FullName);
 
             if (definition != null)
@@ -137,45 +102,4 @@ namespace Jhoose.Security.Repository
             }
         }
     }
-
-    [EPiServerDataContract]
-    public class ResponseHeaderStorageItem<T> : IDynamicData where T : ResponseHeader
-    {
-        public ResponseHeaderStorageItem()
-        {
-
-        }
-        /*
-        public ResponseHeaderStorageItem(string typeName, string serializedValue)
-        {
-            this.TypeName = typeName;
-            this.SerializedValue = serializedValue;
-
-            Type t = Type.GetType(this.TypeName);
-            this.Header = (T)JsonConvert.DeserializeObject(serializedValue, t);
-            this.Id = Identity.NewIdentity(this.Header.Id);
-        }
-        */
-
-        public ResponseHeaderStorageItem(T header)
-        {
-            //this.Header = header;
-            this.TypeName = header.GetType().AssemblyQualifiedName;
-            this.SerializedValue = JsonConvert.SerializeObject(header);
-            this.Id = Identity.NewIdentity(header.Id);
-        }
-
-        //public T Header { get; private set; }
-
-
-        [EPiServerDataMember]
-        public string TypeName { get; set; } = string.Empty;
-
-        [EPiServerDataMember]
-        public string SerializedValue { get; set; } = string.Empty;
-
-        [EPiServerDataMember]
-        public Identity Id { get; set; } = Identity.NewIdentity();
-    }
-
 }
