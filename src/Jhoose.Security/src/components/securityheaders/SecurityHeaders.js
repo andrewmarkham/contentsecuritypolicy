@@ -29,7 +29,7 @@ export function SecurityHeaders(props) {
 
             var modelLabel = getLabelForHeaderOption(row.name, mode);
 
-            if (domain != null) 
+            if (domain != null && domain !== "") 
                 return `${modelLabel}; domain : ${domain}`;
             else
                 return modelLabel;

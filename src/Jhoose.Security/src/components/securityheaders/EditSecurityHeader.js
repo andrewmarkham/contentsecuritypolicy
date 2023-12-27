@@ -25,9 +25,9 @@ export function EditSecurityHeader(props) {
     }
 
     function showDomain(header) {
-        const { domain } = { ...header };
+        const { mode } = { ...header };
 
-        return typeof (domain) === "undefined" ? false : true;
+        return mode === 2;
     }
 
     function setHeaderValue(key, value) {
@@ -48,10 +48,10 @@ export function EditSecurityHeader(props) {
                 newHeader.includeSubDomains = !newHeader.includeSubDomains;
                 break;
             case "maxage":
-                newHeader.maxAge = parseInt(value);
+                newHeader.maxAge = parseInt(value) ;
                 break;
             case "domain":
-                newHeader.domain = value;
+                newHeader.domain = value ?? "";
                 break;
             default:
                 break;
