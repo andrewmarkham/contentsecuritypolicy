@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Jhoose.Security.Core.Models;
+using Jhoose.Security.Core.Models.CSP;
 
 namespace Jhoose.Security.Core.Repository
 {
     public abstract class BaseCspPolicyRepository : ICspPolicyRepository
     {
-        private  List<CspPolicy> defaultPolicies = new List<CspPolicy> {
+        private List<CspPolicy> defaultPolicies = new List<CspPolicy> {
             new CspPolicy { PolicyName = "default-src",     Order=1, Level = CspPolicyLevel.Level1,  SummaryText="<p>The default-src directive defines the default policy for fetching resources such as JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media. Not all directives fallback to default-src.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
             new CspPolicy { PolicyName = "script-src",      Order=2, Level = CspPolicyLevel.Level1, SummaryText="<p>Defines valid sources of JavaScript.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
             new CspPolicy { PolicyName = "style-src",       Order=3, Level = CspPolicyLevel.Level1, SummaryText="<p>Defines valid sources of stylesheets or CSS.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
@@ -16,15 +17,15 @@ namespace Jhoose.Security.Core.Repository
             new CspPolicy { PolicyName = "object-src",      Order=7, Level = CspPolicyLevel.Level1, SummaryText="<p>Defines valid sources of plugins, eg &lt;object&gt;, &lt;embed&gt; or &lt;applet&gt;.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
             new CspPolicy { PolicyName = "media-src",       Order=8, Level = CspPolicyLevel.Level1, SummaryText="<p>Defines valid sources of audio and video, eg HTML5 &lt;audio&gt;, &lt;video&gt; elements.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
             new CspPolicy { PolicyName = "frame-src",       Order=9, Level = CspPolicyLevel.Level1, SummaryText="<p>Defines valid sources for loading frames. In CSP Level 2 frame-src was deprecated in favor of the child-src directive. CSP Level 3, has undeprecated frame-src and it will continue to defer to child-src if not present.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
-            
-            new CspPolicy { PolicyName = "sandbox",         
-                Order=10, 
-                Level = CspPolicyLevel.Level1, 
-                SummaryText="<p>Enables a sandbox for the requested resource similar to the iframe sandbox attribute. The sandbox applies a same origin policy, prevents popups, plugins and script execution is blocked. You can keep the sandbox value empty to keep all restrictions in place, or add values: allow-forms allow-same-origin allow-scripts allow-popups, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-presentation, allow-popups-to-escape-sandbox, and allow-top-navigation</p>", 
+
+            new CspPolicy { PolicyName = "sandbox",
+                Order=10,
+                Level = CspPolicyLevel.Level1,
+                SummaryText="<p>Enables a sandbox for the requested resource similar to the iframe sandbox attribute. The sandbox applies a same origin policy, prevents popups, plugins and script execution is blocked. You can keep the sandbox value empty to keep all restrictions in place, or add values: allow-forms allow-same-origin allow-scripts allow-popups, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-presentation, allow-popups-to-escape-sandbox, and allow-top-navigation</p>",
                 SandboxOptions = new SandboxOptions(),
                 Options = null,
                 SchemaSource = null },
-            
+
             new CspPolicy { PolicyName = "child-src",       Order=11, Level = CspPolicyLevel.Level2, SummaryText="<p>Defines valid sources for web workers and nested browsing contexts loaded using elements such as &lt;frame&gt; and &lt;iframe&gt;</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
             new CspPolicy { PolicyName = "form-action",     Order=12, Level = CspPolicyLevel.Level2, SummaryText="<p>Defines valid sources that can be used as an HTML &lt;form&gt; action.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
             new CspPolicy { PolicyName = "frame-ancestors", Order=13, Level = CspPolicyLevel.Level2, SummaryText="<p>Defines valid sources for embedding the resource using &lt;frame&gt; &lt;iframe&gt; &lt;object&gt; &lt;embed&gt; &lt;applet&gt;. Setting this directive to 'none' should be roughly equivalent to X-Frame-Options: DENY</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
@@ -40,7 +41,7 @@ namespace Jhoose.Security.Core.Repository
 
         public virtual void Bootstrap()
         {
-             if (this.List().Any())
+            if (this.List().Any())
             {
                 return;
             }

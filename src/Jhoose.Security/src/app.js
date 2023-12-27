@@ -4,17 +4,18 @@ import "@episerver/ui-framework/dist/main.css";
 import "@episerver/platform-navigation/dist/main.css";
 import "./css/app.css";
 
-import {ContentArea,WorkItemNavigation,Typography,Workspace,ContextualToolbar, List, ListItem } from "@episerver/ui-framework";
+import {Typography } from "@episerver/ui-framework";
 
-import { CspDataGrid } from './components/cspdatagrid';
-import { CspSettings } from './components/cspsettings';
+import { SecurityHeaders } from './components/securityheaders/SecurityHeaders';
+import {NotEnabled} from './components/securityheaders/NotEnabled';
 
 import { Toaster } from './components/toaster';
 import { appReducer } from './reducers/appReducer';
+import {CspModule} from './components/csp/cspmodule';
 
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Link, Redirect,HashRouter } from 'react-router-dom';
+import { Route, Redirect,HashRouter } from 'react-router-dom';
 
 function App(props) {
 
@@ -23,11 +24,15 @@ function App(props) {
     loading: false,
     saving: false,
     data: [],
+    useHeadersUI: true,
+    headerData: [],
     settingsSaved: true,
     settings: { mode: "on", reportingUrl: "" }
   };
 
   const [state, dispatch] = useReducer(appReducer, initialState);
+
+  const [title, setTitle] = useState("Content Security Policy");
 
   useEffect(() => {
     load();
@@ -41,26 +46,23 @@ function App(props) {
     dispatch({actionType: 'settingsSave', data: settings, dispatcher: dispatch});
   }
 
+  function saveHeader(requestHeaders) {
+    dispatch({actionType: 'headerSave', data: requestHeaders, dispatcher: dispatch});
+  }
   
   function load() {
     dispatch({actionType: 'load', data:null, dispatcher: dispatch});
     dispatch({actionType: 'settingsLoad', data:null, dispatcher: dispatch});
+    dispatch({actionType: 'headerLoad', data:null, dispatcher: dispatch});
   }
 
     return (
       <>
       <HashRouter >
       <Toaster message={state.loading ? "Loading..." : state.saving ? "Saving..." : ""} visible={state.loading | state.saving }></Toaster>
-        <ContentArea>    
-          <WorkItemNavigation>
-            <List>
-              <ListItem><Link to="/csp">Policy</Link></ListItem>
-              <ListItem><Link to="/csp/settings">Settings</Link></ListItem>
-            </List>
-          </WorkItemNavigation>
-          <Workspace>  
-            <div>
-              <Typography use="headline2">Content Security Policy</Typography>
+        <div>    
+            <div className="title">
+              <Typography use="headline2">{title}</Typography>
               <p>&nbsp;</p>
             </div>
             
@@ -69,19 +71,19 @@ function App(props) {
             </Route>
 
             <Route exact path="/csp">
-                <CspDataGrid data={state.data} save={save} disabled={state.loading | state.saving} />
+                <CspModule  data={state.data} save={save} 
+                            settings={state.settings} saveSettings={saveSettings} settingsSaved={state.settingsSaved}
+                            disabled={state.loading | state.saving}
+                            setTitle={setTitle}/>
             </Route>
 
-            <Route path="/csp/settings">
-                <CspSettings settings={state.settings} 
-                  isDirty={!state.settingsSaved}
-                  save={saveSettings} 
-                  disabled={state.loading | state.saving}>
-                </CspSettings>
+            <Route exact path="/headers">
+                {state.useHeadersUI ?
+                  <SecurityHeaders data={state.headerData} save={saveHeader} disabled={state.loading | state.saving} setTitle={setTitle} /> :
+                  <NotEnabled setTitle={setTitle}  />
+                }
             </Route>
-
-          </Workspace>
-      </ContentArea>
+      </div>
       </HashRouter>
     </>
     );

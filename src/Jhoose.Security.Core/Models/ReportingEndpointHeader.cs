@@ -1,4 +1,6 @@
-﻿namespace Jhoose.Security.Core.Models
+﻿using Jhoose.Security.Core.Models.CSP;
+
+namespace Jhoose.Security.Core.Models
 {
     public class ReportingEndpointHeader : CspPolicyHeaderBase
     {

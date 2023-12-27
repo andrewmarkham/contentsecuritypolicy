@@ -19,6 +19,8 @@ using System.Net.Http;
 using System.IO;
 using System.Threading.Tasks;
 using EPiServer;
+using Jhoose.Security.Core.Models.CSP;
+using Jhoose.Security.Core.Models.SecurityHeaders;
 
 namespace Jhoose.Security.Tests.Services
 {
@@ -42,6 +44,7 @@ namespace Jhoose.Security.Tests.Services
         {
             //Arrange
             var cspProvider = Substitute.For<ICspProvider>();
+            var responseHeadersProvider = Substitute.For<IResponseHeadersProvider>();
 
             // configure csp policy header
             cacheManager.Get<IEnumerable<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, Arg.Any<Func<IEnumerable<CspPolicyHeaderBase>>>(), Arg.Any<TimeSpan>())
@@ -56,7 +59,7 @@ namespace Jhoose.Security.Tests.Services
 
             var logger = Substitute.For<ILogger<JhooseSecurityService>>();
 
-            var service = new JhooseSecurityService(cspProvider, cacheManager, logger);
+            var service = new JhooseSecurityService(cspProvider, responseHeadersProvider, cacheManager, logger);
 
             var response = new HttpResponseStub();
 
@@ -73,6 +76,7 @@ namespace Jhoose.Security.Tests.Services
         {
             //Arrange
             var cspProvider = Substitute.For<ICspProvider>();
+            var responseHeadersProvider = Substitute.For<IResponseHeadersProvider>();
 
             // configure csp policy header
             cacheManager.Get<IEnumerable<CspPolicyHeader>>(Constants.PolicyCacheKey, Arg.Any<Func<IEnumerable<CspPolicyHeader>>>(), Arg.Any<TimeSpan>())
@@ -87,7 +91,7 @@ namespace Jhoose.Security.Tests.Services
 
             var logger = Substitute.For<ILogger<JhooseSecurityService>>();
 
-            var service = new JhooseSecurityService(cspProvider, cacheManager, logger);
+            var service = new JhooseSecurityService(cspProvider, responseHeadersProvider, cacheManager, logger);
 
             var response = new HttpResponseStub();
 
@@ -107,22 +111,19 @@ namespace Jhoose.Security.Tests.Services
         {
             //Arrange
             var cspProvider = Substitute.For<ICspProvider>();
+            var responseHeadersProvider = Substitute.For<IResponseHeadersProvider>();
+
+            cacheManager.Get<IEnumerable<ResponseHeader>>(Constants.ResponseHeadersCacheKey, Arg.Any<Func<IEnumerable<ResponseHeader>>>(), Arg.Any<TimeSpan>())
+                        .Returns(new List<ResponseHeader>() { new XFrameOptionsHeader() });
 
             var logger = Substitute.For<ILogger<JhooseSecurityService>>();
 
-            var service = new JhooseSecurityService(cspProvider, cacheManager, logger);
+            var service = new JhooseSecurityService(cspProvider, responseHeadersProvider, cacheManager, logger);
 
             var response = new HttpResponseStub();
 
-            var headers = new List<ResponseHeader>()
-            {
-                new XFrameOptionsHeader()
-                {
-                }
-            };
-
             //Act
-            service.AddHeaders(response, headers);
+            service.AddHeaders(response);
 
             //Assert
             Assert.IsTrue(response.Headers.ContainsKey("X-Frame-Options"));
@@ -134,10 +135,11 @@ namespace Jhoose.Security.Tests.Services
         {
             //Arrange
             var cspProvider = Substitute.For<ICspProvider>();
+            var responseHeadersProvider = Substitute.For<IResponseHeadersProvider>();
 
             var logger = Substitute.For<ILogger<JhooseSecurityService>>();
 
-            var service = new JhooseSecurityService(cspProvider, cacheManager, logger);
+            var service = new JhooseSecurityService(cspProvider, responseHeadersProvider, cacheManager, logger);
 
             var response = new HttpResponseStub();
             response.Headers.Add("X-Frame-Options", "xxxx");
@@ -150,7 +152,7 @@ namespace Jhoose.Security.Tests.Services
             };
 
             //Act
-            service.AddHeaders(response, headers);
+            service.AddHeaders(response);
 
             //Assert
             Assert.IsTrue(response.Headers.ContainsKey("X-Frame-Options"));

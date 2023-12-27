@@ -1,4 +1,3 @@
-#if NET5_0_OR_GREATER
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Http;
@@ -6,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Jhoose.Security.Middleware;
 using EPiServer.Shell.Modules;
-#endif
 
 using Jhoose.Security.Core.Repository;
 using Jhoose.Security.Core.Provider;
@@ -19,16 +17,15 @@ using Jhoose.Security.Core.Cache;
 
 using Jhoose.Security.Services;
 using System.Web;
+using Jhoose.Security.Core.Binders;
 
 namespace Jhoose.Security.DependencyInjection
 {
     public static class SecurityExtensions
     {
-#if NET5_0_OR_GREATER
-
         public static IServiceCollection AddJhooseSecurity(this IServiceCollection services,
                 IConfiguration configuration,
-                Action<JhooseSecurityOptions> options = null)
+                Action<JhooseSecurityOptions>? options = null)
         {
             services.AddHostedService<InitialiseHostedService>();
 
@@ -55,8 +52,29 @@ namespace Jhoose.Security.DependencyInjection
             services.AddSingleton<ICacheManager, EpiserverCacheManager>();
             services.AddScoped<IJhooseSecurityService, JhooseSecurityService>();
 
+            services.AddScoped<IResponseHeadersRepository, StandardResponseHeadersRepository>();
+
+            services.AddScoped<IResponseHeadersProvider>((sp) =>
+            {
+                var options = sp.GetService<IOptions<JhooseSecurityOptions>>();
+                var repo = sp.GetService<IResponseHeadersRepository>();
+
+                if (options is null) throw new ArgumentNullException($"{nameof(options)} is null");
+                if (repo is null) throw new ArgumentNullException($"{nameof(repo)} is null");
+
+                return (options?.Value?.UseHeadersUI ?? false) ?
+                    new StandardResponseHeadersProvider(repo) :
+                    new ConfigurationResponseHeadersProvider(options);
+
+            });
+
             //hook in the csp nonce generation to the optimizely internal services, so the same value is always used
             services.AddContentSecurityPolicyNonce(sp => sp.GetRequiredService<ICspProvider>().GenerateNonce());
+
+            services.AddControllers(options =>
+            {
+                options.ModelBinderProviders.Insert(0, new ResponseHeaderModelBinderProvider());
+            });
 
             return services;
         }
@@ -78,24 +96,16 @@ namespace Jhoose.Security.DependencyInjection
 
             return applicationBuilder;
         }
-#endif
 
         public static bool IsValidPath(HttpRequest request, IEnumerable<string> exclusionPaths)
         {
 
             foreach (var path in exclusionPaths)
             {
-#if NET5_0_OR_GREATER
                 if (request.Path.StartsWithSegments(path, System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     return false;
                 }
-#else
-                if (request.Path.StartsWith(path, System.StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return false;
-                }
-#endif
             }
 
             return true;
