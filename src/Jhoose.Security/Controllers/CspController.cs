@@ -85,6 +85,7 @@ namespace Jhoose.Security.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
         }
 
+
         [HttpGet]
         [Route("header")]
         [ProducesResponseType(typeof(ResponseHeader), StatusCodes.Status200OK)]

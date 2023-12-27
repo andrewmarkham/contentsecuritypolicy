@@ -17,14 +17,13 @@ namespace Jhoose.Security.Repository
     {
         protected readonly DynamicDataStoreFactory dataStoreFactory;
         protected readonly ICacheManager cache;
-        private readonly IDatabaseMode databaseMode;
 
+        private readonly IDatabaseMode databaseMode;
         protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() =>
         {
 
             var storeParams = new StoreDefinitionParameters();
             storeParams.IndexNames.Add("Id");
-
             return dataStoreFactory.CreateStore(nameof(ResponseHeader), typeof(ResponseHeaderStorageItem<>), storeParams);
 
         }, false);
@@ -36,7 +35,6 @@ namespace Jhoose.Security.Repository
             this.cache = cache;
             this.databaseMode = databaseMode;
             this.dataStoreFactory = dataStoreFactory;
-
         }
 
         public void Bootstrap()
@@ -89,7 +87,7 @@ namespace Jhoose.Security.Repository
         {
             if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
                 return;
-
+                
             var definition = StoreDefinition.Get(typeof(T).FullName);
 
             if (definition != null)
@@ -107,5 +105,4 @@ namespace Jhoose.Security.Repository
             }
         }
     }
-
 }
