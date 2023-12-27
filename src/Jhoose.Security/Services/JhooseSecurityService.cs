@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Provider;
 using Jhoose.Security.Core.Cache;
@@ -53,7 +51,7 @@ namespace Jhoose.Security.Services
                     }
                     else
                     {
-                        response.Headers.Add(header.Name, header.Value);
+                        response.Headers.Append(header.Name, header.Value);
                     }
                 }
 
@@ -90,7 +88,7 @@ namespace Jhoose.Security.Services
                         }
                         else
                         {
-                            response.Headers.Add(header.Name, header.Value);
+                            response.Headers.Append(header.Name, header.Value);
                         }
                     }
                 }

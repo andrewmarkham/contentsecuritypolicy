@@ -42,6 +42,7 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 	</ItemGroup>
+	<!--
 	<ItemGroup>
 		<ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj">
 			<GlobalPropertiesToRemove>
@@ -60,4 +61,5 @@
 			<Pack>true</Pack>
 		</Content>
 	</ItemGroup>
+	-->
 </Project>

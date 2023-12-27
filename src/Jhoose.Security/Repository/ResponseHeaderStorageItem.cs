@@ -16,7 +16,7 @@ namespace Jhoose.Security.Repository
         public ResponseHeaderStorageItem(T header)
         {
             //this.Header = header;
-            this.TypeName = header.GetType().AssemblyQualifiedName;
+            this.TypeName = header.GetType().AssemblyQualifiedName ?? string.Empty;
             this.SerializedValue = JsonConvert.SerializeObject(header);
             this.Id = Identity.NewIdentity(header.Id);
         }

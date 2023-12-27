@@ -12,7 +12,7 @@ namespace Jhoose.Security.Core.Models.CSP
             this.settings = settings;
         }
 
-        protected virtual string BuildValue(string reportUrl, string nonceValue)
+        protected virtual string BuildValue(string reportUrl, string? nonceValue)
         {
 
             var sb = new StringBuilder();
@@ -31,8 +31,8 @@ namespace Jhoose.Security.Core.Models.CSP
             return string.Format(sb.ToString(), nonceValue);
         }
 
-        public string NonceValue { get; set; }
-        public List<CspPolicy> Policies { get; set; }
+        public string? NonceValue { get; set; }
+        public List<CspPolicy>? Policies { get; set; }
 
         public override string Value => this.BuildValue(this.settings.ReportingUrl, this.NonceValue);
     }

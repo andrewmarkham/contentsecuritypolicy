@@ -16,8 +16,8 @@ using System;
 using Jhoose.Security.Core.Cache;
 
 using Jhoose.Security.Services;
-using System.Web;
 using Jhoose.Security.Core.Binders;
+using System.Linq;
 
 namespace Jhoose.Security.DependencyInjection
 {
@@ -83,13 +83,13 @@ namespace Jhoose.Security.DependencyInjection
         {
             var securityOptions = applicationBuilder.ApplicationServices.GetService<IOptions<JhooseSecurityOptions>>();
 
-            applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c.Request, securityOptions.Value.ExclusionPaths), ab =>
+            applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c.Request, securityOptions?.Value.ExclusionPaths ?? Enumerable.Empty<string>()), ab =>
             {
                 ab = ab.UseMiddleware<ContentSecurityPolicyMiddleware>();
                 ab.UseMiddleware<SecurityHeadersMiddleware>();
             });
 
-            if (securityOptions.Value.HttpsRedirection)
+            if (securityOptions?.Value.HttpsRedirection ?? false)
             {
                 applicationBuilder.UseHttpsRedirection();
             }

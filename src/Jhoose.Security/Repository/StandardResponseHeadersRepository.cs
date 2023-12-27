@@ -60,15 +60,12 @@ namespace Jhoose.Security.Repository
         {
             var policies = store.Value.LoadAll<ResponseHeaderStorageItem<ResponseHeader>>();
 
-            foreach (var p in policies)
+            foreach (ResponseHeaderStorageItem<ResponseHeader> p in policies)
             {
-                var json = p.SerializedValue;
+                string json = p.SerializedValue;
+                Type t = Type.GetType(p.TypeName)!;
 
-                Type t = Type.GetType(p.TypeName);
-                var dt = (ResponseHeader)JsonConvert.DeserializeObject(json, t);
-
-                yield return dt;
-
+                yield return (ResponseHeader)JsonConvert.DeserializeObject(json, t)!;
             }
         }
 
@@ -87,7 +84,7 @@ namespace Jhoose.Security.Repository
         {
             if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
                 return;
-                
+
             var definition = StoreDefinition.Get(typeof(T).FullName);
 
             if (definition != null)

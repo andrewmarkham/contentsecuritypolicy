@@ -46,8 +46,8 @@ namespace DemoSite
 
             services.AddJhooseSecurity(_configuration, (o) =>
             {
-                o.UseHeadersUI = true;
-                o.XFrameOptions.Mode = Jhoose.Security.Core.Models.SecurityHeaders.XFrameOptionsEnum.AllowFrom;
+                o.UseHeadersUI = false;
+                o.XFrameOptions.Mode = Jhoose.Security.Core.Models.SecurityHeaders.XFrameOptionsEnum.SameOrigin;
             });
 
             services.ConfigureApplicationCookie(options =>

@@ -15,7 +15,7 @@ namespace Jhoose.Security.Repository
         protected readonly DynamicDataStoreFactory dataStoreFactory;
         protected readonly ICacheManager cache;
         private readonly IDatabaseMode databaseMode;
-        
+
         protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() =>
         {
 
@@ -36,9 +36,10 @@ namespace Jhoose.Security.Repository
 
         }, false);
 
+        /*
         public StandardCspPolicyRepository()
         {
-        }
+        }*/
 
         public StandardCspPolicyRepository(DynamicDataStoreFactory dataStoreFactory, ICacheManager cache, IDatabaseMode databaseMode)
         {
