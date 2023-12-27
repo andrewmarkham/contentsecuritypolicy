@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 using Jhoose.Security.Core;
 using Jhoose.Security.Core.Cache;
@@ -13,6 +14,8 @@ namespace Jhoose.Security.Repository
     {
         protected readonly DynamicDataStoreFactory dataStoreFactory;
         protected readonly ICacheManager cache;
+        private readonly IDatabaseMode databaseMode;
+        
         protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() =>
         {
 
@@ -37,15 +40,18 @@ namespace Jhoose.Security.Repository
         {
         }
 
-        public StandardCspPolicyRepository(DynamicDataStoreFactory dataStoreFactory, ICacheManager cache)
+        public StandardCspPolicyRepository(DynamicDataStoreFactory dataStoreFactory, ICacheManager cache, IDatabaseMode databaseMode)
         {
             this.cache = cache;
+            this.databaseMode = databaseMode;
             this.dataStoreFactory = dataStoreFactory;
 
         }
 
         public override void Bootstrap()
         {
+            if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
+                return;
 
             Remap<CspPolicy>();
             Remap<CspOptions>();
@@ -100,6 +106,9 @@ namespace Jhoose.Security.Repository
 
         private void Remap<T>()
         {
+            if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
+                return;
+
             var definition = StoreDefinition.Get(typeof(T).FullName);
 
             if (definition != null)
@@ -107,6 +116,7 @@ namespace Jhoose.Security.Repository
                 definition.Remap(typeof(T));
                 definition.CommitChanges();
             }
+
         }
     }
 }

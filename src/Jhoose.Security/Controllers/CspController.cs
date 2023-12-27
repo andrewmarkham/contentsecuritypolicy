@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
-using System.Text.Json;
 
 using System.Collections.Generic;
 
@@ -87,9 +86,6 @@ namespace Jhoose.Security.Controllers
         }
 
 
-
-
-
         [HttpGet]
         [Route("header")]
         [ProducesResponseType(typeof(ResponseHeader), StatusCodes.Status200OK)]
@@ -106,7 +102,6 @@ namespace Jhoose.Security.Controllers
                     Headers = items
                 };
 
-
                 string json = JsonConvert.SerializeObject(resp, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
                 return Content(json, "application/json");
             }
@@ -115,8 +110,6 @@ namespace Jhoose.Security.Controllers
                 logger.LogError(ex, "Error getting header");
                 return Problem(ex.Message, statusCode: 500);
             }
-
-
         }
 
         [HttpPost]
