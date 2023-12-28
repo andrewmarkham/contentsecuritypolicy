@@ -2,13 +2,14 @@
 using System;
 
 using System.Text.Json.Serialization;
+using EPiServer.Data;
 
 namespace Jhoose.Security.Core.Models.CSP
 {
     public class CspSettings
     {
-        public Guid Id { get; } = Guid.Parse("3f15cad4-cd57-41c3-95c8-f7f62a2759ea");
-        public string Mode { get; set; } = "off";
+        public Guid Id { get; set; }
+        public string Mode { get; set; }
 
         /// <summary>
         /// Used for the report-uri directive

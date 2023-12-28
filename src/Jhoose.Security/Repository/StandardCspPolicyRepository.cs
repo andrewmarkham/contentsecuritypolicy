@@ -7,44 +7,58 @@ using Jhoose.Security.Core;
 using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Repository;
+using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Repository
 {
-    public class StandardCspPolicyRepository : BaseCspPolicyRepository
+    public class StandardCspPolicyRepository : BaseCspPolicyRepository, IDisposable
     {
         protected readonly DynamicDataStoreFactory dataStoreFactory;
         protected readonly ICacheManager cache;
         private readonly IDatabaseMode databaseMode;
+        private readonly ILogger<StandardCspPolicyRepository> logger;
+        private static object _lock = new();
+
+        private DynamicDataStore? _store;
 
         protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() =>
         {
+            if (_store is null)
+            {
+                var storeParams = new StoreDefinitionParameters();
+                storeParams.IndexNames.Add("Id");
 
-            var storeParams = new StoreDefinitionParameters();
-            storeParams.IndexNames.Add("Id");
+                _store = dataStoreFactory.CreateStore(typeof(CspPolicy), storeParams);
+            }
 
-            return dataStoreFactory.CreateStore(typeof(CspPolicy), storeParams);
+            return _store;
 
-        }, false);
+        });
+
+        private DynamicDataStore? _settingsStore;
+        private bool disposedValue;
 
         protected Lazy<DynamicDataStore> settingsStore => new Lazy<DynamicDataStore>(() =>
         {
+            if (_settingsStore is null)
+            {
+                var storeParams = new StoreDefinitionParameters();
 
-            var storeParams = new StoreDefinitionParameters();
-            storeParams.IndexNames.Add("Id");
+                _settingsStore = dataStoreFactory.CreateStore(typeof(CspSettings).FullName, typeof(CspSettings));
+            }
 
-            return dataStoreFactory.CreateStore(typeof(CspSettings), storeParams);
+            return _settingsStore;
+        });
 
-        }, false);
-
-        /*
-        public StandardCspPolicyRepository()
-        {
-        }*/
-
-        public StandardCspPolicyRepository(DynamicDataStoreFactory dataStoreFactory, ICacheManager cache, IDatabaseMode databaseMode)
+        public StandardCspPolicyRepository(DynamicDataStoreFactory dataStoreFactory,
+            ICacheManager cache,
+            IDatabaseMode databaseMode,
+            ILogger<StandardCspPolicyRepository> logger
+            )
         {
             this.cache = cache;
             this.databaseMode = databaseMode;
+            this.logger = logger;
             this.dataStoreFactory = dataStoreFactory;
 
         }
@@ -66,42 +80,60 @@ namespace Jhoose.Security.Repository
         public override List<CspPolicy> List()
         {
 
-            //store.Value.DeleteAll();
-            var policies = store.Value.LoadAll<CspPolicy>();
+            lock (_lock)
+            {
+                var policies = store.Value.LoadAll<CspPolicy>();
 
-            return policies.ToList();
+                return policies.ToList();
+            }
         }
 
         public override CspPolicy Update(CspPolicy policy)
         {
-            // This needs to go back in as it causes the app to crash.   
-            this.cache.Remove(Constants.PolicyCacheKey);
+            lock (_lock)
+            {
+                // This needs to go back in as it causes the app to crash.   
+                this.cache.Remove(Constants.PolicyCacheKey);
 
-            store.Value.Save(policy);
-            return policy;
+                store.Value.Save(policy);
+                return policy;
+            }
         }
 
         public override CspSettings Settings()
         {
-            return settingsStore.Value.Load<CspSettings>(EPiServer.Data.Identity.NewIdentity(Guid.Parse("3f15cad4-cd57-41c3-95c8-f7f62a2759ea"))) ?? new CspSettings
+            lock (_lock)
             {
-                Mode = "report",
-                ReportingUrl = string.Empty
-            };
+                var s = settingsStore.Value.Items<CspSettings>().FirstOrDefault();
+
+                s = s ?? new CspSettings
+                {
+                    Id = Guid.NewGuid(),
+                    Mode = "report",
+                    ReportingUrl = string.Empty
+                };
+                return s;
+            }
         }
 
         public override bool SaveSettings(CspSettings settings)
         {
-            this.cache.Remove(Constants.SettingsCacheKey);
+            lock (_lock)
+            {
+                this.cache.Remove(Constants.SettingsCacheKey);
+                this.cache.Remove(Constants.PolicyCacheKey);
 
-            try
-            {
-                settingsStore.Value.Save(settings);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
+                try
+                {
+                    var id = settingsStore.Value.Save(settings, Identity.NewIdentity(settings.Id));
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    this.logger.LogError(ex, "Error saving settings");
+                    return false;
+                }
             }
         }
 
@@ -118,6 +150,28 @@ namespace Jhoose.Security.Repository
                 definition.CommitChanges();
             }
 
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this.settingsStore.Value.Dispose();
+                    this.store.Value.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

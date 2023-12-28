@@ -10,6 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Jhoose.Security.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using EPiServer.Framework.Web.Resources;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace DemoSite
 {
@@ -44,7 +46,10 @@ namespace DemoSite
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
-            services.AddJhooseSecurity(_configuration,
+            services.AddJhooseSecurity(_configuration, (o) =>
+            {
+                o.UseHeadersUI = true;
+            },
             configurePolicy: (p) =>
             {
                 p.RequireRole("CspAdmin");
@@ -53,6 +58,16 @@ namespace DemoSite
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/util/Login";
+            });
+
+
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                // Global settings: use the defaults, but serialize enums as strings
+                // (because it really should be the default)
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper;
+
             });
 
             //services.AddTransient<BootstrapData, BootstrapData>();

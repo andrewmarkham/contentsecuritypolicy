@@ -80,6 +80,8 @@ namespace Jhoose.Security.DependencyInjection
             services.AddControllers(options =>
             {
                 options.ModelBinderProviders.Insert(0, new ResponseHeaderModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new CspPolicyModelBinderProvider());
+                options.ModelBinderProviders.Insert(0, new CspSettingsModelBinderProvider());
             });
 
             services.AddAuthorization(c =>

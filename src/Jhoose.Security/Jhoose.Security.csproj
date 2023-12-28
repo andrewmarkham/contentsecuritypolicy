@@ -43,6 +43,7 @@
       		https://nuget.pkg.github.com/andrewmarkham/index.json
 	  	</RestoreSources>
 		<Configurations>Debug;Release;PreRelease</Configurations>
+		<ReleaseVersion>2.1.0.0</ReleaseVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net6.0|AnyCPU'">
 		<DebugType>portable</DebugType>
