@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 using Jhoose.Security.Core;
@@ -13,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace Jhoose.Security.Repository
 {
-    public class StandardResponseHeadersRepository : IResponseHeadersRepository, IDisposable
+    public class StandardResponseHeadersRepository : IResponseHeadersRepository
     {
         protected readonly DynamicDataStoreFactory dataStoreFactory;
         protected readonly ICacheManager cache;
@@ -107,26 +106,6 @@ namespace Jhoose.Security.Repository
 
                 definition.CommitChanges();
             }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    this.store.Value.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
     }
 }

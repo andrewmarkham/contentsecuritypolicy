@@ -8,10 +8,11 @@ using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Repository;
 using Microsoft.Extensions.Logging;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Jhoose.Security.Repository
 {
-    public class StandardCspPolicyRepository : BaseCspPolicyRepository, IDisposable
+    public class StandardCspPolicyRepository : BaseCspPolicyRepository
     {
         protected readonly DynamicDataStoreFactory dataStoreFactory;
         protected readonly ICacheManager cache;
@@ -36,7 +37,6 @@ namespace Jhoose.Security.Repository
         });
 
         private DynamicDataStore? _settingsStore;
-        private bool disposedValue;
 
         protected Lazy<DynamicDataStore> settingsStore => new Lazy<DynamicDataStore>(() =>
         {
@@ -150,28 +150,6 @@ namespace Jhoose.Security.Repository
                 definition.CommitChanges();
             }
 
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    this.settingsStore.Value.Dispose();
-                    this.store.Value.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
         }
     }
 }
