@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 using Jhoose.Security.Core;
@@ -19,14 +18,21 @@ namespace Jhoose.Security.Repository
         protected readonly ICacheManager cache;
 
         private readonly IDatabaseMode databaseMode;
+        private DynamicDataStore? _store;
+        private bool disposedValue;
+
         protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() =>
         {
+            if (_store is null)
+            {
+                var storeParams = new StoreDefinitionParameters();
+                storeParams.IndexNames.Add("Id");
+                _store = dataStoreFactory.CreateStore(nameof(ResponseHeader), typeof(ResponseHeaderStorageItem<>), storeParams);
+            }
 
-            var storeParams = new StoreDefinitionParameters();
-            storeParams.IndexNames.Add("Id");
-            return dataStoreFactory.CreateStore(nameof(ResponseHeader), typeof(ResponseHeaderStorageItem<>), storeParams);
+            return _store;
 
-        }, false);
+        });
 
         public StandardResponseHeadersRepository(DynamicDataStoreFactory dataStoreFactory,
             ICacheManager cache,

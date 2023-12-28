@@ -28,8 +28,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "DemoSite461", "Sample\DemoSite461\DemoSite461.csproj", "{646405B5-6258-403A-9277-F35AAB564F41}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,18 +86,6 @@ Global
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}.Release|x64.Build.0 = Release|Any CPU
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}.Release|x86.ActiveCfg = Release|Any CPU
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}.Release|x86.Build.0 = Release|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|x64.Build.0 = Debug|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Debug|x86.Build.0 = Debug|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Release|x64.ActiveCfg = Release|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Release|x64.Build.0 = Release|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Release|x86.ActiveCfg = Release|Any CPU
-		{646405B5-6258-403A-9277-F35AAB564F41}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,9 +93,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DF0BA3EF-6087-45E7-B3AE-79E6C8009550} = {BDB51695-6CB4-4F7F-9823-11A610CF6013}
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E} = {2D7BE326-A9E7-47B0-80F5-3EC293A2B43A}
-		{646405B5-6258-403A-9277-F35AAB564F41} = {2D7BE326-A9E7-47B0-80F5-3EC293A2B43A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D6AE7B6-18F7-43EA-A3FB-0A1E1C3FDD48}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		version = 2.1.0.0
 	EndGlobalSection
 EndGlobal
