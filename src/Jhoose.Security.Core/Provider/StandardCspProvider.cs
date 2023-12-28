@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 
 using System.Linq;
-using System.Runtime;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Repository;

@@ -30,6 +30,7 @@
 					Added support for .NET7 and .NET8
 					New  interface for managing security headers
 			2.1.0 - Add ability to customise the access policy for the module
+					Consistent serialization approach, ignores global settings
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">

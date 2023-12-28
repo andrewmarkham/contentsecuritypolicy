@@ -217,4 +217,4 @@ services.AddJhooseSecurity(_configuration,
  |1.5|#64, #65 Resolved issue with duplicate headers being added and crashing the solution<br/>#70 Resolved issue the report-to directive being incorectly configured|
  |1.5.2|Add support for ws and wss protocols<br/>Add support for seperate report-uri and report-to endpoints|
  |2.0.0|Removed support for CMS 11/.Net Framework<br/>Added support for .NET7 and .NET8<br/>New  interface for managing security headers (#74)<br/>Fix issues #79, #80, #81 (Supports Readonly mode)|
- |2.1.0|Add ability to customise the access policy for the module|
+ |2.1.0|Add ability to customise the access policy for the module<br/>Consistent serialization approach, ignores global settings|
