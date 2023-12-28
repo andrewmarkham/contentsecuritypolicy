@@ -36,17 +36,18 @@ namespace Jhoose.Security.Core.Provider
         public IEnumerable<CspPolicyHeaderBase> PolicyHeaders()
         {
             var policies = this.policyRepository.List();
+            var settings = this.Settings;
 
-            if (!string.IsNullOrEmpty(this.Settings.ReportToUrl))
+            if (!string.IsNullOrEmpty(settings.ReportToUrl))
             {
-                yield return new ReportingEndpointHeader(this.Settings);
+                yield return new ReportingEndpointHeader(settings);
 
             }
 
             // for global report only
-            if (this.Settings.Mode.Equals("report"))
+            if (settings.Mode.Equals("report"))
             {
-                yield return new CspPolicyReportHeader(this.Settings)
+                yield return new CspPolicyReportHeader(settings)
                 {
                     Policies = policies
                 };
@@ -57,7 +58,7 @@ namespace Jhoose.Security.Core.Provider
 
                 if (actionPolicies.Any())
                 {
-                    yield return new CspPolicyHeader(this.Settings)
+                    yield return new CspPolicyHeader(settings)
                     {
                         Policies = actionPolicies
                     };
@@ -67,7 +68,7 @@ namespace Jhoose.Security.Core.Provider
 
                 if (reportPolicies.Any())
                 {
-                    yield return new CspPolicyReportHeader(this.Settings)
+                    yield return new CspPolicyReportHeader(settings)
                     {
                         Policies = reportPolicies
                     };

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 
 using System.Collections.Generic;
 
-
 using Jhoose.Security.Core.Repository;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.CSP;
@@ -15,17 +14,19 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Jhoose.Security.Authorization;
 
 namespace Jhoose.Security.Controllers
 {
-    [Authorize]
-
     //
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = Constants.PolicyName)]
     public class CspController : ControllerBase
     {
+        private static JsonSerializerSettings jsonSerializerSettings = new() { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+
         private readonly ICspPolicyRepository policyRepository;
         private readonly IResponseHeadersRepository responseHeadersRepository;
         private readonly JhooseSecurityOptions options;
@@ -47,7 +48,8 @@ namespace Jhoose.Security.Controllers
         [ProducesResponseType(typeof(List<CspPolicy>), StatusCodes.Status500InternalServerError)]
         public ActionResult<List<CspPolicy>> List()
         {
-            return Ok(this.policyRepository.List());
+            string json = JsonConvert.SerializeObject(this.policyRepository.List(), jsonSerializerSettings);
+            return Content(json, "application/json");
         }
 
         [HttpPost]
@@ -58,7 +60,8 @@ namespace Jhoose.Security.Controllers
 
         public ActionResult<CspPolicy> Update(CspPolicy policy)
         {
-            return Ok(this.policyRepository.Update(policy));
+            string json = JsonConvert.SerializeObject(this.policyRepository.Update(policy), jsonSerializerSettings);
+            return Content(json, "application/json");
         }
 
 
@@ -68,7 +71,8 @@ namespace Jhoose.Security.Controllers
         [ProducesResponseType(typeof(CspSettings), StatusCodes.Status500InternalServerError)]
         public ActionResult<CspSettings> Settings()
         {
-            return Ok(this.policyRepository.Settings());
+            string json = JsonConvert.SerializeObject(this.policyRepository.Settings(), jsonSerializerSettings);
+            return Content(json, "application/json");
         }
 
         [HttpPost]
@@ -80,7 +84,10 @@ namespace Jhoose.Security.Controllers
             var result = this.policyRepository.SaveSettings(settings);
 
             if (result)
-                return Ok(settings);
+            {
+                string json = JsonConvert.SerializeObject(result, jsonSerializerSettings);
+                return Content(json, "application/json");
+            }
             else
                 return StatusCode(StatusCodes.Status500InternalServerError);
         }
@@ -102,7 +109,7 @@ namespace Jhoose.Security.Controllers
                     Headers = items
                 };
 
-                string json = JsonConvert.SerializeObject(resp, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+                string json = JsonConvert.SerializeObject(resp, jsonSerializerSettings);
                 return Content(json, "application/json");
             }
             catch (Exception ex)
@@ -121,7 +128,9 @@ namespace Jhoose.Security.Controllers
             try
             {
                 var result = this.responseHeadersRepository.Update(header);
-                return Ok(header);
+
+                string json = JsonConvert.SerializeObject(result, jsonSerializerSettings);
+                return Content(json, "application/json");
             }
             catch (Exception ex)
             {

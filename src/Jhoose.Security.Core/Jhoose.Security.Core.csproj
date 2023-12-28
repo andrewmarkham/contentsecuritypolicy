@@ -8,7 +8,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		-->
-		<Version>2.0.0.0</Version>
+		<Version>2.1.0.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Title>Jhoose Security Core</Title>
 		<Description>Core package used by the Jhoose Security module</Description>
@@ -29,6 +29,8 @@
 		2.0.0 - Removed support for CMS 11/.Net Framework
 			    Added support for .NET7 and .NET8
 				New  interface for managing security headers
+		2.1.0 - Add ability to customise the access policy for the module
+		        Consistent serialization approach, ignores global settings
 	  </ReleaseNotes>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<RestoreSources>
@@ -36,6 +38,7 @@
 		https://api.nuget.org/v3/index.json;
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
+		<ReleaseVersion>2.1.0.0</ReleaseVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<LangVersion>latest</LangVersion>

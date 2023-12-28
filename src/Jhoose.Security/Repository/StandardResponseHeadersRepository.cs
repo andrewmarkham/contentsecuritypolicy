@@ -13,20 +13,27 @@ using Newtonsoft.Json;
 
 namespace Jhoose.Security.Repository
 {
-    public class StandardResponseHeadersRepository : IResponseHeadersRepository
+    public class StandardResponseHeadersRepository : IResponseHeadersRepository, IDisposable
     {
         protected readonly DynamicDataStoreFactory dataStoreFactory;
         protected readonly ICacheManager cache;
 
         private readonly IDatabaseMode databaseMode;
+        private DynamicDataStore? _store;
+        private bool disposedValue;
+
         protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() =>
         {
+            if (_store is null)
+            {
+                var storeParams = new StoreDefinitionParameters();
+                storeParams.IndexNames.Add("Id");
+                _store = dataStoreFactory.CreateStore(nameof(ResponseHeader), typeof(ResponseHeaderStorageItem<>), storeParams);
+            }
 
-            var storeParams = new StoreDefinitionParameters();
-            storeParams.IndexNames.Add("Id");
-            return dataStoreFactory.CreateStore(nameof(ResponseHeader), typeof(ResponseHeaderStorageItem<>), storeParams);
+            return _store;
 
-        }, false);
+        });
 
         public StandardResponseHeadersRepository(DynamicDataStoreFactory dataStoreFactory,
             ICacheManager cache,
@@ -100,6 +107,26 @@ namespace Jhoose.Security.Repository
 
                 definition.CommitChanges();
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    this.store.Value.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

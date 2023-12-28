@@ -38,7 +38,7 @@ namespace Jhoose.Security.Services
         {
             try
             {
-                var headerValues = cache.Get<IEnumerable<ResponseHeader>>(Constants.ResponseHeadersCacheKey, () => responseHeaderProvider.ResponseHeaders(), new TimeSpan(1, 0, 0));
+                var headerValues = cache.Get<List<ResponseHeader>>(Constants.ResponseHeadersCacheKey, () => responseHeaderProvider.ResponseHeaders().ToList(), new TimeSpan(1, 0, 0));
 
                 var enabledHeaders = headerValues.Where(h => h.Enabled);
 
@@ -76,7 +76,7 @@ namespace Jhoose.Security.Services
                 if (policySettings.IsEnabled)
                 {
                     // get the policy
-                    var headerValues = cache.Get<IEnumerable<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders(), new TimeSpan(1, 0, 0));
+                    var headerValues = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders().ToList(), new TimeSpan(1, 0, 0));
 
                     foreach (var header in headerValues)
                     {
