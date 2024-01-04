@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "npx webpack --config webpack.config.js",
     "dev": "npx webpack --config webpack.config.js && node ./src/index.js",
-    "watch": "npx webpack --watch --config webpack.config.js && node ./src/index.js"
+    "watch": "npx webpack watch --config webpack.config.js && node ./src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +22,8 @@
     "caniuse-lite": "^1.0.30001458",
     "express": "^4.17.3",
     "lokijs": "^1.5.11",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -40,4 +41,3 @@
     "webpack-cli": "^4.7.2"
   }
 }
-

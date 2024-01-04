@@ -21,6 +21,7 @@ using System.Linq;
 using Jhoose.Security.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using EPiServer.Authorization;
+using Jhoose.Security.Webhooks;
 
 namespace Jhoose.Security.DependencyInjection
 {
@@ -54,13 +55,14 @@ namespace Jhoose.Security.DependencyInjection
 
 
             services.AddScoped<ICspPolicyRepository, StandardCspPolicyRepository>();
-            services.AddScoped<ICspProvider, StandardCspProvider>();
+            services.AddSingleton<ICspProvider, StandardCspProvider>();
             services.AddSingleton<ICacheManager, EpiserverCacheManager>();
-            services.AddScoped<IJhooseSecurityService, JhooseSecurityService>();
+            services.AddSingleton<IJhooseSecurityService, JhooseSecurityService>();
 
             services.AddScoped<IResponseHeadersRepository, StandardResponseHeadersRepository>();
+            services.AddScoped<IAuthKeyService, DefaultAuthKeyService>();
 
-            services.AddScoped<IResponseHeadersProvider>((sp) =>
+            services.AddSingleton<IResponseHeadersProvider>((sp) =>
             {
                 var options = sp.GetService<IOptions<JhooseSecurityOptions>>();
                 var repo = sp.GetService<IResponseHeadersRepository>();
@@ -88,6 +90,10 @@ namespace Jhoose.Security.DependencyInjection
             {
                 c.AddPolicy(Constants.PolicyName, configurePolicy ?? DefaultPolicy);
             });
+
+            services.AddScoped<IWebhookNotifications, DefaultWebhookNotifications>();
+
+            services.AddHttpClient("webhooks");
 
             return services;
         }

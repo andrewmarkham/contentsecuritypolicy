@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
 		  $(RestoreSources);
 		  ../../Jhoose.Security/bin/Debug;
@@ -11,7 +11,7 @@
           https://nuget.pkg.github.com/andrewmarkham/index.json;
           https://nuget.pkg.github.com/unrvld/index.json;
 	  </RestoreSources>
-		<ReleaseVersion>2.1.0.0</ReleaseVersion>
+		<ReleaseVersion>2.2.0.0</ReleaseVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Remove="modules\_protected\Jhoose.Security\ClientResources\csp-app.js" />

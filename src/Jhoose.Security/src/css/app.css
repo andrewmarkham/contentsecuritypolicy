@@ -67,8 +67,8 @@ white-space: -moz-pre-wrap;
 white-space: pre-wrap;
 }
 
-tab-container {
-    padding: 10px 30px 10px 5px;
+.tab-container {
+    padding: 10px 10px 10px 10px;
 }
 
 div.title {
@@ -77,4 +77,28 @@ div.title {
 
 div.notenabled {
     padding: 10px;
+}
+
+.iconButton {
+    margin-left: 5px;
+}
+
+.pad-left-20 {
+    padding-left: 20px;
+    margin-left: 20px;
+}
+
+.border-left {
+    border-left: 4px solid rgba(0,0,0,0.6);
+
+}
+.smaller {
+    font-size: smaller;
+}
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-weight: bold;
 }

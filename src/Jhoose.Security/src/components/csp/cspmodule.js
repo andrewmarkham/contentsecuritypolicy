@@ -1,10 +1,11 @@
 
 import React,  { useEffect, useReducer, useState } from 'react';
-import { TabBar, Tab, tab} from "@episerver/ui-framework";
+import { TabBar, Tab} from "@episerver/ui-framework";
 
 import {CspDataGrid} from './cspdatagrid';
 import {CspSettings} from './cspsettings';
 import {TabContainer} from '../tabContainer';
+import { ApiAccess } from './ApiAccess';
 
 export function CspModule(props) {
 
@@ -21,7 +22,7 @@ export function CspModule(props) {
                 onActivate={evt => setActiveIndex(evt.detail.index)}>
                 <Tab>Content Security Policy</Tab>
                 <Tab>Settings</Tab>
-
+                <Tab>Api Access</Tab>
             </TabBar>
             
             <TabContainer index={0} activeIndex={activeIndex}>
@@ -33,6 +34,9 @@ export function CspModule(props) {
                         save={props.saveSettings} 
                         disabled={props.disabled}>
                 </CspSettings>
+            </TabContainer>
+            <TabContainer index={2} activeIndex={activeIndex}>
+                <ApiAccess settings={props.settings} handleUpdate={props.saveSettings}></ApiAccess>
             </TabContainer>
         </>
 
