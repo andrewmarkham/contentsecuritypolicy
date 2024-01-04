@@ -203,7 +203,25 @@ services.AddJhooseSecurity(_configuration,
     });
 ```
 
+##API Access
+The security headers can be accessed via a Rest API, this is useful if you are using Optimizely to manage the content, but not presentation.
 
+Access to the Rest API is secured by authentication keys, each consumer must include a valid key in the header.
+
+Webhooks are used to notify any consumer that the security headrers have changed.
+
+###Nonce value
+Each request must include a 'nonce'.  This value should not be consistent and change between each request.
+
+###Example
+
+```
+POST /api/jhoose/headers HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+X-API-Key: ...
+{'nonce': '1234567890' }
+```
  ---
  ## Version History
 
@@ -218,3 +236,4 @@ services.AddJhooseSecurity(_configuration,
  |1.5.2|Add support for ws and wss protocols<br/>Add support for seperate report-uri and report-to endpoints|
  |2.0.0|Removed support for CMS 11/.Net Framework<br/>Added support for .NET7 and .NET8<br/>New  interface for managing security headers (#74)<br/>Fix issues #79, #80, #81 (Supports Readonly mode)|
  |2.1.0|Add ability to customise the access policy for the module<br/>Consistent serialization approach, ignores global settings|
+ |2.2.0|API Access to Security headers|
