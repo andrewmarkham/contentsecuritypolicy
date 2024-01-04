@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "BuildAll",
-            "program": "${workspaceFolder}/src/Sample/DemoSite/bin/Debug/net5.0/DemoSite.dll",
+            "program": "${workspaceFolder}/src/Sample/DemoSite/bin/Debug/net8.0/DemoSite.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Sample/DemoSite",
             "stopAtEntry": false,
@@ -24,6 +24,5 @@
                 "/Views": "${workspaceFolder}/src/Test/Management/Views"
             }
         }
-
     ]
 }

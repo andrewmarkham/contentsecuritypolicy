@@ -8,7 +8,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.1.0.0</Version>
+		<Version>2.2.0.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -31,6 +31,7 @@
 					New  interface for managing security headers
 			2.1.0 - Add ability to customise the access policy for the module
 					Consistent serialization approach, ignores global settings
+			2.2.0 - API Access to Security headers
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
@@ -44,7 +45,7 @@
       		https://nuget.pkg.github.com/andrewmarkham/index.json
 	  	</RestoreSources>
 		<Configurations>Debug;Release;PreRelease</Configurations>
-		<ReleaseVersion>2.1.0.0</ReleaseVersion>
+		<ReleaseVersion>2.2.0.0</ReleaseVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net6.0|AnyCPU'">
 		<DebugType>portable</DebugType>
@@ -103,6 +104,7 @@
 		<None Remove="Microsoft.Extensions.Options.ConfigurationExtensions" />
 		<None Remove="Provider\" />
 		<None Remove="Authorization\" />
+		<None Remove="Webhooks\" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
@@ -110,6 +112,7 @@
 	<ItemGroup>
 		<Folder Include="Provider\" />
 		<Folder Include="Authorization\" />
+		<Folder Include="Webhooks\" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\..\README.md" Pack="true" PackagePath="\" />

@@ -8,6 +8,7 @@ using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.SecurityHeaders;
 using Jhoose.Security.Core.Repository;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
 namespace Jhoose.Security.Repository
@@ -18,28 +19,16 @@ namespace Jhoose.Security.Repository
         protected readonly ICacheManager cache;
 
         private readonly IDatabaseMode databaseMode;
-        private DynamicDataStore? _store;
-        private bool disposedValue;
-
-        protected Lazy<DynamicDataStore> store => new Lazy<DynamicDataStore>(() =>
-        {
-            if (_store is null)
-            {
-                var storeParams = new StoreDefinitionParameters();
-                storeParams.IndexNames.Add("Id");
-                _store = dataStoreFactory.CreateStore(nameof(ResponseHeader), typeof(ResponseHeaderStorageItem<>), storeParams);
-            }
-
-            return _store;
-
-        });
+        private readonly IHttpContextAccessor httpContextAccessor;
 
         public StandardResponseHeadersRepository(DynamicDataStoreFactory dataStoreFactory,
             ICacheManager cache,
-            IDatabaseMode databaseMode)
+            IDatabaseMode databaseMode,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.cache = cache;
             this.databaseMode = databaseMode;
+            this.httpContextAccessor = httpContextAccessor;
             this.dataStoreFactory = dataStoreFactory;
         }
 
@@ -64,27 +53,40 @@ namespace Jhoose.Security.Repository
 
         public IEnumerable<ResponseHeader> List()
         {
-            var policies = store.Value.LoadAll<ResponseHeaderStorageItem<ResponseHeader>>();
-
-            foreach (ResponseHeaderStorageItem<ResponseHeader> p in policies)
+            using (var s = GetStore())
             {
-                string json = p.SerializedValue;
-                Type t = Type.GetType(p.TypeName)!;
+                var policies = s.LoadAll<ResponseHeaderStorageItem<ResponseHeader>>();
 
-                yield return (ResponseHeader)JsonConvert.DeserializeObject(json, t)!;
+                foreach (ResponseHeaderStorageItem<ResponseHeader> p in policies)
+                {
+                    string json = p.SerializedValue;
+
+                    Type t = GetType(p.TypeName);
+
+                    yield return (ResponseHeader)JsonConvert.DeserializeObject(json, t)!;
+                }
             }
         }
 
         public T Update<T>(T policy) where T : ResponseHeader
         {
-            // This needs to go back in as it causes the app to crash.   
-            this.cache.Remove(Constants.PolicyCacheKey);
+            using (var s = GetStore())
+            {
+                // This needs to go back in as it causes the app to crash.   
+                this.cache.Remove(Constants.PolicyCacheKey);
 
-            var _ = store.Value.Save(new ResponseHeaderStorageItem<T>(policy));
+                var _ = s.Save(new ResponseHeaderStorageItem<T>(policy));
 
-            return policy;
+                return policy;
+            }
         }
 
+        private DynamicDataStore GetStore()
+        {
+            var storeParams = new StoreDefinitionParameters();
+            storeParams.IndexNames.Add("Id");
+            return dataStoreFactory.CreateStore(nameof(ResponseHeader), typeof(ResponseHeaderStorageItem<>), storeParams);
+        }
 
         private void Remap<T>()
         {
@@ -106,6 +108,21 @@ namespace Jhoose.Security.Repository
 
                 definition.CommitChanges();
             }
+        }
+
+        private Type GetType(string typeName)
+        {
+            return Type.GetType(typeName, assemblyName =>
+                {
+                    return AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == assemblyName.Name);
+                },
+                (assembly, typeName, caseInsensitive) =>
+                {
+                    if (caseInsensitive)
+                        return assembly?.GetTypes().SingleOrDefault(t => t.FullName?.Equals(typeName, StringComparison.InvariantCultureIgnoreCase) ?? false);
+                    else
+                        return assembly?.GetTypes().SingleOrDefault(t => t.FullName == typeName);
+                })!;
         }
     }
 }

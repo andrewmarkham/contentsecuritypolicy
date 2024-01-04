@@ -46,7 +46,7 @@ export function SecurityHeaders(props) {
 
 
     return (
-        <>
+        <div className="tab-container">
                 <ErrorBoundary>
                 <DataTable>
                     <DataTableContent>
@@ -98,7 +98,7 @@ export function SecurityHeaders(props) {
                     </ErrorBoundary>
 
             
-        </>
+        </div>
     );
 }
 

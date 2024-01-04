@@ -65,8 +65,8 @@ namespace DemoSite
             {
                 // Global settings: use the defaults, but serialize enums as strings
                 // (because it really should be the default)
-                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper;
+                //options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper;
 
             });
 

@@ -1,8 +1,7 @@
 
 using System;
-
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using EPiServer.Data;
 
 namespace Jhoose.Security.Core.Models.CSP
 {
@@ -21,6 +20,13 @@ namespace Jhoose.Security.Core.Models.CSP
         /// </summary>
         public string ReportToUrl { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Urls that will be triggered when the settings change
+        /// </summary>
+        public List<string>? WebhookUrls { get; set; } = new List<string>();
+
+        public List<AuthenticationKey>? AuthenticationKeys { get; set; } = new List<AuthenticationKey>();
+
         [JsonIgnore]
         public bool HasReporting => !string.IsNullOrEmpty(this.ReportingUrl) | !string.IsNullOrEmpty(this.ReportToUrl);
 
@@ -29,6 +35,5 @@ namespace Jhoose.Security.Core.Models.CSP
 
         [JsonIgnore]
         public string PolicyHeader => this.Mode.Equals("on", StringComparison.CurrentCultureIgnoreCase) ? "Content-Security-Policy" : "Content-Security-Policy-Report-Only";
-
     }
 }

@@ -33,7 +33,16 @@ app.get('/api/csp', async (req, res) => {
 app.get('/api/csp/settings', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
-  var settings = {mode: "on", reportingUrl: "http://www.bbc.co.uk/"  }
+  var settings = {
+      mode: "on", 
+      reportingUrl: "http://www.bbc.co.uk/",
+      reportToUrl: "http://www.bbc.co.uk/",
+      webhookUrls: ["http://www.1", "http://www.2"],
+      authenticationKeys: [
+        { name: "key1", key: "value1", revoked: false },
+        { name: "key1", key: "value1", revoked: false }
+      ]
+    }
 
   await snooze(1500);
   res.json(settings);

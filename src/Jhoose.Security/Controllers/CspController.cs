@@ -15,6 +15,8 @@ using Newtonsoft.Json.Serialization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Jhoose.Security.Authorization;
+using Jhoose.Security.Webhooks;
+using System.Threading.Tasks;
 
 namespace Jhoose.Security.Controllers
 {
@@ -29,16 +31,19 @@ namespace Jhoose.Security.Controllers
 
         private readonly ICspPolicyRepository policyRepository;
         private readonly IResponseHeadersRepository responseHeadersRepository;
+        private readonly IWebhookNotifications webhookNotifications;
         private readonly JhooseSecurityOptions options;
         private readonly ILogger<CspController> logger;
 
         public CspController(ICspPolicyRepository policyRepository,
                              IResponseHeadersRepository responseHeadersRepository,
                              IOptions<JhooseSecurityOptions> options,
+                             IWebhookNotifications webhookNotifications,
                              ILogger<CspController> logger)
         {
             this.policyRepository = policyRepository;
             this.responseHeadersRepository = responseHeadersRepository;
+            this.webhookNotifications = webhookNotifications;
             this.options = options.Value;
             this.logger = logger;
         }
@@ -61,6 +66,9 @@ namespace Jhoose.Security.Controllers
         public ActionResult<CspPolicy> Update(CspPolicy policy)
         {
             string json = JsonConvert.SerializeObject(this.policyRepository.Update(policy), jsonSerializerSettings);
+
+            this.NotifyWebhooks();
+
             return Content(json, "application/json");
         }
 
@@ -85,7 +93,10 @@ namespace Jhoose.Security.Controllers
 
             if (result)
             {
-                string json = JsonConvert.SerializeObject(result, jsonSerializerSettings);
+                string json = JsonConvert.SerializeObject(settings, jsonSerializerSettings);
+
+                this.NotifyWebhooks();
+
                 return Content(json, "application/json");
             }
             else
@@ -123,13 +134,16 @@ namespace Jhoose.Security.Controllers
         [Route("header")]
         [ProducesResponseType(typeof(ResponseHeader), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseHeader), StatusCodes.Status500InternalServerError)]
-        public ActionResult<ResponseHeader> Settings([FromBody] ResponseHeader header)
+        public  ActionResult<ResponseHeader> Settings([FromBody] ResponseHeader header)
         {
             try
             {
                 var result = this.responseHeadersRepository.Update(header);
 
                 string json = JsonConvert.SerializeObject(result, jsonSerializerSettings);
+
+                this.NotifyWebhooks();
+
                 return Content(json, "application/json");
             }
             catch (Exception ex)
@@ -137,6 +151,14 @@ namespace Jhoose.Security.Controllers
                 logger.LogError(ex, "Error getting settings");
                 return Problem(ex.Message, statusCode: 500);
             }
+        }
+
+        private void NotifyWebhooks()
+        {
+            var settings = this.policyRepository.Settings();
+            var webhoookUrls = settings.WebhookUrls?.Select(u => new Uri(u)).ToList() ?? [];
+            
+            webhookNotifications.Notify(webhoookUrls );
         }
     }
 }
