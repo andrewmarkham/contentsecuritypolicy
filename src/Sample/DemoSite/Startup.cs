@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using EPiServer.Framework.Web.Resources;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using EPiServer.Shell.Modules;
 
 namespace DemoSite
 {
@@ -44,11 +45,15 @@ namespace DemoSite
             });
 
 
+            //services.Configure<ProtectedModuleOptions>(p => p.RootPath = "~/ui");
+            //services.Configure<UIOptions>(o => o.EditUrl = new System.Uri("~/ui/CMS/", System.UriKind.Relative));
+
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
             services.AddJhooseSecurity(_configuration, (o) =>
             {
                 o.UseHeadersUI = true;
+                //o.ExclusionPaths.Add("/ui");
             },
             configurePolicy: (p) =>
             {
