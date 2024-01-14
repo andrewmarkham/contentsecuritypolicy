@@ -42,7 +42,11 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+		<!--
+		<PackageReference Include="Jhoose.Security.Admin" Version="2.2.0.259" />
+		-->
 	</ItemGroup>
+	
 	<ItemGroup>
 		<ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj">
 			<GlobalPropertiesToRemove>
@@ -54,6 +58,7 @@
 			</GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>
+	
 	<ItemGroup>
 		<Content Update="modules\_protected\Jhoose.Security\module.config">
 			<PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
