@@ -8,7 +8,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.2.1.0</Version>
+		<Version>2.2.2.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -33,6 +33,7 @@
 					Consistent serialization approach, ignores global settings
 			2.2.0 - API Access to Security headers
 			2.2.1 - Bug with the module not working when edit segment is different to the default 'episerver'.
+			2.2.2 - Bug with response header cache not being cleared after a change.
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
@@ -46,7 +47,7 @@
       		https://nuget.pkg.github.com/andrewmarkham/index.json
 	  	</RestoreSources>
 		<Configurations>Debug;Release;PreRelease</Configurations>
-		<ReleaseVersion>2.2.0.0</ReleaseVersion>
+		<ReleaseVersion>2.2.2.0</ReleaseVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net6.0|AnyCPU'">
 		<DebugType>portable</DebugType>

@@ -237,3 +237,5 @@ X-API-Key: ...
  |2.0.0|Removed support for CMS 11/.Net Framework<br/>Added support for .NET7 and .NET8<br/>New  interface for managing security headers (#74)<br/>Fix issues #79, #80, #81 (Supports Readonly mode)|
  |2.1.0|Add ability to customise the access policy for the module<br/>Consistent serialization approach, ignores global settings|
  |2.2.0|API Access to Security headers|
+ |2.2.1|Bug with the module not working when edit segment is different to the default 'episerver'.|
+ |2.2.2|Bug with response header cache not being cleared after a change.|
