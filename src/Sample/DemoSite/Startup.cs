@@ -45,15 +45,15 @@ namespace DemoSite
             });
 
 
-            //services.Configure<ProtectedModuleOptions>(p => p.RootPath = "~/ui");
-            //services.Configure<UIOptions>(o => o.EditUrl = new System.Uri("~/ui/CMS/", System.UriKind.Relative));
+            services.Configure<ProtectedModuleOptions>(p => p.RootPath = "~/ui");
+            services.Configure<UIOptions>(o => o.EditUrl = new System.Uri("~/ui/CMS/", System.UriKind.Relative));
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
             services.AddJhooseSecurity(_configuration, (o) =>
             {
                 o.UseHeadersUI = true;
-                //o.ExclusionPaths.Add("/ui");
+                o.ExclusionPaths.Add("/ui");
             },
             configurePolicy: (p) =>
             {
