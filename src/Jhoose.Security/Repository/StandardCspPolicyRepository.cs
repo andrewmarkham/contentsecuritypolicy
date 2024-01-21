@@ -105,7 +105,8 @@ namespace Jhoose.Security.Repository
             {
                 this.cache.Remove(Constants.SettingsCacheKey);
                 this.cache.Remove(Constants.PolicyCacheKey);
-
+                this.cache.Remove(Constants.ResponseHeadersCacheKey);
+                
                 try
                 {
                     var id = ss.Save(settings, Identity.NewIdentity(settings.Id));
