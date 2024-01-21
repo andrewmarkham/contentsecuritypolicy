@@ -73,7 +73,7 @@ namespace Jhoose.Security.Repository
             using (var s = GetStore())
             {
                 // This needs to go back in as it causes the app to crash.   
-                this.cache.Remove(Constants.PolicyCacheKey);
+                this.cache.Remove(Constants.ResponseHeadersCacheKey);
 
                 var _ = s.Save(new ResponseHeaderStorageItem<T>(policy));
 

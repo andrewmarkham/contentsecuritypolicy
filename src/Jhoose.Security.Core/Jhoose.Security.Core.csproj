@@ -8,7 +8,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		-->
-		<Version>2.2.1.0</Version>
+		<Version>2.2.2.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Title>Jhoose Security Core</Title>
 		<Description>Core package used by the Jhoose Security module</Description>
@@ -33,6 +33,7 @@
 		        Consistent serialization approach, ignores global settings
 		2.2.0 - API Access to Security headers
 		2.2.1 - Bug with the module not working when edit segment is different to the default 'episerver'.
+		2.2.2 - Bug with response header cache not being cleared after a change.
 	  </ReleaseNotes>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<RestoreSources>
@@ -40,7 +41,7 @@
 		https://api.nuget.org/v3/index.json;
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
-		<ReleaseVersion>2.2.0.0</ReleaseVersion>
+		<ReleaseVersion>2.2.2.0</ReleaseVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<LangVersion>latest</LangVersion>
