@@ -192,7 +192,7 @@ These aren't removed, the reason being
 </configuration>
 ```
 
-##Authentication
+## Authentication
 By default any user with the 'CmsAdmins' role can access the module, this can be changed at startup if you need to further restrict access.
 
 ``` C#
@@ -203,17 +203,17 @@ services.AddJhooseSecurity(_configuration,
     });
 ```
 
-##API Access
+## API Access
 The security headers can be accessed via a Rest API, this is useful if you are using Optimizely to manage the content, but not presentation.
 
 Access to the Rest API is secured by authentication keys, each consumer must include a valid key in the header.
 
 Webhooks are used to notify any consumer that the security headrers have changed.
 
-###Nonce value
+### Nonce value
 Each request must include a 'nonce'.  This value should not be consistent and change between each request.
 
-###Example
+### Example
 
 ```
 POST /api/jhoose/headers HTTP/1.1
