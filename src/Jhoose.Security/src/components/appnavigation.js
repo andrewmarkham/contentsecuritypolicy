@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+/*import React, { useEffect, useState} from 'react';
 import { Navigation} from "@episerver/platform-navigation";
 
 export const AppNavigation = ({ history }) => {
@@ -52,4 +52,4 @@ export const AppNavigation = ({ history }) => {
             actionItems={actionItems}>
         </Navigation>
     );
-};
+};*/

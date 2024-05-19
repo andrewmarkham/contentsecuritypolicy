@@ -7,6 +7,7 @@ namespace Jhoose.Security.Core.Models.CSP
         public SandboxOptions()
         {
             this.Enabled = false;
+            this.AllowDownloads = false;
             this.AllowForms = false;
             this.AllowSameOrigin = false;
             this.AllowScripts = false;
@@ -18,9 +19,12 @@ namespace Jhoose.Security.Core.Models.CSP
             this.AllowPopupsToEscapeSandbox = false;
             this.AllowTopNavigation = false;
             this.AllowTopNavigationByUserActivation = false;
+            this.AllowTopNavigationToCustomProtocols = false;
         }
 
         public bool Enabled { get; set; }
+
+        public bool AllowDownloads { get; set; }
         public bool AllowForms { get; set; }
         public bool AllowSameOrigin { get; set; }
         public bool AllowScripts { get; set; }
@@ -32,6 +36,8 @@ namespace Jhoose.Security.Core.Models.CSP
         public bool AllowPopupsToEscapeSandbox { get; set; }
         public bool AllowTopNavigation { get; set; }
         public bool AllowTopNavigationByUserActivation { get; set; }
+        public bool AllowTopNavigationToCustomProtocols { get; set; }
+        
 
 
         public override string ToString()
@@ -40,6 +46,7 @@ namespace Jhoose.Security.Core.Models.CSP
 
             if (this.Enabled)
             {
+                if (this.AllowDownloads) sb.Append("allow-downloads ");
                 if (this.AllowForms) sb.Append("allow-forms ");
                 if (this.AllowSameOrigin) sb.Append("allow-same-origin ");
 
@@ -53,6 +60,7 @@ namespace Jhoose.Security.Core.Models.CSP
                 if (this.AllowPopupsToEscapeSandbox) sb.Append("allow-popups-to-escape-sandbox ");
                 if (this.AllowTopNavigation) sb.Append("allow-top-navigation ");
                 if (this.AllowTopNavigationByUserActivation) sb.Append("allow-top-navigation-by-user-activation ");
+                if (this.AllowTopNavigationToCustomProtocols) sb.Append("allow-top-navigation-to-custom-protocols ");
             }
 
             return sb.ToString();

@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "ysA4doDFswpo+u8tF6bK87+D1BeRxmz6vgT7G400pnA6d1/bMU8vquDexLu2R9S928unMJwS258c6JE8uSJHjQ==",
+  "success": true,
+  "projectFilePath": "/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/Jhoose.Security.Reporting.csproj",
+  "expectedPackageFiles": [
+    "/Users/andrewmarkham/.nuget/packages/elastic.clients.elasticsearch/8.13.12/elastic.clients.elasticsearch.8.13.12.nupkg.sha512",
+    "/Users/andrewmarkham/.nuget/packages/elastic.transport/0.4.19/elastic.transport.0.4.19.nupkg.sha512",
+    "/Users/andrewmarkham/.nuget/packages/system.diagnostics.diagnosticsource/8.0.0/system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
+    "/Users/andrewmarkham/.nuget/packages/system.runtime.compilerservices.unsafe/6.0.0/system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "/Users/andrewmarkham/.nuget/packages/system.text.encodings.web/8.0.0/system.text.encodings.web.8.0.0.nupkg.sha512",
+    "/Users/andrewmarkham/.nuget/packages/system.text.json/8.0.0/system.text.json.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

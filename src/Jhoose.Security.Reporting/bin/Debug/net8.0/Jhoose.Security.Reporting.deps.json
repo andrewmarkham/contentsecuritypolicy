@@ -1,0 +1,59 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Jhoose.Security.Reporting/1.0.0": {
+        "dependencies": {
+          "Elastic.Clients.Elasticsearch": "8.13.12"
+        },
+        "runtime": {
+          "Jhoose.Security.Reporting.dll": {}
+        }
+      },
+      "Elastic.Clients.Elasticsearch/8.13.12": {
+        "dependencies": {
+          "Elastic.Transport": "0.4.19"
+        },
+        "runtime": {
+          "lib/net8.0/Elastic.Clients.Elasticsearch.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.13.12.0"
+          }
+        }
+      },
+      "Elastic.Transport/0.4.19": {
+        "runtime": {
+          "lib/net8.0/Elastic.Transport.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.4.19.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Jhoose.Security.Reporting/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Elastic.Clients.Elasticsearch/8.13.12": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-771p9YULrF9V04cuzVPnNNuXUQ8/Jh4qgWzq9nEiQ1KiAY5QdjbEv5nLTxgWoVrbgedXC5MtCyHPkSusPCESZg==",
+      "path": "elastic.clients.elasticsearch/8.13.12",
+      "hashPath": "elastic.clients.elasticsearch.8.13.12.nupkg.sha512"
+    },
+    "Elastic.Transport/0.4.19": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QsFtfHJi/DJDH4Gh602Y+hVTWS5KdpUPpRHxU57OSwty/nSDd/xRymThuIRgH5UxnSFVmQMEslyFtP7BkLFgmg==",
+      "path": "elastic.transport/0.4.19",
+      "hashPath": "elastic.transport.0.4.19.nupkg.sha512"
+    }
+  }
+}

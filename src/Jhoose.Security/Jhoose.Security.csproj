@@ -78,6 +78,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\Jhoose.Security.Reporting\Jhoose.Security.Reporting.csproj" PrivateAssets="all" />
 	</ItemGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
 		<Exec Command="npm run publish" />

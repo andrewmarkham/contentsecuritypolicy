@@ -16,7 +16,7 @@ namespace Jhoose.Security.Core.Models.CSP
         {
 
             var sb = new StringBuilder();
-            this.Policies.ForEach(p => sb.Append(p.ToString()));
+            this.Policies?.ForEach(p => sb.Append(p.ToString()));
 
             if (!(string.IsNullOrEmpty(reportUrl)))
             {

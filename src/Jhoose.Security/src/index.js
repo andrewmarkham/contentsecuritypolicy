@@ -128,6 +128,7 @@ function bootstrapDB() {
   console.log(`Inserting CSP data into collection ${collectionName}`);
   policiesCol.insert(policiesJson);
 
+
   const data = [
     {
         "name": "Strict-Transport-Security",

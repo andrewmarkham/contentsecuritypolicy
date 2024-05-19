@@ -13,6 +13,9 @@ using EPiServer.Framework.Web.Resources;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EPiServer.Shell.Modules;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace DemoSite
 {
@@ -66,6 +69,7 @@ namespace DemoSite
             });
 
 
+            
             services.AddControllers().AddJsonOptions(options =>
             {
                 // Global settings: use the defaults, but serialize enums as strings
@@ -74,7 +78,7 @@ namespace DemoSite
                 //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper;
 
             });
-
+            
             //services.AddTransient<BootstrapData, BootstrapData>();
         }
 
@@ -99,7 +103,7 @@ namespace DemoSite
                 endpoints.MapContent();
                 endpoints.MapControllers();
             });
-
         }
     }
+
 }

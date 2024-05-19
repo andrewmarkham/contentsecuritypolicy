@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jhoose.Security.Reporting", "Jhoose.Security.Reporting\Jhoose.Security.Reporting.csproj", "{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,18 @@ Global
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}.Release|x64.Build.0 = Release|Any CPU
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}.Release|x86.ActiveCfg = Release|Any CPU
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E}.Release|x86.Build.0 = Release|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Debug|x64.Build.0 = Debug|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Debug|x86.Build.0 = Debug|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Release|x64.ActiveCfg = Release|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Release|x64.Build.0 = Release|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Release|x86.ActiveCfg = Release|Any CPU
+		{B78728D4-F016-4CCF-A7FF-E38BD5E64EA0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

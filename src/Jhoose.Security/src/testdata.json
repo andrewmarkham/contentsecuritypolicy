@@ -1,3 +1,4 @@
+
 [
     { "id": "a5780475-6944-429d-bf5c-ac417d274e10", "policyName": "default-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>The default-src directive defines the default policy for fetching resources such as JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media. Not all directives fallback to default-src.</p>" },
     { "id": "a5780475-6944-429d-bf5c-ac417d274e12", "policyName": "script-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources of JavaScript.</p>"  },
@@ -42,17 +43,19 @@
         "reportOnly": false, 
         "sandboxOptions": {
             "enabled": false,
+            "allowDownloads": false,
             "allowForms": false ,
+            "allowModals": false ,
+            "allowOrientationLock": false,
+            "allowPointerLock": false ,
+            "allowPopups": false  ,
+            "allowPopupsToEscapeSandbox": false,
+            "allowPresentation": false ,
             "allowSameOrigin" : false, 
             "allowScripts" : false ,
-            "allowPopups": false  ,
-            "allowModals": false ,
-            "allowOrientationLock": false,  
-            "allowPointerLock": false ,
-            "allowPresentation": false ,
-            "allowPopupsToEscapeSandbox": false, 
             "allowTopNavigation": false ,
-            "allowTopNavigationByUserActivation": false 
+            "allowTopNavigationByUserActivation": false,
+            "allowTopNavigationToCustomProtocols": false
         },
         "summaryText": "<p>Enables a sandbox for the requested resource similar to the iframe sandbox attribute. The sandbox applies a same origin policy, prevents popups, plugins and script execution is blocked. You can keep the sandbox value empty to keep all restrictions in place, or add values: allow-forms allow-same-origin allow-scripts allow-popups, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-presentation, allow-popups-to-escape-sandbox, and allow-top-navigation</p>"  },
 
@@ -67,3 +70,4 @@
     { "id": "a5780475-6944-429d-bf5c-ac417d274e28", "policyName": "prefetch-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Defines valid sources for request prefetch and prerendering, for example via the link tag with rel='prefetch' or rel='prerender'</p>"  },
     { "id": "a5780475-6944-429d-bf5c-ac417d274e29", "policyName": "navigate-to","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }, "summaryText": "<p>Restricts the URLs that the document may navigate to by any means. For example when a link is clicked, a form is submitted, or window.location is invoked. If form-action is present then this directive is ignored for form submissions.</p>"  }
 ]
+

@@ -1,0 +1,142 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/Jhoose.Security.Reporting.csproj": {}
+  },
+  "projects": {
+    "/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/Jhoose.Security.Reporting.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/Jhoose.Security.Reporting.csproj",
+        "projectName": "Jhoose.Security.Reporting",
+        "projectPath": "/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/Jhoose.Security.Reporting.csproj",
+        "packagesPath": "/Users/andrewmarkham/.nuget/packages/",
+        "outputPath": "/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "configFilePaths": [
+          "/Users/andrewmarkham/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0",
+          "net7.0",
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.optimizely.com/feed/packages.svc/": {},
+          "https://nuget.pkg.github.com/andrewmarkham/index.json": {},
+          "https://nuget.pkg.github.com/unrvld/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          },
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          },
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Elastic.Clients.Elasticsearch": {
+              "target": "Package",
+              "version": "[8.13.12, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/RuntimeIdentifierGraph.json"
+        },
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Elastic.Clients.Elasticsearch": {
+              "target": "Package",
+              "version": "[8.13.12, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/RuntimeIdentifierGraph.json"
+        },
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Elastic.Clients.Elasticsearch": {
+              "target": "Package",
+              "version": "[8.13.12, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
