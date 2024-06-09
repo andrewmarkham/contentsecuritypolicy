@@ -5,7 +5,7 @@ import {headerAppReducer} from './headerAppReducer';
 import { ApplicationState } from '../types';
 import { ApplicationAction, CspAction } from './types';
 
-
+/*
 export const appReducer = (state: ApplicationState, action: ApplicationAction) : ApplicationState => {
 
     // CSP AppReducer
@@ -38,4 +38,4 @@ export const appReducer = (state: ApplicationState, action: ApplicationAction) :
     }
 
     return state;
-  };
+  };*/

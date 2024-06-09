@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { Checkbox, GridCell, GridRow } from "@episerver/ui-framework";
-import { PolicyOptionName, PolicyOptions } from './types/types';
+
+import { PolicyOptions } from './types/types';
+import { Col, Row,Checkbox } from 'antd';
+import { CheckboxChangeEvent } from 'antd/es/checkbox/Checkbox';
 
 type Props = {  
     options: PolicyOptions,
@@ -11,7 +13,7 @@ export function CspOptions(props: Props) {
 
     var [options, setOptions] = useState<PolicyOptions>(props.options);
 
-    function setPolicyValue(key:string, value: string) {
+    function setPolicyValue(key:string) {
 
         var newOptions: PolicyOptions = { ...options };
 
@@ -24,56 +26,56 @@ export function CspOptions(props: Props) {
 
     return (<fieldset>
         <legend>Options</legend>
-        <GridRow>
-            <GridCell span={12}>
-                <Checkbox checked={options.nonce} onChange={(e) => {
-                    setPolicyValue("none", e.currentTarget.value);
+        <Row>
+            <Col span={12}>
+                <Checkbox checked={options.nonce} onChange={(e:CheckboxChangeEvent) => {
+                    setPolicyValue("none");
                 }}>None</Checkbox>
-            </GridCell>
+            </Col>
             <>
             {!options.none &&
                 <>
-                    <GridCell span={3}>
-                        <Checkbox checked={options.wildcard} onChange={(e) => {
-                            setPolicyValue("wildcard", e.currentTarget.value);
+                    <Col span={3}>
+                        <Checkbox checked={options.wildcard} onChange={(e:CheckboxChangeEvent) => {
+                            setPolicyValue("wildcard");
                         }}>Wildcard</Checkbox>
-                    </GridCell>
-                    <GridCell span={3}>
-                        <Checkbox checked={options.self} onChange={(e) => {
-                            setPolicyValue("self", e.currentTarget.value);
+                    </Col>
+                    <Col span={3}>
+                        <Checkbox checked={options.self} onChange={(e:CheckboxChangeEvent) => {
+                            setPolicyValue("self");
                         }}>Self</Checkbox>
-                    </GridCell>
+                    </Col>
                     {props.showScriptOptions &&
                     <>
-                    <GridCell span={3}>
-                        <Checkbox checked={options.nonce} onChange={(e) => {
-                            setPolicyValue("nonce", e.currentTarget.value);
+                    <Col span={3}>
+                        <Checkbox checked={options.nonce} onChange={(e:CheckboxChangeEvent) => {
+                            setPolicyValue("nonce");
                         }}>Nonce</Checkbox>
-                    </GridCell>
-                    <GridCell span={3}>
-                        <Checkbox checked={options.unsafeEval} onChange={(e) => {
-                            setPolicyValue("unsafeEval", e.currentTarget.value);
+                    </Col>
+                    <Col span={3}>
+                        <Checkbox checked={options.unsafeEval} onChange={(e:CheckboxChangeEvent) => {
+                            setPolicyValue("unsafeEval");
                         }}>Unsafe Eval</Checkbox>
-                    </GridCell>
-                    <GridCell span={3}>
-                        <Checkbox disabled={options.none} checked={options.unsafeHashes} onChange={(e) => {
-                            setPolicyValue("unsafeHashes", e.currentTarget.value);
+                    </Col>
+                    <Col span={3}>
+                        <Checkbox disabled={options.none} checked={options.unsafeHashes} onChange={(e:CheckboxChangeEvent) => {
+                            setPolicyValue("unsafeHashes");
                         }}>Unsafe Hashes</Checkbox>
-                    </GridCell>
-                    <GridCell span={3}>
-                        <Checkbox checked={options.unsafeInline} onChange={(e) => {
-                            setPolicyValue("unsafeInline", e.currentTarget.value);
+                    </Col>
+                    <Col span={3}>
+                        <Checkbox checked={options.unsafeInline} onChange={(e:CheckboxChangeEvent) => {
+                            setPolicyValue("unsafeInline");
                         }}>Unsafe Inline</Checkbox>
-                    </GridCell>
-                    <GridCell span={3}>
-                        <Checkbox checked={options.strictDynamic} onChange={(e) => {
-                            setPolicyValue("strictDynamic", e.currentTarget.value);
+                    </Col>
+                    <Col span={3}>
+                        <Checkbox checked={options.strictDynamic} onChange={(e:CheckboxChangeEvent) => {
+                            setPolicyValue("strictDynamic");
                         }}>Strict Dynamic</Checkbox>
-                    </GridCell>
+                    </Col>
                     </>}
                 </>}
             </>
-        </GridRow>
+        </Row>
 
     </fieldset>);
 }

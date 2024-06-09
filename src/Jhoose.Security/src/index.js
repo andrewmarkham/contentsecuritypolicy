@@ -34,13 +34,13 @@ app.get('/api/csp/settings', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   var settings = {
-      mode: "on", 
+      mode: "off", 
       reportingUrl: "http://www.bbc.co.uk/",
       reportToUrl: "http://www.bbc.co.uk/",
       webhookUrls: ["http://www.1", "http://www.2"],
       authenticationKeys: [
-        { name: "key1", key: "value1", revoked: false },
-        { name: "key1", key: "value1", revoked: false }
+        { name: "key1 abc", key: "value1", revoked: false },
+        { name: "key1", key: "value1 asdasjkhdas", revoked: true }
       ]
     }
 

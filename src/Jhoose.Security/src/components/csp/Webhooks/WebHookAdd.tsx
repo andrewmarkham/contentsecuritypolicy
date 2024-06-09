@@ -1,6 +1,5 @@
+import { Button } from "antd";
 import React from "react";
-import { TextButton } from "@episerver/ui-framework";
-
 
 type Props = {
     disabled: boolean,
@@ -8,8 +7,8 @@ type Props = {
 }
 export function WebHookAdd(props: Props) {
     return (
-        <div>
-            <TextButton disabled={props.disabled} onClick={() => props.handleAdd()}>Add New Webhook</TextButton>
+        <div className="toolBar">
+            <Button type="primary" disabled={props.disabled} onClick={() => props.handleAdd()}>Add New Webhook</Button>
         </div>
     );
 }

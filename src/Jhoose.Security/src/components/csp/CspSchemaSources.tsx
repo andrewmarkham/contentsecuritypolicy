@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox, GridCell, GridRow } from "@episerver/ui-framework";
+import { Col, Row,Checkbox } from 'antd';
 import { SchemaSource } from './types/types';
 
 type Props = {
@@ -25,49 +25,48 @@ export function CspSchemaSources(props: Props) {
 
     return (<fieldset>
         <legend>Schema Source</legend>
-        <GridRow>
-
-            <GridCell span={3}>
+        <Row>
+            <Col span={3}>
                 <Checkbox checked={schemaSource.http} onChange={(e) => {
                     setPolicyValue("http");
                 }}>http</Checkbox>
-            </GridCell>
-            <GridCell span={3}>
+            </Col>
+            <Col span={3}>
                 <Checkbox checked={schemaSource.https} onChange={(e) => {
                     setPolicyValue("https");
                 }}>https</Checkbox>
-            </GridCell>
-            <GridCell span={3}>
+            </Col>
+            <Col span={3}>
                 <Checkbox checked={schemaSource.data} onChange={(e) => {
                     setPolicyValue("data");
                 }}>data</Checkbox>
-            </GridCell>
-            <GridCell span={3}>
+            </Col>
+            <Col span={3}>
                 <Checkbox checked={schemaSource.mediastream} onChange={(e) => {
                     setPolicyValue("mediastream");
                 }}>mediastream</Checkbox>
-            </GridCell>
+            </Col>
 
-            <GridCell span={3}>
+            <Col span={3}>
                 <Checkbox checked={schemaSource.blob} onChange={(e) => {
                     setPolicyValue("blob");
                 }}>blob</Checkbox>
-            </GridCell>
-            <GridCell span={3}>
+            </Col>
+            <Col span={3}>
                 <Checkbox checked={schemaSource.filesystem} onChange={(e) => {
                     setPolicyValue("filesystem");
                 }}>filesystem</Checkbox>
-            </GridCell>
-                        <GridCell span={3}>
+            </Col>
+            <Col span={3}>
                 <Checkbox checked={schemaSource.ws} onChange={(e) => {
                     setPolicyValue("ws");
                 }}>ws</Checkbox>
-            </GridCell>
-            <GridCell span={3}>
+            </Col>
+            <Col span={3}>
                 <Checkbox checked={schemaSource.wss} onChange={(e) => {
                     setPolicyValue("wss");
                 }}>wss</Checkbox>
-            </GridCell>
-        </GridRow>
+            </Col>
+        </Row>
     </fieldset>);
 }

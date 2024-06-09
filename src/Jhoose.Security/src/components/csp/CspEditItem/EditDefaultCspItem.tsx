@@ -1,15 +1,17 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { Checkbox,TextField, Dialog, GridCell, GridRow } from "@episerver/ui-framework";
+import React, { useState, useMemo, } from 'react';
+
 import { CspOptions } from '../CspOptions';
 
 import { CspSchemaSources } from '../CspSchemaSources';
 import { CspPolicy, PolicyOptions, SchemaSource } from '../types/types';
 import { getPolicyOptionsDisplay, getSchemaSourceDisplay, isScriptPolicy as _isScriptPolicy } from '../helpers';
+import { Checkbox, Flex, Input, Modal } from 'antd';
+
 
 type Props = {  
     isOpen: boolean,
     policy: CspPolicy,
-    onClose: (e: any, callback: any) => void
+    onClose: () => void
 }
 
 export function EditDefaultCspItem(props: Props) {
@@ -21,6 +23,8 @@ export function EditDefaultCspItem(props: Props) {
     const [value, setValue] = useState(policy.value);
 
     const title = `Edit Policy`;
+
+    const { TextArea } = Input;
 
     function setOptions(options: PolicyOptions){
         var newPolicy : CspPolicy = {
@@ -61,6 +65,16 @@ export function EditDefaultCspItem(props: Props) {
         setPolicy(newPolicy);
     }
 
+    const handleOk = () => {
+        //setConfirmLoading(true);
+        //formRef.current?.RequestSave();
+        props.onClose();
+    };
+    
+    const handleCancel = () => {
+        props.onClose();
+    };
+
     const calculatedPolicy = useMemo(() => {
         return `${policy.policyName} ${getPolicyOptionsDisplay(policy)} ${getSchemaSourceDisplay(policy)}`;
     }, [policy.options,policy.schemaSource,value]);
@@ -70,56 +84,51 @@ export function EditDefaultCspItem(props: Props) {
     }, [policy.policyName]);
 
     return(
-        <Dialog className="editDialog" open={isOpen}
+        <Modal
+            destroyOnClose
             title={title}
-            dismissLabel="Cancel"
-            confirmLabel="OK"
-            enableConfirm={true}
-            onInteraction={(e) => props.onClose(e, () => {
-                return policy;
-            })}>
-                <>
-                <GridRow>
-                    <GridCell span={12}>
+            open={props.isOpen}
+            onOk={handleOk}
+            //confirmLoading={confirmLoading}
+            onCancel={handleCancel}
+            width={"75vw"}
+            >
+            <Flex vertical>
+                <div>
                         <h3>{policy.policyName}</h3>
                         <div className="summary" dangerouslySetInnerHTML={{__html: policy.summaryText}}></div>
-                    </GridCell>
-                    <GridCell span={12}>
+                    </div>
+                    <div >
                         <fieldset>
                             <legend>Mode</legend>
                             <Checkbox checked={policy.reportOnly} onChange={(e) => {
-                            setPolicyValue("mode", e.currentTarget.value);
+                                setPolicyValue("mode", e.target.value);
                         }}>Report Only</Checkbox>
                         </fieldset>
-                    </GridCell>
-                    <GridCell span={12}>
+                    </div>
+                    <div >
                         <CspOptions 
                             options={policy.options}
                             showScriptOptions={isScriptPolicy}
                             update={setOptions}
                             ></CspOptions>
-                    </GridCell>
-                    <GridCell span={12}>
+                    </div>
+                    <div >
                         <CspSchemaSources schemaSource={policy.schemaSource} update={setSchemaSource}></CspSchemaSources>
-                    </GridCell>
-                </GridRow>
-                <GridRow>
-                    <GridCell span={12}>
-                        <TextField
+                    </div>
+
+                    <div>
+                        <TextArea 
+                            rows={4} 
                             disabled={policy.options?.none ?? true} 
-                            label="Host Source"
-                            className="fullwidth"
-                            textarea
-                            outlined
-                            value={value}
+                            placeholder='Host Source'
                             onChange={(e) => {
                                 setPolicyValue("value",e.currentTarget.value);
-                            }}/>
-                        <pre>{calculatedPolicy}</pre>
-                    </GridCell>
-                </GridRow>
-                </>
-        </Dialog>
+                            }} />
+                        <pre className='summary'>{calculatedPolicy}</pre>
+                    </div>
+            </Flex>
+        </Modal>
     )
 }
 

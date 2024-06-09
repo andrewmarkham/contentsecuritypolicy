@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { ApplicationState } from '../types';
+import { ApplicationState, CspState } from '../types';
 import { Dispatcher, CspAction } from './types';
 import { CspPolicy, CspSandboxPolicy, PolicyOptions, SandboxOptions, SchemaSource } from '../components/csp/types/types';
 
-export const cspAppReducer = (state : ApplicationState, action: CspAction): ApplicationState  => {
+export const cspAppReducer = (state : CspState, action: CspAction): CspState  => {
     if (action.actionType === "save") {
 
       saveDataRequest(action.dispatcher ,action.cspPolicy);
@@ -12,7 +12,7 @@ export const cspAppReducer = (state : ApplicationState, action: CspAction): Appl
         ...state,
         saving: true,
         data: [...state.data]
-      }
+      } as CspState
     } else if (action.actionType === "saved") { 
 
       var newPolicies = merge(state.data, action.cspPolicy);
@@ -20,31 +20,26 @@ export const cspAppReducer = (state : ApplicationState, action: CspAction): Appl
       return {
         ...state,
         saving: false,
-        settings: {...state.settings},
-        headerData: [...state.headerData],
         data: [...newPolicies]
-      } 
+      } as CspState
     } else if (action.actionType === "load") { 
+      console.log("Load CSP")
       loadDataRequest(action.dispatcher);
 
       return {
         ...state,
         loading: true,
-        settings: {...state.settings},
-        headerData: [...state.headerData],
         data: [...state.data]
-      }
+      } as CspState
     } else if (action.actionType === "loaded") { 
 
-      console.log(action.cspPolicies);
+      console.log(action.state);
 
       return {
         ...state,
         loading: false,
-        settings: {...state.settings},
-        headerData: [...state.headerData],
-        data: [...action.cspPolicies || state.data]
-      }
+        data: [...(action.state as CspState).data || state.data]
+      } as CspState
     } 
     return state;
   };
@@ -54,9 +49,6 @@ export const cspAppReducer = (state : ApplicationState, action: CspAction): Appl
 
     return data.map(p => {
         if (p.id === updatedRecord.id){
-
-          
-
           if (updatedRecord.policyName === "sandbox") {
             var newSandboxPolicy: CspSandboxPolicy = Object.assign(p, updatedRecord) as CspSandboxPolicy;
 
@@ -86,7 +78,7 @@ export const cspAppReducer = (state : ApplicationState, action: CspAction): Appl
           .then((r) =>
           {
             if (r.status === 200) {
-                dispatcher({actionType: "loaded", cspPolicies : r.data});
+                dispatcher({actionType: "loaded", state : { data: r.data } as CspState});
             }
           })
           .catch((e) => {

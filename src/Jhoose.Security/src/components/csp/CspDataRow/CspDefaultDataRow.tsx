@@ -1,8 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { DataTableRow, DataTableCell } from "@episerver/ui-framework";
+
 import { CspPolicy } from '../types/types';
 import { EditDefaultCspItem } from '../CspEditItem/EditDefaultCspItem';
 import { getPolicyOptionsDisplay, getSchemaSourceDisplay } from '../helpers';
+import { Cell } from "../../DataTable/Cell";
+import { Row } from "../../DataTable/Row";
 
 type Props = {  
     row: CspPolicy,
@@ -25,32 +27,26 @@ export function CspDataRow(props: Props) {
 
     return(
         <>
-        <DataTableRow key={policy.id} rowId={policy.id.toString()} >
-            <DataTableCell>
+        <Row key={policy.id} >
+            <Cell width="150px">
                 <button className="linkButton" onClick={() => setIsEditOpen(true)}>{policy.policyName}</button>
-            </DataTableCell>
-            <DataTableCell>{options}</DataTableCell>
-            <DataTableCell>{schema}</DataTableCell>
-            <DataTableCell>
+            </Cell>
+            <Cell>{options}</Cell>
+            <Cell>{schema}</Cell>
+            <Cell>
                 <>
                 {policy.options?.none ? "" : policy?.value ?? ""}
                 <EditDefaultCspItem 
                     key={policy.id} 
                     isOpen={isEditOpen} 
                     policy={policy} 
-                    onClose={(e: any, p:any) => {
-
+                    onClose={() => {
                         setIsEditOpen(false);
-
-                        // ok, lets save the data
-                        if (e.detail.action === "confirm") {
-                            props.save(p());
-                        }
                     }}/>
                 </>
-            </DataTableCell>
+            </Cell>
     
-        </DataTableRow>
+        </Row>
         </>
     );
 }

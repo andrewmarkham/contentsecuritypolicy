@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from 'react';
-import { DataTableRow, DataTableCell } from "@episerver/ui-framework";
 import { CspPolicy, CspSandboxPolicy } from '../types/types';
 import { EditSandboxCspItem } from '../CspEditItem/EditSandboxCspItem';
 import { getSandboxOptionsDisplay } from '../helpers';
+import { Cell } from "../../DataTable/Cell";
+import { Row } from "../../DataTable/Row";
 
 type Props = {  
     row: CspSandboxPolicy,
@@ -20,28 +21,22 @@ export function CspSandboxDataRow(props: Props) {
 
     return(
         <>
-        <DataTableRow key={policy.id} rowId={policy.id.toString()} >
-            <DataTableCell>
+        <Row key={policy.id} >
+            <Cell width="150px">
                 <button className="linkButton" onClick={() => setIsEditOpen(true)}>{policy.policyName}</button>
-            </DataTableCell>
-            <DataTableCell>{options}</DataTableCell>
-            <DataTableCell>&nbsp;</DataTableCell>
-            <DataTableCell>       
+            </Cell>
+            <Cell>{options}</Cell>
+            <Cell>&nbsp;</Cell>
+            <Cell>       
                 <EditSandboxCspItem 
-                key={policy.id} 
-                isOpen={isEditOpen} 
-                policy={policy} 
-                onClose={(e: any, p:any) => {
-
-                    setIsEditOpen(false);
-
-                    // ok, lets save the data
-                    if (e.detail.action === "confirm") {
-                        props.save(p());
-                    }
-                }}/>
-            </DataTableCell>
-             </DataTableRow>
+                    key={policy.id} 
+                    isOpen={isEditOpen} 
+                    policy={policy} 
+                    onClose={() => {
+                        setIsEditOpen(false);
+                    }}/>
+            </Cell>
+        </Row>
         </>
     );
 }

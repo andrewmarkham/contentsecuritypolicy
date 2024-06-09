@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 import { Dispatcher, HeaderAction } from './types';
-import { ApplicationState } from '../types';
+import { ApplicationState, HeadersState } from '../types';
 import { SecurityHeader } from '../components/securityheaders/types/securityHeader';
 
-export const headerAppReducer = (state : ApplicationState, action: HeaderAction): ApplicationState => {
+export const headerAppReducer = (state : HeadersState, action: HeaderAction): HeadersState => {
     
   if (action.actionType === "headerSave") {
 
@@ -12,45 +12,36 @@ export const headerAppReducer = (state : ApplicationState, action: HeaderAction)
   
         return {
           ...state,
-          useHeadersUI: true,
+          useHeadersUI: state.useHeadersUI,
           saving: true,
-          settings: {...state.settings},
-          headerData: [...state.headerData],
-          settingsSaved: false,
           data: [...state.data]
-        }
+        } as HeadersState
       } else if (action.actionType === "headerSaved") { 
 
-        var newHeaderData = merge(state.headerData, action.securityHeader);
+        var newHeaderData = merge(state.data, action.securityHeader);
 
         return {
           ...state,
+          useHeadersUI: state.useHeadersUI,
           saving: false,
-          settings: {...state.settings},
-          settingsSaved: true,
-          headerData: [...newHeaderData],
-          data: [...state.data]
-        }
+          data: [...newHeaderData]
+        } as HeadersState
     } else if (action.actionType === "headerLoad") { 
       loadRequest(action.dispatcher);
 
       return {
         ...state,
         loading: true,
-        settings: {...state.settings},
-        headerData: [...state.headerData],
         data: [...state.data]
-      }
+      } as HeadersState
     } else if (action.actionType === "headerLoaded") { 
 
       return {
         ...state,
-        useHeadersUI: action.useHeadersUI || state.useHeadersUI,
+        useHeadersUI: (action.state as HeadersState).useHeadersUI || state.useHeadersUI,
         loading: false,
-        settings: {...state.settings},
-        headerData: [...action.securityHeaders || state.headerData],
-        data: [...state.data]
-      }
+        data: [...(action.state as HeadersState).data || state.data]
+      } as HeadersState
     } 
 
     return state;
@@ -74,8 +65,13 @@ export const headerAppReducer = (state : ApplicationState, action: HeaderAction)
           .then((r) =>
           {
             if (r.status === 200) {
-
-                dispatcher({actionType: "headerLoaded", useHeadersUI: r.data.useHeadersUI, securityHeaders : r.data.headers});
+                dispatcher({
+                  actionType: "headerLoaded", 
+                  state: {
+                    useHeadersUI: r.data.useHeadersUI,
+                    data: r.data.headers
+                  } as HeadersState
+                });
             }
           })
           .catch((e) => {

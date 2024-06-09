@@ -1,19 +1,17 @@
 import React, { useState, useMemo } from 'react';
-import { Dialog, GridCell, GridRow } from "@episerver/ui-framework";
 
 import { CspPolicy, CspSandboxPolicy, PolicyOptions, SandboxOptions, SchemaSource } from '../types/types';
 import { CspSandboxOptions } from '../CspSandboxOptions';
 import { getSandboxOptionsDisplay } from '../helpers';
+import { Flex, Modal } from 'antd';
 
 type Props = {  
     isOpen: boolean,
     policy: CspSandboxPolicy,
-    onClose: (e: any, callback: any) => void
+    onClose: () => void
 }
 
 export function EditSandboxCspItem(props: Props) {
-
-    const [isOpen, setIsOpen] = useState(props.isOpen);
 
     const [policy, setPolicy] = useState(props.policy);
     
@@ -31,32 +29,42 @@ export function EditSandboxCspItem(props: Props) {
         setPolicy(newPolicy);
     }
 
+    const handleOk = () => {
+        //setConfirmLoading(true);
+        //formRef.current?.RequestSave();
+        props.onClose();
+    };
+    
+    const handleCancel = () => {
+        props.onClose();
+    };
+
     const calculatedPolicy = useMemo(() => {
         return getSandboxOptionsDisplay(policy);
     }, [policy.sandboxOptions,value]);
 
     return(
-        <Dialog className="editDialog" open={isOpen}
+        <Modal
+            destroyOnClose
             title={title}
-            dismissLabel="Cancel"
-            confirmLabel="OK"
-            enableConfirm={true}
-            onInteraction={(e) => props.onClose(e, () => {
-                return policy;
-            })}>
-                <GridRow>
-                    <GridCell span={12}>
+            open={props.isOpen}
+            onOk={handleOk}
+            //confirmLoading={confirmLoading}
+            onCancel={handleCancel}
+            width={"75vw"}
+            >
+                <Flex vertical>
+                    <div>
                         <h3>{policy.policyName}</h3>
                         <div className="summary" dangerouslySetInnerHTML={{__html: policy.summaryText}}></div>
-                    </GridCell>
+                    </div>
 
-                    <GridCell span={12}>
+                    <div>
                         <CspSandboxOptions options={policy.sandboxOptions} update={setSandboxOptions}></CspSandboxOptions>
-                        <pre>{calculatedPolicy}</pre>
-                    </GridCell>
-
-                </GridRow>
-        </Dialog>
+                        <pre className='summary'>{calculatedPolicy}</pre>
+                    </div>
+                </Flex>
+        </Modal>
     )
 }
 

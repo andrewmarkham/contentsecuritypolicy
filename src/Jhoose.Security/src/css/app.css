@@ -1,3 +1,15 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: rgba(0, 0, 0, 0.88);
+    font-size: 14px;
+    word-break: break-word;
+}
+
+main {
+    padding: 0px 15px 5px 15px;
+    margin-bottom: 2rem;
+}
+
 fieldset {
     border-radius: 4px;
     border-color: rgba(0,0,0,0.6);
@@ -8,27 +20,6 @@ fieldset {
 
 .fullwidth {
     width: 100% !important;
-}
-
-.toaster {
-    position: absolute;
-    bottom: 0;
-    border: 1px solid;
-    padding: 1rem;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    left: 50%;
-    
-    transform: translate(-50%, -50%);
-    border-radius: 4px;
-    background-color: #606060;
-    border-color: #606060;
-    
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-}
-
-.toaster .mdc-typography--headline4 {
-    color: white !important;
 }
 
 .wide-text {
@@ -59,17 +50,14 @@ fieldset {
     min-width: 40vw;
 }
 
-pre {
+pre.summary {
     word-break: break-all; 
-word-wrap: break-word;
-white-space: pre;
-white-space: -moz-pre-wrap; 
-white-space: pre-wrap;
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: -moz-pre-wrap; 
+    white-space: pre-wrap;
 }
 
-.tab-container {
-    padding: 10px 10px 10px 10px;
-}
 
 div.title {
     padding: 10px;
@@ -101,4 +89,11 @@ div.notenabled {
 
 .bold {
     font-weight: bold;
+}
+
+.toolBar {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
 }

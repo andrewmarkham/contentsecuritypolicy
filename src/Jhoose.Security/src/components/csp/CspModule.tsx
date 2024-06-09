@@ -1,54 +1,41 @@
 
-import React,  { useEffect, useState } from 'react';
-import { TabBar, Tab} from "@episerver/ui-framework";
+import React from 'react';
+
+import { Tabs, Typography } from 'antd';
+import type { TabsProps } from 'antd';
 
 import {CspDataGrid} from './CspDataGrid';
 import {CspSettings} from './CspSettings';
-import {TabContainer} from '../tabContainer';
 import { ApiAccess } from './ApiAccess';
-import { CspPolicy, CspSandboxPolicy, SecuritySettings } from './types/types';
 
-type Props = {
-    data: Array<CspPolicy|CspSandboxPolicy>,
-    settings: SecuritySettings,
-    save: (data: CspPolicy) => void,
-    saveSettings: (settings: SecuritySettings) => void,
-    setTitle: (title: string) => void,
-    disabled: boolean,
-    settingsSaved: boolean
+export function CspModule() {
 
-}
-export function CspModule(props: Props) {
+    const { Title } = Typography;
 
-    var [activeIndex, setActiveIndex] = useState(0);
-
-    useEffect(() => {
-        props.setTitle("Content Security Policy")
-    })
-
+    const items: TabsProps['items'] = [
+        {
+          key: '1',
+          label: 'Content Security Policy',
+          children: <CspDataGrid />,
+        },
+        {
+          key: '2',
+          label: 'Settings',
+          children: <CspSettings /> ,
+        },
+        {
+          key: '3',
+          label: 'Api Access',
+          children: <ApiAccess  />,
+        }
+      ];
     return(
         <>
-            <TabBar
-                activeTabIndex={activeIndex}
-                onActivate={evt => setActiveIndex(evt.detail.index)}>
-                <Tab>Content Security Policy</Tab>
-                <Tab>Settings</Tab>
-                <Tab>Api Access</Tab>
-            </TabBar>
-            
-            <TabContainer index={0} activeIndex={activeIndex}>
-                <CspDataGrid data={props.data} save={props.save} disabled={props.disabled} />
-            </TabContainer>
-            <TabContainer index={1} activeIndex={activeIndex}>
-                <CspSettings settings={props.settings} 
-                        isDirty={!props.settingsSaved}
-                        save={props.saveSettings} 
-                        disabled={props.disabled}>
-                </CspSettings>
-            </TabContainer>
-            <TabContainer index={2} activeIndex={activeIndex}>
-                <ApiAccess settings={props.settings} handleUpdate={props.saveSettings}></ApiAccess>
-            </TabContainer>
+            <div className="title">
+              <Title level={2}>Content Security Policy</Title>
+              <p>&nbsp;</p>
+            </div>
+            <Tabs defaultActiveKey="1" items={items} />
         </>
 
     );

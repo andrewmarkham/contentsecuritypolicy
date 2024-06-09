@@ -1,66 +1,18 @@
-import React, { useEffect, useState } from "react";
-import {
-  Card,
-  CardContentArea,
-  ExposedDropdownMenu,
-  TextField,
-  GridRow,
-  GridCell,
-  Typography,
-  TextButton,
-  CardActions,
-  CardActionButtons,
-} from "@episerver/ui-framework";
-import { SecuritySettings } from "./types/types";
+import React from "react";
 
-type Props = {  
-  settings: SecuritySettings,
-  isDirty: boolean,
-  disabled: boolean,
-  save: (settings: SecuritySettings) => void
-};
+import { SettingsForm } from "./SettingsForm";
 
-export function CspSettings(props: Props) {
-  const [settings, setSettings] = useState(props.settings);
-
-  const [isDirty, setIsDirty] = useState(props.isDirty);
-
-  const options = [
-    { label: "On", value: "on" },
-    { label: "Off", value: "off" },
-    { label: "Report Only", value: "report" },
-  ];
-
-  useEffect(() => {
-    setIsDirty(props.isDirty);
-  }, [props.isDirty]);
-
-  function setSettingsValue(key: string, value: string) {
-    setIsDirty(true);
-
-    var newSetting = { ...settings };
-
-    switch (key) {
-      case "mode":
-        newSetting.mode = value;
-        break;
-
-      case "reporting":
-        newSetting.reportingUrl = value;
-        break;
-
-      case "reportto":
-        newSetting.reportToUrl = value;
-        break;
-      default:
-        break;
-    }
-
-    setSettings(newSetting);
-  }
+export function CspSettings() {
 
   return (
     <>
+      <SettingsForm />
+    </>
+  );
+}
+
+{/*
+
       <Card header="Global Settings">
         <CardContentArea>
           <GridRow>
@@ -71,7 +23,7 @@ export function CspSettings(props: Props) {
               <ExposedDropdownMenu
                 label="Mode"
                 options={options}
-                value={settings.mode}
+                value={state.settings.settings.mode}
                 onValueChange={(value) => {
                   setSettingsValue("mode", value);
                 }}
@@ -106,7 +58,7 @@ export function CspSettings(props: Props) {
                 className="wide-text"
                 label="Endpoint Url (report-uri)"
                 outlined={true}
-                value={settings.reportingUrl}
+                value={state.settings.settings.reportingUrl}
                 onChange={(e) => {
                   setSettingsValue("reporting", e.currentTarget.value);
                 }}
@@ -119,7 +71,7 @@ export function CspSettings(props: Props) {
                 className="wide-text"
                 label="Endpoint Url (report-to)"
                 outlined={true}
-                value={settings.reportToUrl}
+                value={state.settings.settings.reportToUrl}
                 onChange={(e) => {
                   setSettingsValue("reportto", e.currentTarget.value);
                 }}
@@ -134,7 +86,7 @@ export function CspSettings(props: Props) {
               disabled={!isDirty}
               contained={true}
               onClick={(e) => {
-                props.save(settings);
+                save({} as SecuritySettings);
               }}
             >
               Update
@@ -142,7 +94,4 @@ export function CspSettings(props: Props) {
           </CardActionButtons>
         </CardActions>
       </Card>
-    </>
-  );
-}
-
+*/}

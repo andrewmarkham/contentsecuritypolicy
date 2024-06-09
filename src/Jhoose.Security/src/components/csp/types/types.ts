@@ -57,3 +57,7 @@ export type CspPolicy = {
 export type CspSandboxPolicy = Omit<CspPolicy, "schemaSource" | "options"> & {
     sandboxOptions: SandboxOptions
 }
+
+export interface RefForm {
+    RequestSave: () => void
+  }

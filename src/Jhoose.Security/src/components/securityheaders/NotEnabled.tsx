@@ -1,20 +1,14 @@
 import React, { useEffect } from 'react';
-import {Typography} from "@episerver/ui-framework";
+import { Typography } from "antd";
 
-type Props = { 
-    setTitle: (title: string) => void
- }
+export function NotEnabled() {
 
-export function NotEnabled(props: Props) {
-
-    useEffect(() => {
-        props.setTitle("Security Headers")
-    })
+    const { Title } = Typography;
 
     return (
 
         <div className='notenabled'>
-            <Typography use="headline3">Security Headers Admin screen is not enabled, please enable in the startup options.</Typography>
+            <Title level={3}>Security Headers Admin screen is not enabled, please enable in the startup options.</Title>
         </div>
     );
 }

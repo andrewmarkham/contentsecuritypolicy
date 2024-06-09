@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { IconButton, CancelIcon, CheckIcon, TextField } from "@episerver/ui-framework";
+
+import { Button, Input } from 'antd';
+import {CloseCircleFilled, CheckCircleFilled } from '@ant-design/icons';
 
 type Props = {
     item: string,
@@ -18,8 +20,6 @@ export function WebHookInlineEdit(props: Props) {
 
         if (res == null)
             return false;
-
-
         else
             return true;
     }
@@ -44,18 +44,17 @@ export function WebHookInlineEdit(props: Props) {
     }
 
     return (
-        <>
-            <TextField
+        <div>
+            <Input
                 className="wide-text"
-                outlined
                 defaultValue={item}
-                invalid={hasError}
+                status={hasError ? '' : 'error'}
                 required={true}
                 type="url"
                 onChange={(e) => { setNewValue(e.target.value); }} />
 
-            <IconButton title="Update" className='iconButton' icon={<CheckIcon />} onClick={(e) => handleUpdate('UPDATE', newValue)} />
-            <IconButton title="Cancel" className='iconButton' icon={<CancelIcon />} onClick={() => handleUpdate('CANCEL', '')} />
-        </>
+            <Button title="Update" className='iconButton' icon={<CheckCircleFilled />} onClick={(e) => handleUpdate('UPDATE', newValue)}>Update</Button>
+            <Button title="Cancel" className='iconButton' icon={<CloseCircleFilled />} onClick={() => handleUpdate('CANCEL', '')}>Cancel</Button>
+        </div>
     );
 }

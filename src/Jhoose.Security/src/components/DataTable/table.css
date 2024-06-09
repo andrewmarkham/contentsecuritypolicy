@@ -1,0 +1,64 @@
+div.table {
+    display:flex;
+    flex-direction:column;
+
+    border: 1px solid #b8b8b8;
+}
+
+div.table div.row {
+    display:flex;
+    flex-direction:row;
+    align-items: stretch;
+
+    border-bottom: 1px solid #b8b8b8;
+
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+div.table div.row:hover {
+    background-color: rgb(240, 240, 240);
+}
+
+div.table div.header:hover {
+    background-color: #d2d1d1;
+}
+
+div.table div.row:last-child {
+    border-bottom: none;
+}
+
+div.table div.cell {
+    padding: 10px 5px;
+    flex-grow: 1;
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+}
+
+div.table div.fixedCell {
+    /*border: 1px solid #6016d0;*/
+    padding: 10px 5px;
+    vertical-align: middle;
+    align-self: center;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #d2d1d1;
+    font-weight: bold;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+    justify-content: flex-end;
+}
+
+.center {
+    text-align: center;
+    justify-self: center;
+}

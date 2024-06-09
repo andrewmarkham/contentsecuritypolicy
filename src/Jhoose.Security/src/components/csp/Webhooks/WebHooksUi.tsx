@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import {
-    Typography,
-    DataTable, DataTableContent, DataTableHeaderRow, DataTableColumnHeaderCell, DataTableBody} from "@episerver/ui-framework";
+
+import { Typography } from 'antd';
+
 import { WebHookItem } from "./WebHookItem";
 import { WebHookAdd } from "./WebHookAdd";
+import { Table } from "../../DataTable/Table";
+import { Cell } from "../../DataTable/Cell";
+import { Header } from "../../DataTable/Header";
 
 
 type Props = {
@@ -12,7 +15,10 @@ type Props = {
 }
 
 export function WebHooksUi(props: Props) {
-    const [webhookUrls, setWebhookUrls] = useState(props.webhookUrls);
+
+    const { Title, Paragraph} = Typography;
+
+    const [webhookUrls, setWebhookUrls] = useState<Array<string>>(props.webhookUrls);
     const [isAddOpen, setIsAddOpen] = useState(false);
 
     function handleUpdate(index: number, value: string) {
@@ -26,8 +32,8 @@ export function WebHooksUi(props: Props) {
     function handleDelete(index: number) {
         var newWebhookUrls = webhookUrls.splice(index, 1);
 
-        props.handleWebhookUpdate(newWebhookUrls);
-        setWebhookUrls(newWebhookUrls);
+        props.handleWebhookUpdate(webhookUrls);
+        setWebhookUrls(webhookUrls);
         setIsAddOpen(false);
     }
 
@@ -38,27 +44,27 @@ export function WebHooksUi(props: Props) {
         setIsAddOpen(true);
     }
 
+    const columns = [
+        {
+          title: 'Webhook Url',
+          dataIndex: 'name',
+          key: 'name',
+        }
+      ];
+
     return (
         <>
             <div className="tab-container">
-                <Typography use="headline3">
-                    <h3>Webhooks</h3>
-                </Typography>
-                <Typography use="body1">
-                    <p>Register webhooks to recieve notification to any updates to the security headers.</p>
-                </Typography>
-                <DataTable>
-                    <DataTableContent>
-                        <DataTableHeaderRow>
-                            <DataTableColumnHeaderCell>
-                                Webhook Url
-                            </DataTableColumnHeaderCell>
-                            <DataTableColumnHeaderCell>
-                                &nbsp;
-                            </DataTableColumnHeaderCell>
-                        </DataTableHeaderRow>
+                <Title level={3}>Webhooks</Title>
+                <Paragraph>
+                    Register webhooks to recieve notification to any updates to the security headers.
+                </Paragraph>
 
-                        <DataTableBody>
+                <Table>
+                        <Header>
+                            <Cell>Webhook Url</Cell>
+                            <Cell width="200px">&nbsp;</Cell>
+                        </Header>
                             {webhookUrls?.map((w: string, index: number) => {
                                 return <WebHookItem
                                     key={index}
@@ -69,9 +75,7 @@ export function WebHooksUi(props: Props) {
                                     handleUpdate={handleUpdate}
                                     handleDelete={handleDelete} />;
                             })}
-                        </DataTableBody>
-                    </DataTableContent>
-                </DataTable>
+                    </Table>
             </div>
             <WebHookAdd handleAdd={handleAdd} disabled={isAddOpen} />
         </>

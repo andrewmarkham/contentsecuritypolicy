@@ -1,7 +1,11 @@
 import React, { useMemo, useState } from "react";
-import { DataTableCell, DataTableRow, DeleteIcon, EditIcon, IconButton } from "@episerver/ui-framework";
+
 import { WebHookInlineEdit } from "./WebHookInlineEdit";
 import { WebHookInlineDelete } from "./WebHookInlineDelete";
+import { Cell } from "../../DataTable/Cell";
+import { Row } from "../../DataTable/Row";
+import { Button } from "antd";
+import {EditFilled, DeleteFilled } from '@ant-design/icons';
 
 type Props = {
     item: string,
@@ -37,20 +41,20 @@ export function WebHookItem(props: Props) {
     }
 
     return (
-        <DataTableRow key={index} rowId={index.toString()}>
-            <DataTableCell>
+        <Row key={index}>
+            <Cell>
                 {RenderCell()}
-            </DataTableCell>
+            </Cell>
 
-            <DataTableCell>
+            <Cell width="200px" align="right">
                 {showEditDelete ?
                     <>
-                        <IconButton disabled={props.isAddOpen} title="Edit" className='iconButton' icon={<EditIcon />} onClick={() => setIsEditOpen(true)} />
-                        <IconButton disabled={props.isAddOpen} title="Delete" className='iconButton' icon={<DeleteIcon />} onClick={() => setIsDeleteOpen(true)} />
+                        <Button disabled={props.isAddOpen} title="Edit" className='iconButton' icon={<EditFilled />} onClick={() => setIsEditOpen(true)}>Edit</Button>
+                        <Button disabled={props.isAddOpen} title="Delete" className='iconButton' icon={<DeleteFilled />} onClick={() => setIsDeleteOpen(true)}>Delete</Button>
                     </>
                     : <p>&nbsp;</p>}
-            </DataTableCell>
-        </DataTableRow>
+            </Cell>
+        </Row>
     );
 
     function RenderCell() {

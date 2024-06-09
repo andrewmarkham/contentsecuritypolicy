@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Checkbox, GridCell, GridRow } from "@episerver/ui-framework";
+import { Col, Row,Checkbox } from 'antd';
 import { SandboxOptions } from './types/types';
 
 type SandboxSummary = {
@@ -46,12 +46,12 @@ export function CspSandboxOptions(props: Props) {
     return (
     <fieldset>
         <legend>Options</legend>
-        <GridRow>
-            <GridCell span={12}>
+        <Row>
+            <Col span={12}>
                 <Checkbox checked={options.enabled} onChange={(e) => {
                     setPolicyValue("enabled");
                 }}>Enabled</Checkbox>
-            </GridCell>
+            </Col>
 
             <SandboxOptionsCell enabled={options.enabled} name="allowDownloads" value={options.allowDownloads} setPolicyValue={setPolicyValue} />
             <SandboxOptionsCell enabled={options.enabled} name="allowForms" value={options.allowForms} setPolicyValue={setPolicyValue} />
@@ -66,7 +66,7 @@ export function CspSandboxOptions(props: Props) {
             <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigation" value={options.allowTopNavigation} setPolicyValue={setPolicyValue} />
             <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigationByUserActivation" value={options.allowTopNavigationByUserActivation} setPolicyValue={setPolicyValue} />
             <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigationToCustomProtocols" value={options.allowTopNavigationToCustomProtocols} setPolicyValue={setPolicyValue} />         
-        </GridRow>
+        </Row>
             
     </fieldset>);
 }
@@ -82,10 +82,10 @@ function SandboxOptionsCell(props: SandboxOptionsCellProps) {
     var sumary = labels[props.name];
     return (
         
-        <GridCell span={3} key={props.name}>
+        <Col span={3} key={props.name}>
             <Checkbox title={sumary.descrption} disabled={!props.enabled} checked={props.value} onChange={(e) => {
                 props.setPolicyValue(props.name);
             }}>{sumary.label}</Checkbox>
-        </GridCell>
+        </Col>
     );
 }

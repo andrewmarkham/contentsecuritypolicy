@@ -1,6 +1,7 @@
 import React from "react";
-import { IconButton, CancelIcon, CheckIcon } from "@episerver/ui-framework";
 
+import { Button } from 'antd';
+import {CloseCircleFilled, CheckCircleFilled } from '@ant-design/icons';
 
 type Props = {
     item: string,
@@ -14,11 +15,11 @@ export function WebHookInlineDelete(props: Props) {
         props.handleDelete(action, index);
     }
     return (
-        <>
+        <div>
             <span className="italic bold">{item}</span> <span> - Are you sure you want to delete this webhook?</span>
 
-            <IconButton title="Delete" className='iconButton' icon={<CheckIcon />} onClick={() => handleDelete(true)} />
-            <IconButton title="Cancel" className='iconButton' icon={<CancelIcon />} onClick={() => handleDelete(false)} />
-        </>
+            <Button title="Delete" className='iconButton' icon={<CheckCircleFilled />} onClick={() => handleDelete(true)}>Delete</Button>
+            <Button title="Cancel" className='iconButton' icon={<CloseCircleFilled />} onClick={() => handleDelete(false)}>Cancel</Button>
+        </div>
     );
 }
