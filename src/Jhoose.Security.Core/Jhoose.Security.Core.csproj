@@ -46,7 +46,7 @@
 		<ReleaseVersion>2.3.0.0</ReleaseVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<LangVersion>latest</LangVersion>
+	 <LangVersion>12</LangVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
 		<LangVersion>latest</LangVersion>

@@ -4,6 +4,7 @@
 		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<Nullable>enable</Nullable>
+		 <LangVersion>12</LangVersion>
 		<PackageId>Jhoose.Security.Admin</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
