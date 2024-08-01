@@ -5,7 +5,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>12</LangVersion>
+
+    <RestoreSources>
+		  $(RestoreSources);
+		  https://api.nuget.org/v3/index.json;
+		  https://nuget.optimizely.com/feed/packages.svc;
+  	</RestoreSources>
+
   </PropertyGroup>
+
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
