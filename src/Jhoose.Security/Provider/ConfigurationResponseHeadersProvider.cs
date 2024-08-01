@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Jhoose.Security.Core.Configuration;
 using Jhoose.Security.Core.Models;
 using Microsoft.Extensions.Options;
 

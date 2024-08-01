@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { PolicyOptions } from './types/types';
-import { Col, Row,Checkbox } from 'antd';
+import { Checkbox, Flex } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox/Checkbox';
 
 type Props = {  
@@ -26,56 +26,47 @@ export function CspOptions(props: Props) {
 
     return (<fieldset>
         <legend>Options</legend>
-        <Row>
-            <Col span={12}>
-                <Checkbox checked={options.nonce} onChange={(e:CheckboxChangeEvent) => {
+        <Flex gap="large" vertical>
+            <div>
+                <Checkbox checked={options.none} onChange={(e:CheckboxChangeEvent) => {
                     setPolicyValue("none");
                 }}>None</Checkbox>
-            </Col>
-            <>
-            {!options.none &&
-                <>
-                    <Col span={3}>
-                        <Checkbox checked={options.wildcard} onChange={(e:CheckboxChangeEvent) => {
-                            setPolicyValue("wildcard");
-                        }}>Wildcard</Checkbox>
-                    </Col>
-                    <Col span={3}>
-                        <Checkbox checked={options.self} onChange={(e:CheckboxChangeEvent) => {
-                            setPolicyValue("self");
-                        }}>Self</Checkbox>
-                    </Col>
+            </div>
+            <Flex gap="large" wrap>
+                    <Checkbox disabled={options.none} checked={options.wildcard} onChange={() => {
+                        setPolicyValue("wildcard");
+                    }}>Wildcard</Checkbox>
+
+                    <Checkbox disabled={options.none} checked={options.self} onChange={() => {
+                        setPolicyValue("self");
+                    }}>Self</Checkbox>
+
                     {props.showScriptOptions &&
                     <>
-                    <Col span={3}>
-                        <Checkbox checked={options.nonce} onChange={(e:CheckboxChangeEvent) => {
+
+                        <Checkbox disabled={options.none} checked={options.nonce} onChange={() => {
                             setPolicyValue("nonce");
                         }}>Nonce</Checkbox>
-                    </Col>
-                    <Col span={3}>
-                        <Checkbox checked={options.unsafeEval} onChange={(e:CheckboxChangeEvent) => {
+ 
+                        <Checkbox disabled={options.none} checked={options.unsafeEval} onChange={() => {
                             setPolicyValue("unsafeEval");
                         }}>Unsafe Eval</Checkbox>
-                    </Col>
-                    <Col span={3}>
-                        <Checkbox disabled={options.none} checked={options.unsafeHashes} onChange={(e:CheckboxChangeEvent) => {
+
+                        <Checkbox disabled={options.none} checked={options.unsafeHashes} onChange={() => {
                             setPolicyValue("unsafeHashes");
                         }}>Unsafe Hashes</Checkbox>
-                    </Col>
-                    <Col span={3}>
-                        <Checkbox checked={options.unsafeInline} onChange={(e:CheckboxChangeEvent) => {
+
+                        <Checkbox disabled={options.none} checked={options.unsafeInline} onChange={(t) => {
                             setPolicyValue("unsafeInline");
                         }}>Unsafe Inline</Checkbox>
-                    </Col>
-                    <Col span={3}>
-                        <Checkbox checked={options.strictDynamic} onChange={(e:CheckboxChangeEvent) => {
+
+
+                        <Checkbox disabled={options.none} checked={options.strictDynamic} onChange={() => {
                             setPolicyValue("strictDynamic");
                         }}>Strict Dynamic</Checkbox>
-                    </Col>
-                    </>}
                 </>}
-            </>
-        </Row>
+            </Flex>
+        </Flex>
 
     </fieldset>);
 }

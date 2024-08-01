@@ -1,15 +1,28 @@
-
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Jhoose.Security.Core.Models.CSP
 {
+    public enum ReportingMode {
+        None = 0,
+        Local = 1,
+        External = 2
+    }
+
     public class CspSettings
     {
+        public CspSettings()
+        {
+            this.Mode = "off";
+            this.ReportingMode = ReportingMode.None;
+        }
+
         public Guid Id { get; set; }
         public string Mode { get; set; }
 
+        public ReportingMode ReportingMode {get;set;}
+        
         /// <summary>
         /// Used for the report-uri directive
         /// </summary>
@@ -23,9 +36,9 @@ namespace Jhoose.Security.Core.Models.CSP
         /// <summary>
         /// Urls that will be triggered when the settings change
         /// </summary>
-        public List<string>? WebhookUrls { get; set; } = new List<string>();
+        public List<string>? WebhookUrls { get; set; } = [];
 
-        public List<AuthenticationKey>? AuthenticationKeys { get; set; } = new List<AuthenticationKey>();
+        public List<AuthenticationKey>? AuthenticationKeys { get; set; } = [];
 
         [JsonIgnore]
         public bool HasReporting => !string.IsNullOrEmpty(this.ReportingUrl) | !string.IsNullOrEmpty(this.ReportToUrl);

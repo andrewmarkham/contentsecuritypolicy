@@ -10,6 +10,6 @@ namespace Jhoose.Security.Core.Models
 
         public override string Name => "Reporting-Endpoints";
 
-        public override string Value => $"csp-endpoint=\"{this.settings.ReportToUrl}\", default=\"{this.settings.ReportToUrl}\"";
+        public override string Value => $"csp-endpoint=\"{this.reportToUrl}\", default=\"{this.reportToUrl}\"";
     }
 }

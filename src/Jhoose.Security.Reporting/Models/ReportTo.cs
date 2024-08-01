@@ -12,18 +12,25 @@ namespace Jhoose.Security.Reporting.Models
             string type,
             string url,
             string userAgent,
-            ReportToBody body
+            ReportToBody body,
+            DateTime recievedAt 
         )
         {
             Age = age;
-            Type = type;
-            Url = url;
-            UserAgent = userAgent;
-            Body = body;
+                RecievedAt = recievedAt;
+                Type = type;
+                Url = url;
+                UserAgent = userAgent;
+                Body = body;
+                Browser = string.Empty;
+                Version = string.Empty;
+                OS = string.Empty;
         }
 
         [JsonPropertyName("age")]
         public int Age { get; }
+
+        public DateTime RecievedAt { get; set; }
 
         [JsonPropertyName("type")]
         public string Type { get; }
@@ -33,8 +40,16 @@ namespace Jhoose.Security.Reporting.Models
 
         [JsonPropertyName("user_agent")]
         public string UserAgent { get; set; }
+        public string Browser { get; set; }
+        public string Version { get; set; }
+        public string OS { get; set; }
+
+        public string Directive => Body.EffectiveDirective;
+
+        public string BlockedUri => Body.BlockedURL;
 
         [JsonPropertyName("body")]
         public ReportToBody Body { get; }
     }
 }
+

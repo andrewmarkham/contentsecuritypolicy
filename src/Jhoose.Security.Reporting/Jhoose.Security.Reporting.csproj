@@ -4,13 +4,32 @@
 		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="2.0.3" />
   </ItemGroup>
-</Project>
+
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+    <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
+		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+		<ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" PrivateAssets="all" />
+	</ItemGroup>
+</Project>  
+

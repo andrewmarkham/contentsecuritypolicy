@@ -8,13 +8,13 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_NO: 2.2.2.${{ github.run_number }}  
-  BUILD_NO_PRE: 2.2.2-rc.${{ github.run_number }} 
+  BUILD_NO: 2.3.0.${{ github.run_number }}  
+  BUILD_NO_PRE: 2.3.0-rc.${{ github.run_number }} 
 
 jobs:
   build:
 
-    runs-on: windows-2019
+    runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v3.3.0
@@ -28,10 +28,10 @@ jobs:
       working-directory: ./src/Jhoose.Security
       run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "GithubBuild" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
 
-    - name: Use Node.js 16.0.0
+    - name: Use Node.js 20.14.0
       uses: actions/setup-node@v3.6.0
       with:
-        node-version: 16.0.0  
+        node-version: 20.14.0  
 
     - name: Run node
       working-directory: ./src/Jhoose.Security

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Jhoose.Security.Reporting")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1becee7d137748fd72ca2e4ee6aea10d6f73f2cd")]
 [assembly: System.Reflection.AssemblyProductAttribute("Jhoose.Security.Reporting")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Jhoose.Security.Reporting")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

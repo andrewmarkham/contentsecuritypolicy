@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Col, Row,Checkbox } from 'antd';
+import { Checkbox, Flex } from 'antd';
 import { SchemaSource } from './types/types';
 
 type Props = {
+    disabled: boolean,
     schemaSource: SchemaSource,
     update: any
 
@@ -25,48 +26,40 @@ export function CspSchemaSources(props: Props) {
 
     return (<fieldset>
         <legend>Schema Source</legend>
-        <Row>
-            <Col span={3}>
-                <Checkbox checked={schemaSource.http} onChange={(e) => {
+        <Flex gap="large" wrap>
+
+                <Checkbox disabled={props.disabled} checked={schemaSource.http} onChange={(e) => {
                     setPolicyValue("http");
                 }}>http</Checkbox>
-            </Col>
-            <Col span={3}>
-                <Checkbox checked={schemaSource.https} onChange={(e) => {
+
+                <Checkbox disabled={props.disabled} checked={schemaSource.https} onChange={(e) => {
                     setPolicyValue("https");
                 }}>https</Checkbox>
-            </Col>
-            <Col span={3}>
-                <Checkbox checked={schemaSource.data} onChange={(e) => {
+
+                <Checkbox disabled={props.disabled} checked={schemaSource.data} onChange={(e) => {
                     setPolicyValue("data");
                 }}>data</Checkbox>
-            </Col>
-            <Col span={3}>
-                <Checkbox checked={schemaSource.mediastream} onChange={(e) => {
+
+                <Checkbox disabled={props.disabled} checked={schemaSource.mediastream} onChange={(e) => {
                     setPolicyValue("mediastream");
                 }}>mediastream</Checkbox>
-            </Col>
 
-            <Col span={3}>
-                <Checkbox checked={schemaSource.blob} onChange={(e) => {
+                <Checkbox disabled={props.disabled} checked={schemaSource.blob} onChange={(e) => {
                     setPolicyValue("blob");
                 }}>blob</Checkbox>
-            </Col>
-            <Col span={3}>
-                <Checkbox checked={schemaSource.filesystem} onChange={(e) => {
+
+                <Checkbox disabled={props.disabled} checked={schemaSource.filesystem} onChange={(e) => {
                     setPolicyValue("filesystem");
                 }}>filesystem</Checkbox>
-            </Col>
-            <Col span={3}>
-                <Checkbox checked={schemaSource.ws} onChange={(e) => {
+
+                <Checkbox disabled={props.disabled} checked={schemaSource.ws} onChange={(e) => {
                     setPolicyValue("ws");
                 }}>ws</Checkbox>
-            </Col>
-            <Col span={3}>
-                <Checkbox checked={schemaSource.wss} onChange={(e) => {
+
+                <Checkbox disabled={props.disabled} checked={schemaSource.wss} onChange={(e) => {
                     setPolicyValue("wss");
                 }}>wss</Checkbox>
-            </Col>
-        </Row>
+
+        </Flex>
     </fieldset>);
 }

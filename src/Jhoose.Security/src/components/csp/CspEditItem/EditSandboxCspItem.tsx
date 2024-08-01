@@ -1,9 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 
-import { CspPolicy, CspSandboxPolicy, PolicyOptions, SandboxOptions, SchemaSource } from '../types/types';
+import { CspSandboxPolicy, SandboxOptions } from '../types/types';
 import { CspSandboxOptions } from '../CspSandboxOptions';
 import { getSandboxOptionsDisplay } from '../helpers';
-import { Flex, Modal } from 'antd';
+import { Divider, Flex, Modal } from 'antd';
+import { AppContext } from '../../../context';
 
 type Props = {  
     isOpen: boolean,
@@ -14,8 +15,7 @@ type Props = {
 export function EditSandboxCspItem(props: Props) {
 
     const [policy, setPolicy] = useState(props.policy);
-    
-    const [value, setValue] = useState(policy.value);
+    const { dispatch } = useContext(AppContext);
 
     const title = `Edit Policy`;
 
@@ -30,8 +30,10 @@ export function EditSandboxCspItem(props: Props) {
     }
 
     const handleOk = () => {
-        //setConfirmLoading(true);
-        //formRef.current?.RequestSave();
+        dispatch({
+            cspPolicy: policy , 
+            actionType: "save", 
+            dispatcher: dispatch} );
         props.onClose();
     };
     
@@ -41,7 +43,7 @@ export function EditSandboxCspItem(props: Props) {
 
     const calculatedPolicy = useMemo(() => {
         return getSandboxOptionsDisplay(policy);
-    }, [policy.sandboxOptions,value]);
+    }, [policy.sandboxOptions]);
 
     return(
         <Modal
@@ -49,7 +51,6 @@ export function EditSandboxCspItem(props: Props) {
             title={title}
             open={props.isOpen}
             onOk={handleOk}
-            //confirmLoading={confirmLoading}
             onCancel={handleCancel}
             width={"75vw"}
             >
@@ -61,6 +62,7 @@ export function EditSandboxCspItem(props: Props) {
 
                     <div>
                         <CspSandboxOptions options={policy.sandboxOptions} update={setSandboxOptions}></CspSandboxOptions>
+                        <Divider orientation="left">Policy</Divider>
                         <pre className='summary'>{calculatedPolicy}</pre>
                     </div>
                 </Flex>

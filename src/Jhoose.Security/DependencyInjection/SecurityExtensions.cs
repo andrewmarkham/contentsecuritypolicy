@@ -23,10 +23,8 @@ using Microsoft.AspNetCore.Authorization;
 using EPiServer.Authorization;
 using Jhoose.Security.Webhooks;
 using EPiServer.ServiceLocation;
-using Jhoose.Security.Reporting;
-using Microsoft.AspNetCore.RateLimiting;
 
-using System.Threading.RateLimiting;
+using Jhoose.Security.Core.Configuration;
 
 namespace Jhoose.Security.DependencyInjection
 {
@@ -41,13 +39,11 @@ namespace Jhoose.Security.DependencyInjection
         {
             services.AddHostedService<InitialiseHostedService>();
 
+            services.Configure<JhooseSecurityOptions>(configuration.GetSection(JhooseSecurityOptions.JhooseSecurity));
+            
             if (options != null)
             {
-                services.Configure<JhooseSecurityOptions>(options);
-            }
-            else
-            {
-                services.Configure<JhooseSecurityOptions>(configuration.GetSection(JhooseSecurityOptions.JhooseSecurity));
+                services.PostConfigure<JhooseSecurityOptions>(options);
             }
 
             services.Configure<ProtectedModuleOptions>(m =>
@@ -99,22 +95,7 @@ namespace Jhoose.Security.DependencyInjection
             services.AddScoped<IWebhookNotifications, DefaultWebhookNotifications>();
 
             services.AddHttpClient("webhooks");
-
-            services.AddSingleton<IReportingRepository, ElasticSearchReportingRepository>();
-            services.AddControllers()
-                    .AddMvcOptions(o => o.InputFormatters.Add(new Reporting.Controllers.ProblemJsonFormatter()));
-
-#if NET7_0_OR_GREATER
-            services.AddRateLimiter(_ =>
-            {
-                _.AddFixedWindowLimiter("fixed",o => {
-                    o.PermitLimit = 100;
-                    o.QueueLimit = 100;
-                    o.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                    o.Window = TimeSpan.FromMinutes(1);
-                });
-            });
-#endif
+            
             return services;
         }
 
@@ -132,8 +113,6 @@ namespace Jhoose.Security.DependencyInjection
             {
                 applicationBuilder.UseHttpsRedirection();
             }
-
-            applicationBuilder.UseRateLimiter();
 
             return applicationBuilder;
         }

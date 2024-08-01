@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Row,Checkbox } from 'antd';
+import { Col, Row,Checkbox, Flex } from 'antd';
 import { SandboxOptions } from './types/types';
 
 type SandboxSummary = {
@@ -41,33 +41,31 @@ export function CspSandboxOptions(props: Props) {
         setOptions(newOptions);
         props.update(newOptions);
     };
-
-
+    
     return (
     <fieldset>
         <legend>Options</legend>
-        <Row>
-            <Col span={12}>
-                <Checkbox checked={options.enabled} onChange={(e) => {
-                    setPolicyValue("enabled");
-                }}>Enabled</Checkbox>
-            </Col>
+        <Flex gap="large" vertical>
+            <Checkbox checked={options.enabled} onChange={(e) => {
+                setPolicyValue("enabled");
+            }}>Enabled</Checkbox>
 
-            <SandboxOptionsCell enabled={options.enabled} name="allowDownloads" value={options.allowDownloads} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowForms" value={options.allowForms} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowModals" value={options.allowModals} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowOrientationLock" value={options.allowOrientationLock} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowPointerLock" value={options.allowPointerLock} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowPopups" value={options.allowPopups} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowPopupsToEscapeSandbox" value={options.allowPopupsToEscapeSandbox} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowPresentation" value={options.allowPresentation} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowSameOrigin" value={options.allowSameOrigin} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowScripts" value={options.allowScripts} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigation" value={options.allowTopNavigation} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigationByUserActivation" value={options.allowTopNavigationByUserActivation} setPolicyValue={setPolicyValue} />
-            <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigationToCustomProtocols" value={options.allowTopNavigationToCustomProtocols} setPolicyValue={setPolicyValue} />         
-        </Row>
-            
+            <Flex gap="large" wrap>
+                <SandboxOptionsCell enabled={options.enabled} name="allowDownloads" value={options.allowDownloads} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowForms" value={options.allowForms} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowModals" value={options.allowModals} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowOrientationLock" value={options.allowOrientationLock} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowPointerLock" value={options.allowPointerLock} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowPopups" value={options.allowPopups} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowPopupsToEscapeSandbox" value={options.allowPopupsToEscapeSandbox} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowPresentation" value={options.allowPresentation} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowSameOrigin" value={options.allowSameOrigin} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowScripts" value={options.allowScripts} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigation" value={options.allowTopNavigation} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigationByUserActivation" value={options.allowTopNavigationByUserActivation} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigationToCustomProtocols" value={options.allowTopNavigationToCustomProtocols} setPolicyValue={setPolicyValue} />         
+            </Flex>
+        </Flex>    
     </fieldset>);
 }
 
@@ -81,11 +79,8 @@ type SandboxOptionsCellProps = {
 function SandboxOptionsCell(props: SandboxOptionsCellProps) {
     var sumary = labels[props.name];
     return (
-        
-        <Col span={3} key={props.name}>
-            <Checkbox title={sumary.descrption} disabled={!props.enabled} checked={props.value} onChange={(e) => {
-                props.setPolicyValue(props.name);
-            }}>{sumary.label}</Checkbox>
-        </Col>
+        <Checkbox title={sumary.descrption} disabled={!props.enabled} checked={props.value} onChange={(e) => {
+            props.setPolicyValue(props.name);
+        }}>{sumary.label}</Checkbox>
     );
 }

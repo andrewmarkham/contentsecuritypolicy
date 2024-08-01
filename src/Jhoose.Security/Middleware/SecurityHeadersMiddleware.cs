@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
 using Jhoose.Security.Services;
+using Jhoose.Security.Core.Configuration;
 
 namespace Jhoose.Security.Middleware
 {
@@ -14,7 +15,7 @@ namespace Jhoose.Security.Middleware
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService, IOptions<JhooseSecurityOptions> options)
+        public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService)
         {
             if (!context.Response.HasStarted)
             {

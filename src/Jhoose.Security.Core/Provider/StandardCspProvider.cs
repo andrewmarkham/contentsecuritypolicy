@@ -38,7 +38,7 @@ namespace Jhoose.Security.Core.Provider
             var policies = this.policyRepository.List();
             var settings = this.Settings;
 
-            if (!string.IsNullOrEmpty(settings.ReportToUrl))
+            if (!(settings.Mode == "off" || settings.ReportingMode == ReportingMode.None))
             {
                 yield return new ReportingEndpointHeader(settings);
 

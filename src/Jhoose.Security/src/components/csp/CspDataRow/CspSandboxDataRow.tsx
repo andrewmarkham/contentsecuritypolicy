@@ -4,6 +4,7 @@ import { EditSandboxCspItem } from '../CspEditItem/EditSandboxCspItem';
 import { getSandboxOptionsDisplay } from '../helpers';
 import { Cell } from "../../DataTable/Cell";
 import { Row } from "../../DataTable/Row";
+import { MutedOutlined } from '@ant-design/icons';
 
 type Props = {  
     row: CspSandboxPolicy,
@@ -35,6 +36,9 @@ export function CspSandboxDataRow(props: Props) {
                     onClose={() => {
                         setIsEditOpen(false);
                     }}/>
+            </Cell>
+            <Cell width="100px" align='right'>
+                {policy.reportOnly ? <span title="Configured as report only"><MutedOutlined /></span> : <></>}
             </Cell>
         </Row>
         </>

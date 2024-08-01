@@ -4,7 +4,7 @@ import { RowProps } from "./types";
 
 export function Row(props: PropsWithChildren<RowProps>) {
     return (
-        <div className="row">
+        <div className="jrow">
             {props.children}
         </div>
     );

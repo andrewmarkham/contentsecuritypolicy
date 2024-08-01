@@ -86,7 +86,7 @@ export const cspAppReducer = (state : CspState, action: CspAction): CspState  =>
           });
   }
   
-  function saveDataRequest(dispatcher?: Dispatcher, policyData? : CspPolicy) {
+  function saveDataRequest(dispatcher?: Dispatcher, policyData? : CspPolicy | CspSandboxPolicy) {
     if (!dispatcher) return;
     
     if (!policyData) {

@@ -8,8 +8,10 @@ import { Row } from '../DataTable/Row';
 import { Cell } from '../DataTable/Cell';
 import { Header } from '../DataTable/Header';
 import { AppContext } from '../../context';
-import { Typography } from 'antd';
+import { Typography, message } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
+
+import { Toaster } from '../toaster';
 
 type Props = {
     data: SecurityHeader[],
@@ -23,6 +25,8 @@ export function SecurityHeaders() {
     const { Title } = Typography;
     
     const dummy = { "id": "-1", "name": "", "enabled": true, "mode": 0, "value": "" };
+
+    const [messageApi, contextHolder] = message.useMessage();
 
     const [currentHeader, setCurrentHeader] = useState<SecurityHeader>(dummy);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -65,9 +69,9 @@ export function SecurityHeaders() {
         dispatch({state: state.headers, actionType: "headerLoad", dispatcher: dispatch })
     }, []);
     
-
     return (
         <>
+        <Toaster show={state.headers.loading || state.headers.saving} message={state.headers.loading ? "Loading..." : "Saving..."} />
         <div className="title">
             <Title level={2}>Security Headers</Title>
             <p>&nbsp;</p>
@@ -77,7 +81,7 @@ export function SecurityHeaders() {
                         <Header>
                             <Cell width="300px">Header</Cell>
                             <Cell>Configuration</Cell>
-                            <Cell width="100px">Enabled</Cell>
+                            <Cell width="100px" align='right'>Enabled</Cell>
                         </Header>
 
                         {state.headers.data?.map((r : SecurityHeader) => {
@@ -85,24 +89,12 @@ export function SecurityHeaders() {
                                 <Row key={r.id}>
                                     <Cell width="300px">
                                         <button className="linkButton" onClick={() => {
-                                            
-                                            //setCurrentHeader(r);
                                             setIsModalOpen(true);
                                             setCurrentHeader(r);
-
-                                            /*
-                                            setTimeout(() => 
-                                                {
-                                                    setIsModalOpen(true);
-                                                },
-                                                500);
-                                            */
-                                            
-                                            //console.log(r.name, isModalOpen)
                                         }}>{r.name}</button>
                                     </Cell>
                                     <Cell>{getValue(r)}</Cell>
-                                    <Cell width="100px"> {r.enabled ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <></>} </Cell>
+                                    <Cell width="100px" align='right'> {r.enabled ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <></>} </Cell>
                                 </Row>
                             );
                         })}

@@ -5,7 +5,8 @@ export type AuthenticationKey = {
 }
 
 export type SecuritySettings = {
-    mode: string,
+    mode: "on"|"off"|"report",
+    reportingMode: 0 | 1 | 2,
     reportingUrl: string,
     reportToUrl: string,
     webhookUrls: string[],

@@ -5,6 +5,7 @@ import { EditDefaultCspItem } from '../CspEditItem/EditDefaultCspItem';
 import { getPolicyOptionsDisplay, getSchemaSourceDisplay } from '../helpers';
 import { Cell } from "../../DataTable/Cell";
 import { Row } from "../../DataTable/Row";
+import { MutedOutlined } from '@ant-design/icons';
 
 type Props = {  
     row: CspPolicy,
@@ -45,7 +46,9 @@ export function CspDataRow(props: Props) {
                     }}/>
                 </>
             </Cell>
-    
+            <Cell width="100px" align='right'>
+                {policy.reportOnly ? <span title="Configured as report only"><MutedOutlined /></span> : <></>}
+            </Cell>
         </Row>
         </>
     );

@@ -34,6 +34,8 @@
 		2.2.0 - API Access to Security headers
 		2.2.1 - Bug with the module not working when edit segment is different to the default 'episerver'.
 		2.2.2 - Bug with response header cache not being cleared after a change.
+		2.3.0 - UX Improvements 
+		        New Reporting dashboard
 	  </ReleaseNotes>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<RestoreSources>
@@ -41,7 +43,7 @@
 		https://api.nuget.org/v3/index.json;
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
-		<ReleaseVersion>2.2.2.0</ReleaseVersion>
+		<ReleaseVersion>2.3.0.0</ReleaseVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<LangVersion>latest</LangVersion>

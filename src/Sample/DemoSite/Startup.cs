@@ -16,6 +16,10 @@ using EPiServer.Shell.Modules;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using Jhoose.Security.Reporting.DependencyInjection;
+using System.Collections.Generic;
+using Jhoose.Security.Reporting.Database;
+using Jhoose.Security.Core.Configuration;
 
 namespace DemoSite
 {
@@ -53,7 +57,11 @@ namespace DemoSite
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
-            services.AddJhooseSecurity(_configuration, (o) =>
+            var jhooseOptions = new JhooseSecurityOptions();
+
+            _configuration.GetSection(JhooseSecurityOptions.JhooseSecurity).Bind(jhooseOptions);
+
+            services.AddJhooseSecurity(_configuration,(o) =>
             {
                 o.UseHeadersUI = true;
                 o.ExclusionPaths.Add("/ui");
@@ -62,6 +70,9 @@ namespace DemoSite
             {
                 p.RequireRole("CspAdmin");
             });
+
+            //move into main jhoose
+            services.AddJhooseSecurityCoreReporting();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -97,6 +108,9 @@ namespace DemoSite
             app.UseAuthorization();
 
             app.UseJhooseSecurity();
+
+            //move into main jhoose
+            app.UseJhooseSecurityReporting();
 
             app.UseEndpoints(endpoints =>
             {

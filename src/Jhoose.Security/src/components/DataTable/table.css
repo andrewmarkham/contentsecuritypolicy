@@ -1,11 +1,11 @@
-div.table {
+div.jtable {
     display:flex;
     flex-direction:column;
 
     border: 1px solid #b8b8b8;
 }
 
-div.table div.row {
+div.jtable div.jrow {
     display:flex;
     flex-direction:row;
     align-items: stretch;
@@ -16,19 +16,19 @@ div.table div.row {
     padding-right: 5px;
 }
 
-div.table div.row:hover {
+div.jtable div.row:hover {
     background-color: rgb(240, 240, 240);
 }
 
-div.table div.header:hover {
+div.jtable div.header:hover {
     background-color: #d2d1d1;
 }
 
-div.table div.row:last-child {
+div.jtable div.jrow:last-child {
     border-bottom: none;
 }
 
-div.table div.cell {
+div.jtable div.cell {
     padding: 10px 5px;
     flex-grow: 1;
     display: flex;
@@ -36,8 +36,7 @@ div.table div.cell {
     flex-direction: column;
 }
 
-div.table div.fixedCell {
-    /*border: 1px solid #6016d0;*/
+div.jtable div.fixedCell {
     padding: 10px 5px;
     vertical-align: middle;
     align-self: center;

@@ -1,11 +1,14 @@
-import React, { useState, useMemo, } from 'react';
+import React, { useState, useMemo, useContext, } from 'react';
 
 import { CspOptions } from '../CspOptions';
 
 import { CspSchemaSources } from '../CspSchemaSources';
 import { CspPolicy, PolicyOptions, SchemaSource } from '../types/types';
 import { getPolicyOptionsDisplay, getSchemaSourceDisplay, isScriptPolicy as _isScriptPolicy } from '../helpers';
-import { Checkbox, Flex, Input, Modal } from 'antd';
+import { Checkbox, Divider, Flex, Input, Modal } from 'antd';
+import { AppContext } from '../../../context';
+import { CspState } from '../../../types';
+import { CspAction } from '../../../reducers/types';
 
 
 type Props = {  
@@ -16,8 +19,6 @@ type Props = {
 
 export function EditDefaultCspItem(props: Props) {
 
-    const [isOpen, setIsOpen] = useState(props.isOpen);
-
     const [policy, setPolicy] = useState(props.policy);
     
     const [value, setValue] = useState(policy.value);
@@ -25,6 +26,8 @@ export function EditDefaultCspItem(props: Props) {
     const title = `Edit Policy`;
 
     const { TextArea } = Input;
+
+    const { dispatch } = useContext(AppContext);
 
     function setOptions(options: PolicyOptions){
         var newPolicy : CspPolicy = {
@@ -66,8 +69,11 @@ export function EditDefaultCspItem(props: Props) {
     }
 
     const handleOk = () => {
-        //setConfirmLoading(true);
-        //formRef.current?.RequestSave();
+        dispatch({
+            cspPolicy: policy , 
+            actionType: "save", 
+            dispatcher: dispatch} );
+
         props.onClose();
     };
     
@@ -114,7 +120,10 @@ export function EditDefaultCspItem(props: Props) {
                             ></CspOptions>
                     </div>
                     <div >
-                        <CspSchemaSources schemaSource={policy.schemaSource} update={setSchemaSource}></CspSchemaSources>
+                        <CspSchemaSources 
+                            disabled={policy.options?.none ?? true} 
+                            schemaSource={policy.schemaSource} 
+                            update={setSchemaSource}></CspSchemaSources>
                     </div>
 
                     <div>
@@ -125,6 +134,7 @@ export function EditDefaultCspItem(props: Props) {
                             onChange={(e) => {
                                 setPolicyValue("value",e.currentTarget.value);
                             }} />
+                        <Divider orientation="left">Policy</Divider>
                         <pre className='summary'>{calculatedPolicy}</pre>
                     </div>
             </Flex>

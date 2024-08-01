@@ -5,9 +5,14 @@ using Jhoose.Security.Reporting.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.AspNetCore.RateLimiting;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MyCSharp.HttpUserAgentParser.Providers;
+
+#if NET7_0_OR_GREATER
+using Microsoft.AspNetCore.RateLimiting;
+#endif
 
 namespace Jhoose.Security.Reporting.Controllers
 {
@@ -20,10 +25,9 @@ namespace Jhoose.Security.Reporting.Controllers
     {
         private readonly IReportingRepository reportingRepository;
 
-        public ReportingController(IReportingRepository reportingRepository)
+        public ReportingController(IReportingRepositoryFactory reportingRepositoryFactory)
         {
-            string g= "test";
-            this.reportingRepository = reportingRepository;
+            this.reportingRepository = reportingRepositoryFactory.GetReportingRepository() ?? throw new ArgumentNullException(nameof(reportingRepository));
         }
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ReportTo reportTo)
@@ -37,7 +41,6 @@ namespace Jhoose.Security.Reporting.Controllers
         public IActionResult Options([FromHeader(Name = "Access-Control-Request-Method")] string requestMethod, 
                                     [FromHeader(Name = "Access-Control-Request-Headers")] string requestHeaders)
         {
-            var a = this.Request;
             Response.Headers.Add("Access-Control-Allow-Origin", new[] { (string?)Request.Headers["Origin"] });
             Response.Headers.Add("Access-Control-Allow-Methods", "POST, OPTIONS");
             Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

@@ -34,6 +34,8 @@
 			2.2.0 - API Access to Security headers
 			2.2.1 - Bug with the module not working when edit segment is different to the default 'episerver'.
 			2.2.2 - Bug with response header cache not being cleared after a change.
+			2.3.0 - UX Improvements
+			        New reporting Dashboard
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
@@ -47,7 +49,7 @@
       		https://nuget.pkg.github.com/andrewmarkham/index.json
 	  	</RestoreSources>
 		<Configurations>Debug;Release;PreRelease</Configurations>
-		<ReleaseVersion>2.2.2.0</ReleaseVersion>
+		<ReleaseVersion>2.3.0.0</ReleaseVersion>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net6.0|AnyCPU'">
 		<DebugType>portable</DebugType>
@@ -69,7 +71,7 @@
 		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0" />
 		<PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

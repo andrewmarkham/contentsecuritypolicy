@@ -11,3 +11,6 @@
 /Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net8.0/Jhoose.Security.Reporting.pdb
 /Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net8.0/ref/Jhoose.Security.Reporting.dll
 /Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net8.0/Jhoose.Security.Reporting.csproj.AssemblyReference.cache
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/bin/Debug/net8.0/Jhoose.Security.Core.dll
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/bin/Debug/net8.0/Jhoose.Security.Core.pdb
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net8.0/Jhoose.Security.Reporting.csproj.CopyComplete

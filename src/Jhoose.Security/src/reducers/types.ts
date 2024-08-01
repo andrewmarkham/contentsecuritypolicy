@@ -1,4 +1,4 @@
-import { CspPolicy, SecuritySettings } from "../components/csp/types/types";
+import { CspPolicy, CspSandboxPolicy, SecuritySettings } from "../components/csp/types/types";
 import { SecurityHeader } from "../components/securityheaders/types/securityHeader";
 import { CspState, HeadersState, SettingsState } from "../types";
 
@@ -22,5 +22,5 @@ export type HeaderAction = Action & {
 }
 
 export type CspAction = Action & {  
-    cspPolicy?: CspPolicy
+    cspPolicy?: CspPolicy | CspSandboxPolicy
 }

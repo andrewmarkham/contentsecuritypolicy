@@ -1,0 +1,13 @@
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/Jhoose.Security.Reporting.csproj.AssemblyReference.cache
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/Jhoose.Security.Reporting.GeneratedMSBuildEditorConfig.editorconfig
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/Jhoose.Security.Reporting.AssemblyInfoInputs.cache
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/Jhoose.Security.Reporting.AssemblyInfo.cs
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/Jhoose.Security.Reporting.csproj.CoreCompileInputs.cache
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/Jhoose.Security.Reporting.sourcelink.json
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/bin/Debug/net6.0/Jhoose.Security.Reporting.deps.json
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/bin/Debug/net6.0/Jhoose.Security.Reporting.dll
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/bin/Debug/net6.0/Jhoose.Security.Reporting.pdb
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/Jhoose.Security.Reporting.dll
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/refint/Jhoose.Security.Reporting.dll
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/Jhoose.Security.Reporting.pdb
+/Users/andrewmarkham/DevRoot/Episerver/Content Security Policy/src/Jhoose.Security.Reporting/obj/Debug/net6.0/ref/Jhoose.Security.Reporting.dll

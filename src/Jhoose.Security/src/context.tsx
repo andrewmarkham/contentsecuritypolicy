@@ -30,6 +30,7 @@ const initialState: ApplicationState = {
         networkError: false,
         settings: { 
                 mode: "on", 
+                reportingMode: 0,
                 reportingUrl: "",
                 reportToUrl: "",
                 webhookUrls: [],

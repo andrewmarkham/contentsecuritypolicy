@@ -5,6 +5,7 @@ using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 using Jhoose.Security.Core;
 using Jhoose.Security.Core.Cache;
+using Jhoose.Security.Core.Configuration;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.SecurityHeaders;
 using Jhoose.Security.Core.Repository;

@@ -6,7 +6,7 @@ import './table.css'
 
 export function Table(props: PropsWithChildren<TableProps>) {
     return (
-        <div className="table">
+        <div className="jtable">
             {props.children}
         </div>
     )
