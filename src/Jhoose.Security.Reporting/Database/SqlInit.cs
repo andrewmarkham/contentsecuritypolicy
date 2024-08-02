@@ -168,7 +168,7 @@ namespace Jhoose.Security.Reporting.Database
             await isqlHelper.ExecuteNonQuery(sqlCommand);
 
             sqlCommand = """
-                            CREATE OR ALTER PROCEDURE SecurityReportSearch(
+                    CREATE OR ALTER PROCEDURE SecurityReportSearch(
                         @PageSize AS INTEGER,
                         @RecordFrom AS INTEGER,
                         @DateFrom AS DATETIME,
@@ -198,9 +198,8 @@ namespace Jhoose.Security.Reporting.Database
                         CASE WHEN @SortOrder = 'D' THEN RecievedAt ELSE '' END DESC,
                         CASE WHEN @SortOrder = 'A' THEN RecievedAt ELSE '' END ASC
 
-
                     --Get results
-                    SELECT TOP(@PageSize)
+                    SELECT 
                         Id,
                         RecievedAt,
                         Url,
@@ -208,7 +207,11 @@ namespace Jhoose.Security.Reporting.Database
                         Browser,
                         BlockedUri
                     FROM #TempSearchData
-                    WHERE RowNumber >= @RecordFrom
+                    ORDER BY 
+                        CASE WHEN @SortOrder = 'D' THEN RowNumber ELSE '' END DESC,
+                        CASE WHEN @SortOrder = 'A' THEN RowNumber ELSE '' END ASC
+                    OFFSET @RecordFrom ROWS
+                    FETCH NEXT @PageSize ROWS ONLY
                         
                     SELECT TOP 15 
                         Directive,
