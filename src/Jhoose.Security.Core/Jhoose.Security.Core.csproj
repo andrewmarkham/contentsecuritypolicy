@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
+		<LangVersion>12</LangVersion>
 		<!--
 		<PackageId>Jhoose.Security.Core</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
@@ -44,12 +45,6 @@
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
 		<ReleaseVersion>2.3.0.0</ReleaseVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-	 <LangVersion>12</LangVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
