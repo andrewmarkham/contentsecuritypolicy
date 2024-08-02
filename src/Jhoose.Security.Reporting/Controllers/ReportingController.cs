@@ -41,10 +41,10 @@ namespace Jhoose.Security.Reporting.Controllers
         public IActionResult Options([FromHeader(Name = "Access-Control-Request-Method")] string requestMethod, 
                                     [FromHeader(Name = "Access-Control-Request-Headers")] string requestHeaders)
         {
-            Response.Headers.Add("Access-Control-Allow-Origin", new[] { (string?)Request.Headers["Origin"] });
-            Response.Headers.Add("Access-Control-Allow-Methods", "POST, OPTIONS");
-            Response.Headers.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-            Response.Headers.Add("Access-Control-Max-Age", "86400");
+            Response.Headers.Append("Access-Control-Allow-Origin", new[] { (string?)Request.Headers["Origin"] });
+            Response.Headers.Append("Access-Control-Allow-Methods", "POST, OPTIONS");
+            Response.Headers.Append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            Response.Headers.Append("Access-Control-Max-Age", "86400");
             
             return Ok();
         }   

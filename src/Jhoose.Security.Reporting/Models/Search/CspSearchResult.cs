@@ -4,22 +4,22 @@ namespace Jhoose.Security.Reporting.Models.Search
 {
     public class CspSearchResult
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = string.Empty;
         public int Age { get; set; }
         public DateTime RecievedAt { get; set; }
-        public string Type { get; set; }
-        public string Url { get; set; }
+        public string Type { get; set; } = "csp-violation";
+        public string Url { get; set; } = string.Empty;
 
         [JsonPropertyName("user_agent")]
-        public string UserAgent { get; set; }
+        public string UserAgent { get; set; } = string.Empty;
 
-        public string Browser { get; set; }
-        public string Version { get; set; }
-        public string Os { get; set; }
-        public string Directive { get; set; }
-        public string BlockedUri { get; set; }
+        public string Browser { get; set; } = string.Empty;
+        public string Version { get; set; } = string.Empty;
+        public string Os { get; set; } = string.Empty;
+        public  string Directive { get; set; }  = string.Empty;
+        public  string BlockedUri { get; set; } = string.Empty;
 
-        public BodyData Body { get; set; }
+        public BodyData? Body { get; set; }
     }
 
 
