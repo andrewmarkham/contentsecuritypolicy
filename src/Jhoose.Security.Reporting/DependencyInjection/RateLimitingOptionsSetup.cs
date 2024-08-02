@@ -10,7 +10,6 @@ using Jhoose.Security.Reporting.Database;
 #if NET7_0_OR_GREATER
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.RateLimiting;
-#endif
 
 namespace Jhoose.Security.Reporting.DependencyInjection
 {
@@ -35,3 +34,4 @@ namespace Jhoose.Security.Reporting.DependencyInjection
         }
     }
 }
+#endif
