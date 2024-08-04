@@ -4,6 +4,7 @@
 		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<Nullable>enable</Nullable>
+		<LangVersion>12</LangVersion>
 		<PackageId>Jhoose.Security.Admin</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
@@ -34,6 +35,8 @@
 			2.2.0 - API Access to Security headers
 			2.2.1 - Bug with the module not working when edit segment is different to the default 'episerver'.
 			2.2.2 - Bug with response header cache not being cleared after a change.
+			2.3.0 - UX Improvements
+			        New reporting Dashboard
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
@@ -47,7 +50,8 @@
       		https://nuget.pkg.github.com/andrewmarkham/index.json
 	  	</RestoreSources>
 		<Configurations>Debug;Release;PreRelease</Configurations>
-		<ReleaseVersion>2.2.2.0</ReleaseVersion>
+		<ReleaseVersion>2.3.0.0</ReleaseVersion>
+
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net6.0|AnyCPU'">
 		<DebugType>portable</DebugType>
@@ -55,29 +59,32 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
 		<DebugType>embedded</DebugType>
 	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'PreRelease|AnyCPU' ">
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.1" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0" />
 		<PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
 	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="2.0.3" />
+	</ItemGroup>
+
+
+	<ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+		<PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" PrivateAssets="all" />
+		<ProjectReference Include="..\Jhoose.Security.Reporting\Jhoose.Security.Reporting.csproj" PrivateAssets="all" />
 	</ItemGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
 		<Exec Command="npm run publish" />

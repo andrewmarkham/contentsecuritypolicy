@@ -13,6 +13,13 @@ using EPiServer.Framework.Web.Resources;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EPiServer.Shell.Modules;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using Jhoose.Security.Reporting.DependencyInjection;
+using System.Collections.Generic;
+using Jhoose.Security.Reporting.Database;
+using Jhoose.Security.Core.Configuration;
 
 namespace DemoSite
 {
@@ -50,7 +57,11 @@ namespace DemoSite
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
-            services.AddJhooseSecurity(_configuration, (o) =>
+            var jhooseOptions = new JhooseSecurityOptions();
+
+            _configuration.GetSection(JhooseSecurityOptions.JhooseSecurity).Bind(jhooseOptions);
+
+            services.AddJhooseSecurity(_configuration,(o) =>
             {
                 o.UseHeadersUI = true;
                 o.ExclusionPaths.Add("/ui");
@@ -60,12 +71,16 @@ namespace DemoSite
                 p.RequireRole("CspAdmin");
             });
 
+            //move into main jhoose
+            services.AddJhooseSecurityCoreReporting();
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/util/Login";
             });
 
 
+            
             services.AddControllers().AddJsonOptions(options =>
             {
                 // Global settings: use the defaults, but serialize enums as strings
@@ -74,7 +89,7 @@ namespace DemoSite
                 //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper;
 
             });
-
+            
             //services.AddTransient<BootstrapData, BootstrapData>();
         }
 
@@ -94,12 +109,15 @@ namespace DemoSite
 
             app.UseJhooseSecurity();
 
+            //move into main jhoose
+            app.UseJhooseSecurityReporting();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapContent();
                 endpoints.MapControllers();
             });
-
         }
     }
+
 }

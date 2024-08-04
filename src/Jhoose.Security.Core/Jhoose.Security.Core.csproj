@@ -3,6 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
+		<LangVersion>12</LangVersion>
 		<!--
 		<PackageId>Jhoose.Security.Core</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
@@ -34,6 +35,8 @@
 		2.2.0 - API Access to Security headers
 		2.2.1 - Bug with the module not working when edit segment is different to the default 'episerver'.
 		2.2.2 - Bug with response header cache not being cleared after a change.
+		2.3.0 - UX Improvements 
+		        New Reporting dashboard
 	  </ReleaseNotes>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<RestoreSources>
@@ -41,13 +44,7 @@
 		https://api.nuget.org/v3/index.json;
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
-		<ReleaseVersion>2.2.2.0</ReleaseVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-		<LangVersion>latest</LangVersion>
+		<ReleaseVersion>2.3.0.0</ReleaseVersion>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />

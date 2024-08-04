@@ -22,6 +22,9 @@ using Jhoose.Security.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using EPiServer.Authorization;
 using Jhoose.Security.Webhooks;
+using EPiServer.ServiceLocation;
+
+using Jhoose.Security.Core.Configuration;
 
 namespace Jhoose.Security.DependencyInjection
 {
@@ -36,13 +39,11 @@ namespace Jhoose.Security.DependencyInjection
         {
             services.AddHostedService<InitialiseHostedService>();
 
+            services.Configure<JhooseSecurityOptions>(configuration.GetSection(JhooseSecurityOptions.JhooseSecurity));
+            
             if (options != null)
             {
-                services.Configure<JhooseSecurityOptions>(options);
-            }
-            else
-            {
-                services.Configure<JhooseSecurityOptions>(configuration.GetSection(JhooseSecurityOptions.JhooseSecurity));
+                services.PostConfigure<JhooseSecurityOptions>(options);
             }
 
             services.Configure<ProtectedModuleOptions>(m =>
@@ -94,7 +95,7 @@ namespace Jhoose.Security.DependencyInjection
             services.AddScoped<IWebhookNotifications, DefaultWebhookNotifications>();
 
             services.AddHttpClient("webhooks");
-
+            
             return services;
         }
 

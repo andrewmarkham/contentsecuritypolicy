@@ -1,0 +1,252 @@
+[
+    {
+      "time": "2024-06-23T20:24:38.893402",
+      "value": 91,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:24:38.893402",
+      "value": 58,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:24:38.893402",
+      "value": 95,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:24:38.893402",
+      "value": 92,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:23:38.893402",
+      "value": 30,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:23:38.893402",
+      "value": 69,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:23:38.893402",
+      "value": 53,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:23:38.893402",
+      "value": 3,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:22:38.893402",
+      "value": 60,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:22:38.893402",
+      "value": 96,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:22:38.893402",
+      "value": 70,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:22:38.893402",
+      "value": 87,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:21:38.893402",
+      "value": 7,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:21:38.893402",
+      "value": 72,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:21:38.893402",
+      "value": 69,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:21:38.893402",
+      "value": 55,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:20:38.893402",
+      "value": 52,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:20:38.893402",
+      "value": 89,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:20:38.893402",
+      "value": 98,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:20:38.893402",
+      "value": 33,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:19:38.893402",
+      "value": 30,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:19:38.893402",
+      "value": 12,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:19:38.893402",
+      "value": 99,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:19:38.893402",
+      "value": 55,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:18:38.893402",
+      "value": 90,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:18:38.893402",
+      "value": 11,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:18:38.893402",
+      "value": 84,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:18:38.893402",
+      "value": 64,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:17:38.893402",
+      "value": 49,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:17:38.893402",
+      "value": 30,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:17:38.893402",
+      "value": 70,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:17:38.893402",
+      "value": 38,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:16:38.893402",
+      "value": 89,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:16:38.893402",
+      "value": 18,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:16:38.893402",
+      "value": 29,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:16:38.893402",
+      "value": 0,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:15:38.893402",
+      "value": 91,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:15:38.893402",
+      "value": 43,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:15:38.893402",
+      "value": 3,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:15:38.893402",
+      "value": 6,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:14:38.893402",
+      "value": 32,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:14:38.893402",
+      "value": 79,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:14:38.893402",
+      "value": 49,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:14:38.893402",
+      "value": 27,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:13:38.893402",
+      "value": 25,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:13:38.893402",
+      "value": 73,
+      "metric": "edge"
+    },
+    {
+      "time": "2024-06-23T20:13:38.893402",
+      "value": 56,
+      "metric": "firefox"
+    },
+    {
+      "time": "2024-06-23T20:13:38.893402",
+      "value": 45,
+      "metric": "chrome"
+    },
+    {
+      "time": "2024-06-23T20:12:38.893402",
+      "value": 45,
+      "metric": "safari"
+    },
+    {
+      "time": "2024-06-23T20:12:38.893402",
+      "value": 26,
+      "metric": "edge"
+    }
+]

@@ -1,9 +1,14 @@
 const express = require('express');
 const path = require('path');
-
+//import { buildDasboardData } from './dashboardHelper';
 const loki = require('lokijs');
 const fs = require('fs');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const { error } = require('console');
+
+
+const { faker } = require('@faker-js/faker');
+const { validate } = require('uuid');
 
 const app = express()
 const port = 3000
@@ -34,19 +39,87 @@ app.get('/api/csp/settings', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   var settings = {
-      mode: "on", 
+      mode: "off", 
+      reportingMode: 1,
       reportingUrl: "http://www.bbc.co.uk/",
       reportToUrl: "http://www.bbc.co.uk/",
       webhookUrls: ["http://www.1", "http://www.2"],
       authenticationKeys: [
-        { name: "key1", key: "value1", revoked: false },
-        { name: "key1", key: "value1", revoked: false }
+        { name: "key1 abc", key: "value1", revoked: false },
+        { name: "key1", key: "value1 asdasjkhdas", revoked: true }
       ]
     }
 
   await snooze(1500);
   res.json(settings);
 })
+var jsonParser = bodyParser.json()
+app.post('/api/csp/search', jsonParser,async (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  var r = {
+    total: 2,
+    results: [
+      {
+        id: "1",
+        age: 0,
+        recievedAt: "2024-07-16T21:55:08.405438Z",
+        type: "csp-violation",
+        url: "https://localhost:8001/",
+        user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",
+        browser: "Safari",
+        version: "17.4",
+        os: "Mac OS X",
+        directive: "script-src-elem",
+        blockedUri: "https://localhost:8001/assets/js/breakpoints.min.js",
+        body: {
+          documentURL: "https://localhost:8001/",
+          disposition: "enforce",
+          referrer: "",
+          effectiveDirective: "script-src-elem",
+          blockedURL: "https://localhost:8001/assets/js/breakpoints.min.js",
+          originalPolicy: "default-src 'self' ; script-src 'none'; ; style-src 'self' 'nonce-be287871-9517-455b-a6bd-725218ebab3d' https: ; img-src * https: data: mediastream: blob: ; object-src * 'self' ; child-src * 'self' ;  report-uri https://localhost:8001/api/reporting/;  report-to csp-endpoint; ",
+          statusCode: 200,
+          sample: "",
+          sourceFile: "https://localhost:8001/",
+          lineNumber: 0,
+          columnNumber: 1
+        }
+      },
+      {
+        id: "2",
+        age: 0,
+        recievedAt: "2024-07-16T21:55:08.405492Z",
+        type: "csp-violation",
+        url: "https://localhost:8001/",
+        user_agent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15",
+        browser: "Safari",
+        version: "17.4",
+        os: "Mac OS X",
+        directive: "font-src",
+        blockedUri: "https://fonts.gstatic.com:443/s/raleway/v34/1Ptug8zYS_SKggPNyCIIT4ttDfCmxA.woff2",
+        body: {
+          documentURL: "https://localhost:8001/",
+          disposition: "enforce",
+          referrer: "",
+          effectiveDirective: "font-src",
+          blockedURL: "https://fonts.gstatic.com:443/s/raleway/v34/1Ptug8zYS_SKggPNyCIIT4ttDfCmxA.woff2",
+          originalPolicy: "default-src 'self' ; script-src 'none'; ; style-src 'self' 'nonce-be287871-9517-455b-a6bd-725218ebab3d' https: ; img-src * https: data: mediastream: blob: ; object-src * 'self' ; child-src * 'self' ;  report-uri https://localhost:8001/api/reporting/;  report-to csp-endpoint; ",
+          statusCode: 200,
+          sample: "",
+          sourceFile: "https://localhost:8001/",
+          lineNumber: 0,
+          columnNumber: 1
+        }
+      }
+    ],
+    directives: ['font-src','script-src-elem'],
+    browsers: ['Safari', 'Firefox']
+  };
+
+  await snooze(1500);
+  res.json(r);
+});
 
 app.get('/api/csp/header', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -63,7 +136,7 @@ app.get('/api/csp/header', async (req, res) => {
   res.json(resp);
 })
 
-var jsonParser = bodyParser.json()
+
 app.post('/api/csp',jsonParser, async (req, res) => {
   
   var policiesCol = db.getCollection(collectionName);
@@ -104,6 +177,21 @@ app.post('/api/csp/header',jsonParser, async (req, res) => {
   res.json(data);
 })
 
+app.post('/api/csp/dashboard/summary', jsonParser, async (req, res) => {
+
+  var query = req.body;
+  console.log(query);
+
+  res.setHeader('Content-Type', 'application/json');
+
+  await snooze(1500);
+
+  var summaryData = buildDasboardData(query);
+
+  res.json(summaryData);
+});
+
+
 app.get('/EPiServer/Shell/epiplatformnavigation', async(req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.sendFile(path.join(__dirname + '/menuItems.json' ));
@@ -127,6 +215,7 @@ function bootstrapDB() {
 
   console.log(`Inserting CSP data into collection ${collectionName}`);
   policiesCol.insert(policiesJson);
+
 
   const data = [
     {
@@ -189,4 +278,155 @@ function bootstrapDB() {
   headersCol.insert(data);
 
   console.log(`Bootstrap commplete, added ${policiesCol.count()}, added ${headersCol.count()}`);
+}
+
+
+
+
+const headings = [
+    {'30m': '30 minutes'},
+    {'1hr': '1 hour'},
+    {'6hr': '6 hours'},
+    {'12hr': '12 hours'},
+    {'1d': '1 day'},
+    {'3d': '3 days'},
+    {'7d': '7 days'},
+];
+
+function buildDasboardData(query) {
+    
+    var {timeframe,type} = query;
+
+    var summaryData = {
+        query:{
+          title: headings[timeframe],
+          from: "2021-06-01T00:00:00Z",
+          to: "2021-06-01T00:30:00Z"
+        },
+        total: faker.number.int({ max: 1000 }),
+        topPages: buildPages(),
+        topDirectives: buildDirectives(),
+        errors: buildErrors(timeframe, type) 
+    }
+
+    return summaryData;
+}
+
+function buildErrors(timeFrame, type) {
+    var errors = [];
+
+    var directiveTypes = ["script-src", "connect-src", "default-src", "media-src", "child-src"];
+    var browserTypes = ["Chrome", "Firefox", "Safari", "Edge", "IE"];
+
+    var stepSize = 1;
+    var steps = 30;
+    switch (timeFrame) {
+      case "30m":
+        break;  
+      case "1h": 
+        stepSize = 2;
+        steps = 60;
+        break;
+      case "6h":
+        stepSize = 12;
+        steps = 3600;
+        break;
+      case "12h":
+        stepSize = 24;
+        steps = 7200;
+        break;  
+      case "1d":  
+        stepSize = 48;
+        steps = 14400;
+        break;  
+      case "3d":
+        stepSize = 48 * 3;
+        steps = 14400 * 3;
+        break;
+      case "7d":  
+        stepSize = 48 * 7;
+        steps = 14400 * 7;
+        break;
+    }
+
+    console.log(timeFrame);
+    console.log(stepSize);
+    console.log(steps);
+
+    if (type === "browser") {
+
+      for (bt in browserTypes) {
+        for (let i = 0; i < steps; i = i+stepSize) {
+          //console.log(i);
+          errors.push({
+              time: new Date(Date.now() + i*60000),
+              value: faker.number.int({ max: 100 *  stepSize}),
+              metric: browserTypes[bt]
+          });
+        }
+      }
+    } else if (type === "directive") {
+
+      for (dt in directiveTypes) {
+        for (let i = 0; i < steps; i = i+stepSize) {
+          errors.push({
+              time: new Date(Date.now() + i*60000),
+              value: faker.number.int({ max: 100 *  stepSize}),
+              metric: directiveTypes[dt]
+          });
+        }
+      }
+    }
+
+    return errors;
+}
+
+
+function buildPages() {
+    var pages = [];
+    for (let i = 0; i < 5; i++) {
+        var url = faker.internet.url();
+        pages.push({
+            name: url ,
+            url: url,
+            count: faker.number.int({ max: 1000 })
+        });
+    }
+    return pages;
+}
+
+function buildDirectives() {
+    var pages = [];
+
+    pages.push({
+        name: 'default-src' ,
+        url: '#',
+        count: faker.number.int({ max: 1000 })
+    });
+
+    pages.push({
+        name: 'media-src' ,
+        url: '#',
+        count: faker.number.int({ max: 1000 })
+    });
+
+    pages.push({
+        name: 'connect-src' ,
+        url: '#',
+        count: faker.number.int({ max: 1000 })
+    });
+
+    pages.push({
+        name: 'child-src' ,
+        url: '#',
+        count: faker.number.int({ max: 1000 })
+    });
+
+    pages.push({
+        name: 'script-src' ,
+        url: '#',
+        count: faker.number.int({ max: 1000 })
+    });
+
+    return pages;
 }

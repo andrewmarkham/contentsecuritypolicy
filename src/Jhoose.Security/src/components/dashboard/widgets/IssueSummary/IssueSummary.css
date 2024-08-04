@@ -1,0 +1,67 @@
+.issueSummary{
+    width: 100%;
+    height: 610px;
+    padding: 0px 10px;
+}
+
+.issueSummary h3 {
+    margin-top: 0px;
+}
+
+.issue-container {
+    display: grid;
+    grid-template-columns: 300px auto;
+    grid-template-rows: 33% 33% 33%;
+    gap: 0.5em;
+    margin-top: 1em;
+}
+.issue-box {
+    border: 1px solid;
+    border-radius: 10px;
+    padding: 1em 1em;
+    display: inline-flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.issue-box .issuelabel {
+    font-size: 2em;
+}
+
+.issue-box span.value { 
+    font-size: 5em;
+}
+
+.grow {
+    grid-row: 1/4;
+    grid-column: 2;
+}
+
+.issue-box ul {
+  list-style: none;
+  text-align: left;
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 12px;
+}
+
+.issue-box ul a {
+    direction: rtl;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 210px;
+    display: inline-block;
+
+}
+
+.issue-box ul span {
+    margin-left: 10px;
+    overflow: hidden;
+    display: inline-block;
+    width: 43px;
+    text-align: right;
+}
+.issueGraph {
+    min-height: 600px;;
+}

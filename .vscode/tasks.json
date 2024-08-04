@@ -29,7 +29,7 @@
             "args": [
                 "-R",
                 "'${workspaceFolder}/src/Jhoose.Security/dist/Jhoose.Security'",
-                "'${workspaceFolder}/src/Test/Management/modules/_protected'"
+                "'${workspaceFolder}/src/Sample/DemoSite/modules/_protected'"
             ],
             "problemMatcher": "$msCompile"
         },

@@ -5,7 +5,7 @@ const isDevelopment = process.env.NODE_ENV === 'development'
 
 module.exports = {
   mode: 'development',
-  entry: './src/app.js',
+  entry: './src/app.tsx',
   devtool: 'inline-source-map',
   //watch: true,
   output: {
@@ -23,6 +23,11 @@ module.exports = {
             presets: ['@babel/preset-env']
           }
         }
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
@@ -57,7 +62,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.scss']
+    extensions: ['.js', '.jsx','.ts', '.tsx', '.scss']
   }
 };
 
