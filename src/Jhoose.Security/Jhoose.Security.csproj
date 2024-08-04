@@ -51,7 +51,7 @@
 	  	</RestoreSources>
 		<Configurations>Debug;Release;PreRelease</Configurations>
 		<ReleaseVersion>2.3.0.0</ReleaseVersion>
-		<RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net6.0|AnyCPU'">
 		<DebugType>portable</DebugType>
@@ -70,7 +70,18 @@
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
 	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="2.0.3" />
+	</ItemGroup>
+
+
+	<ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
+		<PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" PrivateAssets="all" />
 		<ProjectReference Include="..\Jhoose.Security.Reporting\Jhoose.Security.Reporting.csproj" PrivateAssets="all" />
