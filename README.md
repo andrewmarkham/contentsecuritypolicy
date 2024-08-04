@@ -3,6 +3,7 @@
 This module adds several security features to an Optimizely website.
 
  - User interface to manage the Content Secutiry Policy (CSP) policy for your site. 
+ - Summary dashboard to monitor any ongoing CSP issues.
  - User interface to manage the Recommended Security headers and add to the response headers.
 
  This module fully supports
@@ -71,6 +72,38 @@ It is possible to get a nonce added to your inline `<script>` and `<style>` tags
 <script nonce src="/assets/js/jquery.min.js"></script>
 ```
 
+### Issue Dashboard
+The issue dashboard shows a summary of any ongoing Content Security errors being raised by the site. 
+
+The dashboard will list the top 5 pages and top 5 directives that are reporting issues on the site.
+
+By default only issues for the last 30 minutes will be shown, but this can be increased all the way upto the last 7 days.
+![image](./documentation/images/issue-dashboard.png)
+
+
+More indepth investigation can be done via the search interface.
+![image](./documentation/images/issue-search.png)
+
+#### Data & Data Retention
+By default data will only be kept for the last 30 days, but this can be modified via the settings.
+
+There is a scheduled job `Purge Jhoose Security Reporting Data` this must be ran to remove any legacy data.
+
+By default all data is stored in a custom SQL table.  This is added to the CMS database, but this can be changed by setting the connection string setting.
+
+There is also an option to store the data within an Elastic Search Database.  This can be configured within the settings.
+
+It is also possible to create your own [custom provider](./documentation/dashboard.md#custom-provider) and store the data in any external repository. 
+
+#### Configuration
+
+[More Configuration options](./documentation/dashboard.md)
+
+To enable this feature the the Issue Reporting Mode to **Local Dashboard**
+
+![image](./documentation/images/settings.png)
+
+
 ## Recommended Security Headers
 
 The following recommended security headers are now automatically added to the response header.
@@ -112,6 +145,7 @@ services.AddJhooseSecurity(_configuration, (o) =>
 });
 ```
 ![image](./documentation/images/response-headers.png)
+
 
 ### Configuration
 
@@ -239,3 +273,4 @@ X-API-Key: ...
  |2.2.0|API Access to Security headers|
  |2.2.1|Bug with the module not working when edit segment is different to the default 'episerver'.|
  |2.2.2|Bug with response header cache not being cleared after a change.|
+ |2.3.0| Added a new Dashboard; this gives a summary of any current issues and also allows you to search for historical issues.<br/> UI refresh and various bug fixes  |

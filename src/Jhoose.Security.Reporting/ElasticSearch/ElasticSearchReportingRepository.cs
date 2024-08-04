@@ -6,7 +6,6 @@ using Elastic.Clients.Elasticsearch.Aggregations;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Jhoose.Security.Reporting.Models.Search;
-using EPiServer.Data.Dynamic.Linq;
 using Elastic.Clients.Elasticsearch.QueryDsl;
 using EPiServer.Shell;
 using System.Net;
