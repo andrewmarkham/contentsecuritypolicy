@@ -56,3 +56,11 @@ src/Sample/DemoSite/App_Data/blobs/
 src/Jhoose.Security.Reporting/obj/
 
 src/Jhoose.Security.Reporting/bin/
+
+src/Sample/Foundation/bin/
+
+src/Sample/Foundation/obj/
+
+src/Sample/Foundation/node_modules/
+
+src/Sample/Foundation/App_Data/

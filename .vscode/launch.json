@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (web)",
+            "name": "Demo Site",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "BuildAll",
@@ -22,6 +22,26 @@
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/src/Sample/DemoSite/Views"
+            }
+        },
+        {
+            "name": "Foundation",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "BuildFoundationAll",
+            "program": "${workspaceFolder}/src/Sample/Foundation/bin/Debug/net6.0/Foundation.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Sample/Foundation",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/src/Sample/Foundation/Views"
             }
         }
     ]
