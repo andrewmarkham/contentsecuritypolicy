@@ -57,9 +57,9 @@ namespace DemoSite
 
             services.TryAddEnumerable(ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(BootstrapAdminUser)));
 
-            var jhooseOptions = new JhooseSecurityOptions();
+            //var jhooseOptions = new JhooseSecurityOptions();
 
-            _configuration.GetSection(JhooseSecurityOptions.JhooseSecurity).Bind(jhooseOptions);
+            //_configuration.GetSection(JhooseSecurityOptions.JhooseSecurity).Bind(jhooseOptions);
 
             services.AddJhooseSecurity(_configuration,(o) =>
             {
@@ -70,9 +70,6 @@ namespace DemoSite
             {
                 p.RequireRole("CspAdmin");
             });
-
-            //move into main jhoose
-            services.AddJhooseSecurityCoreReporting();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -108,9 +105,6 @@ namespace DemoSite
             app.UseAuthorization();
 
             app.UseJhooseSecurity();
-
-            //move into main jhoose
-            app.UseJhooseSecurityReporting();
 
             app.UseEndpoints(endpoints =>
             {
