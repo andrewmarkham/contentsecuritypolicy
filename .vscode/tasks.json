@@ -11,12 +11,33 @@
             "problemMatcher": []
         },
         {
+            "label": "BuildFoundationAll",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "buildFoundation",
+                "copyFoundation"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "build",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
                 "${workspaceFolder}/src/Sample/DemoSite/DemoSite.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "buildFoundation",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Sample/Foundation/Foundation.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -30,6 +51,17 @@
                 "-R",
                 "'${workspaceFolder}/src/Jhoose.Security/dist/Jhoose.Security'",
                 "'${workspaceFolder}/src/Sample/DemoSite/modules/_protected'"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "copyFoundation",
+            "command": "cp",
+            "type": "shell",
+            "args": [
+                "-R",
+                "'${workspaceFolder}/src/Jhoose.Security/dist/Jhoose.Security'",
+                "'${workspaceFolder}/src/Sample/Foundation/modules/_protected'"
             ],
             "problemMatcher": "$msCompile"
         },

@@ -274,3 +274,4 @@ X-API-Key: ...
  |2.2.1|Bug with the module not working when edit segment is different to the default 'episerver'.|
  |2.2.2|Bug with response header cache not being cleared after a change.|
  |2.3.0| Added a new Dashboard; this gives a summary of any current issues and also allows you to search for historical issues.<br/> UI refresh and various bug fixes  |
+ |2.3.1| Bug fixes |

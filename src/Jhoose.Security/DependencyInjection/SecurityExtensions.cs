@@ -25,6 +25,7 @@ using Jhoose.Security.Webhooks;
 using EPiServer.ServiceLocation;
 
 using Jhoose.Security.Core.Configuration;
+using Jhoose.Security.Reporting.DependencyInjection;
 
 namespace Jhoose.Security.DependencyInjection
 {
@@ -96,6 +97,9 @@ namespace Jhoose.Security.DependencyInjection
 
             services.AddHttpClient("webhooks");
             
+            //move into main jhoose
+            services.AddJhooseSecurityCoreReporting();
+            
             return services;
         }
 
@@ -113,6 +117,8 @@ namespace Jhoose.Security.DependencyInjection
             {
                 applicationBuilder.UseHttpsRedirection();
             }
+
+            applicationBuilder.UseJhooseSecurityReporting();
 
             return applicationBuilder;
         }

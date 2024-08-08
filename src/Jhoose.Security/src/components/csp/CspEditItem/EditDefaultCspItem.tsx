@@ -131,6 +131,7 @@ export function EditDefaultCspItem(props: Props) {
                             rows={4} 
                             disabled={policy.options?.none ?? true} 
                             placeholder='Host Source'
+                            value={policy.value}
                             onChange={(e) => {
                                 setPolicyValue("value",e.currentTarget.value);
                             }} />
