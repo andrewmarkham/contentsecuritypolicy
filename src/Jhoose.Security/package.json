@@ -26,10 +26,10 @@
     "axios": "^1.7.2",
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^10.0.1",
-    "body-parser": "^1.20.2",
+    "body-parser": "^1.20.3",
     "caniuse-lite": "^1.0.30001629",
     "date-fns": "^3.6.0",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "lokijs": "^1.5.12",
     "react-router-dom": "^6.23.1",
     "uuid": "^9.0.1"
