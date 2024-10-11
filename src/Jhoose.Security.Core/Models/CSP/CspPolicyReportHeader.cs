@@ -2,7 +2,7 @@
 {
     public class CspPolicyReportHeader : CspPolicyHeaderBase
     {
-        public CspPolicyReportHeader(CspSettings settings) : base(settings)
+        public CspPolicyReportHeader(CspSettings settings,string host) : base(settings, host)
         {
         }
 

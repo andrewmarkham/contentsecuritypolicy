@@ -47,6 +47,7 @@
 		<ReleaseVersion>2.3.1.0</ReleaseVersion>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.0" />

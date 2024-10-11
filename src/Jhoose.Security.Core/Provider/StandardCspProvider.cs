@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 
 using System.Linq;
+using EPiServer.Core;
+using EPiServer.Web;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Repository;
@@ -13,10 +15,12 @@ namespace Jhoose.Security.Core.Provider
         private readonly string nonceValue;
 
         private readonly ICspPolicyRepository policyRepository;
+        private readonly ISiteDefinitionResolver siteDefinitionResolver;
 
-        public StandardCspProvider(ICspPolicyRepository policyRepository)
+        public StandardCspProvider(ICspPolicyRepository policyRepository, ISiteDefinitionResolver siteDefinitionResolver)
         {
             this.policyRepository = policyRepository;
+            this.siteDefinitionResolver = siteDefinitionResolver;
             this.nonceValue = Guid.NewGuid().ToString();
         }
 
@@ -35,19 +39,23 @@ namespace Jhoose.Security.Core.Provider
 
         public IEnumerable<CspPolicyHeaderBase> PolicyHeaders()
         {
+            var rootRef = ContentReference.IsNullOrEmpty(ContentReference.StartPage) ? ContentReference.RootPage : ContentReference.StartPage;
+            var host = this.siteDefinitionResolver.GetByContent(rootRef, true).SiteUrl.ToString();
+            
             var policies = this.policyRepository.List();
             var settings = this.Settings;
 
             if (!(settings.Mode == "off" || settings.ReportingMode == ReportingMode.None))
             {
-                yield return new ReportingEndpointHeader(settings);
+                yield return new ReportingEndpointHeader(settings, host);
+                yield return new ReportToHeader(settings, host);
 
             }
 
             // for global report only
             if (settings.Mode.Equals("report"))
             {
-                yield return new CspPolicyReportHeader(settings)
+                yield return new CspPolicyReportHeader(settings, host)
                 {
                     Policies = policies
                 };
@@ -58,7 +66,7 @@ namespace Jhoose.Security.Core.Provider
 
                 if (actionPolicies.Any())
                 {
-                    yield return new CspPolicyHeader(settings)
+                    yield return new CspPolicyHeader(settings, host)
                     {
                         Policies = actionPolicies
                     };
@@ -68,7 +76,7 @@ namespace Jhoose.Security.Core.Provider
 
                 if (reportPolicies.Any())
                 {
-                    yield return new CspPolicyReportHeader(settings)
+                    yield return new CspPolicyReportHeader(settings,host)
                     {
                         Policies = reportPolicies
                     };
