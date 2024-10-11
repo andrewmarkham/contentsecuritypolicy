@@ -10,6 +10,7 @@ using Jhoose.Security.Core.Models.CSP;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using EPiServer.Web;
 
 
 namespace Jhoose.Security.Services
@@ -44,6 +45,7 @@ namespace Jhoose.Security.Services
 
                 foreach (var header in enabledHeaders)
                 {
+
 
                     if (response.Headers.ContainsKey(header.Name))
                     {
