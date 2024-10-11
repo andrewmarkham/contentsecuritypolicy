@@ -29,13 +29,23 @@ namespace Jhoose.Security.Reporting.Controllers
         {
             this.reportingRepository = reportingRepositoryFactory.GetReportingRepository() ?? throw new ArgumentNullException(nameof(reportingRepository));
         }
+        
         [HttpPost]
+        public async Task<IActionResult> Post([FromBody] List<ReportTo> reportTos)
+        {
+            foreach (var reportTo in reportTos)
+                await reportingRepository.AddReport(reportTo);
+
+            return Ok();
+        }
+
+        /*[HttpPost]
         public async Task<IActionResult> Post([FromBody] ReportTo reportTo)
         {
             await reportingRepository.AddReport(reportTo);
 
             return Ok();
-        }
+        }*/
 
         [HttpOptions]
         public IActionResult Options([FromHeader(Name = "Access-Control-Request-Method")] string requestMethod, 
