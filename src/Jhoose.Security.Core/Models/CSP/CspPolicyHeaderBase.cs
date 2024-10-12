@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using EPiServer.Web;
 
 namespace Jhoose.Security.Core.Models.CSP
 {
@@ -10,15 +11,15 @@ namespace Jhoose.Security.Core.Models.CSP
         protected readonly string reportUrl;
         protected readonly string reportToUrl;
 
-        protected CspPolicyHeaderBase(CspSettings settings)
+        protected CspPolicyHeaderBase(CspSettings settings, string host)
         {
             this.settings = settings;
 
             switch (this.settings.ReportingMode)
             {
                 case ReportingMode.Local:
-                    this.reportUrl = "/api/reporting/";
-                    this.reportToUrl = "/api/reporting/";
+                    this.reportUrl = $"{host}api/reporting/";
+                    this.reportToUrl = $"{host}api/reporting/";
                     break;
                 case ReportingMode.External:
                     this.reportUrl = this.settings.ReportingUrl;

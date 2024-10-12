@@ -42,7 +42,7 @@ namespace Jhoose.Security.Reporting.DependencyInjection
             services.AddSingleton<IDashboardService, DashboardService>();
             
             services.AddControllers()
-                    .AddMvcOptions(o => o.InputFormatters.Add(new Controllers.ProblemJsonFormatter()));
+                    .AddMvcOptions(o => o.InputFormatters.Insert(0, new Controllers.ProblemJsonFormatter()));
 
             services.ConfigureOptions<ReportingOptionsSetup>();
 
