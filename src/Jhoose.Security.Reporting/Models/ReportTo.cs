@@ -44,9 +44,9 @@ namespace Jhoose.Security.Reporting.Models
         public string Version { get; set; }
         public string OS { get; set; }
 
-        public string Directive => Body.EffectiveDirective;
+        public string? Directive => Body.EffectiveDirective;
 
-        public string BlockedUri => Body.BlockedURL;
+        public string? BlockedUri => Body.BlockedURL;
 
         [JsonPropertyName("body")]
         public ReportToBody Body { get; }

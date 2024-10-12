@@ -6,7 +6,7 @@ namespace Jhoose.Security.Core.Models.CSP
 
     public class CspPolicyHeader : CspPolicyHeaderBase
     {
-        public CspPolicyHeader(CspSettings settings) : base(settings)
+        public CspPolicyHeader(CspSettings settings, string host) : base(settings, host)
         {
         }
 
