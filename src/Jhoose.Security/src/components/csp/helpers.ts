@@ -13,6 +13,7 @@ export function getPolicyOptionsDisplay(policy: CspPolicy): string {
             v = policy.options.self ? v+= "'self' " : v;
 
             v = policy.options.unsafeEval ? v+= "'unsafe-eval' " : v;
+            v = policy.options.wasmUnsafeEval ? v+= "'wasm-unsafe-eval' " : v;
             v = policy.options.unsafeHashes ? v+= "'unsafe-hashes' " : v;
             v = policy.options.unsafeInline ? v+= "'unsafe-inline' " : v;
             v = policy.options.strictDynamic ? v+= "'strict-dynamic' " : v;
@@ -44,7 +45,7 @@ export function getSchemaSourceDisplay(policy: CspPolicy): string {
 
 export function isScriptPolicy(policy: CspPolicy): boolean{
 
-    if(policy.policyName === "script-src" || policy.policyName === "style-src") {
+    if(policy.policyName === "default-src" || policy.policyName === "script-src" || policy.policyName === "style-src") {
         return true;
     }        
 
@@ -52,7 +53,8 @@ export function isScriptPolicy(policy: CspPolicy): boolean{
 }
 
 export function getSandboxOptionsDisplay(policy: CspSandboxPolicy): string {
-    var v = `${policy.policyName} `;
+    //var v = `${policy.policyName} `;
+    var v = "";
     // sandboxOptions
     if (policy.sandboxOptions?.enabled ?? false) {
         v = policy.sandboxOptions?.allowDownloads ? v+= "allow-downloads " : v;

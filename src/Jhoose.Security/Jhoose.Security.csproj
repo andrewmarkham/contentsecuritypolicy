@@ -9,7 +9,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.3.2.0</Version>
+		<Version>2.4.0.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -39,6 +39,8 @@
 			        New reporting Dashboard
 			2.3.1 - Bug fixes
 			2.3.2 - Fixed bug with CSP issues not being reported correctly.
+			2.4.0 - Added 'wasm-unsafe-eval' to the CSP Options
+			        Added missing options to default-src 
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
