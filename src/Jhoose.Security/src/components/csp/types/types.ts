@@ -25,7 +25,7 @@ export type SchemaSource = {
     wss?: boolean;
 }
 
-export type PolicyOptionName = "wildcard" | "none" | "self" | "unsafeEval" | "unsafeHashes" | "unsafeInline" | "strictDynamic" | "nonce";
+export type PolicyOptionName = "wildcard" | "none" | "self" | "wasmUnsafeEval" | "unsafeEval" | "unsafeHashes" | "unsafeInline" | "strictDynamic" | "nonce";
 
 export interface PolicyOptions extends Record<PolicyOptionName,boolean>{}
 

@@ -29,9 +29,32 @@ namespace Jhoose.Security.Reporting.Database
 
         public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 
+        private async Task<bool> SecurityReportingExists()
+        {
+            var sqlCommand = """
+                IF (EXISTS (SELECT * 
+                  FROM INFORMATION_SCHEMA.TABLES 
+                 WHERE TABLE_NAME = 'SecurityReportToVersion'))
+                BEGIN
+                    SELECT 1
+                END
+                ELSE
+                BEGIN
+                    SELECT 0
+                END
+                """;
+
+            var result = await isqlHelper.ExecuteScalar<int>(sqlCommand);
+            return result > 0;
+        }
         private async Task<string> GetCurrentVersion()
         {
             string version = string.Empty;
+
+            if (!await SecurityReportingExists())
+            {
+                return version;
+            }
 
             var sqlCommand = "SELECT Version FROM SecurityReportToVersion";
             await isqlHelper.ExecuteReader(sqlCommand, [], readerAction: reader =>
@@ -46,6 +69,7 @@ namespace Jhoose.Security.Reporting.Database
 
             return version;
         }
+
 
         private async Task SetCurrentVersion(string version)
         {

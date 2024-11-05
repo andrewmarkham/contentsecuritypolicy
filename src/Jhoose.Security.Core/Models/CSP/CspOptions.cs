@@ -11,6 +11,7 @@ namespace Jhoose.Security.Core.Models.CSP
             this.Self = false;
 
             this.UnsafeEval = false;
+            this.WasmUnsafeEval = false;
             this.UnsafeHashes = false;
             this.UnsafeInline = false;
             this.StrictDynamic = false;
@@ -21,6 +22,7 @@ namespace Jhoose.Security.Core.Models.CSP
         public bool Wildcard { get; set; }
         public bool Self { get; set; }
         public bool UnsafeEval { get; set; }
+        public bool WasmUnsafeEval { get; set; }
         public bool UnsafeHashes { get; set; }
         public bool UnsafeInline { get; set; }
         public bool StrictDynamic { get; set; }
@@ -40,6 +42,7 @@ namespace Jhoose.Security.Core.Models.CSP
             if (this.Self) sb.Append("'self' ");
 
             if (this.UnsafeEval) sb.Append("'unsafe-eval' ");
+            if (this.WasmUnsafeEval) sb.Append("'wasm-unsafe-eval' ");
             if (this.UnsafeHashes) sb.Append("'unsafe-hashes' ");
             if (this.UnsafeInline) sb.Append("'unsafe-inline' ");
             if (this.StrictDynamic) sb.Append("'strict-dynamic' ");
@@ -49,6 +52,6 @@ namespace Jhoose.Security.Core.Models.CSP
             return sb.ToString();
         }
 
-        public bool HasOptions => this.None | this.Wildcard | this.Self | this.UnsafeEval | this.UnsafeHashes | this.UnsafeInline | this.StrictDynamic | this.Nonce;
+        public bool HasOptions => this.None | this.Wildcard | this.Self | this.WasmUnsafeEval| this.UnsafeEval | this.UnsafeHashes | this.UnsafeInline | this.StrictDynamic | this.Nonce;
     }
 }

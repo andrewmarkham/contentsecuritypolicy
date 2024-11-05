@@ -52,6 +52,11 @@ export function CspOptions(props: Props) {
                             setPolicyValue("unsafeEval");
                         }}>Unsafe Eval</Checkbox>
 
+                        <Checkbox disabled={options.none} checked={options.wasmUnsafeEval} onChange={() => {
+                            setPolicyValue("wasmUnsafeEval");
+                        }}>Wasm Unsafe Eval</Checkbox>
+
+
                         <Checkbox disabled={options.none} checked={options.unsafeHashes} onChange={() => {
                             setPolicyValue("unsafeHashes");
                         }}>Unsafe Hashes</Checkbox>
