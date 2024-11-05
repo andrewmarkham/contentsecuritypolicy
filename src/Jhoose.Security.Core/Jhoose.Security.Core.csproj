@@ -9,7 +9,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		-->
-		<Version>2.3.2.0</Version>
+		<Version>2.4.0.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Title>Jhoose Security Core</Title>
 		<Description>Core package used by the Jhoose Security module</Description>
