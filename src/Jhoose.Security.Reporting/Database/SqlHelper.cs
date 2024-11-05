@@ -27,6 +27,23 @@ namespace Jhoose.Security.Reporting.Database
             }
         }
 
+        public async Task<T?> ExecuteScalar<T>(string sqlCommand, params SqlParameter[] parameters)
+        {
+            try{
+                using var connection = new SqlConnection(options.ConnectionString);
+                connection.Open();
+                using var command = new SqlCommand(sqlCommand, connection);
+
+                command.Parameters.AddRange(parameters);
+                var result = await command.ExecuteScalarAsync();
+                return (T?)result;
+            } catch (Exception ex)
+            {
+                logger.LogError(ex, "Error while executing non query");
+                return default;
+            }
+        }
+
         public async Task<T?> ExecuteReader<T>(string sqlCommand, IEnumerable<SqlParameter>? parameters,Func<SqlDataReader, T>? readerAction = null)
         {
             T? results = default;

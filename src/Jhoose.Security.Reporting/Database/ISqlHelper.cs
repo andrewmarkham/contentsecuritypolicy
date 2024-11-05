@@ -13,6 +13,9 @@ namespace Jhoose.Security.Reporting.Database
                                                       IEnumerable<SqlParameter> parameters, 
                                                       Func<SqlDataReader, T>? readerAction = null,
                                                       int defaultReturnValue = -1);
+
+        Task<T?> ExecuteScalar<T>(string sqlCommand, params SqlParameter[] parameters);
+
         public SqlParameter CreateParameter<T>(string parameterName, DbType dbType, T value);
         //public SqlParameter CreateParameter(string parameterName, DbType dbType, int size);
     }
