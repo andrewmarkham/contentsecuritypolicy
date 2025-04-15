@@ -57,9 +57,9 @@ namespace Jhoose.Security.DependencyInjection
 
 
             services.AddScoped<ICspPolicyRepository, StandardCspPolicyRepository>();
-            services.AddSingleton<ICspProvider, StandardCspProvider>();
+            services.AddScoped<ICspProvider, StandardCspProvider>();
             services.AddSingleton<ICacheManager, EpiserverCacheManager>();
-            services.AddSingleton<IJhooseSecurityService, JhooseSecurityService>();
+            services.AddScoped<IJhooseSecurityService, JhooseSecurityService>();
 
             services.AddScoped<IResponseHeadersRepository, StandardResponseHeadersRepository>();
             services.AddScoped<IAuthKeyService, DefaultAuthKeyService>();
