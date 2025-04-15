@@ -276,3 +276,4 @@ X-API-Key: ...
  |2.3.0| Added a new Dashboard; this gives a summary of any current issues and also allows you to search for historical issues.<br/> UI refresh and various bug fixes  |
  |2.3.1| Bug fixes |
  |2.4.0| Added 'wasm-unsafe-eval' to the CSP Options<br/>Added missing options to default-src |
+ |2.4.1| Make ICspProvider and IJhooseSecurityService request scoped so a unqiue dynamic nonce is generated per request |
