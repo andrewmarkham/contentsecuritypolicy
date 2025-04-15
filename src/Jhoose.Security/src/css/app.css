@@ -117,3 +117,7 @@
 #csp-root .formCopy {
     padding-left: calc(3em + 14px);
 }
+
+#csp-root .form-container {
+    margin-left: 90px;
+}
