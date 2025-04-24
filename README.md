@@ -277,3 +277,4 @@ X-API-Key: ...
  |2.3.1| Bug fixes |
  |2.4.0| Added 'wasm-unsafe-eval' to the CSP Options<br/>Added missing options to default-src |
  |2.4.1| Make ICspProvider and IJhooseSecurityService request scoped so a unqiue dynamic nonce is generated per request |
+ |2.4.2| Ensure CSP policy header syntax is valid when using 'None' Option for any policy |

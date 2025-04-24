@@ -34,20 +34,22 @@ namespace Jhoose.Security.Core.Models.CSP
 
             if (this.None)
             {
-                sb.Append("'none'; ");
+                sb.Append("'none' ");
                 return sb.ToString();
             }
+            else
+            {
+                if (this.Wildcard) sb.Append("* ");
+                if (this.Self) sb.Append("'self' ");
 
-            if (this.Wildcard) sb.Append("* ");
-            if (this.Self) sb.Append("'self' ");
+                if (this.UnsafeEval) sb.Append("'unsafe-eval' ");
+                if (this.WasmUnsafeEval) sb.Append("'wasm-unsafe-eval' ");
+                if (this.UnsafeHashes) sb.Append("'unsafe-hashes' ");
+                if (this.UnsafeInline) sb.Append("'unsafe-inline' ");
+                if (this.StrictDynamic) sb.Append("'strict-dynamic' ");
 
-            if (this.UnsafeEval) sb.Append("'unsafe-eval' ");
-            if (this.WasmUnsafeEval) sb.Append("'wasm-unsafe-eval' ");
-            if (this.UnsafeHashes) sb.Append("'unsafe-hashes' ");
-            if (this.UnsafeInline) sb.Append("'unsafe-inline' ");
-            if (this.StrictDynamic) sb.Append("'strict-dynamic' ");
-
-            if (this.Nonce) sb.Append("'nonce-{0}' ");
+                if (this.Nonce) sb.Append("'nonce-{0}' ");
+            }
 
             return sb.ToString();
         }
