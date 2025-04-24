@@ -48,12 +48,18 @@ namespace Jhoose.Security.Core.Models.CSP
                 sb.AppendFormat($"{this.PolicyName} ");
 
                 sb.Append(this.Options?.ToString());
-                sb.Append(this.SchemaSource?.ToString());
-                sb.Append(this.SandboxOptions?.ToString());
 
-                var value = this.Value.Replace(Environment.NewLine, " ");
-
-                sb.AppendFormat($"{value}; ");
+                if (!this.Options?.None ?? false)
+                {
+                    sb.Append(this.SchemaSource?.ToString());
+                    sb.Append(this.SandboxOptions?.ToString());
+                    var value = this.Value.Replace(Environment.NewLine, " ");
+                    sb.AppendFormat($"{value}; ");
+                }
+                else
+                {
+                    sb.AppendFormat($"; ");
+                }
             }
 
             return sb.ToString();
