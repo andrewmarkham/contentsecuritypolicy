@@ -26,7 +26,7 @@ export function getPolicyOptionsDisplay(policy: CspPolicy): string {
 export function getSchemaSourceDisplay(policy: CspPolicy): string {
     var v = "";
 
-    if (policy.schemaSource)
+    if (!policy.options.none && policy.schemaSource)
     {
         //schemaSource
         v = policy.schemaSource.http ? v+= "http: " : v;
