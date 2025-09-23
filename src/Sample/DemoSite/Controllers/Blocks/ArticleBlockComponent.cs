@@ -8,14 +8,15 @@ using EPiServer.Web;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DemoSite.Controllers.Blocks
-{    public class ArticleBlockComponent : ViewComponent, IRenderTemplate<ArticlesBlock>, IRenderTemplate 
+{
+    public class ArticleBlockComponent : ViewComponent, IRenderTemplate<ArticlesBlock>, IRenderTemplate
     //public class ArticleBlockComponent : PartialContentComponent<ArticlesBlock>
     {
         private readonly IContentRepository contentRepository;
 
         public ArticleBlockComponent(IContentRepository contentRepository)
         {
-            this.contentRepository = contentRepository;    
+            this.contentRepository = contentRepository;
         }
 
         public IViewComponentResult Invoke(ArticlesBlock currentContent)

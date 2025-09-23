@@ -61,7 +61,7 @@ namespace DemoSite
 
             //_configuration.GetSection(JhooseSecurityOptions.JhooseSecurity).Bind(jhooseOptions);
 
-            services.AddJhooseSecurity(_configuration,(o) =>
+            services.AddJhooseSecurity(_configuration, (o) =>
             {
                 o.UseHeadersUI = true;
                 o.ExclusionPaths.Add("/ui");
@@ -77,7 +77,7 @@ namespace DemoSite
             });
 
 
-            
+
             services.AddControllers().AddJsonOptions(options =>
             {
                 // Global settings: use the defaults, but serialize enums as strings
@@ -86,7 +86,7 @@ namespace DemoSite
                 //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper;
 
             });
-            
+
             //services.AddTransient<BootstrapData, BootstrapData>();
         }
 

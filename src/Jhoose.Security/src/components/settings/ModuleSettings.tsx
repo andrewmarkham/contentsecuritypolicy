@@ -6,7 +6,7 @@ import type { TabsProps } from 'antd';
 
 import {CspSettings} from './CspSettings';
 import { ApiAccess } from './ApiAccess';
-import ImportExport from './ImportExport';
+import { ImportExport } from './ImportExport';
 
 export function ModuleSettings() {
 

@@ -14,4 +14,4 @@ public interface IReportingRepository
     Task<int> PurgeReporingData(DateTime beforeDate);
 
     Task<CspSearchResults> Search(CspSearchParams searchParams);
-}   
+}

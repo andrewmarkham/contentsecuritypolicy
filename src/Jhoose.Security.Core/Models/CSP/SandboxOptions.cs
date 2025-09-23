@@ -37,7 +37,7 @@ namespace Jhoose.Security.Core.Models.CSP
         public bool AllowTopNavigation { get; set; }
         public bool AllowTopNavigationByUserActivation { get; set; }
         public bool AllowTopNavigationToCustomProtocols { get; set; }
-        
+
 
 
         public override string ToString()

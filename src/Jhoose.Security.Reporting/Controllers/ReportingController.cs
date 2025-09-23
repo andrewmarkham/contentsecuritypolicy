@@ -18,9 +18,9 @@ namespace Jhoose.Security.Reporting.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    #if NET7_0_OR_GREATER
+#if NET7_0_OR_GREATER
     [EnableRateLimiting("fixed")]
-    #endif
+#endif
     public class ReportingController : ControllerBase
     {
         private readonly IReportingRepository reportingRepository;
@@ -29,7 +29,7 @@ namespace Jhoose.Security.Reporting.Controllers
         {
             this.reportingRepository = reportingRepositoryFactory.GetReportingRepository() ?? throw new ArgumentNullException(nameof(reportingRepository));
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] List<ReportTo> reportTos)
         {
@@ -48,16 +48,16 @@ namespace Jhoose.Security.Reporting.Controllers
         }*/
 
         [HttpOptions]
-        public IActionResult Options([FromHeader(Name = "Access-Control-Request-Method")] string requestMethod, 
+        public IActionResult Options([FromHeader(Name = "Access-Control-Request-Method")] string requestMethod,
                                     [FromHeader(Name = "Access-Control-Request-Headers")] string requestHeaders)
         {
             Response.Headers.Append("Access-Control-Allow-Origin", new[] { (string?)Request.Headers["Origin"] });
             Response.Headers.Append("Access-Control-Allow-Methods", "POST, OPTIONS");
             Response.Headers.Append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             Response.Headers.Append("Access-Control-Max-Age", "86400");
-            
+
             return Ok();
-        }   
+        }
 
     }
 }

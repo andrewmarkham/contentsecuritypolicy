@@ -25,7 +25,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname + '/index.html' ));
 })
 
-app.get('/api/csp', async (req, res) => {
+app.get('/api/jhoose/csp', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   var policiesCol = db.getCollection(collectionName);
@@ -35,7 +35,7 @@ app.get('/api/csp', async (req, res) => {
   res.json(policies);
 })
 
-app.get('/api/csp/settings', async (req, res) => {
+app.get('/api/jhoose/settings', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   var settings = {
@@ -54,7 +54,7 @@ app.get('/api/csp/settings', async (req, res) => {
   res.json(settings);
 })
 var jsonParser = bodyParser.json()
-app.post('/api/csp/search', jsonParser,async (req, res) => {
+app.post('/api/jhoose/dashboard/search', jsonParser,async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   var r = {
@@ -121,7 +121,7 @@ app.post('/api/csp/search', jsonParser,async (req, res) => {
   res.json(r);
 });
 
-app.get('/api/csp/header', async (req, res) => {
+app.get('/api/jhoose/responseheaders', async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
 
   var headersCol = db.getCollection("headers");
@@ -137,7 +137,7 @@ app.get('/api/csp/header', async (req, res) => {
 })
 
 
-app.post('/api/csp',jsonParser, async (req, res) => {
+app.post('/api/jhoose/csp',jsonParser, async (req, res) => {
   
   var policiesCol = db.getCollection(collectionName);
   var data = req.body;
@@ -150,7 +150,7 @@ app.post('/api/csp',jsonParser, async (req, res) => {
   res.json(data);
 })
 
-app.post('/api/csp/settings',jsonParser, async (req, res) => {
+app.post('/api/jhoose/settings',jsonParser, async (req, res) => {
   
   var data = req.body;
   console.log(data);
@@ -161,7 +161,7 @@ app.post('/api/csp/settings',jsonParser, async (req, res) => {
   res.json(data);
 })
 
-app.post('/api/csp/header',jsonParser, async (req, res) => {
+app.post('/api/jhoose/responseheaders',jsonParser, async (req, res) => {
   
   var data = req.body;
   console.log(data);
@@ -177,7 +177,7 @@ app.post('/api/csp/header',jsonParser, async (req, res) => {
   res.json(data);
 })
 
-app.post('/api/csp/dashboard/summary', jsonParser, async (req, res) => {
+app.post('/api/jhoose/dashboard', jsonParser, async (req, res) => {
 
   var query = req.body;
   console.log(query);
@@ -191,6 +191,44 @@ app.post('/api/csp/dashboard/summary', jsonParser, async (req, res) => {
   res.json(summaryData);
 });
 
+app.post('/api/jhoose/settings/export', jsonParser, async (req, res) => {
+
+  var query = req.body;
+  console.log(query);
+
+  res.setHeader('Content-Type', 'application/json');
+
+  await snooze(1500);
+
+  var summaryData = buildDasboardData(query);
+
+   res.json(summaryData);
+});
+
+app.post('/api/jhoose/settings/uploadimport', async (req, res) => {
+
+  var data = req.body;
+  console.log(data);
+
+  res.setHeader('Content-Type', 'application/json');
+
+  await snooze(1500);
+
+  // Just return what was sent for now
+  res.json(data);
+});
+
+app.get('/api/jhoose/settings/listimports', async (req, res) => {
+
+  res.setHeader('Content-Type', 'application/json');
+
+  await snooze(1500);
+
+  var jsonData = fs.readFileSync(path.join(__dirname + '/csp-importdata.json'));
+  var importdata = JSON.parse(jsonData);
+
+  res.json(importdata);
+});
 
 app.get('/EPiServer/Shell/epiplatformnavigation', async(req, res) => {
   res.setHeader('Content-Type', 'application/json');
