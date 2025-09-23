@@ -128,7 +128,7 @@ namespace Jhoose.Security.Reporting.Database
 
             await isqlHelper.ExecuteNonQuery(sqlCommand);
         }
-        
+
         private async Task CreateStoredProcedure()
         {
             var sqlCommand = """

@@ -13,14 +13,16 @@ namespace Jhoose.Security.Reporting.Database
 
         public async Task<int> ExecuteNonQuery(string sqlCommand, params SqlParameter[] parameters)
         {
-            try{
+            try
+            {
                 using var connection = new SqlConnection(options.ConnectionString);
                 connection.Open();
                 using var command = new SqlCommand(sqlCommand, connection);
 
                 command.Parameters.AddRange(parameters);
                 return await command.ExecuteNonQueryAsync();
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex, "Error while executing non query");
                 return -1;
@@ -29,7 +31,8 @@ namespace Jhoose.Security.Reporting.Database
 
         public async Task<T?> ExecuteScalar<T>(string sqlCommand, params SqlParameter[] parameters)
         {
-            try{
+            try
+            {
                 using var connection = new SqlConnection(options.ConnectionString);
                 connection.Open();
                 using var command = new SqlCommand(sqlCommand, connection);
@@ -37,18 +40,20 @@ namespace Jhoose.Security.Reporting.Database
                 command.Parameters.AddRange(parameters);
                 var result = await command.ExecuteScalarAsync();
                 return (T?)result;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex, "Error while executing non query");
                 return default;
             }
         }
 
-        public async Task<T?> ExecuteReader<T>(string sqlCommand, IEnumerable<SqlParameter>? parameters,Func<SqlDataReader, T>? readerAction = null)
+        public async Task<T?> ExecuteReader<T>(string sqlCommand, IEnumerable<SqlParameter>? parameters, Func<SqlDataReader, T>? readerAction = null)
         {
             T? results = default;
 
-            try{
+            try
+            {
                 using var connection = new SqlConnection(options.ConnectionString);
                 connection.Open();
                 using var command = new SqlCommand(sqlCommand, connection);
@@ -66,11 +71,13 @@ namespace Jhoose.Security.Reporting.Database
                 reader.Close();
 
                 return results ?? default;
-                
-            } catch (SqlException ex)
+
+            }
+            catch (SqlException ex)
             {
                 logger.LogError(ex, "SQL Exception while executing reader");
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 logger.LogError(ex, "Error while executing reader");
             }
@@ -78,8 +85,8 @@ namespace Jhoose.Security.Reporting.Database
             return results;
         }
 
-        public async Task<int> ExecuteStoredProcedure<T>(string storedProcedureName, 
-                                                      IEnumerable<SqlParameter> parameters, 
+        public async Task<int> ExecuteStoredProcedure<T>(string storedProcedureName,
+                                                      IEnumerable<SqlParameter> parameters,
                                                       Func<SqlDataReader, T>? readerAction = null,
                                                       int defaultReturnValue = -1)
         {
@@ -122,8 +129,8 @@ namespace Jhoose.Security.Reporting.Database
         {
             var parameter = new SqlParameter
             {
-                ParameterName = parameterName, 
-                DbType = dbType, 
+                ParameterName = parameterName,
+                DbType = dbType,
                 Direction = ParameterDirection.Input,
                 Value = value
             };

@@ -3,14 +3,15 @@ using Microsoft.Data.SqlClient;
 
 namespace Jhoose.Security.Reporting.Database
 {
-    public interface ISqlHelper {
+    public interface ISqlHelper
+    {
         public Task<int> ExecuteNonQuery(string sqlCommand, params SqlParameter[] parameters);
-        public Task<T?> ExecuteReader<T>(string sqlCommand, 
+        public Task<T?> ExecuteReader<T>(string sqlCommand,
             IEnumerable<SqlParameter>? parameters,
             Func<SqlDataReader, T>? readerAction = null);
 
-        public Task<int> ExecuteStoredProcedure<T>(string storedProcedureName, 
-                                                      IEnumerable<SqlParameter> parameters, 
+        public Task<int> ExecuteStoredProcedure<T>(string storedProcedureName,
+                                                      IEnumerable<SqlParameter> parameters,
                                                       Func<SqlDataReader, T>? readerAction = null,
                                                       int defaultReturnValue = -1);
 

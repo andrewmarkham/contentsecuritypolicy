@@ -8,7 +8,8 @@ using EPiServer.Web;
 namespace DemoSite.Models.Pages
 {
     [ContentType(GUID = "77cd3b4e-a6e0-45de-996f-8fbef7dcc04b")]
-    public class ArticlePage : PageData {
+    public class ArticlePage : PageData
+    {
         [Display(
             GroupName = SystemTabNames.Content,
             Order = 10)]

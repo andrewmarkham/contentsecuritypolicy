@@ -34,17 +34,16 @@ namespace Jhoose.Security.Core.Models.CSP
 
         protected virtual string BuildValue(string reportUrl, string? nonceValue)
         {
-
             var sb = new StringBuilder();
             this.Policies?.ForEach(p => sb.Append(p.ToString()));
 
             if (!string.IsNullOrEmpty(reportUrl))
             {
-                sb.Append($" report-uri {reportUrl}; ");
+                sb.Append(" report-uri ").Append(reportUrl).Append("; ");
 
                 if (!string.IsNullOrEmpty(this.reportToUrl))
                 {
-                    sb.Append($" report-to csp-endpoint; ");
+                    sb.Append(" report-to csp-endpoint; ");
                 }
             }
 

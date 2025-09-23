@@ -10,7 +10,7 @@ namespace Jhoose.Security.Core.Models
 
         public override string Name => "Report-To";
 
-        
+
         public override string Value => $"{{ \"group\": \"csp-endpoint\",\"max_age\": 10886400,\"endpoints\": [{{ \"url\": \"{this.reportToUrl}\" }}] }}";
     }
 }

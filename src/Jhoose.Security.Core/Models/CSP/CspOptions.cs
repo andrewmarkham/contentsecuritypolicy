@@ -54,6 +54,6 @@ namespace Jhoose.Security.Core.Models.CSP
             return sb.ToString();
         }
 
-        public bool HasOptions => this.None | this.Wildcard | this.Self | this.WasmUnsafeEval| this.UnsafeEval | this.UnsafeHashes | this.UnsafeInline | this.StrictDynamic | this.Nonce;
+        public bool HasOptions => this.None | this.Wildcard | this.Self | this.WasmUnsafeEval | this.UnsafeEval | this.UnsafeHashes | this.UnsafeInline | this.StrictDynamic | this.Nonce;
     }
 }

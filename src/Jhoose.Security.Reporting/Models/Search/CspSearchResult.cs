@@ -16,14 +16,15 @@ namespace Jhoose.Security.Reporting.Models.Search
         public string Browser { get; set; } = string.Empty;
         public string Version { get; set; } = string.Empty;
         public string Os { get; set; } = string.Empty;
-        public  string Directive { get; set; }  = string.Empty;
-        public  string BlockedUri { get; set; } = string.Empty;
+        public string Directive { get; set; } = string.Empty;
+        public string BlockedUri { get; set; } = string.Empty;
 
         public BodyData? Body { get; set; }
     }
 
 
-    public class CspSearchParams {
+    public class CspSearchParams
+    {
 
         public string? SortField { get; set; }
 
@@ -35,13 +36,15 @@ namespace Jhoose.Security.Reporting.Models.Search
         public CspSearchFilter? Filters { get; set; }
     }
 
-    public class CspSearchFilter {
+    public class CspSearchFilter
+    {
         public string? Query { get; set; }
         public DateTime? DateFrom { get; set; }
         public List<string>? Browser { get; set; }
         public List<string>? Directive { get; set; }
 
-        public bool HasFilters() {
+        public bool HasFilters()
+        {
             return !string.IsNullOrEmpty(Query) || DateFrom.HasValue || Browser?.Count > 0 || Directive?.Count > 0;
         }
     }

@@ -8,4 +8,4 @@ public interface IDashboardService
     Task<DashboardSummary> BuildSummary(DashboardSummaryQuery query);
 
     Task<CspSearchResults> Search(CspSearchParams searchParams);
-}   
+}
