@@ -26,6 +26,7 @@ using EPiServer.ServiceLocation;
 
 using Jhoose.Security.Core.Configuration;
 using Jhoose.Security.Reporting.DependencyInjection;
+using Jhoose.Security.Core.Services;
 
 namespace Jhoose.Security.DependencyInjection
 {
@@ -41,7 +42,7 @@ namespace Jhoose.Security.DependencyInjection
             services.AddHostedService<InitialiseHostedService>();
 
             services.Configure<JhooseSecurityOptions>(configuration.GetSection(JhooseSecurityOptions.JhooseSecurity));
-            
+
             if (options != null)
             {
                 services.PostConfigure<JhooseSecurityOptions>(options);
@@ -63,7 +64,10 @@ namespace Jhoose.Security.DependencyInjection
 
             services.AddScoped<IResponseHeadersRepository, StandardResponseHeadersRepository>();
             services.AddScoped<IAuthKeyService, DefaultAuthKeyService>();
+            services.AddScoped<IImportExportService, ImportExportService>();
 
+            services.AddScoped<IImportRepository, JhooseImportRepository>();
+            
             services.AddSingleton<IResponseHeadersProvider>((sp) =>
             {
                 var options = sp.GetService<IOptions<JhooseSecurityOptions>>();
@@ -96,10 +100,10 @@ namespace Jhoose.Security.DependencyInjection
             services.AddScoped<IWebhookNotifications, DefaultWebhookNotifications>();
 
             services.AddHttpClient("webhooks");
-            
+
             //move into main jhoose
             services.AddJhooseSecurityCoreReporting();
-            
+
             return services;
         }
 

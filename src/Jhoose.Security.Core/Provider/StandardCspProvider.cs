@@ -41,7 +41,7 @@ namespace Jhoose.Security.Core.Provider
         {
             var rootRef = ContentReference.IsNullOrEmpty(ContentReference.StartPage) ? ContentReference.RootPage : ContentReference.StartPage;
             var host = this.siteDefinitionResolver.GetByContent(rootRef, true).SiteUrl.ToString();
-            
+
             var policies = this.policyRepository.List();
             var settings = this.Settings;
 
@@ -76,7 +76,7 @@ namespace Jhoose.Security.Core.Provider
 
                 if (reportPolicies.Any())
                 {
-                    yield return new CspPolicyReportHeader(settings,host)
+                    yield return new CspPolicyReportHeader(settings, host)
                     {
                         Policies = reportPolicies
                     };

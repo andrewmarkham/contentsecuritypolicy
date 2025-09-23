@@ -4,7 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Jhoose.Security.Core.Models.CSP
 {
-    public enum ReportingMode {
+    public enum ReportingMode
+    {
         None = 0,
         Local = 1,
         External = 2
@@ -21,8 +22,8 @@ namespace Jhoose.Security.Core.Models.CSP
         public Guid Id { get; set; }
         public string Mode { get; set; }
 
-        public ReportingMode ReportingMode {get;set;}
-        
+        public ReportingMode ReportingMode { get; set; }
+
         /// <summary>
         /// Used for the report-uri directive
         /// </summary>

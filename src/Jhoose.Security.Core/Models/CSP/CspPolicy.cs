@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Jhoose.Security.Core.Models.CSP
 {
@@ -35,6 +36,7 @@ namespace Jhoose.Security.Core.Models.CSP
 
         public string Value { get; set; }
 
+        [JsonIgnore]
         public string SummaryText { get; set; }
 
         public override string ToString()
@@ -45,7 +47,7 @@ namespace Jhoose.Security.Core.Models.CSP
                 (this.SchemaSource?.HasSchemaSource ?? false) |
                 (this.SandboxOptions?.Enabled ?? false) | !string.IsNullOrEmpty(this.Value))
             {
-                sb.AppendFormat($"{this.PolicyName} ");
+                sb.Append(this.PolicyName).Append(' ');
 
                 sb.Append(this.Options?.ToString());
 
@@ -53,12 +55,15 @@ namespace Jhoose.Security.Core.Models.CSP
                 {
                     sb.Append(this.SchemaSource?.ToString());
                     sb.Append(this.SandboxOptions?.ToString());
-                    var value = this.Value.Replace(Environment.NewLine, " ");
-                    sb.AppendFormat($"{value}; ");
+
+                    // Use Span to avoid creating intermediate string allocation
+                    var valueSpan = this.Value.AsSpan();
+                    var replaced = valueSpan.ToString().Replace(Environment.NewLine, " ");
+                    sb.Append(replaced).Append("; ");
                 }
                 else
                 {
-                    sb.AppendFormat($"; ");
+                    sb.Append("; ");
                 }
             }
 

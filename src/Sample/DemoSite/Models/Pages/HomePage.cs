@@ -10,9 +10,9 @@ namespace DemoSite.Models.Pages
         GUID = "19671657-B684-4D95-A61F-8DD4FE60D559")]
     public class HomePage : PageData
     {
-       [Display(
-            GroupName = SystemTabNames.Content,
-            Order = 10)]
+        [Display(
+             GroupName = SystemTabNames.Content,
+             Order = 10)]
         [CultureSpecific]
         public virtual string Heading { get; set; }
 
@@ -23,8 +23,8 @@ namespace DemoSite.Models.Pages
         public virtual ContentArea MainContentArea { get; set; }
 
         [UIHint(UIHint.Image)]
-        public virtual ContentReference Logo {get;set;}
+        public virtual ContentReference Logo { get; set; }
 
-        public virtual ContentArea MainContent {get;set;}
+        public virtual ContentArea MainContent { get; set; }
     }
 }

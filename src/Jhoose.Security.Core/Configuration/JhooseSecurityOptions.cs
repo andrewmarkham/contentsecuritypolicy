@@ -26,8 +26,8 @@ namespace Jhoose.Security.Core.Configuration
 
         public bool UseHeadersUI { get; set; }
 
-        public ReportingOptions Reporting{ get; set; } = new ReportingOptions();
-        
+        public ReportingOptions Reporting { get; set; } = new ReportingOptions();
+
         public StrictTransportSecurityHeader StrictTransportSecurity { get; set; }
         public XFrameOptionsHeader XFrameOptions { get; set; }
         public XContentTypeOptionsHeader XContentTypeOptions { get; set; }

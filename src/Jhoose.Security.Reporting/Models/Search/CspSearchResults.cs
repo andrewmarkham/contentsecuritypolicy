@@ -1,6 +1,7 @@
 namespace Jhoose.Security.Reporting.Models.Search
 {
-    public class CspSearchResults {
+    public class CspSearchResults
+    {
         public long Total { get; set; } = 0;
         public List<CspSearchResult> Results { get; set; } = [];
 

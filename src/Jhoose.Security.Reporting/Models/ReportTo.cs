@@ -13,18 +13,18 @@ namespace Jhoose.Security.Reporting.Models
             string url,
             string userAgent,
             ReportToBody body,
-            DateTime recievedAt 
+            DateTime recievedAt
         )
         {
             Age = age;
-                RecievedAt = recievedAt;
-                Type = type;
-                Url = url;
-                UserAgent = userAgent;
-                Body = body;
-                Browser = string.Empty;
-                Version = string.Empty;
-                OS = string.Empty;
+            RecievedAt = recievedAt;
+            Type = type;
+            Url = url;
+            UserAgent = userAgent;
+            Body = body;
+            Browser = string.Empty;
+            Version = string.Empty;
+            OS = string.Empty;
         }
 
         [JsonPropertyName("age")]

@@ -23,7 +23,7 @@ namespace Jhoose.Security.Reporting.Database
         }
 
         public string Type => "Sql";
-        
+
         public async Task AddReport(ReportTo reportTo)
         {
             var sqlCommand = """
@@ -38,19 +38,19 @@ namespace Jhoose.Security.Reporting.Database
 
             await sqlHelper.ExecuteNonQuery(
                 sqlCommand,
-                sqlHelper.CreateParameter<int>("Age", DbType.Int32,reportTo.Age),
-                sqlHelper.CreateParameter<DateTime>("RecievedAt", DbType.DateTime,reportTo.RecievedAt),
-                sqlHelper.CreateParameter<DateTime>("RecievedAtMin", DbType.DateTime,recievedAtMin),
-                sqlHelper.CreateParameter<DateTime>("RecievedAtHour", DbType.DateTime,recievedAtHour),
-                sqlHelper.CreateParameter<string>("Type", DbType.String,reportTo.Type),
-                sqlHelper.CreateParameter<string>("Url", DbType.String,reportTo.Url),
-                sqlHelper.CreateParameter<string>("UserAgent", DbType.String,reportTo.UserAgent),
-                sqlHelper.CreateParameter<string>("Browser", DbType.String,reportTo.Browser),
-                sqlHelper.CreateParameter<string>("Version", DbType.String,reportTo.Version),
-                sqlHelper.CreateParameter<string>("OS", DbType.String,reportTo.OS),
-                sqlHelper.CreateParameter<string>("Directive", DbType.String,reportTo.Directive),
-                sqlHelper.CreateParameter<string>("BlockedUri", DbType.String,reportTo.BlockedUri),
-                sqlHelper.CreateParameter<string>("Body", DbType.String,JsonSerializer.Serialize(reportTo.Body)));
+                sqlHelper.CreateParameter<int>("Age", DbType.Int32, reportTo.Age),
+                sqlHelper.CreateParameter<DateTime>("RecievedAt", DbType.DateTime, reportTo.RecievedAt),
+                sqlHelper.CreateParameter<DateTime>("RecievedAtMin", DbType.DateTime, recievedAtMin),
+                sqlHelper.CreateParameter<DateTime>("RecievedAtHour", DbType.DateTime, recievedAtHour),
+                sqlHelper.CreateParameter<string>("Type", DbType.String, reportTo.Type),
+                sqlHelper.CreateParameter<string>("Url", DbType.String, reportTo.Url),
+                sqlHelper.CreateParameter<string>("UserAgent", DbType.String, reportTo.UserAgent),
+                sqlHelper.CreateParameter<string>("Browser", DbType.String, reportTo.Browser),
+                sqlHelper.CreateParameter<string>("Version", DbType.String, reportTo.Version),
+                sqlHelper.CreateParameter<string>("OS", DbType.String, reportTo.OS),
+                sqlHelper.CreateParameter<string>("Directive", DbType.String, reportTo.Directive),
+                sqlHelper.CreateParameter<string>("BlockedUri", DbType.String, reportTo.BlockedUri),
+                sqlHelper.CreateParameter<string>("Body", DbType.String, JsonSerializer.Serialize(reportTo.Body)));
         }
 
         public async Task<DashboardSummary> GetDashboardSummary(DashboardSummary summary)
@@ -63,7 +63,8 @@ namespace Jhoose.Security.Reporting.Database
                 sqlHelper.CreateParameter("@Period", DbType.String, "min")
             };
 
-            await sqlHelper.ExecuteStoredProcedure("GetSecurityReportSummary",parameters,(reader) => {
+            await sqlHelper.ExecuteStoredProcedure("GetSecurityReportSummary", parameters, (reader) =>
+            {
                 return PopulateDashboardSummary(reader, summary);
             });
 
@@ -76,13 +77,13 @@ namespace Jhoose.Security.Reporting.Database
 
             return await sqlHelper.ExecuteNonQuery(
                 sqlCommand,
-                sqlHelper.CreateParameter<DateTime>("BeforeDate", DbType.DateTime,beforeDate));
+                sqlHelper.CreateParameter<DateTime>("BeforeDate", DbType.DateTime, beforeDate));
 
         }
 
         public async Task<CspSearchResults> Search(CspSearchParams searchParams)
         {
-            var from = (searchParams.Page-1) * searchParams.PageSize;
+            var from = (searchParams.Page - 1) * searchParams.PageSize;
 
             var sqlCommand = "SecurityReportSearch";
             var parameters = new List<SqlParameter>
@@ -98,17 +99,19 @@ namespace Jhoose.Security.Reporting.Database
             };
             var searchResults = new CspSearchResults();
 
-            await sqlHelper.ExecuteStoredProcedure(sqlCommand, parameters,(reader) => {
-                return GetCspSearchResults(reader,searchResults);
+            await sqlHelper.ExecuteStoredProcedure(sqlCommand, parameters, (reader) =>
+            {
+                return GetCspSearchResults(reader, searchResults);
             });
 
             return searchResults;
         }
 
-        private static DashboardSummary PopulateDashboardSummary(SqlDataReader reader, DashboardSummary summary) {
-               
-            summary.TopDirectives.AddRange(GetDashboardIssues(reader,"directive"));
-            
+        private static DashboardSummary PopulateDashboardSummary(SqlDataReader reader, DashboardSummary summary)
+        {
+
+            summary.TopDirectives.AddRange(GetDashboardIssues(reader, "directive"));
+
             reader.NextResult();
 
             summary.TopPages.AddRange(GetDashboardIssues(reader, "page"));
@@ -125,7 +128,7 @@ namespace Jhoose.Security.Reporting.Database
         private static IEnumerable<DashboardIssue> GetDashboardIssues(SqlDataReader reader, string section)
         {
             var path = Paths.ToResource("Jhoose.Security", "jhoosesecurityadmin#/");
-            
+
             while (reader.Read())
             {
                 yield return new DashboardIssue
@@ -143,16 +146,16 @@ namespace Jhoose.Security.Reporting.Database
             {
                 yield return new DashboardGraphItem
                 {
-                        Time = reader.GetDateTime(2),
-                        Metric = reader.GetString(0),
-                        Value = reader.GetInt32(3)
+                    Time = reader.GetDateTime(2),
+                    Metric = reader.GetString(0),
+                    Value = reader.GetInt32(3)
                 };
             }
         }
 
         private static CspSearchResults GetCspSearchResults(SqlDataReader reader, CspSearchResults cspSearchResults)
         {
-            
+
             cspSearchResults.Results.AddRange(GetCspSearchResults1(reader));
 
             reader.NextResult();
@@ -171,16 +174,18 @@ namespace Jhoose.Security.Reporting.Database
             return cspSearchResults;
         }
 
-        private static IEnumerable<CspSearchResult> GetCspSearchResults1(SqlDataReader reader) {
+        private static IEnumerable<CspSearchResult> GetCspSearchResults1(SqlDataReader reader)
+        {
             while (reader.Read())
             {
-                yield return new CspSearchResult {
+                yield return new CspSearchResult
+                {
                     Id = reader.GetInt64(0).ToString(),
                     RecievedAt = reader.GetDateTime(1),
                     Url = reader.GetString(2),
                     Directive = reader.GetString(3),
                     Browser = reader.GetString(4),
-                    BlockedUri  = reader.GetString(5)
+                    BlockedUri = reader.GetString(5)
                 };
             }
         }

@@ -27,7 +27,7 @@ namespace Jhoose.Security.Reporting.ElasticSearch
                 options.Password = GetParamValue(provider.Params, nameof(ElasticSearchReportingOptions.Password), string.Empty);
 
                 options.IndexName = GetParamValue(provider.Params, nameof(ElasticSearchReportingOptions.IndexName), string.Empty);
-                options.CertificateFingerprint  = GetParamValue(provider.Params, nameof(ElasticSearchReportingOptions.CertificateFingerprint), string.Empty);
+                options.CertificateFingerprint = GetParamValue(provider.Params, nameof(ElasticSearchReportingOptions.CertificateFingerprint), string.Empty);
                 options.CloudId = GetParamValue(provider.Params, nameof(ElasticSearchReportingOptions.CloudId), string.Empty);
                 options.EndPoints = [.. GetParamValue(provider.Params, nameof(ElasticSearchReportingOptions.EndPoints), string.Empty).Split(';')];
             }
