@@ -30,7 +30,8 @@ namespace Jhoose.Security.Middleware
                     response.StatusCode == StatusCodes.Status304NotModified
                     || response.Headers.TryGetValue(HeaderNames.ContentType, out var contentType)
                         && !contentType.ToString().StartsWith(MediaTypeNames.Text.Html)
-                        && !contentType.ToString().StartsWith("text/javascript") // MediaTypeNames.Text.JavaScript is not available in .NET < 8
+                        // MediaTypeNames.Text.JavaScript is not available in .NET < 8
+                        && !contentType.ToString().StartsWith("text/javascript")
                 )
                 {
                     response.Headers.Remove(HeaderNames.ContentSecurityPolicy);
