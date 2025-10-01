@@ -32,4 +32,3 @@ namespace Jhoose.Security.Reporting.Models.Search
         public int ColumnNumber { get; set; }
     }
 }
-

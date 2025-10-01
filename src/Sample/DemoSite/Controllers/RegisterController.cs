@@ -1,17 +1,4 @@
-
-
 //using AlloyTemplates.Models;
-
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using EPiServer.Authorization;
-using EPiServer.Core;
-using EPiServer.DataAbstraction;
-using EPiServer.Security;
-using EPiServer.ServiceLocation;
-using EPiServer.Shell.Security;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc; //using AlloyMvcTemplates.Infrastructure;
 
 namespace DemoSite.Controllers
 {

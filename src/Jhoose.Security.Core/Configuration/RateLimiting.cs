@@ -9,4 +9,3 @@ namespace Jhoose.Security.Core.Configuration
         public int WindowSeconds { get; set; } = 60;
     }
 }
-

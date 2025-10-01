@@ -15,4 +15,3 @@ namespace Jhoose.Security.Core.Configuration
         public List<ReportingProvider> Providers { get; set; } = [];
     }
 }
-

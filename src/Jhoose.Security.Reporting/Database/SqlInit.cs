@@ -5,7 +5,7 @@ namespace Jhoose.Security.Reporting.Database
 {
     public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedService
     {
-        protected const string DBVersion = "1.0.1";
+        protected const string DBVersion = "1.0.2";
 
         private readonly ILogger<SqlInit> logger = logger;
         private readonly ISqlHelper isqlHelper = isqlHelper;
@@ -214,7 +214,7 @@ namespace Jhoose.Security.Reporting.Database
                             BlockedUri
                     INTO #TempSearchData
                     FROM SecurityReportTo
-                    WHERE RecievedAtMin <= @DateFrom AND 
+                    WHERE RecievedAtMin >= @DateFrom AND 
                             (@Query = '' OR Url LIKE '%' + TRIM(@Query) + '%' OR BlockedUri LIKE '%' + TRIM(@Query) + '%') AND
                             (@Browser = '' OR Browser IN (SELECT value FROM string_split(@Browser, ','))) AND
                             (@Directive = '' OR Directive IN (SELECT value FROM string_split(@Directive, ',')))
@@ -261,5 +261,3 @@ namespace Jhoose.Security.Reporting.Database
         }
     }
 }
-
-

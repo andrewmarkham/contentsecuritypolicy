@@ -1,11 +1,13 @@
 using System.Data;
-using System.Data.Common;
 using System.Net;
 using System.Text.Json;
+
 using EPiServer.Shell;
+
 using Jhoose.Security.Reporting.Models;
 using Jhoose.Security.Reporting.Models.Dashboard;
 using Jhoose.Security.Reporting.Models.Search;
+
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 
@@ -90,7 +92,7 @@ namespace Jhoose.Security.Reporting.Database
             {
                 sqlHelper.CreateParameter<int>("@PageSize", DbType.Int32, searchParams.PageSize),
                 sqlHelper.CreateParameter<int>("@RecordFrom", DbType.Int32, from),
-                sqlHelper.CreateParameter<DateTime>("@DateFrom", DbType.DateTime, searchParams.Filters?.DateFrom ?? DateTime.Now),
+                sqlHelper.CreateParameter<DateTime>("@DateFrom", DbType.DateTime, searchParams.Filters?.DateFrom ?? DateTime.UtcNow.AddYears(-1)),
                 sqlHelper.CreateParameter<string>("@Query", DbType.String, searchParams?.Filters?.Query ?? string.Empty),
                 sqlHelper.CreateParameter<string>("@Directive", DbType.String, string.Join(',',searchParams?.Filters?.Directive ?? []) ),
                 sqlHelper.CreateParameter<string>("@Browser", DbType.String, string.Join(',',searchParams?.Filters?.Browser ?? [])),
@@ -191,5 +193,3 @@ namespace Jhoose.Security.Reporting.Database
         }
     }
 }
-
-

@@ -52,4 +52,3 @@ namespace Jhoose.Security.Reporting.Models
         public ReportToBody Body { get; }
     }
 }
-

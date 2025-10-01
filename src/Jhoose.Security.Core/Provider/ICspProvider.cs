@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Jhoose.Security.Core.Models;
+
 using Jhoose.Security.Core.Models.CSP;
 
 namespace Jhoose.Security.Core.Provider

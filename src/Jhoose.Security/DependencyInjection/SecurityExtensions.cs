@@ -1,32 +1,30 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Configuration;
-using Jhoose.Security.Middleware;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using EPiServer.Authorization;
+using EPiServer.ServiceLocation;
 using EPiServer.Shell.Modules;
 
-using Jhoose.Security.Core.Repository;
-using Jhoose.Security.Core.Provider;
-using Jhoose.Security.Repository;
-
-using System.Collections.Generic;
-
-using System;
-using Jhoose.Security.Core.Cache;
-
-using Jhoose.Security.Services;
-using Jhoose.Security.Core.Binders;
-using System.Linq;
 using Jhoose.Security.Authorization;
-using Microsoft.AspNetCore.Authorization;
-using EPiServer.Authorization;
-using Jhoose.Security.Webhooks;
-using EPiServer.ServiceLocation;
-
+using Jhoose.Security.Core.Binders;
+using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Configuration;
-using Jhoose.Security.Reporting.DependencyInjection;
+using Jhoose.Security.Core.Provider;
+using Jhoose.Security.Core.Repository;
 using Jhoose.Security.Core.Services;
+using Jhoose.Security.Middleware;
+using Jhoose.Security.Reporting.DependencyInjection;
+using Jhoose.Security.Repository;
+using Jhoose.Security.Services;
+using Jhoose.Security.Webhooks;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Jhoose.Security.DependencyInjection
 {
@@ -67,7 +65,7 @@ namespace Jhoose.Security.DependencyInjection
             services.AddScoped<IImportExportService, ImportExportService>();
 
             services.AddScoped<IImportRepository, JhooseImportRepository>();
-            
+
             services.AddSingleton<IResponseHeadersProvider>((sp) =>
             {
                 var options = sp.GetService<IOptions<JhooseSecurityOptions>>();

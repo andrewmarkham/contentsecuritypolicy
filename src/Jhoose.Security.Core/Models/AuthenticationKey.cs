@@ -1,5 +1,4 @@
-﻿using System;
-namespace Jhoose.Security.Core.Models
+﻿namespace Jhoose.Security.Core.Models
 {
     public class AuthenticationKey
     {
@@ -8,4 +7,3 @@ namespace Jhoose.Security.Core.Models
         public bool Revoked { get; set; } = false;
     }
 }
-

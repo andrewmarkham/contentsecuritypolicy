@@ -1,20 +1,23 @@
-using Jhoose.Security.Reporting.Models;
+using System.Net;
 
 using Elastic.Clients.Elasticsearch;
-using Jhoose.Security.Reporting.Models.Dashboard;
 using Elastic.Clients.Elasticsearch.Aggregations;
+using Elastic.Clients.Elasticsearch.QueryDsl;
+
+using EPiServer.Shell;
+
+using Jhoose.Security.Reporting.Models;
+using Jhoose.Security.Reporting.Models.Dashboard;
+using Jhoose.Security.Reporting.Models.Search;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Jhoose.Security.Reporting.Models.Search;
-using Elastic.Clients.Elasticsearch.QueryDsl;
-using EPiServer.Shell;
-using System.Net;
 
 namespace Jhoose.Security.Reporting.ElasticSearch;
 
 public class ElasticSearchReportingRepository : IReportingRepository
 {
-    const string IndexName = "reporting";
+    private const string IndexName = "reporting";
 
     private readonly IElasticSearchSettingsBuilder settingsBuilder;
     private readonly IOptions<ElasticSearchReportingOptions> options;

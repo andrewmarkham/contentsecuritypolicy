@@ -1,15 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
+
 using Jhoose.Security.Core;
 using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Configuration;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.SecurityHeaders;
 using Jhoose.Security.Core.Repository;
+
 using Microsoft.AspNetCore.Http;
+
 using Newtonsoft.Json;
 
 namespace Jhoose.Security.Repository

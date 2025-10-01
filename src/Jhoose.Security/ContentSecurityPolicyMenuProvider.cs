@@ -1,14 +1,22 @@
 using System.Collections.Generic;
+
 using EPiServer.Shell;
 using EPiServer.Shell.Navigation;
+
 using Jhoose.Security.Authorization;
 
 namespace Jhoose.Security
 {
-    [MenuProvider]
-    public class ContentSecurityPolicyMenuProvider : IMenuProvider
+    /// <summary>
+    /// Provides menu items for the Jhoose Security section in the EPiServer CMS.
+    /// </summary>
+        [MenuProvider]
+        public class ContentSecurityPolicyMenuProvider : IMenuProvider
     {
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContentSecurityPolicyMenuProvider"/> class.
+        /// </summary>
         public ContentSecurityPolicyMenuProvider()
         {
         }

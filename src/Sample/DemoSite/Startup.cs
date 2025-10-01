@@ -1,25 +1,19 @@
 using DemoSite.Infrastructure.Initilization;
+
 using EPiServer.Cms.UI.AspNetIdentity;
+using EPiServer.Framework.Web.Resources;
+using EPiServer.Shell.Modules;
 using EPiServer.Web;
 using EPiServer.Web.Routing;
+
+using Jhoose.Security.DependencyInjection;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Jhoose.Security.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using EPiServer.Framework.Web.Resources;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using EPiServer.Shell.Modules;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Jhoose.Security.Reporting.DependencyInjection;
-using System.Collections.Generic;
-using Jhoose.Security.Reporting.Database;
-using Jhoose.Security.Core.Configuration;
 
 namespace DemoSite
 {

@@ -3,6 +3,7 @@ using Jhoose.Security.Reporting.Models.Dashboard;
 using Jhoose.Security.Reporting.Models.Search;
 
 namespace Jhoose.Security.Reporting;
+
 public interface IReportingRepository
 {
     string Type { get; }

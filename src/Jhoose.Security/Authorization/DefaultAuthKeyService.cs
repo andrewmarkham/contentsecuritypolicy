@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Linq;
+
 using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Provider;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
 namespace Jhoose.Security.Authorization
 {
-    public class DefaultAuthKeyService : IAuthKeyService
+    /// <summary>
+    /// Provides default implementation for authentication key validation service.
+    /// </summary>
+        public class DefaultAuthKeyService : IAuthKeyService
     {
         private readonly ICspProvider cspProvider;
         private readonly ICacheManager cache;
@@ -48,4 +53,3 @@ namespace Jhoose.Security.Authorization
         }
     }
 }
-

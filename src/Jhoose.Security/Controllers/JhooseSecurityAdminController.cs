@@ -1,5 +1,6 @@
 using Jhoose.Security.Authorization;
 using Jhoose.Security.Core.Repository;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

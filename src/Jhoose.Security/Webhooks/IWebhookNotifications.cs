@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Jhoose.Security.Webhooks
 {
@@ -9,4 +8,3 @@ namespace Jhoose.Security.Webhooks
         void Notify(List<Uri> endPoints);
     }
 }
-

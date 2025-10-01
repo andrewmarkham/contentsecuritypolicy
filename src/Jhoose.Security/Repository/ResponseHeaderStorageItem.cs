@@ -1,6 +1,8 @@
 ﻿using EPiServer.Data;
 using EPiServer.Data.Dynamic;
+
 using Jhoose.Security.Core.Models;
+
 using Newtonsoft.Json;
 
 namespace Jhoose.Security.Repository

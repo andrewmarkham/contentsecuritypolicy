@@ -1,21 +1,19 @@
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
-
-using Jhoose.Security.Core.Repository;
-using Jhoose.Security.Core.Models.CSP;
 using System;
-
-using Microsoft.Extensions.Logging;
-
-using Jhoose.Security.Webhooks;
-using System.Text.Json;
-using Jhoose.Security.Core.Models.Export;
-
-using Jhoose.Security.Core.Services;
 using System.Collections.Generic;
+using System.Text.Json;
+
 using Jhoose.Security.Authorization;
+using Jhoose.Security.Core.Models.CSP;
+using Jhoose.Security.Core.Models.Export;
+using Jhoose.Security.Core.Repository;
+using Jhoose.Security.Core.Services;
+using Jhoose.Security.Webhooks;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Controllers.Api;
 
@@ -114,7 +112,7 @@ public class SettingsController : NotificationBaseController
     [Route("export")]
     [ProducesResponseType(typeof(JhoooseSecurityExport), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(JhoooseSecurityExport), StatusCodes.Status500InternalServerError)]
-    public ActionResult<JhoooseSecurityExport> Export([FromBody]ExportOptions options)
+    public ActionResult<JhoooseSecurityExport> Export([FromBody] ExportOptions options)
     {
         var export = importExportService.Export(options.ExportCsp, options.ExportHeaders, options.ExportSettings);
         return new JsonResult(export, jsonSerializerOptions)

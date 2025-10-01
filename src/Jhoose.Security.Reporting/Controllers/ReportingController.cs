@@ -1,14 +1,7 @@
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Jhoose.Security.Reporting.Models;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using MyCSharp.HttpUserAgentParser.Providers;
 
 #if NET7_0_OR_GREATER
 using Microsoft.AspNetCore.RateLimiting;

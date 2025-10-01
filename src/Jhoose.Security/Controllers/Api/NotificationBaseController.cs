@@ -1,10 +1,11 @@
 
-using Microsoft.AspNetCore.Mvc;
-
-using Jhoose.Security.Core.Repository;
 using System;
 using System.Linq;
+
+using Jhoose.Security.Core.Repository;
 using Jhoose.Security.Webhooks;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace Jhoose.Security.Controllers.Api;
 

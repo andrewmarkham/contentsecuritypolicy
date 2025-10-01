@@ -1,5 +1,4 @@
-﻿using System;
-namespace Jhoose.Security.Authorization
+﻿namespace Jhoose.Security.Authorization
 {
     public class Constants
     {
@@ -7,4 +6,3 @@ namespace Jhoose.Security.Authorization
         public const string ApiKey = "X-API-Key";
     }
 }
-

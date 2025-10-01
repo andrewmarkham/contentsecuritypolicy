@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+
 using Jhoose.Security.Core.Models.CSP;
 
 namespace Jhoose.Security.Core.Repository
 {
     public abstract class BaseCspPolicyRepository : ICspPolicyRepository
     {
-        private List<CspPolicy> defaultPolicies = new List<CspPolicy> {
+        private readonly List<CspPolicy> defaultPolicies = new List<CspPolicy> {
             new CspPolicy { PolicyName = "default-src",     Order=1, Level = CspPolicyLevel.Level1,  SummaryText="<p>The default-src directive defines the default policy for fetching resources such as JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media. Not all directives fallback to default-src.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
             new CspPolicy { PolicyName = "script-src",      Order=2, Level = CspPolicyLevel.Level1, SummaryText="<p>Defines valid sources of JavaScript.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
             new CspPolicy { PolicyName = "style-src",       Order=3, Level = CspPolicyLevel.Level1, SummaryText="<p>Defines valid sources of stylesheets or CSS.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },

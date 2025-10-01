@@ -1,5 +1,7 @@
 using System.Threading.Tasks;
+
 using Jhoose.Security.Services;
+
 using Microsoft.AspNetCore.Http;
 
 namespace Jhoose.Security.Middleware

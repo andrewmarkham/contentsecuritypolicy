@@ -1,5 +1,7 @@
 using System.Data;
+
 using Jhoose.Security.Core.Configuration;
+
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -139,5 +141,3 @@ namespace Jhoose.Security.Reporting.Database
         }
     }
 }
-
-

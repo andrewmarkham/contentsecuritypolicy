@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Http;
+
 using Jhoose.Security.Services;
-using Jhoose.Security.Core.Configuration;
+
+using Microsoft.AspNetCore.Http;
 
 namespace Jhoose.Security.Middleware
 {

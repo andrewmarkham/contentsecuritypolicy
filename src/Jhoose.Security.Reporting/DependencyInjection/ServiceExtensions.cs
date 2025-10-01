@@ -1,13 +1,13 @@
 
-using Jhoose.Security.Reporting.ElasticSearch;
-using Microsoft.AspNetCore.Builder;
-
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using MyCSharp.HttpUserAgentParser.DependencyInjection;
-using Jhoose.Security.Reporting.Database;
-using Microsoft.Extensions.Options;
 using Jhoose.Security.Core.Configuration;
+using Jhoose.Security.Reporting.Database;
+using Jhoose.Security.Reporting.ElasticSearch;
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+
+using MyCSharp.HttpUserAgentParser.DependencyInjection;
 
 
 

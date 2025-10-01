@@ -1,16 +1,17 @@
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authorization;
 using System;
-
-using Microsoft.Extensions.Logging;
-using Jhoose.Security.Authorization;
-using System.Threading.Tasks;
-using Jhoose.Security.Reporting.Models.Dashboard;
-using Jhoose.Security.Reporting;
-using Jhoose.Security.Reporting.Models.Search;
 using System.Text.Json;
+using System.Threading.Tasks;
+
+using Jhoose.Security.Authorization;
+using Jhoose.Security.Reporting;
+using Jhoose.Security.Reporting.Models.Dashboard;
+using Jhoose.Security.Reporting.Models.Search;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Controllers.Api;
 

@@ -1,8 +1,4 @@
-﻿using Jhoose.Security.Core.Models;
-
-using System.Collections.Generic;
-
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Jhoose.Security.Services
 {

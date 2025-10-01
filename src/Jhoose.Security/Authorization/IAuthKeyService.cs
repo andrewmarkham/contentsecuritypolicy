@@ -7,4 +7,3 @@ namespace Jhoose.Security.Authorization
         bool Validate(StringValues stringValues);
     }
 }
-

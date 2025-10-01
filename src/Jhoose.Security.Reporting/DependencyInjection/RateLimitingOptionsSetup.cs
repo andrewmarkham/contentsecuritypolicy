@@ -1,7 +1,7 @@
+using Jhoose.Security.Core.Configuration;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Jhoose.Security.Core.Configuration;
-using Jhoose.Security.Reporting.Database;
 
 
 

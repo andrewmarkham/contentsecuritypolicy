@@ -1,33 +1,31 @@
 #if NET5_0_OR_GREATER
 
-using System.Collections;
-using System.Collections.Generic;
-using Jhoose.Security.DependencyInjection;
-using Jhoose.Security.Services;
-using Microsoft.AspNetCore.Http;
-using NUnit.Framework;
-using NSubstitute;
-using Jhoose.Security.Core.Provider;
-using Jhoose.Security.Core.Cache;
-
-using Microsoft.Extensions.Logging;
-using Jhoose.Security.Core.Models;
-using Jhoose.Security.Core;
 using System;
-using System.Collections.Specialized;
-using System.Net.Http;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using EPiServer;
+
+using Jhoose.Security.Core;
+using Jhoose.Security.Core.Cache;
+using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Models.SecurityHeaders;
+using Jhoose.Security.Core.Provider;
+using Jhoose.Security.Services;
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+
+using NSubstitute;
+
+using NUnit.Framework;
 
 namespace Jhoose.Security.Tests.Services
 {
     [TestFixture]
     public class JhooseSecurityService_Tests
     {
-        ICacheManager cacheManager = Substitute.For<ICacheManager>();
+        private readonly ICacheManager cacheManager = Substitute.For<ICacheManager>();
 
         [SetUp]
         public void SetupTests()
@@ -167,7 +165,7 @@ namespace Jhoose.Security.Tests.Services
 
         public override int StatusCode { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        private IHeaderDictionary headers = new HeaderDictionary();
+        private readonly IHeaderDictionary headers = new HeaderDictionary();
         public override IHeaderDictionary Headers => headers;
 
         public override Stream Body { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -196,5 +194,3 @@ namespace Jhoose.Security.Tests.Services
 }
 
 #endif
-
-

@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Threading.Tasks;
-using System.Text.Json.Nodes;
-using System.Text.Json;
-using System.IO;
+﻿using System.IO;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Threading.Tasks;
+
 using Jhoose.Security.Core.Models.CSP;
+
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Jhoose.Security.Core.Binders
 {
     public class CspPolicyModelBinder : IModelBinder
     {
-        private static JsonSerializerOptions serializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        private static readonly JsonSerializerOptions serializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
         public async Task BindModelAsync(ModelBindingContext bindingContext)
         {
@@ -40,4 +42,3 @@ namespace Jhoose.Security.Core.Binders
         }
     }
 }
-

@@ -9,4 +9,3 @@ namespace Jhoose.Security.Reporting.Models.Search
         public List<string> Browsers { get; set; } = [];
     }
 }
-

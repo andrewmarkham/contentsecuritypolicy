@@ -1,9 +1,10 @@
+using System.Linq;
+
+using Jhoose.Security.Core.Helpers;
+using Jhoose.Security.Core.Models.Export;
 using Jhoose.Security.Core.Repository;
 
 using Microsoft.Extensions.Logging;
-using Jhoose.Security.Core.Models.Export;
-using Jhoose.Security.Core.Helpers;
-using System.Linq;
 
 namespace Jhoose.Security.Core.Services;
 
@@ -50,7 +51,7 @@ public class ImportExportService : IImportExportService
             Metadata = new ExportMetadata(),
             CspSettings = includeSettings ? policyRepository.Settings() : null,
             CspPolicies = includeCsp ? policyRepository.List() : null,
-            ResponseHeaders = includeHeaders ? [..responseHeadersRepository.List()] : null  
+            ResponseHeaders = includeHeaders ? [.. responseHeadersRepository.List()] : null
         };
 
         var hash = ObjectHasher.ComputeHash(export);

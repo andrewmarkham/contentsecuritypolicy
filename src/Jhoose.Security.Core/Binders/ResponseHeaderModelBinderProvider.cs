@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Jhoose.Security.Core.Models;
+﻿using Jhoose.Security.Core.Models;
+
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Jhoose.Security.Core.Binders
 {
@@ -16,4 +17,3 @@ namespace Jhoose.Security.Core.Binders
         }
     }
 }
-

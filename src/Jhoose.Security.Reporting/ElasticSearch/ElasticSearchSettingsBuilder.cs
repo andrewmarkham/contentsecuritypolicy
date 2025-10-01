@@ -2,6 +2,7 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 
 namespace Jhoose.Security.Reporting.ElasticSearch;
+
 public class ElasticSearchSettingsBuilder : IElasticSearchSettingsBuilder
 {
     public virtual ElasticsearchClientSettings GetElasticsearchClientSettings(ElasticSearchReportingOptions options)

@@ -1,20 +1,18 @@
 
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+
+using Jhoose.Security.Authorization;
+using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.CSP;
-using System;
-using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Microsoft.Extensions.Logging;
-
-using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Provider;
-using System.Threading.Tasks;
-using Jhoose.Security.Authorization;
-using System.Text.Json;
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Controllers.Api
 {

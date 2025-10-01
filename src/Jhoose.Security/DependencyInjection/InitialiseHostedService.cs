@@ -2,7 +2,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Jhoose.Security.Core.Provider;
+
 using Microsoft.Extensions.Hosting;
 
 namespace Jhoose.Security.DependencyInjection

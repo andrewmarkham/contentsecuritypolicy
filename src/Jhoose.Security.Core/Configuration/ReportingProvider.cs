@@ -10,4 +10,3 @@ namespace Jhoose.Security.Core.Configuration
 
     }
 }
-

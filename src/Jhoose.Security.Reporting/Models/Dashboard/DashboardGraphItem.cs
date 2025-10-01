@@ -1,5 +1,3 @@
-using System;
-
 namespace Jhoose.Security.Reporting.Models.Dashboard
 {
     public class DashboardGraphItem

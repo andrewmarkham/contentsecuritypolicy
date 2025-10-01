@@ -1,4 +1,5 @@
 using System;
+
 using EPiServer.Framework.Cache;
 
 namespace Jhoose.Security.Core.Cache
@@ -6,7 +7,7 @@ namespace Jhoose.Security.Core.Cache
     public class EpiserverCacheManager : ICacheManager
     {
         private readonly ISynchronizedObjectInstanceCache cache;
-        private static object lockObject = new object();
+        private static readonly object lockObject = new object();
 
         public EpiserverCacheManager(ISynchronizedObjectInstanceCache cache)
         {

@@ -49,4 +49,3 @@ namespace Jhoose.Security.Reporting.Models.Search
         }
     }
 }
-

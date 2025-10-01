@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.SecurityHeaders;
 
@@ -53,4 +54,3 @@ namespace Jhoose.Security.Core.Configuration
         }
     }
 }
-
