@@ -49,8 +49,36 @@ public class ProblemJsonFormatter : TextInputFormatter
                     var reportUri = JsonSerializer.Deserialize<ReportUri>(json);
                     if (reportUri == null)
                     {
-                        logger.LogError("Read failed: reportUri = null");
-                        return await InputFormatterResult.FailureAsync();
+                        var reportUri = JsonSerializer.Deserialize<ReportUri>(json);
+                        if (reportUri == null)
+                        {
+                            logger.LogError("Read failed: reportUri = null");
+                            return await InputFormatterResult.FailureAsync();
+                        }
+
+                        var rt  = new ReportTo(0, "csp-violation", reportUri.CspReport.DocumentUri, userAgent.ToString() ?? string.Empty, new ReportToBody(reportUri.CspReport), DateTime.UtcNow);
+                        reportTo.Add(rt);
+                    }
+                    else
+                    {
+                        if (json.StartsWith("[") && json.EndsWith("]"))
+                        {
+                            var rtc = JsonSerializer.Deserialize<List<ReportTo>>(json) ?? []; 
+                            reportTo.AddRange(rtc);
+                        }
+                        else
+                        {
+                            var rt = JsonSerializer.Deserialize<ReportTo>(json);
+                            if (rt is not null)
+                            {
+                                reportTo.Add(rt);
+                            }
+                        }
+                        foreach (var r in reportTo)
+                        {
+                            r.RecievedAt = DateTime.UtcNow;
+                            r.UserAgent = userAgent.ToString() ?? string.Empty;
+                        }
                     }
 
                     var rt = new ReportTo(0, "csp-violation", reportUri.CspReport.DocumentUri, userAgent.ToString() ?? string.Empty, new ReportToBody(reportUri.CspReport), DateTime.UtcNow);
@@ -77,6 +105,12 @@ public class ProblemJsonFormatter : TextInputFormatter
                         r.UserAgent = userAgent.ToString() ?? string.Empty;
                     }
                 }
+                catch (Exception ex)
+                {
+                    logger.LogError(ex, "Read failed: json = {json}", json);
+                    return await InputFormatterResult.FailureAsync();
+                }
+                
 
                 var userAgentInfo = parser.Parse(userAgent.ToString() ?? string.Empty);
 

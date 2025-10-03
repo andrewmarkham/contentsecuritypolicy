@@ -1,4 +1,4 @@
-﻿namespace Jhoose.Security.Core.Models.CSP;
+namespace Jhoose.Security.Core.Models.CSP;
 
 public class CspPolicyReportHeader : CspPolicyHeaderBase
 {

@@ -1,4 +1,5 @@
-﻿using Jhoose.Security.Core.Models.CSP;
+using Jhoose.Security.Core.Models.CSP;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Jhoose.Security.Core.Models;
 

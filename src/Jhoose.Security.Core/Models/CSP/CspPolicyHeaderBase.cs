@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Text;
+using EPiServer.Web;
 
 namespace Jhoose.Security.Core.Models.CSP;
 

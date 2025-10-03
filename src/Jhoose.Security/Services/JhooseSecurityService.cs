@@ -11,6 +11,7 @@ using Jhoose.Security.Core.Provider;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using EPiServer.Web;
 
 
 namespace Jhoose.Security.Services;
@@ -83,6 +84,7 @@ public class JhooseSecurityService : IJhooseSecurityService
                 foreach (var header in headerValues)
                 {
                     header.NonceValue = this.cspProvider.GenerateNonce();
+
 
                     if (response.Headers.ContainsKey(header.Name))
                     {
