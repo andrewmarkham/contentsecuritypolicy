@@ -1,8 +1,7 @@
-﻿namespace Jhoose.Security.Authorization
+﻿namespace Jhoose.Security.Authorization;
+
+public class Constants
 {
-    public class Constants
-    {
-        public const string PolicyName = "jhoose:SecurityAdmin";
-        public const string ApiKey = "X-API-Key";
-    }
+    public const string PolicyName = "jhoose:SecurityAdmin";
+    public const string ApiKey = "X-API-Key";
 }

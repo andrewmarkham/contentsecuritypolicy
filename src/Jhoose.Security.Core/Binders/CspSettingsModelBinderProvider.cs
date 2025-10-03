@@ -2,18 +2,17 @@
 
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Jhoose.Security.Core.Binders
-{
-    public class CspSettingsModelBinderProvider : IModelBinderProvider
-    {
-        public IModelBinder? GetBinder(ModelBinderProviderContext context)
-        {
-            if (context.Metadata.ModelType != typeof(CspSettings))
-            {
-                return null;
-            }
+namespace Jhoose.Security.Core.Binders;
 
-            return new CspSettingsModelBinder();
+public class CspSettingsModelBinderProvider : IModelBinderProvider
+{
+    public IModelBinder? GetBinder(ModelBinderProviderContext context)
+    {
+        if (context.Metadata.ModelType != typeof(CspSettings))
+        {
+            return null;
         }
+
+        return new CspSettingsModelBinder();
     }
 }

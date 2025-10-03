@@ -1,9 +1,8 @@
-namespace Jhoose.Security.Reporting.Models.Dashboard
+namespace Jhoose.Security.Reporting.Models.Dashboard;
+
+public class DashboardGraphItem
 {
-    public class DashboardGraphItem
-    {
-        public DateTime Time { get; set; }
-        public string Metric { get; set; } = string.Empty;
-        public int Value { get; set; }
-    }
+    public DateTime Time { get; set; }
+    public string Metric { get; set; } = string.Empty;
+    public int Value { get; set; }
 }

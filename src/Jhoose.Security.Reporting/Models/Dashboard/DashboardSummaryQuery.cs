@@ -1,8 +1,7 @@
-namespace Jhoose.Security.Reporting.Models.Dashboard
+namespace Jhoose.Security.Reporting.Models.Dashboard;
+
+public class DashboardSummaryQuery
 {
-    public class DashboardSummaryQuery
-    {
-        public string Timeframe { get; set; } = string.Empty;
-        public string Type { get; set; } = string.Empty;
-    }
+    public string Timeframe { get; set; } = string.Empty;
+    public string Type { get; set; } = string.Empty;
 }

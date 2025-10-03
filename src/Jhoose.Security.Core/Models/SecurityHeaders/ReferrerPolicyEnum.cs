@@ -1,14 +1,13 @@
-namespace Jhoose.Security.Core.Models.SecurityHeaders
+namespace Jhoose.Security.Core.Models.SecurityHeaders;
+
+public enum ReferrerPolicyEnum
 {
-    public enum ReferrerPolicyEnum
-    {
-        NoReferrer,
-        NoReferrerWhenDownGrade,
-        Origin,
-        OriginWhenCrossOrigin,
-        SameOrigin,
-        StrictOrigin,
-        StrictOriginWhenCrossOrigin,
-        UnsafeUrl
-    }
+    NoReferrer,
+    NoReferrerWhenDownGrade,
+    Origin,
+    OriginWhenCrossOrigin,
+    SameOrigin,
+    StrictOrigin,
+    StrictOriginWhenCrossOrigin,
+    UnsafeUrl
 }

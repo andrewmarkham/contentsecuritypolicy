@@ -11,26 +11,25 @@ using Microsoft.Extensions.Options;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace Jhoose.Security.Reporting.DependencyInjection
-{
-    public class RateLimitingOptionsSetup(IServiceProvider services) : IConfigureOptions<RateLimiterOptions>
-    {
-        private readonly IServiceProvider services = services;
+namespace Jhoose.Security.Reporting.DependencyInjection;
 
-        public void Configure(RateLimiterOptions options)
+public class RateLimitingOptionsSetup(IServiceProvider services) : IConfigureOptions<RateLimiterOptions>
+{
+    private readonly IServiceProvider services = services;
+
+    public void Configure(RateLimiterOptions options)
+    {
+        var jhooseOptions = services.GetService<IOptions<JhooseSecurityOptions>>()?.Value;
+        var rateLimiting = jhooseOptions?.Reporting?.RateLimiting;
+        if (rateLimiting?.Enabled ?? false)
         {
-            var jhooseOptions = services.GetService<IOptions<JhooseSecurityOptions>>()?.Value;
-            var rateLimiting = jhooseOptions?.Reporting?.RateLimiting;
-            if (rateLimiting?.Enabled ?? false)
+            options.AddFixedWindowLimiter("fixed", o =>
             {
-                options.AddFixedWindowLimiter("fixed", o =>
-                {
-                    o.PermitLimit = rateLimiting?.PermitLimit ?? 100;
-                    o.QueueLimit = rateLimiting?.QueueLimit ?? 100;
-                    o.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                    o.Window = TimeSpan.FromSeconds(rateLimiting?.WindowSeconds ?? 60);
-                });
-            }
+                o.PermitLimit = rateLimiting?.PermitLimit ?? 100;
+                o.QueueLimit = rateLimiting?.QueueLimit ?? 100;
+                o.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                o.Window = TimeSpan.FromSeconds(rateLimiting?.WindowSeconds ?? 60);
+            });
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Primitives;
 
-namespace Jhoose.Security.Authorization
+namespace Jhoose.Security.Authorization;
+
+public interface IAuthKeyService
 {
-    public interface IAuthKeyService
-    {
-        bool Validate(StringValues stringValues);
-    }
+    bool Validate(StringValues stringValues);
 }

@@ -3,18 +3,17 @@ using System.Collections.Generic;
 
 using Jhoose.Security.Core.Models.CSP;
 
-namespace Jhoose.Security.Core.Repository
+namespace Jhoose.Security.Core.Repository;
+
+public interface ICspPolicyRepository
 {
-    public interface ICspPolicyRepository
-    {
-        List<CspPolicy> List();
-        CspPolicy Update(CspPolicy policy);
+    List<CspPolicy> List();
+    CspPolicy Update(CspPolicy policy);
 
 
-        CspSettings Settings();
+    CspSettings Settings();
 
-        bool SaveSettings(CspSettings settings);
+    bool SaveSettings(CspSettings settings);
 
-        void Bootstrap();
-    }
+    void Bootstrap();
 }

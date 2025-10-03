@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Jhoose.Security.Webhooks
+namespace Jhoose.Security.Webhooks;
+
+public interface IWebhookNotifications
 {
-    public interface IWebhookNotifications
-    {
-        void Notify(List<Uri> endPoints);
-    }
+    void Notify(List<Uri> endPoints);
 }
