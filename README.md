@@ -15,7 +15,7 @@ This module adds several security features to an Optimizely website.
 
 ## Installation
 
-Install the package directly from the Optimizley Nuget repository.  
+Install the package directly from the Optimizely NuGet repository.  
 
 ``` 
 dotnet add package Jhoose.Security.Admin
@@ -25,8 +25,8 @@ dotnet add package Jhoose.Security.Admin
 Install-Package Jhoose.Security.Admin
 ```
 
-###Dependencies
-The module requires the compatability level of the database to be >= 130
+### Dependencies
+The module requires the compatibility level of the database to be >= 130
 ----
 
 ## Content Security Policy
@@ -35,7 +35,7 @@ The module requires the compatability level of the database to be >= 130
 - Global '*report only*' mode, or specify for each policy.
 - Ability to specify paths which are excluded from outputting the policy header.
   
-Review the [Admin Interface](./documentation/admin-interface.md) documentation for more detail on how to manage the policies.
+Review the [Admin Interface](./documentation/admin-interface.md) documentation for more details on how to manage the policies.
 
 ### Configuration
 
@@ -280,4 +280,5 @@ X-API-Key: ...
  |2.4.0| Added 'wasm-unsafe-eval' to the CSP Options<br/>Added missing options to default-src |
  |2.4.1| Make ICspProvider and IJhooseSecurityService request scoped so a unqiue dynamic nonce is generated per request |
  |2.4.2| Ensure CSP policy header syntax is valid when using 'None' Option for any policy |
+
  |2.5.0|Added Import / Export functionality<br/>Added support for .NET9<br/>Fixed minor UI bugs |
