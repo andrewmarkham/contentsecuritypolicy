@@ -1,5 +1,6 @@
-using Microsoft.Extensions.Options;
 using Jhoose.Security.Core.Configuration;
+
+using Microsoft.Extensions.Options;
 
 namespace Jhoose.Security.Reporting;
 

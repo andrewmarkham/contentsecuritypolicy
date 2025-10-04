@@ -1,20 +1,23 @@
-using Jhoose.Security.Reporting.Models;
+using System.Net;
 
 using Elastic.Clients.Elasticsearch;
-using Jhoose.Security.Reporting.Models.Dashboard;
 using Elastic.Clients.Elasticsearch.Aggregations;
+using Elastic.Clients.Elasticsearch.QueryDsl;
+
+using EPiServer.Shell;
+
+using Jhoose.Security.Reporting.Models;
+using Jhoose.Security.Reporting.Models.Dashboard;
+using Jhoose.Security.Reporting.Models.Search;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Jhoose.Security.Reporting.Models.Search;
-using Elastic.Clients.Elasticsearch.QueryDsl;
-using EPiServer.Shell;
-using System.Net;
 
 namespace Jhoose.Security.Reporting.ElasticSearch;
 
 public class ElasticSearchReportingRepository : IReportingRepository
 {
-    const string IndexName = "reporting";
+    private const string IndexName = "reporting";
 
     private readonly IElasticSearchSettingsBuilder settingsBuilder;
     private readonly IOptions<ElasticSearchReportingOptions> options;
@@ -25,17 +28,18 @@ public class ElasticSearchReportingRepository : IReportingRepository
     protected bool? HasIndex { get; set; }
 
     public string Type => "ElasticSearch";
-    
+
     public ElasticSearchReportingRepository(IElasticSearchSettingsBuilder settingsBuilder, IOptions<ElasticSearchReportingOptions> options, ILogger<ElasticSearchReportingRepository> logger)
     {
         this.settingsBuilder = settingsBuilder;
         this.options = options;
         this.logger = logger;
 
-        this.client = new(() => {
+        this.client = new(() =>
+        {
             var settings = settingsBuilder.GetElasticsearchClientSettings(options.Value);
             settings.DefaultIndex(options.Value.IndexName);
-            
+
             return new ElasticsearchClient(settings);
         });
     }
@@ -108,15 +112,15 @@ public class ElasticSearchReportingRepository : IReportingRepository
     {
         await CreateIndexIsNeeded();
 
-        var from = (searchParams.Page-1) * searchParams.PageSize;
+        var from = (searchParams.Page - 1) * searchParams.PageSize;
         var sortOrder = searchParams.SortOrder == "ascend" ? SortOrder.Asc : SortOrder.Desc;
-        
+
 
         var response = await client.Value.SearchAsync<ReportTo>(s => s.Index(IndexName)
-                    .Query(q => BuildSearchQuery(q,searchParams))
+                    .Query(q => BuildSearchQuery(q, searchParams))
                     .From(from)
                     .Size(searchParams.PageSize)
-                    .Sort(s => s.Field(f => f.RecievedAt, new FieldSort { Order = sortOrder } ))
+                    .Sort(s => s.Field(f => f.RecievedAt, new FieldSort { Order = sortOrder }))
                                         .Aggregations(agg =>
                                 agg.Add("directives",
                                         ad => ad.Terms(s => s.Field(f => f.Directive).Size(20)))
@@ -242,12 +246,12 @@ public class ElasticSearchReportingRepository : IReportingRepository
 
         if (aggregate is StringTermsAggregate terms)
         {
-            return terms.Buckets.Select(b => new DashboardIssue 
-                { 
-                    Name = b.Key.ToString(), 
-                    Url = $"{path}cspissues?{section}={WebUtility.UrlEncode(b.Key.ToString())}",
-                    Count = (int)b.DocCount 
-                    }).ToList();
+            return terms.Buckets.Select(b => new DashboardIssue
+            {
+                Name = b.Key.ToString(),
+                Url = $"{path}cspissues?{section}={WebUtility.UrlEncode(b.Key.ToString())}",
+                Count = (int)b.DocCount
+            }).ToList();
         }
 
         return [];
@@ -267,7 +271,7 @@ public class ElasticSearchReportingRepository : IReportingRepository
     {
         var filters = new List<Elastic.Clients.Elasticsearch.QueryDsl.Query>();
         var must = new QueryDescriptor<ReportTo>();
-        
+
         must.MatchAll(m => m.QueryName("all"));
 
         if (searchParams.Filters?.DateFrom.HasValue ?? false)
@@ -280,18 +284,20 @@ public class ElasticSearchReportingRepository : IReportingRepository
 
         if (searchParams.Filters?.Browser?.Count > 0)
         {
-            filters.Add(new TermsQuery{
+            filters.Add(new TermsQuery
+            {
                 Field = Infer.Field<ReportTo>(f => f.Browser),
                 Terms = new TermsQueryField(searchParams.Filters.Browser.Select(d => FieldValue.String(d)).ToList())
-                });  
+            });
         }
-        
+
         if (searchParams.Filters?.Directive?.Count > 0)
         {
-            filters.Add(new TermsQuery{
+            filters.Add(new TermsQuery
+            {
                 Field = Infer.Field<ReportTo>(f => f.Directive),
                 Terms = new TermsQueryField(searchParams.Filters.Directive.Select(d => FieldValue.String(d)).ToList())
-                });  
+            });
         }
 
         if (!string.IsNullOrEmpty(searchParams?.Filters?.Query))

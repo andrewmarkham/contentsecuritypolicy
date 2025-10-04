@@ -1,28 +1,27 @@
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Http;
+
 using Jhoose.Security.Services;
-using Jhoose.Security.Core.Configuration;
 
-namespace Jhoose.Security.Middleware
+using Microsoft.AspNetCore.Http;
+
+namespace Jhoose.Security.Middleware;
+
+public class SecurityHeadersMiddleware
 {
-    public class SecurityHeadersMiddleware
+    private readonly RequestDelegate _next;
+
+    public SecurityHeadersMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public SecurityHeadersMiddleware(RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService)
+    {
+        if (!context.Response.HasStarted)
         {
-            _next = next;
+            securityService.AddHeaders(context.Response);
         }
 
-        public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService)
-        {
-            if (!context.Response.HasStarted)
-            {
-                securityService.AddHeaders(context.Response);
-            }
-
-            await _next(context);
-        }
+        await _next(context);
     }
 }

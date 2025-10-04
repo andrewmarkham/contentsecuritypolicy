@@ -1,9 +1,8 @@
-namespace Jhoose.Security.Core.Models.SecurityHeaders
+namespace Jhoose.Security.Core.Models.SecurityHeaders;
+
+public enum CrossOriginResourcePolicyEnum
 {
-    public enum CrossOriginResourcePolicyEnum
-    {
-        SameSite,
-        SameOrigin,
-        CrossOrigin
-    }
+    SameSite,
+    SameOrigin,
+    CrossOrigin
 }

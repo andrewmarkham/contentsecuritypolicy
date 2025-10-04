@@ -1,8 +1,10 @@
 ﻿using DemoSite.Models.Pages;
 using DemoSite.Models.ViewModels;
+
 using EPiServer;
 using EPiServer.Framework.Web.Resources;
 using EPiServer.Web.Mvc;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

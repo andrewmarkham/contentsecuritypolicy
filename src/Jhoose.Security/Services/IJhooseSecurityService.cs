@@ -1,14 +1,9 @@
-﻿using Jhoose.Security.Core.Models;
+﻿using Microsoft.AspNetCore.Http;
 
-using System.Collections.Generic;
+namespace Jhoose.Security.Services;
 
-using Microsoft.AspNetCore.Http;
-
-namespace Jhoose.Security.Services
+public interface IJhooseSecurityService
 {
-    public interface IJhooseSecurityService
-    {
-        void AddContentSecurityPolicy(HttpResponse response);
-        void AddHeaders(HttpResponse response);
-    }
+    void AddContentSecurityPolicy(HttpResponse response);
+    void AddHeaders(HttpResponse response);
 }

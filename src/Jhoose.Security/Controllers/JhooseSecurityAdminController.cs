@@ -1,25 +1,25 @@
 using Jhoose.Security.Authorization;
 using Jhoose.Security.Core.Repository;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace Jhoose.Security.Controllers
+namespace Jhoose.Security.Controllers.Api;
+
+[Authorize(Policy = Constants.PolicyName)]
+public class JhooseSecurityAdminController : Controller
 {
-    [Authorize(Policy = Constants.PolicyName)]
-    public class JhooseSecurityAdminController : Controller
+    private readonly ICspPolicyRepository policyRepository;
+
+    public JhooseSecurityAdminController(ICspPolicyRepository policyRepository)
     {
-        private readonly ICspPolicyRepository policyRepository;
+        this.policyRepository = policyRepository;
+    }
 
-        public JhooseSecurityAdminController(ICspPolicyRepository policyRepository)
-        {
-            this.policyRepository = policyRepository;
-        }
-
-        public ActionResult Index()
-        {
-            this.policyRepository.Bootstrap();
-            return View();
-        }
+    public ActionResult Index()
+    {
+        this.policyRepository.Bootstrap();
+        return View();
     }
 }

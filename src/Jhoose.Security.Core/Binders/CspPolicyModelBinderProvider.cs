@@ -1,19 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Jhoose.Security.Core.Models.CSP;
+﻿using Jhoose.Security.Core.Models.CSP;
 
-namespace Jhoose.Security.Core.Binders
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+namespace Jhoose.Security.Core.Binders;
+
+public class CspPolicyModelBinderProvider : IModelBinderProvider
 {
-    public class CspPolicyModelBinderProvider : IModelBinderProvider
+    public IModelBinder? GetBinder(ModelBinderProviderContext context)
     {
-        public IModelBinder? GetBinder(ModelBinderProviderContext context)
+        if (context.Metadata.ModelType != typeof(CspPolicy))
         {
-            if (context.Metadata.ModelType != typeof(CspPolicy))
-            {
-                return null;
-            }
-
-            return new CspPolicyModelBinder();
+            return null;
         }
+
+        return new CspPolicyModelBinder();
     }
 }
-

@@ -1,9 +1,8 @@
-namespace Jhoose.Security.Core.Models.CSP
+namespace Jhoose.Security.Core.Models.CSP;
+
+public enum CspPolicyLevel
 {
-    public enum CspPolicyLevel
-    {
-        Level1 = 1,
-        Level2 = 2,
-        Level3 = 3
-    }
+    Level1 = 1,
+    Level2 = 2,
+    Level3 = 3
 }
