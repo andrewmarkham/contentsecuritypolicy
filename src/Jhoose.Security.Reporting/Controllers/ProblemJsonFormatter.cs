@@ -9,45 +9,42 @@ using Microsoft.Extensions.Logging;
 
 using MyCSharp.HttpUserAgentParser.Providers;
 
-namespace Jhoose.Security.Reporting.Controllers;
-
-public class ProblemJsonFormatter : TextInputFormatter
+namespace Jhoose.Security.Reporting.Controllers
 {
-    public ProblemJsonFormatter()
+    public class ProblemJsonFormatter : TextInputFormatter
     {
-
-        this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/problem+json"));
-        this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/reports+json"));
-        this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/csp-report"));
-        this.SupportedEncodings.Add(Encoding.UTF8);
-        this.SupportedEncodings.Add(Encoding.Unicode);
-    }
-
-    public override async Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context, Encoding effectiveEncoding)
-    {
-        List<ReportTo> reportTo = [];
-        string? json = null;
-
-        var httpContext = context.HttpContext;
-        var serviceProvider = httpContext.RequestServices;
-
-        var logger = serviceProvider.GetRequiredService<ILogger<ProblemJsonFormatter>>();
-        var parser = serviceProvider.GetRequiredService<IHttpUserAgentParserProvider>();
-
-        using var reader = new StreamReader(httpContext.Request.Body, effectiveEncoding);
-
-        try
+        public ProblemJsonFormatter()
         {
-            context.HttpContext.Request.Headers.TryGetValue("User-Agent", out var userAgent);
 
-            json = await reader.ReadToEndAsync();
+            this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/problem+json"));
+            this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/reports+json"));
+            this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/csp-report"));
+            this.SupportedEncodings.Add(Encoding.UTF8);
+            this.SupportedEncodings.Add(Encoding.Unicode);
+        }
+
+        public override async Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context, Encoding effectiveEncoding)
+        {
+            List<ReportTo> reportTo = [];
+            string? json = null;
+
+            var httpContext = context.HttpContext;
+            var serviceProvider = httpContext.RequestServices;
+
+            var logger = serviceProvider.GetRequiredService<ILogger<ProblemJsonFormatter>>();
+            var parser = serviceProvider.GetRequiredService<IHttpUserAgentParserProvider>();
+
+            using var reader = new StreamReader(httpContext.Request.Body, effectiveEncoding);
 
             try
             {
-                if (json.Contains("csp-report"))
+                context.HttpContext.Request.Headers.TryGetValue("User-Agent", out var userAgent);
+
+                json = await reader.ReadToEndAsync();
+
+                try
                 {
-                    var reportUri = JsonSerializer.Deserialize<ReportUri>(json);
-                    if (reportUri == null)
+                    if (json.Contains("csp-report"))
                     {
                         var reportUri = JsonSerializer.Deserialize<ReportUri>(json);
                         if (reportUri == null)
@@ -56,14 +53,14 @@ public class ProblemJsonFormatter : TextInputFormatter
                             return await InputFormatterResult.FailureAsync();
                         }
 
-                        var rt  = new ReportTo(0, "csp-violation", reportUri.CspReport.DocumentUri, userAgent.ToString() ?? string.Empty, new ReportToBody(reportUri.CspReport), DateTime.UtcNow);
+                        var rt = new ReportTo(0, "csp-violation", reportUri.CspReport.DocumentUri, userAgent.ToString() ?? string.Empty, new ReportToBody(reportUri.CspReport), DateTime.UtcNow);
                         reportTo.Add(rt);
                     }
                     else
                     {
                         if (json.StartsWith("[") && json.EndsWith("]"))
                         {
-                            var rtc = JsonSerializer.Deserialize<List<ReportTo>>(json) ?? []; 
+                            var rtc = JsonSerializer.Deserialize<List<ReportTo>>(json) ?? [];
                             reportTo.AddRange(rtc);
                         }
                         else
@@ -81,28 +78,13 @@ public class ProblemJsonFormatter : TextInputFormatter
                         }
                     }
 
-                    var rt = new ReportTo(0, "csp-violation", reportUri.CspReport.DocumentUri, userAgent.ToString() ?? string.Empty, new ReportToBody(reportUri.CspReport), DateTime.UtcNow);
-                    reportTo.Add(rt);
-                }
-                else
-                {
-                    if (json.StartsWith("[") && json.EndsWith("]"))
-                    {
-                        var rtc = JsonSerializer.Deserialize<List<ReportTo>>(json) ?? [];
-                        reportTo.AddRange(rtc);
-                    }
-                    else
-                    {
-                        var rt = JsonSerializer.Deserialize<ReportTo>(json);
-                        if (rt is not null)
-                        {
-                            reportTo.Add(rt);
-                        }
-                    }
+                    var userAgentInfo = parser.Parse(userAgent.ToString() ?? string.Empty);
+
                     foreach (var r in reportTo)
                     {
-                        r.RecievedAt = DateTime.UtcNow;
-                        r.UserAgent = userAgent.ToString() ?? string.Empty;
+                        r.Browser = userAgentInfo.Name ?? string.Empty;
+                        r.Version = userAgentInfo.Version ?? string.Empty;
+                        r.OS = userAgentInfo.Platform?.Name ?? string.Empty;
                     }
                 }
                 catch (Exception ex)
@@ -110,30 +92,15 @@ public class ProblemJsonFormatter : TextInputFormatter
                     logger.LogError(ex, "Read failed: json = {json}", json);
                     return await InputFormatterResult.FailureAsync();
                 }
-                
 
-                var userAgentInfo = parser.Parse(userAgent.ToString() ?? string.Empty);
 
-                foreach (var r in reportTo)
-                {
-                    r.Browser = userAgentInfo.Name ?? string.Empty;
-                    r.Version = userAgentInfo.Version ?? string.Empty;
-                    r.OS = userAgentInfo.Platform?.Name ?? string.Empty;
-                }
+                return await InputFormatterResult.SuccessAsync(reportTo.Where(r => r.Type == "csp-violation").ToList());
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Read failed: json = {json}", json);
                 return await InputFormatterResult.FailureAsync();
             }
-
-
-            return await InputFormatterResult.SuccessAsync(reportTo.Where(r => r.Type == "csp-violation").ToList());
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Read failed: json = {json}", json);
-            return await InputFormatterResult.FailureAsync();
         }
     }
 }
