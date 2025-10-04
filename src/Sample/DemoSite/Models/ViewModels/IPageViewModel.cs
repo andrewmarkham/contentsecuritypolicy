@@ -4,15 +4,15 @@ namespace DemoSite.Models.ViewModels
 {
     public interface IPageViewModel<T> where T : IContent
     {
-         T CurrentPage {get;}
+        T CurrentPage { get; }
     }
 
-    public class PageViewModel<T> :IPageViewModel<T> where T : IContent
+    public class PageViewModel<T> : IPageViewModel<T> where T : IContent
     {
         public PageViewModel(T currentPage)
         {
-            
+
         }
-         public T CurrentPage {get;}
+        public T CurrentPage { get; }
     }
 }

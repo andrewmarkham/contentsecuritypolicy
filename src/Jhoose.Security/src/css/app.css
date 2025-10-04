@@ -1,15 +1,15 @@
-* {
+#csp-root p, #csp-root h1, #csp-root h2, #csp-root h3, #csp-root h4, #csp-root h5, #csp-root h6 {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     color: rgba(0, 0, 0, 0.88);
     word-break: break-word;
 }
 
-main {
+#csp-root main {
     padding: 0px 15px 5px 15px;
     margin-bottom: 2rem;
 }
 
-fieldset {
+#csp-root fieldset {
     border-radius: 4px;
     border-color: rgba(0,0,0,0.6);
     border-width: 1px;
@@ -17,11 +17,11 @@ fieldset {
     margin-bottom: 15px;
 }
 
-.fullwidth {
+#csp-root .fullwidth {
     width: 100% !important;
 }
 
-.wide-text {
+#csp-root .wide-text {
     width: 600px;
 }
 
@@ -30,26 +30,26 @@ fieldset {
     padding-top: 0px;
 }
 
-.content-end {
+#csp-root .content-end {
     justify-content: flex-end;
 }
 
-.linkButton {
+#csp-root .linkButton {
     border: none;
     background-color:inherit;
     cursor: pointer;
 }
 
-.linkButton:hover{
+#csp-root .linkButton:hover{
     background-color: inherit;
     text-decoration: underline;
 }
 
-.editDialog .summary {
+#csp-root .editDialog .summary {
     min-width: 40vw;
 }
 
-pre.summary {
+#csp-root pre.summary {
     word-break: break-all; 
     word-wrap: break-word;
     white-space: pre;
@@ -58,59 +58,59 @@ pre.summary {
 }
 
 
-div.title {
+#csp-root div.title {
     padding: 10px 10px;
 }
-div.title h1 {
+#csp-root   div.title h1 {
     margin-bottom: 0px;
 }
-div.notenabled {
+#csp-root div.notenabled {
     padding: 10px;
 }
 
-.iconButton {
+#csp-root .iconButton {
     margin-left: 5px;
 }
 
-.pad-left-20 {
+#csp-root .pad-left-20 {
     padding-left: 20px;
     margin-left: 20px;
 }
 
-.border-left {
+#csp-root .border-left {
     border-left: 4px solid rgba(0,0,0,0.6);
 
 }
-.smaller {
+#csp-root .smaller {
     font-size: smaller;
 }
-.italic {
+#csp-root .italic {
     font-style: italic;
 }
 
-.bold {
+#csp-root .bold {
     font-weight: bold;
 }
 
-.toolBar {
+#csp-root .toolBar {
     margin-top: 15px;
     display: flex;
     flex-direction: row;
     justify-content: end;
 }
 
-.error-message {
+#csp-root .error-message {
     color: red;
 }
 
-.inline {
+#csp-root .inline {
     display: inline;
 }
 
-.flex {
+#csp-root .flex {
     display: flex;
 }
 
-.formCopy {
+#csp-root .formCopy {
     padding-left: calc(3em + 14px);
 }

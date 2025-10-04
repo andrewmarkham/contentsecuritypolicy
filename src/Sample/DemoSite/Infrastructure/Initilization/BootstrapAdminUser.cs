@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using EPiServer.Authorization;
 using EPiServer.Shell.Security;
 using EPiServer.Web;
+
 using Microsoft.AspNetCore.Http;
 
 namespace DemoSite.Infrastructure.Initilization

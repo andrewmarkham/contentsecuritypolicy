@@ -74,7 +74,7 @@ export const cspAppReducer = (state : CspState, action: CspAction): CspState  =>
   function loadDataRequest(dispatcher?: Dispatcher) {
     if (!dispatcher) return;
 
-    axios.get('/api/csp')
+    axios.get('/api/jhoose/csp')
           .then((r) =>
           {
             if (r.status === 200) {
@@ -94,7 +94,7 @@ export const cspAppReducer = (state : CspState, action: CspAction): CspState  =>
       return;
     }
 
-    axios.post('/api/csp',policyData)
+    axios.post('/api/jhoose/csp',policyData)
           .then((r) =>
           {
             if (r.status === 200) {

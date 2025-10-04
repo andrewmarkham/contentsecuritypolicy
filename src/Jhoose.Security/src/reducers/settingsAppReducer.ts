@@ -46,7 +46,7 @@ export const settingsAppReducer = (state: SettingsState, action : SettingsAction
   function loadRequest(dispatcher?:Dispatcher) {
     if (!dispatcher) return;  
 
-    axios.get('/api/csp/settings')
+    axios.get('/api/jhoose/settings')
           .then((r) =>
           {
             if (r.status === 200) {
@@ -70,7 +70,7 @@ export const settingsAppReducer = (state: SettingsState, action : SettingsAction
       return;
     }
 
-    axios.post('/api/csp/settings',settings)
+    axios.post('/api/jhoose/settings',settings)
           .then((r) =>
           {
             if (r.status === 200) {

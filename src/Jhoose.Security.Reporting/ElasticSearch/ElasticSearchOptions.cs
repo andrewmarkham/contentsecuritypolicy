@@ -1,6 +1,6 @@
 namespace Jhoose.Security.Reporting.ElasticSearch;
 
-public class ElasticSearchReportingOptions 
+public class ElasticSearchReportingOptions
 {
     public string IndexName { get; set; } = "security-reporting";
     public List<string>? EndPoints { get; set; }
@@ -8,7 +8,7 @@ public class ElasticSearchReportingOptions
     public string Password { get; set; } = string.Empty;
     public string CertificateFingerprint { get; set; } = string.Empty;
     public string ApiKey { get; set; } = string.Empty;
-    
+
     /// <summary>
     /// The cloud id for the elastic cloud instance
     /// </summary>

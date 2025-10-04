@@ -1,27 +1,27 @@
 using System.Collections.Generic;
+
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Repository;
 
-namespace Jhoose.Security.Core.Provider
+namespace Jhoose.Security.Core.Provider;
+
+public class StandardResponseHeadersProvider : IResponseHeadersProvider
 {
-    public class StandardResponseHeadersProvider : IResponseHeadersProvider
+    private readonly IResponseHeadersRepository responseHeadersRepository;
+
+    public StandardResponseHeadersProvider(IResponseHeadersRepository responseHeadersRepository
+        )
     {
-        private readonly IResponseHeadersRepository responseHeadersRepository;
+        this.responseHeadersRepository = responseHeadersRepository;
+    }
 
-        public StandardResponseHeadersProvider(IResponseHeadersRepository responseHeadersRepository
-            )
-        {
-            this.responseHeadersRepository = responseHeadersRepository;
-        }
+    public void Initialize()
+    {
+        this.responseHeadersRepository.Bootstrap();
+    }
 
-        public void Initialize()
-        {
-            this.responseHeadersRepository.Bootstrap();
-        }
-
-        public IEnumerable<ResponseHeader> ResponseHeaders()
-        {
-            return this.responseHeadersRepository.List();
-        }
+    public IEnumerable<ResponseHeader> ResponseHeaders()
+    {
+        return this.responseHeadersRepository.List();
     }
 }

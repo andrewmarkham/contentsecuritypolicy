@@ -61,7 +61,7 @@ export const headerAppReducer = (state : HeadersState, action: HeaderAction): He
   function loadRequest(dispatcher?: Dispatcher) {
     if (!dispatcher) return;
 
-    axios.get('/api/csp/header')
+    axios.get('/api/jhoose/responseheaders')
           .then((r) =>
           {
             if (r.status === 200) {
@@ -87,7 +87,7 @@ export const headerAppReducer = (state : HeadersState, action: HeaderAction): He
       return;
     }
 
-    axios.post('/api/csp/header',securityheader)
+    axios.post('/api/jhoose/responseheaders',securityheader)
           .then((r) =>
           {
             if (r.status === 200) {

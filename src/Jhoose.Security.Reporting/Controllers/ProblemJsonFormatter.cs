@@ -1,9 +1,12 @@
 using System.Text;
 using System.Text.Json;
+
 using Jhoose.Security.Reporting.Models;
+
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
 using MyCSharp.HttpUserAgentParser.Providers;
 
 namespace Jhoose.Security.Reporting.Controllers
@@ -12,7 +15,7 @@ namespace Jhoose.Security.Reporting.Controllers
     {
         public ProblemJsonFormatter()
         {
-            
+
             this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/problem+json"));
             this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/reports+json"));
             this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/csp-report"));
@@ -39,7 +42,8 @@ namespace Jhoose.Security.Reporting.Controllers
 
                 json = await reader.ReadToEndAsync();
 
-                try {
+                try
+                {
                     if (json.Contains("csp-report"))
                     {
                         var reportUri = JsonSerializer.Deserialize<ReportUri>(json);
@@ -49,14 +53,14 @@ namespace Jhoose.Security.Reporting.Controllers
                             return await InputFormatterResult.FailureAsync();
                         }
 
-                        var rt  = new ReportTo(0, "csp-violation", reportUri.CspReport.DocumentUri, userAgent.ToString() ?? string.Empty, new ReportToBody(reportUri.CspReport), DateTime.UtcNow);
+                        var rt = new ReportTo(0, "csp-violation", reportUri.CspReport.DocumentUri, userAgent.ToString() ?? string.Empty, new ReportToBody(reportUri.CspReport), DateTime.UtcNow);
                         reportTo.Add(rt);
                     }
                     else
                     {
                         if (json.StartsWith("[") && json.EndsWith("]"))
                         {
-                            var rtc = JsonSerializer.Deserialize<List<ReportTo>>(json) ?? []; 
+                            var rtc = JsonSerializer.Deserialize<List<ReportTo>>(json) ?? [];
                             reportTo.AddRange(rtc);
                         }
                         else
@@ -88,13 +92,13 @@ namespace Jhoose.Security.Reporting.Controllers
                     logger.LogError(ex, "Read failed: json = {json}", json);
                     return await InputFormatterResult.FailureAsync();
                 }
-                
 
-                return await InputFormatterResult.SuccessAsync(reportTo.Where(r=>r.Type == "csp-violation").ToList());
+
+                return await InputFormatterResult.SuccessAsync(reportTo.Where(r => r.Type == "csp-violation").ToList());
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Read failed: json = {json}",json);
+                logger.LogError(ex, "Read failed: json = {json}", json);
                 return await InputFormatterResult.FailureAsync();
             }
         }

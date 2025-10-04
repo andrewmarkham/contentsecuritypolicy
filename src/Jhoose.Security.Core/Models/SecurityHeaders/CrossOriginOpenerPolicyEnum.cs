@@ -1,9 +1,8 @@
-namespace Jhoose.Security.Core.Models.SecurityHeaders
+namespace Jhoose.Security.Core.Models.SecurityHeaders;
+
+public enum CrossOriginOpenerPolicyEnum
 {
-    public enum CrossOriginOpenerPolicyEnum
-    {
-        UnSafeNone,
-        SameOriginAllowPopups,
-        SameOrigin
-    }
+    UnSafeNone,
+    SameOriginAllowPopups,
+    SameOrigin
 }

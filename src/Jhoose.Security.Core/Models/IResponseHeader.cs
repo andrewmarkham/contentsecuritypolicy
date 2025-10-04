@@ -1,9 +1,8 @@
-﻿namespace Jhoose.Security.Core.Models
+﻿namespace Jhoose.Security.Core.Models;
+
+public interface IResponseHeader
 {
-    public interface IResponseHeader
-    {
-        bool Enabled { get; set; }
-        string Name { get; }
-        string Value { get; }
-    }
+    bool Enabled { get; set; }
+    string Name { get; }
+    string Value { get; }
 }

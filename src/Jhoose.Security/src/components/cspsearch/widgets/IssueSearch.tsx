@@ -76,7 +76,7 @@ export function IssueSearch() {
 
     setLoading(true);
 
-    fetch(`/api/csp/search`, {
+    fetch(`/api/jhoose/dashboard/search`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

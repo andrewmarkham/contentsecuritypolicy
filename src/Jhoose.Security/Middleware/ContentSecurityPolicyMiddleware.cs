@@ -1,25 +1,48 @@
+using System.Net.Mime;
 using System.Threading.Tasks;
+
 using Jhoose.Security.Services;
+
 using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 
-namespace Jhoose.Security.Middleware
+namespace Jhoose.Security.Middleware;
+
+public class ContentSecurityPolicyMiddleware
 {
-    public class ContentSecurityPolicyMiddleware
+    private readonly RequestDelegate _next;
+
+    public ContentSecurityPolicyMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public ContentSecurityPolicyMiddleware(RequestDelegate next)
+    public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService)
+    {
+        if (!context.Response.HasStarted)
         {
-            _next = next;
+            securityService.AddContentSecurityPolicy(context.Response);
         }
 
-        public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService)
+        context.Response.OnStarting(() =>
         {
-            if (!context.Response.HasStarted)
+            var response = context.Response;
+            // Strip on 304 Not Modified and non-HTML/JS responses
+            if (
+                response.StatusCode == StatusCodes.Status304NotModified
+                || response.Headers.TryGetValue(HeaderNames.ContentType, out var contentType)
+                    && !contentType.ToString().StartsWith(MediaTypeNames.Text.Html)
+                    // MediaTypeNames.Text.JavaScript is not available in .NET < 8
+                    && !contentType.ToString().StartsWith("text/javascript")
+            )
             {
-                securityService.AddContentSecurityPolicy(context.Response);
+                response.Headers.Remove(HeaderNames.ContentSecurityPolicy);
+                response.Headers.Remove(HeaderNames.ContentSecurityPolicyReportOnly);
             }
-            await _next(context);
-        }
+
+            return Task.CompletedTask;
+        });
+
+        await _next(context);
     }
 }

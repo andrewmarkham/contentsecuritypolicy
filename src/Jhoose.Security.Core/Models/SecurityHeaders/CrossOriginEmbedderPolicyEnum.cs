@@ -1,8 +1,7 @@
-namespace Jhoose.Security.Core.Models.SecurityHeaders
+namespace Jhoose.Security.Core.Models.SecurityHeaders;
+
+public enum CrossOriginEmbedderPolicyEnum
 {
-    public enum CrossOriginEmbedderPolicyEnum
-    {
-        UnSafeNone,
-        RequireCorp
-    }
+    UnSafeNone,
+    RequireCorp
 }

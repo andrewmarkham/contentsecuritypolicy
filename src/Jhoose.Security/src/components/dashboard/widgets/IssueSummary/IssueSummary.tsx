@@ -37,7 +37,7 @@ export const IssueSummary = () => {
     const fetchData = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch('/api/csp/dashboard/summary', {
+            const response = await fetch('/api/jhoose/dashboard', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

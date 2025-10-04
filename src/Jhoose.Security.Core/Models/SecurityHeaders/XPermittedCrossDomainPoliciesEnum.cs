@@ -1,10 +1,9 @@
-namespace Jhoose.Security.Core.Models.SecurityHeaders
+namespace Jhoose.Security.Core.Models.SecurityHeaders;
+
+public enum XPermittedCrossDomainPoliciesEnum
 {
-    public enum XPermittedCrossDomainPoliciesEnum
-    {
-        None,
-        MasterOnly,
-        ByContentType,
-        All
-    }
+    None,
+    MasterOnly,
+    ByContentType,
+    All
 }

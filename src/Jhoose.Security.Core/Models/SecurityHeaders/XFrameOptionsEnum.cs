@@ -1,9 +1,8 @@
-namespace Jhoose.Security.Core.Models.SecurityHeaders
+namespace Jhoose.Security.Core.Models.SecurityHeaders;
+
+public enum XFrameOptionsEnum
 {
-    public enum XFrameOptionsEnum
-    {
-        Deny,
-        SameOrigin,
-        AllowFrom
-    }
+    Deny,
+    SameOrigin,
+    AllowFrom
 }

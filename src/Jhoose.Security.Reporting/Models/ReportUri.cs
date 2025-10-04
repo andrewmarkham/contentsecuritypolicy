@@ -1,19 +1,18 @@
 
 using System.Text.Json.Serialization;
 
-namespace Jhoose.Security.Reporting.Models
-{
-    public class ReportUri
-    {
-        [JsonConstructor]
-        public ReportUri(
-            CspReport cspReport
-        )
-        {
-            CspReport = cspReport;
-        }
+namespace Jhoose.Security.Reporting.Models;
 
-        [JsonPropertyName("csp-report")]
-        public CspReport CspReport { get; }
+public class ReportUri
+{
+    [JsonConstructor]
+    public ReportUri(
+        CspReport cspReport
+    )
+    {
+        CspReport = cspReport;
     }
+
+    [JsonPropertyName("csp-report")]
+    public CspReport CspReport { get; }
 }

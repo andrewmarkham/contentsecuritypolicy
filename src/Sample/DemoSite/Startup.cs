@@ -1,25 +1,19 @@
 using DemoSite.Infrastructure.Initilization;
+
 using EPiServer.Cms.UI.AspNetIdentity;
+using EPiServer.Framework.Web.Resources;
+using EPiServer.Shell.Modules;
 using EPiServer.Web;
 using EPiServer.Web.Routing;
+
+using Jhoose.Security.DependencyInjection;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Jhoose.Security.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using EPiServer.Framework.Web.Resources;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using EPiServer.Shell.Modules;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using Jhoose.Security.Reporting.DependencyInjection;
-using System.Collections.Generic;
-using Jhoose.Security.Reporting.Database;
-using Jhoose.Security.Core.Configuration;
 
 namespace DemoSite
 {
@@ -61,7 +55,7 @@ namespace DemoSite
 
             //_configuration.GetSection(JhooseSecurityOptions.JhooseSecurity).Bind(jhooseOptions);
 
-            services.AddJhooseSecurity(_configuration,(o) =>
+            services.AddJhooseSecurity(_configuration, (o) =>
             {
                 o.UseHeadersUI = true;
                 o.ExclusionPaths.Add("/ui");
@@ -77,7 +71,7 @@ namespace DemoSite
             });
 
 
-            
+
             services.AddControllers().AddJsonOptions(options =>
             {
                 // Global settings: use the defaults, but serialize enums as strings
@@ -86,7 +80,7 @@ namespace DemoSite
                 //options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.KebabCaseUpper;
 
             });
-            
+
             //services.AddTransient<BootstrapData, BootstrapData>();
         }
 
