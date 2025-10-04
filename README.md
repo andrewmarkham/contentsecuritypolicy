@@ -26,7 +26,9 @@ Install-Package Jhoose.Security.Admin
 ```
 
 ### Dependencies
+
 The module requires the compatibility level of the database to be >= 130
+
 ----
 
 ## Content Security Policy
@@ -282,3 +284,4 @@ X-API-Key: ...
  |2.4.2| Ensure CSP policy header syntax is valid when using 'None' Option for any policy |
 
  |2.5.0|Added Import / Export functionality<br/>Added support for .NET9<br/>Fixed minor UI bugs |
+
