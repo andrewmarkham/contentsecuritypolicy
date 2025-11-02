@@ -5,11 +5,11 @@ import { Flex} from 'antd';
 
 import type { TableProps } from 'antd';
 import { Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table/interface';
+import type { ColumnsType, FilterValue, SorterResult, TableCurrentDataSource } from 'antd/es/table/interface';
 
 import { format } from "date-fns";
 import { useSearchParams } from 'react-router-dom';
-import { SearchParams, SelectValue, RowDataType, TableParams} from './types/types';
+import { SearchParams, SelectValue, RowDataType, TableParams, TablePaginationConfig} from './types/types';
 
 import { IssueSearchForm } from './IssueSearchForm';
 
@@ -132,6 +132,24 @@ export function IssueSearch() {
     filters: searchQuery
   });
 
+  function handleTableChange(pagination: TablePaginationConfig, 
+      filters: Record<string, FilterValue | null>, 
+      sorter: SorterResult<RowDataType> | SorterResult<RowDataType>[], 
+      extra: TableCurrentDataSource<RowDataType>): void {
+    console.log(sorter);
+    setTableParams({
+      pagination,
+      sortOrder: Array.isArray(sorter) ? "descend" : sorter.order,
+      sortField: Array.isArray(sorter) ? undefined : sorter.field,
+    });
+
+    // `dataSource` is useless since `pageSize` changed
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setData([]);
+    }
+  }
+
+  /*
   const handleTableChange: TableProps['onChange'] = (pagination, filters, sorter) => {
     console.log(sorter);
     setTableParams({
@@ -145,7 +163,7 @@ export function IssueSearch() {
       setData([]);
     }
   };
-
+*/
   return (
     <>
       <Flex gap='small' justify='flex-end' style={{ padding: '1rem' }}>

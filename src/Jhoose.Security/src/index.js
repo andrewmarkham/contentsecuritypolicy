@@ -150,6 +150,53 @@ app.post('/api/jhoose/csp',jsonParser, async (req, res) => {
   res.json(data);
 })
 
+app.get('/api/jhoose/permissions', async (req, res) => {
+  /*res.setHeader('Content-Type', 'application/json');
+
+  var headersCol = db.getCollection("headers");
+  //var headers = headersCol.data;
+
+  var resp = {
+    useHeadersUI: true,
+    headers: headersCol.data
+  }
+
+  await snooze(1500);
+  res.json(resp);
+*/
+    res.setHeader('Content-Type', 'application/json');
+
+  await snooze(1500);
+
+  //var jsonData = fs.readFileSync(path.join(__dirname + '/permissions-data.json'));
+  var importdata = [
+    { key: 'fullscreen', mode: 'enabled', scope: 'self', allowlist: [] },
+    { key: 'accelerometer', mode: 'enabled', scope: 'all', allowlist: [] },
+    { key: 'ambient-light-sensor', mode: 'disabled', scope: 'self', allowlist: [
+
+    ] },
+    { key: 'autoplay', mode: 'enabled', scope: 'self', allowlist: [
+            'https://example.com',
+      'https://another-example.com',
+      'https://yet-another-example.com',
+      'https://1example.com',
+    ] }
+  ]
+
+  res.json(importdata);
+})
+
+app.post('/api/jhoose/permissions',jsonParser, async (req, res) => {
+  
+  var data = req.body;
+  console.log(data);
+  
+  res.setHeader('Content-Type', 'application/json');
+
+  await snooze(1500);
+  res.json(data);
+})
+
 app.post('/api/jhoose/settings',jsonParser, async (req, res) => {
   
   var data = req.body;

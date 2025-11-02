@@ -1,4 +1,4 @@
-#csp-root p, #csp-root h1, #csp-root h2, #csp-root h3, #csp-root h4, #csp-root h5, #csp-root h6 {
+#csp-root p, #csp-root h1, #csp-root h2, #csp-root h3, #csp-root h4, #csp-root h5, #csp-root h6, #csp-root li, #csp-root div, #csp-root span, #csp-root pre, #csp-root label {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     color: rgba(0, 0, 0, 0.88);
     word-break: break-word;
@@ -113,4 +113,13 @@
 
 #csp-root .formCopy {
     padding-left: calc(3em + 14px);
+}
+
+#csp-root .permission-policy__panel .collapsible-panel__header {
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+#csp-root .permission-policy__panel .collapsible-panel__content {
+    padding: 12px;
 }
