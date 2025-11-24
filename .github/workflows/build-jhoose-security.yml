@@ -52,8 +52,16 @@ jobs:
 
     - name: Test
       working-directory: ./src
-      run: dotnet test --no-build 
+      run: dotnet test --no-build --logger "trx;LogFileName=test_results.trx"
     
+    - name: Report tests
+      if: always()
+      uses: dorny/test-reporter@v1
+      with:
+        name: NUnit Tests
+        path: '**/test_results.trx'
+        reporter: dotnet-trx
+        
     - name: nuget push
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release')
       working-directory: ./src/Jhoose.Security
