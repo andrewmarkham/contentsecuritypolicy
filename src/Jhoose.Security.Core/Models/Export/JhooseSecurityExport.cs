@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
 using Jhoose.Security.Core.Models.CSP;
+using Jhoose.Security.Core.Models.Permissions;
 
 namespace Jhoose.Security.Core.Models.Export;
 
@@ -11,6 +12,7 @@ public record JhoooseSecurityExport
     public ExportMetadata Metadata { get; init; } = new ExportMetadata();
     public CspSettings? CspSettings { get; init; }
     public List<CspPolicy>? CspPolicies { get; init; }
+    public List<PermissionPolicy>? Permissions { get; init; }
     public List<ResponseHeader>? ResponseHeaders { get; init; }
 
 }

@@ -3,8 +3,6 @@ using EPiServer.Data.Dynamic;
 
 using Jhoose.Security.Core.Models;
 
-using Newtonsoft.Json;
-
 namespace Jhoose.Security.Repository;
 
 [EPiServerDataContract]
@@ -17,9 +15,8 @@ public class ResponseHeaderStorageItem<T> : IDynamicData where T : ResponseHeade
 
     public ResponseHeaderStorageItem(T header)
     {
-        //this.Header = header;
         this.TypeName = header.GetType().AssemblyQualifiedName ?? string.Empty;
-        this.SerializedValue = JsonConvert.SerializeObject(header);
+        this.SerializedValue = System.Text.Json.JsonSerializer.Serialize(header);
         this.Id = Identity.NewIdentity(header.Id);
     }
 

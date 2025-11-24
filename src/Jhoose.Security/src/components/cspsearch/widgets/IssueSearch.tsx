@@ -5,11 +5,11 @@ import { Flex} from 'antd';
 
 import type { TableProps } from 'antd';
 import { Table } from 'antd';
-import type { ColumnsType } from 'antd/es/table/interface';
+import type { ColumnsType, FilterValue, SorterResult, TableCurrentDataSource } from 'antd/es/table/interface';
 
 import { format } from "date-fns";
 import { useSearchParams } from 'react-router-dom';
-import { SearchParams, SelectValue, RowDataType, TableParams} from './types/types';
+import { SearchParams, SelectValue, RowDataType, TableParams, TablePaginationConfig} from './types/types';
 
 import { IssueSearchForm } from './IssueSearchForm';
 
@@ -22,6 +22,10 @@ const columns: ColumnsType<RowDataType> = [
     sortDirections: ['ascend','descend', 'ascend'],
     render: (value: Date) => format(value, 'yyyy-MM-dd HH:mm:ss'),
     width: '180px',
+  },
+  {
+    title: 'Type',
+    dataIndex: 'type'
   },
   {
     title: 'Url',
@@ -38,7 +42,7 @@ const columns: ColumnsType<RowDataType> = [
     width: '160px',
   },
   {
-    title: 'Blocked Uri',
+    title: 'Issue',
     dataIndex: 'blockedUri',
   }
 ];
@@ -65,6 +69,7 @@ export function IssueSearch() {
 
   const [directiveOptions, setDirectiveOptions] = useState<Array<SelectValue>>([]);
   const [browserOptions, setBrowserOptions] = useState<Array<SelectValue>>([]);
+  const [typeOptions, setTypeOptions] = useState<Array<SelectValue>>([]);
 
   function onSearch(searchParams: SearchParams) {
     setSearchQuery(searchParams);
@@ -97,6 +102,7 @@ export function IssueSearch() {
         });
         setDirectiveOptions(data.directives.map((d: string) => ({ label: d, value: d })));
         setBrowserOptions(data.browsers.map((b: string) => ({ label: b, value: b })));
+        setTypeOptions(data.types.map((t: string) => ({ label: t, value: t })));
       });
   };
 
@@ -132,6 +138,24 @@ export function IssueSearch() {
     filters: searchQuery
   });
 
+  function handleTableChange(pagination: TablePaginationConfig, 
+      filters: Record<string, FilterValue | null>, 
+      sorter: SorterResult<RowDataType> | SorterResult<RowDataType>[], 
+      extra: TableCurrentDataSource<RowDataType>): void {
+    console.log(sorter);
+    setTableParams({
+      pagination,
+      sortOrder: Array.isArray(sorter) ? "descend" : sorter.order,
+      sortField: Array.isArray(sorter) ? undefined : sorter.field,
+    });
+
+    // `dataSource` is useless since `pageSize` changed
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setData([]);
+    }
+  }
+
+  /*
   const handleTableChange: TableProps['onChange'] = (pagination, filters, sorter) => {
     console.log(sorter);
     setTableParams({
@@ -145,7 +169,7 @@ export function IssueSearch() {
       setData([]);
     }
   };
-
+*/
   return (
     <>
       <Flex gap='small' justify='flex-end' style={{ padding: '1rem' }}>
@@ -154,6 +178,7 @@ export function IssueSearch() {
           directives={directiveOptions}
           initialDirective={searchParams.get('directive')}
           browsers={browserOptions}
+          types={typeOptions}
           initialQuery={searchParams.get('page')}
           onSearch={onSearch} />
       </Flex>

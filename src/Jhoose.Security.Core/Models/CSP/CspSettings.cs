@@ -16,12 +16,13 @@ public class CspSettings
     public CspSettings()
     {
         this.Mode = "off";
+        this.PermissionMode = "off";
         this.ReportingMode = ReportingMode.None;
     }
 
     public Guid Id { get; set; }
     public string Mode { get; set; }
-
+    public string PermissionMode { get; set; }
     public ReportingMode ReportingMode { get; set; }
 
     /// <summary>
@@ -45,8 +46,15 @@ public class CspSettings
     public bool HasReporting => !string.IsNullOrEmpty(this.ReportingUrl) | !string.IsNullOrEmpty(this.ReportToUrl);
 
     [JsonIgnore]
-    public bool IsEnabled => this.Mode.Equals("off") ? false : true;
+    public bool IsEnabled => !this.Mode.Equals("off");
 
     [JsonIgnore]
+    public bool IsPermissionsEnabled => !this.PermissionMode.Equals("off");
+    
+    [JsonIgnore]
     public string PolicyHeader => this.Mode.Equals("on", StringComparison.CurrentCultureIgnoreCase) ? "Content-Security-Policy" : "Content-Security-Policy-Report-Only";
+
+    [JsonIgnore]
+    public string PermissionPolicyHeader => this.PermissionMode.Equals("on", StringComparison.CurrentCultureIgnoreCase) ? "Permissions-Policy" : "Permissions-Policy-Report-Only";
+
 }

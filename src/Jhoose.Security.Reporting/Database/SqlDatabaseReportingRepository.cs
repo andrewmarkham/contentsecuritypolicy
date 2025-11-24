@@ -26,7 +26,7 @@ public class SqlDatabaseReportingRepository : IReportingRepository
 
     public string Type => "Sql";
 
-    public async Task AddReport(ReportTo reportTo)
+    public async Task AddReport(ReportTo<IReportToBody> reportTo)
     {
         var sqlCommand = """
                 INSERT INTO SecurityReportTo 
@@ -51,7 +51,7 @@ public class SqlDatabaseReportingRepository : IReportingRepository
             sqlHelper.CreateParameter<string>("Version", DbType.String, reportTo.Version),
             sqlHelper.CreateParameter<string>("OS", DbType.String, reportTo.OS),
             sqlHelper.CreateParameter<string>("Directive", DbType.String, reportTo.Directive),
-            sqlHelper.CreateParameter<string>("BlockedUri", DbType.String, reportTo.BlockedUri),
+            sqlHelper.CreateParameter<string>("BlockedUri", DbType.String, reportTo.Message ?? string.Empty),
             sqlHelper.CreateParameter<string>("Body", DbType.String, JsonSerializer.Serialize(reportTo.Body)));
     }
 
@@ -96,6 +96,7 @@ public class SqlDatabaseReportingRepository : IReportingRepository
             sqlHelper.CreateParameter<string>("@Query", DbType.String, searchParams?.Filters?.Query ?? string.Empty),
             sqlHelper.CreateParameter<string>("@Directive", DbType.String, string.Join(',',searchParams?.Filters?.Directive ?? []) ),
             sqlHelper.CreateParameter<string>("@Browser", DbType.String, string.Join(',',searchParams?.Filters?.Browser ?? [])),
+            sqlHelper.CreateParameter<string>("@Type", DbType.String, string.Join(',',searchParams?.Filters?.Type ?? [])),
             sqlHelper.CreateParameter<string>("@SortOrder", DbType.String, searchParams?.SortOrder == "ascend" ? "A" : "D"),
             sqlHelper.CreateParameter<int>("@MaxRows", DbType.Int32, 100000)
         };
@@ -117,6 +118,10 @@ public class SqlDatabaseReportingRepository : IReportingRepository
         reader.NextResult();
 
         summary.TopPages.AddRange(GetDashboardIssues(reader, "page"));
+
+        reader.NextResult();
+
+        summary.TopTypes.AddRange(GetDashboardIssues(reader, "type"));
 
         reader.NextResult();
 
@@ -170,6 +175,10 @@ public class SqlDatabaseReportingRepository : IReportingRepository
 
         reader.NextResult();
 
+        cspSearchResults.Types.AddRange(GetDashboardIssues(reader, "types").Select(i => i.Name));
+
+        reader.NextResult();
+
         reader.Read();
         cspSearchResults.Total = reader.GetInt32(0);
 
@@ -187,7 +196,8 @@ public class SqlDatabaseReportingRepository : IReportingRepository
                 Url = reader.GetString(2),
                 Directive = reader.GetString(3),
                 Browser = reader.GetString(4),
-                BlockedUri = reader.GetString(5)
+                BlockedUri = reader.GetString(5),
+                Type = reader.GetString(6)
             };
         }
     }

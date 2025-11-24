@@ -8,6 +8,7 @@ public class DashboardSummary
         Total = 0;
         TopPages = [];
         TopDirectives = [];
+        TopTypes = [];
         Errors = [];
     }
 
@@ -15,5 +16,6 @@ public class DashboardSummary
     public int Total { get; set; }
     public List<DashboardIssue> TopPages { get; set; }
     public List<DashboardIssue> TopDirectives { get; set; }
+    public List<DashboardIssue> TopTypes { get; set; }
     public List<DashboardGraphItem> Errors { get; set; }
 }

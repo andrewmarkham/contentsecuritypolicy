@@ -18,7 +18,7 @@ export function CspIssueSearch() {
     return(
         <>
             <div className="title">
-              <Title level={2}>Search CSP Issues</Title>
+              <Title level={2}>Search Issues</Title>
             </div>
             <div>
                 {state.settings.settings.reportingMode === 1 ?

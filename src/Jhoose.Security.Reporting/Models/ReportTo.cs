@@ -1,10 +1,8 @@
-//using Newtonsoft.Json;
-
 using System.Text.Json.Serialization;
 
 namespace Jhoose.Security.Reporting.Models;
 
-public class ReportTo
+public record ReportTo<T> where T : IReportToBody
 {
     [JsonConstructor]
     public ReportTo(
@@ -12,7 +10,7 @@ public class ReportTo
         string type,
         string url,
         string userAgent,
-        ReportToBody body,
+        T body,
         DateTime recievedAt
     )
     {
@@ -44,10 +42,10 @@ public class ReportTo
     public string Version { get; set; }
     public string OS { get; set; }
 
-    public string? Directive => Body.EffectiveDirective;
+    public string Directive => Body.Directive ?? string.Empty;
 
-    public string? BlockedUri => Body.BlockedURL;
+    public string? Message => Body.Message;
 
     [JsonPropertyName("body")]
-    public ReportToBody Body { get; }
+    public T Body { get; }
 }

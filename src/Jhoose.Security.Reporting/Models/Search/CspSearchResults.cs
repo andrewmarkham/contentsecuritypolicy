@@ -7,4 +7,6 @@ public class CspSearchResults
 
     public List<string> Directives { get; set; } = [];
     public List<string> Browsers { get; set; } = [];
+
+    public List<string> Types { get; set; } = [];
 }
