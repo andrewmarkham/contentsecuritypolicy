@@ -59,9 +59,9 @@ jobs:
       uses: dorny/test-reporter@v1
       with:
         name: NUnit Tests
-        path: '**/test_results.trx'
+        path: './src/**/test_results.trx'
         reporter: dotnet-trx
-        
+
     - name: nuget push
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release')
       working-directory: ./src/Jhoose.Security
