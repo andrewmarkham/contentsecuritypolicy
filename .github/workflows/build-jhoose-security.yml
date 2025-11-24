@@ -51,8 +51,8 @@ jobs:
 
 
     - name: Test
-      working-directory: ./src/Jhoose.Security
-      run: dotnet test --configuration Release  --no-build --verbosity normal
+      working-directory: ./src
+      run: dotnet test --no-build --verbosity normal
     
     - name: nuget push
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release')
