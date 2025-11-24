@@ -6,6 +6,7 @@ export type AuthenticationKey = {
 
 export type SecuritySettings = {
     mode: "on"|"off"|"report",
+    permissionMode: "on"|"off"|"report",
     reportingMode: 0 | 1 | 2,
     reportingUrl: string,
     reportToUrl: string,

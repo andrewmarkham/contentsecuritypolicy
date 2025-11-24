@@ -26,6 +26,7 @@ export const RenderPermission: React.FC<{ permission: Permission | undefined; de
     var permissionDisplay;
     switch (permission?.mode) {
         case "enabled":
+        case "report":
             if (permission.scope === "all") {
                 permissionDisplay = `${permission.key}=*`;
             } else {

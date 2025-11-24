@@ -24,6 +24,10 @@ const columns: ColumnsType<RowDataType> = [
     width: '180px',
   },
   {
+    title: 'Type',
+    dataIndex: 'type'
+  },
+  {
     title: 'Url',
     dataIndex: 'url'
   },
@@ -38,7 +42,7 @@ const columns: ColumnsType<RowDataType> = [
     width: '160px',
   },
   {
-    title: 'Blocked Uri',
+    title: 'Issue',
     dataIndex: 'blockedUri',
   }
 ];
@@ -65,6 +69,7 @@ export function IssueSearch() {
 
   const [directiveOptions, setDirectiveOptions] = useState<Array<SelectValue>>([]);
   const [browserOptions, setBrowserOptions] = useState<Array<SelectValue>>([]);
+  const [typeOptions, setTypeOptions] = useState<Array<SelectValue>>([]);
 
   function onSearch(searchParams: SearchParams) {
     setSearchQuery(searchParams);
@@ -97,6 +102,7 @@ export function IssueSearch() {
         });
         setDirectiveOptions(data.directives.map((d: string) => ({ label: d, value: d })));
         setBrowserOptions(data.browsers.map((b: string) => ({ label: b, value: b })));
+        setTypeOptions(data.types.map((t: string) => ({ label: t, value: t })));
       });
   };
 
@@ -172,6 +178,7 @@ export function IssueSearch() {
           directives={directiveOptions}
           initialDirective={searchParams.get('directive')}
           browsers={browserOptions}
+          types={typeOptions}
           initialQuery={searchParams.get('page')}
           onSearch={onSearch} />
       </Flex>

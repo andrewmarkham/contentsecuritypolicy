@@ -8,7 +8,7 @@ public interface IReportingRepository
 {
     string Type { get; }
 
-    Task AddReport(ReportTo reportTo);
+    Task AddReport(ReportTo<IReportToBody> reportTo);
 
     Task<DashboardSummary> GetDashboardSummary(DashboardSummary summary);
 

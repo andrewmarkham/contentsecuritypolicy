@@ -44,6 +44,7 @@ function HandleExport() {
 
     var exportOptions: CheckboxOptionType[] =[
         { label: 'Export CSP', value: 'csp' },
+        { label: 'Export Permissions', value: 'permissions' },
         { label: 'Export Headers', value: 'headers' },
         { label: 'Export Settings', value: 'settings' }
     ];

@@ -58,8 +58,16 @@ public class CspPolicy
 
                 // Use Span to avoid creating intermediate string allocation
                 var valueSpan = this.Value.AsSpan();
-                var replaced = valueSpan.ToString().Replace(Environment.NewLine, " ");
-                sb.Append(replaced).Append("; ");
+                if (valueSpan.Contains("\r\n".AsSpan(), StringComparison.InvariantCulture))
+                {
+                    valueSpan.ToString().Replace("\r\n", " ");
+                    sb.Append(valueSpan.ToString().Replace("\r\n", " ")).Append("; ");
+                }
+                else if (valueSpan.Contains('\n'))
+                {
+                    var replaced = valueSpan.ToString().Replace("\n", " ");
+                    sb.Append(replaced).Append("; ");
+                }
             }
             else
             {

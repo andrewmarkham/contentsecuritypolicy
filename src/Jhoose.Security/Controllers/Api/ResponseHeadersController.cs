@@ -17,35 +17,36 @@ using Microsoft.Extensions.Options;
 
 namespace Jhoose.Security.Controllers.Api;
 
+/// <summary>
+/// Controller for managing response headers and related operations.
+/// </summary>
+/// <param name="policyRepository">Repository for CSP policies.</param>
+/// <param name="responseHeadersRepository">Repository for response headers.</param>
+/// <param name="settingsRepository">Repository for application settings.</param>
+/// <param name="options">Injected options for JhooseSecurity.</param>
+/// <param name="webhookNotifications">Service for sending webhook notifications.</param>
+/// <param name="dashboardService">Service for dashboard reporting.</param>
+/// <param name="logger">Logger instance for the controller.</param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
 [Authorize(Policy = Constants.PolicyName)]
-public class ResponseHeadersController : NotificationBaseController
+public class ResponseHeadersController(ICspPolicyRepository policyRepository,
+                     IResponseHeadersRepository responseHeadersRepository,
+                     ISettingsRepository settingsRepository,
+                     IOptions<JhooseSecurityOptions> options,
+                     IWebhookNotifications webhookNotifications,
+                     IDashboardService dashboardService,
+                     ILogger<ResponseHeadersController> logger) : NotificationBaseController(settingsRepository, webhookNotifications)
 {
     //private static readonly JsonSerializerSettings jsonSerializerSettings = new() { ContractResolver = new CamelCasePropertyNamesContractResolver() };
     private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
-    private readonly ICspPolicyRepository policyRepository;
-    private readonly IResponseHeadersRepository responseHeadersRepository;
-    private readonly IWebhookNotifications webhookNotifications;
-    private readonly IDashboardService dashboardService;
-    private readonly JhooseSecurityOptions options;
-    private readonly ILogger<CspController> logger;
-
-    public ResponseHeadersController(ICspPolicyRepository policyRepository,
-                         IResponseHeadersRepository responseHeadersRepository,
-                         IOptions<JhooseSecurityOptions> options,
-                         IWebhookNotifications webhookNotifications,
-                         IDashboardService dashboardService,
-                         ILogger<CspController> logger) : base(policyRepository, webhookNotifications)
-    {
-        this.policyRepository = policyRepository;
-        this.responseHeadersRepository = responseHeadersRepository;
-        this.webhookNotifications = webhookNotifications;
-        this.dashboardService = dashboardService;
-        this.options = options.Value;
-        this.logger = logger;
-    }
+    private readonly ICspPolicyRepository policyRepository = policyRepository;
+    private readonly IResponseHeadersRepository responseHeadersRepository = responseHeadersRepository;
+    private readonly IWebhookNotifications webhookNotifications = webhookNotifications;
+    private readonly IDashboardService dashboardService = dashboardService;
+    private readonly JhooseSecurityOptions options = options.Value;
+    private readonly ILogger<ResponseHeadersController> logger = logger;
 
     [HttpGet]
     [ProducesResponseType(typeof(ResponseHeader), StatusCodes.Status200OK)]

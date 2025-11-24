@@ -57,12 +57,17 @@ public static class SecurityExtensions
 
         services.AddScoped<ICspPolicyRepository, StandardCspPolicyRepository>();
         services.AddScoped<ICspProvider, StandardCspProvider>();
+        services.AddScoped<ISettingsRepository, SettingsRepository>();
         services.AddSingleton<ICacheManager, EpiserverCacheManager>();
         services.AddScoped<IJhooseSecurityService, JhooseSecurityService>();
 
         services.AddScoped<IResponseHeadersRepository, StandardResponseHeadersRepository>();
         services.AddScoped<IAuthKeyService, DefaultAuthKeyService>();
         services.AddScoped<IImportExportService, ImportExportService>();
+
+
+        services.AddScoped<IPermissionsRepository, StandardPermissionsRepository>();
+        services.AddScoped<IPermissionsProvider, StandardPermissionsProvider>();
 
         services.AddScoped<IImportRepository, JhooseImportRepository>();
 
@@ -112,7 +117,8 @@ public static class SecurityExtensions
         applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c.Request, securityOptions?.Value.ExclusionPaths ?? Enumerable.Empty<string>()), ab =>
         {
             ab = ab.UseMiddleware<ContentSecurityPolicyMiddleware>();
-            ab.UseMiddleware<SecurityHeadersMiddleware>();
+            ab = ab.UseMiddleware<SecurityHeadersMiddleware>();
+            ab = ab.UseMiddleware<PermissionsPolicyMiddleware>();
         });
 
         if (securityOptions?.Value.HttpsRedirection ?? false)

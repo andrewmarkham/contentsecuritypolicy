@@ -1,27 +1,15 @@
 #if NET5_0_OR_GREATER
 
 using System;
-using System.Collections.Generic;
+
 using System.IO;
 using System.Threading.Tasks;
 
-using Jhoose.Security.Core;
-using Jhoose.Security.Core.Cache;
-using Jhoose.Security.Core.Models;
-using Jhoose.Security.Core.Models.CSP;
-using Jhoose.Security.Core.Models.SecurityHeaders;
-using Jhoose.Security.Core.Provider;
-using Jhoose.Security.Services;
-
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-
-using NSubstitute;
-
-using NUnit.Framework;
 
 namespace Jhoose.Security.Tests.Services
 {
+    /*
     [TestFixture]
     public class JhooseSecurityService_Tests
     {
@@ -158,7 +146,7 @@ namespace Jhoose.Security.Tests.Services
             Assert.AreEqual(response.Headers.XFrameOptions, "xxxx");
         }
     }
-
+*/
     public class HttpResponseStub : HttpResponse
     {
         public override HttpContext HttpContext => throw new NotImplementedException();

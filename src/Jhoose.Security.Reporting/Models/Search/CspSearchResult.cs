@@ -7,7 +7,7 @@ public class CspSearchResult
     public string Id { get; set; } = string.Empty;
     public int Age { get; set; }
     public DateTime RecievedAt { get; set; }
-    public string Type { get; set; } = "csp-violation";
+    public string Type { get; set; } = string.Empty;
     public string Url { get; set; } = string.Empty;
 
     [JsonPropertyName("user_agent")]
@@ -18,6 +18,7 @@ public class CspSearchResult
     public string Os { get; set; } = string.Empty;
     public string Directive { get; set; } = string.Empty;
     public string BlockedUri { get; set; } = string.Empty;
+
 
     public BodyData? Body { get; set; }
 }
@@ -42,9 +43,9 @@ public class CspSearchFilter
     public DateTime? DateFrom { get; set; }
     public List<string>? Browser { get; set; }
     public List<string>? Directive { get; set; }
-
+    public List<string>? Type { get; set; }
     public bool HasFilters()
     {
-        return !string.IsNullOrEmpty(Query) || DateFrom.HasValue || Browser?.Count > 0 || Directive?.Count > 0;
+        return !string.IsNullOrEmpty(Query) || DateFrom.HasValue || Browser?.Count > 0 || Directive?.Count > 0 || Type?.Count > 0;
     }
 }

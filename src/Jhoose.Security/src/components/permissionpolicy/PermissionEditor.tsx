@@ -35,7 +35,7 @@ export const PermissionEditor: React.FC<{ data: Partial<Permission>, default: st
         try {
             localStorage.setItem(`permission:${payload.key}`, JSON.stringify(payload));
 
-            fetch(`api/jhoose/permissions/`, {
+            fetch(`/api/jhoose/permissions/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,15 +67,17 @@ export const PermissionEditor: React.FC<{ data: Partial<Permission>, default: st
             <div>
                 <h3>Edit Permission</h3>
                 <Row>
-                    <Cell width='150px'>
+                    <Cell width='300px'>
                         <label>
                             <span style={{marginRight: "5px"}}>Mode:</span>
                             <Select options={
                                 [
                                     { value: 'default', label: <span>Default</span> },
                                     { value: 'enabled', label: <span>Enabled</span> },
+                                    { value: 'report', label: <span>Enabled (Report Only)</span> },
                                     { value: 'disabled', label: <span>Disabled</span> }
                                 ]} 
+                                style={{width: "200px"}}
                                 value={permissionData?.mode || "default"}
                                 onChange={(value) => {
                                     setPermissionData({ ...permissionData, mode: value as Permission['mode'] });
@@ -84,7 +86,7 @@ export const PermissionEditor: React.FC<{ data: Partial<Permission>, default: st
                                 />
                         </label>
                     </Cell>
-                {permissionData.mode === "enabled" && (
+                {permissionData.mode === "enabled" || permissionData.mode === "report" && (
                     <Cell>
                         <label>
                             <span style={{marginRight: "5px"}}>Scope:</span>
@@ -106,7 +108,7 @@ export const PermissionEditor: React.FC<{ data: Partial<Permission>, default: st
                     </Cell>
                 )}
                 </Row>
-                {(permissionData.mode === "enabled" && permissionData.scope === "self") && (
+                {((permissionData.mode === "enabled" || permissionData.mode === "report") && permissionData.scope === "self") && (
                     <Row>
                         <Cell>
                         <label>

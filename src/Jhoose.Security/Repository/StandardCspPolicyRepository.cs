@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +12,6 @@ using Jhoose.Security.Core.Repository;
 using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Repository;
-
 public class StandardCspPolicyRepository : BaseCspPolicyRepository
 {
     protected readonly DynamicDataStoreFactory dataStoreFactory;
@@ -28,12 +26,7 @@ public class StandardCspPolicyRepository : BaseCspPolicyRepository
         return dataStoreFactory.CreateStore(typeof(CspPolicy), storeParams);
     }
 
-    private DynamicDataStore GetSettingstore()
-    {
-        var storeParams = new StoreDefinitionParameters();
 
-        return dataStoreFactory.CreateStore(typeof(CspSettings).FullName, typeof(CspSettings));
-    }
 
     public StandardCspPolicyRepository(DynamicDataStoreFactory dataStoreFactory,
         ICacheManager cache,
@@ -56,7 +49,6 @@ public class StandardCspPolicyRepository : BaseCspPolicyRepository
         Remap<CspPolicy>();
         Remap<CspOptions>();
         Remap<SchemaSource>();
-        Remap<CspSettings>();
         Remap<SandboxOptions>();
 
         base.Bootstrap();
@@ -81,46 +73,6 @@ public class StandardCspPolicyRepository : BaseCspPolicyRepository
 
             s.Save(policy);
             return policy;
-        }
-    }
-
-    public override CspSettings Settings()
-    {
-        using (var ss = GetSettingstore())
-        {
-            var s = ss.Items<CspSettings>().FirstOrDefault();
-
-            s = s ?? new CspSettings
-            {
-                Id = Guid.NewGuid(),
-                Mode = "report",
-                ReportingUrl = string.Empty,
-                WebhookUrls = new List<string>(),
-                AuthenticationKeys = new List<Core.Models.AuthenticationKey>()
-            };
-            return s;
-        }
-    }
-
-    public override bool SaveSettings(CspSettings settings)
-    {
-        using (var ss = GetSettingstore())
-        {
-            this.cache.Remove(Constants.SettingsCacheKey);
-            this.cache.Remove(Constants.PolicyCacheKey);
-            this.cache.Remove(Constants.ResponseHeadersCacheKey);
-
-            try
-            {
-                var id = ss.Save(settings, Identity.NewIdentity(settings.Id));
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex, "Error saving settings");
-                return false;
-            }
         }
     }
 

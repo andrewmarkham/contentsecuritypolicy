@@ -41,7 +41,7 @@ export function PermissionPolicyModule() {
             <Toaster show={isLoading} message={"Loading..." } />
             <div className="title">
                 <div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                    <div>
+                    <div style={{maxWidth: "60%"}}>
                         <Title level={1}>Permissions Policy</Title>
                             <p>The <span style={{
                                 display: 'inline-block',

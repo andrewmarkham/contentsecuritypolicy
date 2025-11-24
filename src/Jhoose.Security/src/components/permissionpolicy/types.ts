@@ -8,7 +8,7 @@ export type PermissionPolicy = {
 
 export type Permission = {
     key: string;
-    mode: "default" | "enabled" | "disabled";
+    mode: "default" | "enabled" | "report" | "disabled";
     scope: "all" | "self" ;
     allowlist: string[];
 };

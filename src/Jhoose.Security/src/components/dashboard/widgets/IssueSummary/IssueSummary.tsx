@@ -23,6 +23,7 @@ const timeFilters = [
 const typeFilters = [
     { label: "Browser", value: "browser" },
     { label: "Directive", value: "directive" },
+    { label: "Type", value: "type" },
     { label: "Page", value: "page" },
 ];
 
