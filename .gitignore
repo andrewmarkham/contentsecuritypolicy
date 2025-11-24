@@ -64,3 +64,5 @@ src/Sample/Foundation/obj/
 src/Sample/Foundation/node_modules/
 
 src/Sample/Foundation/App_Data/
+
+src/Tests/Jhoose.Security.Reporting.Tests/bin/
