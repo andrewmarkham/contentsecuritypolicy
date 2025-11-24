@@ -28,7 +28,7 @@ Install-Package Jhoose.Security.Admin
 ### Dependencies
 
 The module requires the compatibility level of the database to be >= 130
-
+As of version 2.6.0 support of .NET6 and .NET7 has been removed.
 ----
 
 ## Content Security Policy
@@ -282,6 +282,5 @@ X-API-Key: ...
  |2.4.0| Added 'wasm-unsafe-eval' to the CSP Options<br/>Added missing options to default-src |
  |2.4.1| Make ICspProvider and IJhooseSecurityService request scoped so a unqiue dynamic nonce is generated per request |
  |2.4.2| Ensure CSP policy header syntax is valid when using 'None' Option for any policy |
-
  |2.5.0|Added Import / Export functionality<br/>Added support for .NET9<br/>Fixed minor UI bugs |
-
+ |2.6.0|Added ability to manage Permissions Policy<br/>Added Support for .NET10<br/>Removed support for .NET6 and .NET7<br/>Fixed some bugs (CRLF in header values, UI issues with header management)|
