@@ -3,13 +3,13 @@
 	<PropertyGroup>
 		<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
-		<LangVersion>13</LangVersion>
+		<LangVersion>14</LangVersion>
 		<!--
 		<PackageId>Jhoose.Security.Core</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		-->
-		<Version>2.5.0.0</Version>
+		<Version>2.6.0.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Title>Jhoose Security Core</Title>
 		<Description>Core package used by the Jhoose Security module</Description>
