@@ -27,8 +27,9 @@ Install-Package Jhoose.Security.Admin
 
 ### Dependencies
 
-The module requires the compatibility level of the database to be >= 130
-As of version 2.6.0 support of .NET6 and .NET7 has been removed.
+- The module requires the compatibility level of the database to be >= 130
+- As of version 2.6.0 support of .NET6 and .NET7 has been removed.
+
 ----
 
 ## Content Security Policy
