@@ -69,3 +69,5 @@ src/Tests/Jhoose.Security.Reporting.Tests/bin/
 src/Tests/Jhoose.Security.Reporting.Tests/obj/Debug/net8.0/Jhoose.Security.Reporting.Tests.AssemblyInfo.cs
 src/Tests/Jhoose.Security.Reporting.Tests/obj/Debug/net8.0/Jhoose.Security.Reporting.Tests.AssemblyInfoInputs.cache
 src/Tests/Jhoose.Security.Reporting.Tests/obj/Debug/net8.0/Jhoose.Security.Reporting.Tests.csproj.AssemblyReference.cache
+
+src/Tests/Jhoose.Security.Reporting.Tests/obj/

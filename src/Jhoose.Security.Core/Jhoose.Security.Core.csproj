@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
-		<Nullable>enable</Nullable>
-		<LangVersion>14</LangVersion>
-		<!--
+    <PropertyGroup>
+        <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+        <Nullable>enable</Nullable>
+        <LangVersion>14</LangVersion>
+        <!--
 		<PackageId>Jhoose.Security.Core</PackageId>
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		-->
-		<Version>2.6.0.0</Version>
-		<Authors>Andrew Markham</Authors>
-		<Title>Jhoose Security Core</Title>
-		<Description>Core package used by the Jhoose Security module</Description>
-		<Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
-		<ReleaseNotes>
+        <Version>2.6.0.0</Version>
+        <Authors>Andrew Markham</Authors>
+        <Title>Jhoose Security Core</Title>
+        <Description>Core package used by the Jhoose Security module</Description>
+        <Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
+        <ReleaseNotes>
 		1.1.0 - Added the ability to output the recommended security headers.
 		1.1.1 - Added option to disable any of the recommended security headers.
 		1.2.0 - Target .Net Framework and Episerver 11
@@ -39,25 +39,25 @@
 		        New Reporting dashboard
 		2.3.2 - Fixed bug with CSP issues not being reported correctly.
 	  </ReleaseNotes>
-		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-		<RestoreSources>
+        <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+        <RestoreSources>
 		$(RestoreSources);
 		https://api.nuget.org/v3/index.json;
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
-		<ReleaseVersion>2.5.0.0</ReleaseVersion>
-	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
-		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
-		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.0" />
-	</ItemGroup>
-	<ItemGroup />
-	<ItemGroup>
-		<None Remove="Binders\" />
-	</ItemGroup>
-	<ItemGroup>
-		<Folder Include="Binders\" />
-	</ItemGroup>
+        <ReleaseVersion>2.5.0.0</ReleaseVersion>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
+        <PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
+        <PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.0" />
+    </ItemGroup>
+    <ItemGroup />
+    <ItemGroup>
+        <None Remove="Binders\" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Binders\" />
+    </ItemGroup>
 </Project>

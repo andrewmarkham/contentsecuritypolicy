@@ -11,6 +11,11 @@
           https://nuget.pkg.github.com/andrewmarkham/index.json;
           https://nuget.pkg.github.com/unrvld/index.json;
 	  </RestoreSources>
+      		<RestoreSources Condition=" '$(Configuration)' == 'Release' OR '$(Configuration)' == 'PreRelease' ">
+		  	https://api.nuget.org/v3/index.json;
+		  	https://nuget.optimizely.com/feed/packages.svc;
+      		https://nuget.pkg.github.com/andrewmarkham/index.json
+	  	</RestoreSources>
 		<ReleaseVersion>2.2.0.0</ReleaseVersion>
 	</PropertyGroup>
 	<ItemGroup>
