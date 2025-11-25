@@ -52,15 +52,15 @@ jobs:
 
     - name: Jhoose.Security.Core.Tests
       working-directory: ./src/Tests/Jhoose.Security.Core.Tests
-      run: dotnet test  --no-build -v d --logger "trx;LogFileName=test_results.trx"
+      run: dotnet test  --no-build 
 
     - name: Jhoose.Security.Reporting.Tests
       working-directory: ./src/Tests/Jhoose.Security.Reporting.Tests
-      run: dotnet test  --no-build -v d --logger "trx;LogFileName=test_results.trx"
+      run: dotnet test  --no-build 
 
     - name: Jhoose.Security.Tests
       working-directory: ./src/Tests/Jhoose.Security.Tests
-      run: dotnet test  --no-build -v d --logger "trx;LogFileName=test_results.trx"
+      run: dotnet test  --no-build 
 
     - name: Report tests
       if: always()
