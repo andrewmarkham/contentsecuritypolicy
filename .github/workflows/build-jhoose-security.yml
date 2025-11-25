@@ -50,7 +50,7 @@ jobs:
       working-directory: ./src/Jhoose.Security
 
     - name: Jhoose.Security.Tests
-      working-directory: ./src
+      working-directory: ./src/Tests/Jhoose.Security.Tests
       run: dotnet test \
               --configuration Release \
               --no-build \
