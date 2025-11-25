@@ -50,10 +50,18 @@ jobs:
       working-directory: ./src/Jhoose.Security
 
 
-    - name: Test
-      working-directory: ./src
-      run: dotnet test --configuration Release -v d --logger "trx;LogFileName=test_results.trx"
-    
+    - name: Jhoose.Security.Core.Tests
+      working-directory: ./src/Tests/Jhoose.Security.Core.Tests
+      run: dotnet test  --no-build -v d --logger "trx;LogFileName=test_results.trx"
+
+    - name: Jhoose.Security.Reporting.Tests
+      working-directory: ./src/Tests/Jhoose.Security.Reporting.Tests
+      run: dotnet test  --no-build -v d --logger "trx;LogFileName=test_results.trx"
+
+    - name: Jhoose.Security.Tests
+      working-directory: ./src/Tests/Jhoose.Security.Tests
+      run: dotnet test  --no-build -v d --logger "trx;LogFileName=test_results.trx"
+
     - name: Report tests
       if: always()
       uses: dorny/test-reporter@v1
