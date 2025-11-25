@@ -49,18 +49,12 @@ jobs:
       run: dotnet build --configuration PreRelease -p:Version=${{ env.BUILD_NO_PRE }}
       working-directory: ./src/Jhoose.Security
 
-
-    - name: Jhoose.Security.Core.Tests
-      working-directory: ./src/Tests/Jhoose.Security.Core.Tests
-      run: dotnet test  --no-build 
-
-    - name: Jhoose.Security.Reporting.Tests
-      working-directory: ./src/Tests/Jhoose.Security.Reporting.Tests
-      run: dotnet test  --no-build 
-
     - name: Jhoose.Security.Tests
-      working-directory: ./src/Tests/Jhoose.Security.Tests
-      run: dotnet test  --no-build 
+      working-directory: ./src
+      run: dotnet test ./csp.sln \
+              --configuration Release \
+              --no-build \
+              --logger "trx;LogFileName=test_results.trx"
 
     - name: Report tests
       if: always()
