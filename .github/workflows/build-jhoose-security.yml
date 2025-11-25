@@ -51,10 +51,7 @@ jobs:
 
     - name: Jhoose.Security.Tests
       working-directory: ./src/Tests/Jhoose.Security.Tests
-      run: dotnet test \
-              --configuration Release \
-              --no-build \
-              --logger "trx;LogFileName=test_results.trx"
+      run: dotnet test --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
 
     - name: Report tests
       if: always()
