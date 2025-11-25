@@ -51,7 +51,7 @@ jobs:
 
     - name: Jhoose.Security.Tests
       working-directory: ./src
-      run: dotnet test ./csp.sln \
+      run: dotnet test \
               --configuration Release \
               --no-build \
               --logger "trx;LogFileName=test_results.trx"
