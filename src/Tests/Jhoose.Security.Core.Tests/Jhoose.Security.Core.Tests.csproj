@@ -10,6 +10,9 @@
 		https://api.nuget.org/v3/index.json;
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
+    <ExcludeTestMsTest>true</ExcludeTestMsTest>
+  <ExcludeTestNUnit>false</ExcludeTestNUnit>
+  <ExcludeTestXunit>true</ExcludeTestXunit>
   </PropertyGroup>
 
   <ItemGroup>

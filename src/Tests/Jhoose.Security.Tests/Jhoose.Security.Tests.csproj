@@ -9,6 +9,9 @@
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
 		<ReleaseVersion>2.2.0.0</ReleaseVersion>
+        <ExcludeTestMsTest>true</ExcludeTestMsTest>
+        <ExcludeTestNUnit>false</ExcludeTestNUnit>
+        <ExcludeTestXunit>true</ExcludeTestXunit>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="12.16.0" />
