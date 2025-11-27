@@ -54,7 +54,7 @@ jobs:
 
     - name: Run Jhoose.Security.Core.Tests
       working-directory: ./src/Tests/Jhoose.Security.Core.Tests
-      run: dotnet test Jhoose.Security.Core.Tests.csproj  --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
+      run: dotnet test Jhoose.Security.Core.Tests.csproj  --configuration Release --no-build --logger "trx;LogFileName=test_results.trx -v normal"
 
     - name: Run Jhoose.Security.Reporting.Tests
       working-directory: ./src/Tests/Jhoose.Security.Reporting.Tests
