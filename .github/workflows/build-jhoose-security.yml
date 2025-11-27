@@ -49,9 +49,17 @@ jobs:
       run: dotnet build --configuration PreRelease -p:Version=${{ env.BUILD_NO_PRE }}
       working-directory: ./src/Jhoose.Security
 
-    - name: Jhoose.Security.Tests
+    - name: Run Jhoose.Security.Core.Tests
+      working-directory: ./src/Tests/Jhoose.Security.Core.Tests
+      run: dotnet test Jhoose.Security.Core.Tests.csproj  --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
+
+    - name: Run Jhoose.Security.Reporting.Tests
+      working-directory: ./src/Tests/Jhoose.Security.Reporting.Tests
+      run: dotnet test Jhoose.Security.Reporting.Tests.csproj  --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
+
+    - name: Run Jhoose.Security.Tests
       working-directory: ./src/Tests/Jhoose.Security.Tests
-      run: dotnet test --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
+      run: dotnet test Jhoose.Security.Tests.csproj --no-build  --configuration Release --logger "trx;LogFileName=test_results.trx"
 
     - name: Report tests
       if: always()
