@@ -1,84 +1,40 @@
-//using Newtonsoft.Json;
-
 using System.Text.Json.Serialization;
 
 namespace Jhoose.Security.Reporting.Models;
 
-public class ReportToBody
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+[JsonDerivedType(typeof(CspReportToBody), "csp")]
+[JsonDerivedType(typeof(PermissionsReportToBody), "permissions")]
+[JsonDerivedType(typeof(DeprecationReportToBody), "deprecation")]
+public interface IReportToBody
 {
-    [JsonConstructor]
-    public ReportToBody(
-        string? documentURL,
-        string? disposition,
-        string? referrer,
-        string? effectiveDirective,
-        string? blockedURL,
-        string? originalPolicy,
-        int? statusCode,
-        string? sample,
-        string? sourceFile,
-        int? lineNumber,
-        int? columnNumber
-    )
-    {
-        DocumentURL = documentURL;
-        Disposition = disposition;
-        Referrer = referrer;
-        EffectiveDirective = effectiveDirective;
-        BlockedURL = blockedURL;
-        OriginalPolicy = originalPolicy;
-        StatusCode = statusCode;
-        Sample = sample;
-        SourceFile = sourceFile;
-        LineNumber = lineNumber;
-        ColumnNumber = columnNumber;
-    }
-
-    public ReportToBody(CspReport cspReport)
-    {
-        DocumentURL = cspReport.DocumentUri;
-        Disposition = cspReport.Disposition;
-        Referrer = cspReport.Referrer;
-        EffectiveDirective = cspReport.EffectiveDirective;
-        BlockedURL = cspReport.BlockedUri;
-        OriginalPolicy = cspReport.OriginalPolicy;
-        StatusCode = cspReport.StatusCode;
-        Sample = "";
-        SourceFile = "";
-        LineNumber = 1;
-        ColumnNumber = cspReport.ColumnNumber;
-    }
-
-    [JsonPropertyName("documentURL")]
-    public string? DocumentURL { get; }
-
-    [JsonPropertyName("disposition")]
-    public string? Disposition { get; }
-
-    [JsonPropertyName("referrer")]
-    public string? Referrer { get; }
-
-    [JsonPropertyName("effectiveDirective")]
-    public string? EffectiveDirective { get; }
-
-    [JsonPropertyName("blockedURL")]
-    public string? BlockedURL { get; }
-
-    [JsonPropertyName("originalPolicy")]
-    public string? OriginalPolicy { get; }
-
-    [JsonPropertyName("statusCode")]
-    public int? StatusCode { get; }
-
-    [JsonPropertyName("sample")]
-    public string? Sample { get; }
-
-    [JsonPropertyName("sourceFile")]
-    public string? SourceFile { get; }
-
-    [JsonPropertyName("lineNumber")]
-    public int? LineNumber { get; }
-
-    [JsonPropertyName("columnNumber")]
-    public int? ColumnNumber { get; }
+    string? Directive { get; }
+    string? Message { get; }
 }
+
+public record CspReportToBody([property: JsonPropertyName("documentURL")] string? DocumentURL, 
+[property: JsonPropertyName("disposition")] string? Disposition, 
+[property: JsonPropertyName("referrer")] string? Referrer, 
+[property: JsonPropertyName("effectiveDirective")] string? EffectiveDirective, 
+[property: JsonPropertyName("blockedURL")] string? BlockedURL, 
+[property: JsonPropertyName("originalPolicy")] string? OriginalPolicy, 
+[property: JsonPropertyName("statusCode")] int? StatusCode, 
+[property: JsonPropertyName("sample")] string? Sample) : IReportToBody
+//[property: JsonPropertyName("message")] string? Message, 
+//[property: JsonPropertyName("policyId")] string? PolicyId)
+{
+    public string? Directive => EffectiveDirective;
+    public string? Message => BlockedURL;
+}
+
+public record PermissionsReportToBody([property: JsonPropertyName("disposition")] string? Disposition, [property: JsonPropertyName("policyId")] string? PolicyId, [property: JsonPropertyName("message")] string? Message, [property: JsonPropertyName("sourceFile")] string? SourceFile, [property: JsonPropertyName("lineNumber")] int? LineNumber, [property: JsonPropertyName("columnNumber")] int? ColumnNumber) : IReportToBody
+{
+    public string? Directive => PolicyId;
+    //public string? Message => Message;
+}
+
+public record DeprecationReportToBody([property: JsonPropertyName("id")] string? Id, [property: JsonPropertyName("lineNumber")] int? LineNumber, [property: JsonPropertyName("columnNumber")] int? ColumnNumber, [property: JsonPropertyName("message")] string? Message, [property: JsonPropertyName("sourceFile")] string? SourceFile) : IReportToBody
+{
+    public string? Directive => Id;
+    //public string? Message => Message;
+};

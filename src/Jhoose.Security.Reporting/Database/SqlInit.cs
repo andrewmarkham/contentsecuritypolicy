@@ -5,7 +5,7 @@ namespace Jhoose.Security.Reporting.Database;
 
 public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedService
 {
-    protected const string DBVersion = "1.0.2";
+    protected const string DBVersion = "1.1.3";
 
     private readonly ILogger<SqlInit> logger = logger;
     private readonly ISqlHelper isqlHelper = isqlHelper;
@@ -149,10 +149,12 @@ public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedSe
                         Url, 
                         Browser, 
                         Directive, 
+                        Type,
                         CASE @Type
                             WHEN 'directive' THEN Directive
                             WHEN 'browser' THEN Browser 
                             WHEN 'page' THEN url
+                            WHEN 'type' THEN Type
                         END AS Metric
                 INTO #TempReportData
                 FROM SecurityReportTo
@@ -172,6 +174,12 @@ public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedSe
                 GROUP BY Url
                 ORDER BY COUNT(*) DESC
 
+                SELECT TOP 5
+                    Type,
+                    COUNT(*)
+                FROM #TempReportData
+                GROUP BY Type
+                ORDER BY COUNT(*) DESC
 
                 SELECT 
                     Metric,
@@ -197,8 +205,9 @@ public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedSe
                     @RecordFrom AS INTEGER,
                     @DateFrom AS DATETIME,
                     @Query AS CHAR(1024),
-                    @Directive AS CHAR(20),
-                    @Browser AS CHAR(20),
+                    @Directive AS CHAR(1024),
+                    @Browser AS CHAR(1024),
+                    @Type AS CHAR(1024),
                     @SortOrder AS CHAR(1) = 'D',
                     @MaxRows AS INTEGER = 100000) AS 
             BEGIN
@@ -211,13 +220,15 @@ public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedSe
                         Url,
                         Directive,
                         Browser,
-                        BlockedUri
+                        BlockedUri,
+                        Type
                 INTO #TempSearchData
                 FROM SecurityReportTo
                 WHERE RecievedAtMin >= @DateFrom AND 
                         (@Query = '' OR Url LIKE '%' + TRIM(@Query) + '%' OR BlockedUri LIKE '%' + TRIM(@Query) + '%') AND
                         (@Browser = '' OR Browser IN (SELECT value FROM string_split(@Browser, ','))) AND
-                        (@Directive = '' OR Directive IN (SELECT value FROM string_split(@Directive, ',')))
+                        (@Directive = '' OR Directive IN (SELECT value FROM string_split(@Directive, ','))) AND
+                        (@Type = '' OR Type IN (SELECT value FROM string_split(@Type, ',')))
                 ORDER BY 
                     CASE WHEN @SortOrder = 'D' THEN RecievedAt ELSE '' END DESC,
                     CASE WHEN @SortOrder = 'A' THEN RecievedAt ELSE '' END ASC
@@ -229,7 +240,8 @@ public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedSe
                     Url,
                     Directive,
                     Browser,
-                    BlockedUri
+                    BlockedUri,
+                    Type
                 FROM #TempSearchData
                 ORDER BY 
                     CASE WHEN @SortOrder = 'D' THEN RowNumber ELSE '' END DESC,
@@ -250,7 +262,15 @@ public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedSe
                 FROM #TempSearchData
                 GROUP BY Browser
                 ORDER BY COUNT(*) DESC
-                
+
+                SELECT TOP 15
+                    Type,
+                    COUNT(*)
+                FROM #TempSearchData
+                GROUP BY Type
+                ORDER BY COUNT(*) DESC
+
+
                 SELECT 
                     COUNT(*) AS Total 
                 FROM #TempSearchData

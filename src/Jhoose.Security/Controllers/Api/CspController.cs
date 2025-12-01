@@ -16,23 +16,25 @@ using Microsoft.Extensions.Logging;
 namespace Jhoose.Security.Controllers.Api;
 
 
+/// <summary>
+/// Controller for managing Content Security Policy (CSP) policies.
+/// </summary>
+/// <param name="policyRepository">Repository used to read and modify CSP policies.</param>
+/// <param name="settingsRepository">Repository used to read application settings.</param>
+/// <param name="webhookNotifications">Service used to send webhook notifications.</param>
+/// <param name="logger">Logger for diagnostic messages.</param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
 [Authorize(Policy = Constants.PolicyName)]
-public class CspController : NotificationBaseController
+public class CspController(ICspPolicyRepository policyRepository,
+                      ISettingsRepository settingsRepository,
+                      IWebhookNotifications webhookNotifications,
+                      ILogger<CspController> logger) : NotificationBaseController(settingsRepository, webhookNotifications)
 {
-
-    public CspController(ICspPolicyRepository policyRepository,
-                          IWebhookNotifications webhookNotifications,
-                          ILogger<CspController> logger) : base(policyRepository, webhookNotifications)
-    {
-        this.logger = logger;
-        this.policyRepository = policyRepository;
-    }
     private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
-    private readonly ILogger<CspController> logger;
-    private readonly ICspPolicyRepository policyRepository;
+    private readonly ILogger<CspController> logger = logger;
+    private readonly ICspPolicyRepository policyRepository = policyRepository;
 
     [HttpGet]
     [ProducesResponseType(typeof(List<CspPolicy>), StatusCodes.Status200OK)]

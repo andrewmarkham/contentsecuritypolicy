@@ -13,14 +13,20 @@ public class ImportExportService : IImportExportService
     private readonly ILogger<ImportExportService> logger;
     private readonly ICspPolicyRepository policyRepository;
     private readonly IResponseHeadersRepository responseHeadersRepository;
+    private readonly IPermissionsRepository permissionsRepository;
+    private readonly ISettingsRepository settingsRepository;
 
     public ImportExportService(ICspPolicyRepository policyRepository,
                               IResponseHeadersRepository responseHeadersRepository,
+                              IPermissionsRepository permissionsRepository,
+                              ISettingsRepository settingsRepository,
                               ILogger<ImportExportService> logger)
     {
         this.logger = logger;
         this.policyRepository = policyRepository;
         this.responseHeadersRepository = responseHeadersRepository;
+        this.permissionsRepository = permissionsRepository;
+        this.settingsRepository = settingsRepository;
     }
 
     public void Import(JhoooseSecurityExport export)
@@ -31,6 +37,9 @@ public class ImportExportService : IImportExportService
         //handle policies import
         HandleCspImport(export);
 
+        //handle permissions import
+        HandlePermissionsImport(export);
+        
         //handle response headers import
         HandleResponseHeadersImport(export);
     }
@@ -44,13 +53,14 @@ public class ImportExportService : IImportExportService
         return receivedHash == computedHash;
     }
 
-    public JhoooseSecurityExport Export(bool includeCsp = true, bool includeHeaders = true, bool includeSettings = true)
+    public JhoooseSecurityExport Export(bool includeCsp = true, bool includePermissions = true, bool includeHeaders = true, bool includeSettings = true)
     {
         var export = new JhoooseSecurityExport
         {
             Metadata = new ExportMetadata(),
-            CspSettings = includeSettings ? policyRepository.Settings() : null,
+            CspSettings = includeSettings ? settingsRepository.Settings() : null,
             CspPolicies = includeCsp ? policyRepository.List() : null,
+            Permissions = includePermissions ? [.. permissionsRepository.List()] : null,
             ResponseHeaders = includeHeaders ? [.. responseHeadersRepository.List()] : null
         };
 
@@ -64,7 +74,7 @@ public class ImportExportService : IImportExportService
     {
         if (export.CspSettings != null)
         {
-            policyRepository.SaveSettings(export.CspSettings);
+            settingsRepository.SaveSettings(export.CspSettings);
         }
     }
 
@@ -85,6 +95,17 @@ public class ImportExportService : IImportExportService
         }
     }
 
+    protected virtual void HandlePermissionsImport(JhoooseSecurityExport export)
+    {
+        if (export.Permissions != null && export.Permissions.Count > 0)
+        {
+            permissionsRepository.Clear();
+            foreach (var policy in export.Permissions)
+            {
+                permissionsRepository.Update(policy);
+            }
+        }
+    }
     protected virtual void HandleResponseHeadersImport(JhoooseSecurityExport export)
     {
         if (export.ResponseHeaders != null && export.ResponseHeaders.Count > 0)

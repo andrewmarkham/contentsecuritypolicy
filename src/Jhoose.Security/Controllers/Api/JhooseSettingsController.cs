@@ -17,50 +17,44 @@ using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Controllers.Api;
 
+/// <summary>
+/// API controller to manage Jhoose security settings, response headers, policy imports/exports and webhook notifications.
+/// </summary>
+/// <param name="settingsRepository">Repository for managing CSP settings.</param>
+/// <param name="webhookNotifications">Service used to send webhook notifications.</param>
+/// <param name="importExportService">Service to perform import and export operations.</param>
+/// <param name="importRepository">Repository to persist and retrieve import records.</param>
+/// <param name="logger">Logger instance for the controller.</param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
 [Authorize(Policy = Constants.PolicyName)]
-public class SettingsController : NotificationBaseController
+public class SettingsController(ISettingsRepository settingsRepository,
+                          IWebhookNotifications webhookNotifications,
+                          IImportExportService importExportService,
+                          IImportRepository importRepository,
+                          ILogger<SettingsController> logger) : NotificationBaseController(settingsRepository,webhookNotifications)
 {
-    //private static readonly JsonSerializerSettings jsonSerializerSettings = new() { ContractResolver = new CamelCasePropertyNamesContractResolver() };
-    private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-    private readonly ILogger<SettingsController> logger;
-    private readonly ICspPolicyRepository policyRepository;
-    private readonly IResponseHeadersRepository responseHeadersRepository;
-    private readonly IImportExportService importExportService;
-    private readonly IImportRepository importRepository;
+     private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+    private readonly ILogger<SettingsController> logger = logger;
+    private readonly ISettingsRepository settingsRepository = settingsRepository;
+    private readonly IImportExportService importExportService = importExportService;
+    private readonly IImportRepository importRepository = importRepository;
 
-    public SettingsController(ICspPolicyRepository policyRepository,
-                              IResponseHeadersRepository responseHeadersRepository,
-                              IWebhookNotifications webhookNotifications,
-                              IImportExportService importExportService,
-                              IImportRepository importRepository,
-                              ILogger<SettingsController> logger) : base(policyRepository, webhookNotifications)
-    {
-        this.logger = logger;
-        this.policyRepository = policyRepository;
-        this.responseHeadersRepository = responseHeadersRepository;
-        this.importExportService = importExportService;
-        this.importRepository = importRepository;
-    }
 
-    [HttpGet]
-    //[Route("settings")]
-    [ProducesResponseType(typeof(CspSettings), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(CspSettings), StatusCodes.Status500InternalServerError)]
     /// <summary>
     /// Gets the CSP settings.
     /// </summary>
     /// <returns>The CSP settings.</returns>
+    [HttpGet]
+    //[Route("settings")]
+    [ProducesResponseType(typeof(CspSettings), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(CspSettings), StatusCodes.Status500InternalServerError)]
     public ActionResult<CspSettings> Settings()
     {
         try
         {
-            var settings = policyRepository.Settings();
+            var settings = settingsRepository.Settings();
 
-            //string json = JsonConvert.SerializeObject(settings, jsonSerializerSettings);
-
-            //return Content(json, "application/json");
             return new JsonResult(settings, jsonSerializerOptions)
             {
                 StatusCode = StatusCodes.Status200OK,
@@ -74,20 +68,20 @@ public class SettingsController : NotificationBaseController
         }
     }
 
-    [HttpPost]
-    //[Route("settings")]
-    [ProducesResponseType(typeof(CspSettings), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(CspSettings), StatusCodes.Status500InternalServerError)]
+
     /// <summary>
     /// Updates the CSP settings.
     /// </summary>
     /// <param name="settings">The CSP settings to update.</param>
     /// <returns>The updated CSP settings.</returns>
+    [HttpPost]
+    [ProducesResponseType(typeof(CspSettings), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(CspSettings), StatusCodes.Status500InternalServerError)]
     public ActionResult<CspSettings> Settings(CspSettings settings)
     {
         try
         {
-            var result = policyRepository.SaveSettings(settings);
+            var result = settingsRepository.SaveSettings(settings);
 
             if (result)
             {
@@ -108,19 +102,31 @@ public class SettingsController : NotificationBaseController
         }
     }
 
+
+    /// <summary>
+    /// Exports selected CSP policies, response headers, and settings according to the provided options.
+    /// </summary>
+    /// <param name="options">Options specifying which parts of the configuration to include in the export.</param>
+    /// <returns>An export object containing the requested configuration data.</returns>
     [HttpPost]
     [Route("export")]
     [ProducesResponseType(typeof(JhoooseSecurityExport), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(JhoooseSecurityExport), StatusCodes.Status500InternalServerError)]
     public ActionResult<JhoooseSecurityExport> Export([FromBody] ExportOptions options)
     {
-        var export = importExportService.Export(options.ExportCsp, options.ExportHeaders, options.ExportSettings);
+        var export = importExportService.Export(options.ExportCsp, options.ExportPermissions, options.ExportHeaders, options.ExportSettings);
         return new JsonResult(export, jsonSerializerOptions)
         {
             StatusCode = StatusCodes.Status200OK,
         };
     }
 
+
+    /// <summary>
+    /// Uploads an exported configuration package and persists it to the import repository.
+    /// </summary>
+    /// <param name="export">The exported configuration data to save; if null a BadRequest is returned.</param>
+    /// <returns>Returns 204 No Content on success or 400 Bad Request if the export is null.</returns>
     [HttpPost]
     [Route("uploadimport")]
     [ProducesResponseType(typeof(JhoooseSecurityExport), StatusCodes.Status204NoContent)]

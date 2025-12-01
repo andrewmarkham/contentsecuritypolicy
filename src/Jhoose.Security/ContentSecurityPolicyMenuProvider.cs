@@ -63,13 +63,21 @@ namespace Jhoose.Security;
             {
                 SortIndex = SortIndex.First + 29,
                 AuthorizationPolicy = Constants.PolicyName
-            }
-            ,
+            },
+
+            new UrlMenuItem("Permission Policy",
+            MenuPaths.Global + "/cms/security/permissions",
+            Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/permissions"))
+            {
+                SortIndex = SortIndex.First + 30,
+                AuthorizationPolicy = Constants.PolicyName
+            },
+
             new UrlMenuItem("Settings",
             MenuPaths.Global + "/cms/security/settings",
             Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/settings"))
             {
-                SortIndex = SortIndex.First + 30,
+                SortIndex = SortIndex.First + 31,
                 AuthorizationPolicy = Constants.PolicyName
             }
         };

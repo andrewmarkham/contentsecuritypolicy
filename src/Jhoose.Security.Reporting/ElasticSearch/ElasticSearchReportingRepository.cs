@@ -43,7 +43,7 @@ public class ElasticSearchReportingRepository : IReportingRepository
             return new ElasticsearchClient(settings);
         });
     }
-    public async Task AddReport(ReportTo reportTo)
+    public async Task AddReport(ReportTo<IReportToBody> reportTo)
     {
         await CreateIndexIsNeeded();
         var response = await client.Value.IndexAsync(reportTo,
@@ -56,13 +56,15 @@ public class ElasticSearchReportingRepository : IReportingRepository
 
         var buckets = CalculateBucketSize(summary.Query.Timeframe);
 
-        var r = await client.Value.SearchAsync<ReportTo>(s => s.Index(options.Value.IndexName)
+        var r = await client.Value.SearchAsync<ReportTo<IReportToBody>>(s => s.Index(options.Value.IndexName)
                                 .Query(query => query.Bool(b => b.Must(m => m.Range(r => r.DateRange(dr => dr.Field(f => f.RecievedAt).Gte(summary.Query.From).Lte(summary.Query.To))))))
                                 .Aggregations(agg =>
                                     agg.Add("directives",
                                             ad => ad.Terms(s => s.Field(f => f.Directive).Size(5)))
                                        .Add("urls", ad =>
                                             ad.Terms(s => s.Field(f => f.Url).Size(5)))
+                                       .Add("types", ad =>
+                                            ad.Terms(s => s.Field(f => f.Type).Size(5)))
                                        .Add("graph", ad =>
                                             ad.AutoDateHistogram(s => s.Field(f => f.RecievedAt)
                                                     .Buckets(buckets))
@@ -71,6 +73,8 @@ public class ElasticSearchReportingRepository : IReportingRepository
                                                                 ad => ad.Terms(s => s.Field(f => f.Browser).Size(5)))
                                                             .Add("directive",
                                                                 ad => ad.Terms(s => s.Field(f => f.Directive).Size(5)))
+                                                            .Add("type",
+                                                                ad => ad.Terms(s => s.Field(f => f.Type).Size(5)))
                                                             .Add("page", ad =>
                                                                 ad.Terms(s => s.Field(f => f.Url).Size(5)
                                                             ))))
@@ -87,6 +91,9 @@ public class ElasticSearchReportingRepository : IReportingRepository
                     case "directives":
                         summary.TopDirectives = GetDashboardIssues(agg.Value, "directive");
                         break;
+                    case "types":
+                        summary.TopTypes = GetDashboardIssues(agg.Value, "type");
+                        break;
                     case "urls":
                         summary.TopPages = GetDashboardIssues(agg.Value, "page");
                         break;
@@ -102,7 +109,7 @@ public class ElasticSearchReportingRepository : IReportingRepository
 
     public async Task<int> PurgeReporingData(DateTime beforeDate)
     {
-        var response = await this.client.Value.DeleteByQueryAsync<ReportTo>(d => d.Query(query => query.Bool(b => b.Must(m => m.Range(r => r.DateRange(dr => dr.Field(f => f.RecievedAt).Gte(beforeDate)))))));
+        var response = await this.client.Value.DeleteByQueryAsync<ReportTo<IReportToBody>>(d => d.Query(query => query.Bool(b => b.Must(m => m.Range(r => r.DateRange(dr => dr.Field(f => f.RecievedAt).Gte(beforeDate)))))));
 
         var deletedCount = response.Deleted ?? 0;
         return (int)deletedCount;
@@ -116,7 +123,7 @@ public class ElasticSearchReportingRepository : IReportingRepository
         var sortOrder = searchParams.SortOrder == "ascend" ? SortOrder.Asc : SortOrder.Desc;
 
 
-        var response = await client.Value.SearchAsync<ReportTo>(s => s.Index(IndexName)
+        var response = await client.Value.SearchAsync<ReportTo<IReportToBody>>(s => s.Index(IndexName)
                     .Query(q => BuildSearchQuery(q, searchParams))
                     .From(from)
                     .Size(searchParams.PageSize)
@@ -124,6 +131,8 @@ public class ElasticSearchReportingRepository : IReportingRepository
                                         .Aggregations(agg =>
                                 agg.Add("directives",
                                         ad => ad.Terms(s => s.Field(f => f.Directive).Size(20)))
+                                    .Add("types", ad =>
+                                        ad.Terms(s => s.Field(f => f.Type).Size(20)))
                                     .Add("browsers", ad =>
                                         ad.Terms(s => s.Field(f => f.Browser).Size(20)))));
 
@@ -139,8 +148,8 @@ public class ElasticSearchReportingRepository : IReportingRepository
             Version = d.Browser,
             Os = d.Browser,
             Directive = d.Directive,
-            BlockedUri = d.BlockedUri,
-            Body = new BodyData
+            BlockedUri = d.Message ?? string.Empty,
+            /*Body = new BodyData
             {
                 DocumentUrl = d.Body.DocumentURL,
                 Disposition = d.Body.Disposition,
@@ -153,13 +162,14 @@ public class ElasticSearchReportingRepository : IReportingRepository
                 SourceFile = d.Body.SourceFile,
                 LineNumber = d.Body.LineNumber ?? -1,
                 ColumnNumber = d.Body.ColumnNumber ?? -1
-            }
+            }*/
         }).ToList();
 
         return new CspSearchResults
         {
             Total = response.Total,
             Results = r,
+            Types = GetSearchAggregations(response?.Aggregations?.FirstOrDefault(a => a.Key == "types").Value),
             Browsers = GetSearchAggregations(response?.Aggregations?.FirstOrDefault(a => a.Key == "browsers").Value),
             Directives = GetSearchAggregations(response?.Aggregations?.FirstOrDefault(a => a.Key == "directives").Value)
         };
@@ -176,10 +186,11 @@ public class ElasticSearchReportingRepository : IReportingRepository
         if (!response.Exists)
         {
 
-            await client.Value.Indices.CreateAsync<ReportTo>(IndexName,
+            await client.Value.Indices.CreateAsync<ReportTo<IReportToBody>>(IndexName,
                 index => index.Mappings(m =>
                 m.Properties(p =>
                     p.Keyword(t => t.Directive)
+                     .Keyword(t => t.Type)
                      .Keyword(t => t.Browser)
                      .Keyword(t => t.Url)
                      .Date(t => t.RecievedAt))));
@@ -267,16 +278,16 @@ public class ElasticSearchReportingRepository : IReportingRepository
         return [];
     }
 
-    private QueryDescriptor<ReportTo> BuildSearchQuery(QueryDescriptor<ReportTo> q, CspSearchParams searchParams)
+    private QueryDescriptor<ReportTo<IReportToBody>> BuildSearchQuery(QueryDescriptor<ReportTo<IReportToBody>> q, CspSearchParams searchParams)
     {
         var filters = new List<Elastic.Clients.Elasticsearch.QueryDsl.Query>();
-        var must = new QueryDescriptor<ReportTo>();
+        var must = new QueryDescriptor<ReportTo<IReportToBody>>();
 
         must.MatchAll(m => m.QueryName("all"));
 
         if (searchParams.Filters?.DateFrom.HasValue ?? false)
         {
-            filters.Add(new DateRangeQuery(Infer.Field<ReportTo>(f => f.RecievedAt))
+            filters.Add(new DateRangeQuery(Infer.Field<ReportTo<IReportToBody>>(f => f.RecievedAt))
             {
                 Gte = searchParams.Filters.DateFrom
             });
@@ -286,8 +297,17 @@ public class ElasticSearchReportingRepository : IReportingRepository
         {
             filters.Add(new TermsQuery
             {
-                Field = Infer.Field<ReportTo>(f => f.Browser),
+                Field = Infer.Field<ReportTo<IReportToBody>>(f => f.Browser),
                 Terms = new TermsQueryField(searchParams.Filters.Browser.Select(d => FieldValue.String(d)).ToList())
+            });
+        }
+
+        if (searchParams.Filters?.Type?.Count > 0)
+        {
+            filters.Add(new TermsQuery
+            {
+                Field = Infer.Field<ReportTo<IReportToBody>>(f => f.Type),
+                Terms = new TermsQueryField(searchParams.Filters.Type.Select(d => FieldValue.String(d)).ToList())
             });
         }
 
@@ -295,7 +315,7 @@ public class ElasticSearchReportingRepository : IReportingRepository
         {
             filters.Add(new TermsQuery
             {
-                Field = Infer.Field<ReportTo>(f => f.Directive),
+                Field = Infer.Field<ReportTo<IReportToBody>>(f => f.Directive),
                 Terms = new TermsQueryField(searchParams.Filters.Directive.Select(d => FieldValue.String(d)).ToList())
             });
         }
@@ -305,7 +325,7 @@ public class ElasticSearchReportingRepository : IReportingRepository
 
             must.SimpleQueryString(new SimpleQueryStringQuery
             {
-                Fields = Infer.Fields<ReportTo>(f => f.Url, f => f.BlockedUri),
+                Fields = Infer.Fields<ReportTo<IReportToBody>>(f => f.Url/*, f => f.BlockedUri*/),
                 Query = searchParams?.Filters?.Query ?? string.Empty,
                 Analyzer = "keyword"
             });

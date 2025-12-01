@@ -9,6 +9,7 @@ using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Models;
 using Jhoose.Security.Core.Models.CSP;
 using Jhoose.Security.Core.Provider;
+using Jhoose.Security.Core.Repository;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,9 @@ namespace Jhoose.Security.Controllers.Api;
 [Route("api/[controller]")]
 [ApiController]
 public class JhooseController(ICspProvider cspProvider,
+    ISettingsRepository settingsRepository,
     IResponseHeadersProvider responseHeaderProvider,
+    IPermissionsProvider permissionsProvider,
     ICacheManager cache,
     ILogger<JhooseController> logger) : ControllerBase
 {
@@ -28,7 +31,6 @@ public class JhooseController(ICspProvider cspProvider,
         public string Nonce { get; set; } = string.Empty;
     }
 
-    //private static JsonSerializerSettings jsonSerializerSettings =new() { ContractResolver = new CamelCasePropertyNamesContractResolver() };
     private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
     [ApiKeyAuthorization]
@@ -39,20 +41,7 @@ public class JhooseController(ICspProvider cspProvider,
     {
         try
         {
-            /*
-            await Task.Run(() =>
-            {
-                var headers = this.GetHeaders().ToList();
-                headers.AddRange(this.GetContentSecurityPolicy(headerRequest.Nonce));
-
-                json = JsonConvert.SerializeObject(headers, jsonSerializerSettings);
-            });
-
-            //return Content(json ?? "[]", "application/json");
-            */
-
-            var headers = this.GetHeaders().ToList();
-            headers.AddRange(this.GetContentSecurityPolicy(headerRequest.Nonce));
+            List<KeyValuePair<string, string>> headers = [..this.GetHeaders(), ..this.GetContentSecurityPolicy(headerRequest.Nonce), ..this.GetContentPermissionsPolicy()];
 
             return new JsonResult(headers ?? [], jsonSerializerOptions)
             {
@@ -81,7 +70,7 @@ public class JhooseController(ICspProvider cspProvider,
     private IEnumerable<KeyValuePair<string, string>> GetContentSecurityPolicy(string nonce)
     {
         // get the policy settings
-        var policySettings = cache.Get<CspSettings>(Core.Constants.SettingsCacheKey, () => cspProvider.Settings,
+        var policySettings = cache.Get<CspSettings>(Core.Constants.SettingsCacheKey, () => settingsRepository.Settings(),
             new TimeSpan(1, 0, 0));
 
         if (policySettings.IsEnabled)
@@ -93,6 +82,25 @@ public class JhooseController(ICspProvider cspProvider,
             foreach (var header in headerValues)
             {
                 header.NonceValue = nonce;
+                yield return new KeyValuePair<string, string>(header.Name, header.Value);
+            }
+        }
+    }
+
+    private IEnumerable<KeyValuePair<string, string>> GetContentPermissionsPolicy()
+    {
+        // get the policy settings
+        var policySettings = cache.Get<CspSettings>(Core.Constants.SettingsCacheKey, () => settingsRepository.Settings(),
+            new TimeSpan(1, 0, 0));
+
+        if (policySettings.IsPermissionsEnabled)
+        {
+            // get the policy
+            var headerValues = cache.Get<List<ResponseHeader>>(Core.Constants.PermissionPolicyCacheKey,
+                () => [.. permissionsProvider.PermissionPolicies()], new TimeSpan(1, 0, 0));
+
+            foreach (var header in headerValues)
+            {
                 yield return new KeyValuePair<string, string>(header.Name, header.Value);
             }
         }

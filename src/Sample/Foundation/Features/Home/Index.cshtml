@@ -18,4 +18,54 @@
     <div class="col-12">
         @Html.PropertyFor(x => x.CurrentContent.BottomContentArea)
     </div>
+
+
+      <video id="camera" autoplay playsinline muted></video>
+
+  <script>
+    // Start camera once the DOM is ready
+    document.addEventListener('DOMContentLoaded', async () => {
+      const video = document.getElementById('camera');
+
+      if (!navigator.mediaDevices?.getUserMedia) {
+        console.error('getUserMedia is not supported in this browser.');
+        return;
+      }
+
+      try {
+        // Request the camera; 'user' = front camera on mobile. Use 'environment' for rear.
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: 'user' },
+          audio: false
+        });
+
+        // Pipe the stream into the <video>
+        video.srcObject = stream;
+
+        // Some browsers require an explicit play() call
+        try { await video.play(); } catch (_) {}
+
+        // Keep a reference so we can clean up
+        window.__cameraStream = stream;
+      } catch (err) {
+        // Handle permission denied / no camera / insecure origin, etc.
+        console.error('Could not start camera:', err);
+      }
+    });
+
+    // Optional: pause/resume track when tab visibility changes (saves battery)
+    document.addEventListener('visibilitychange', () => {
+      const stream = window.__cameraStream;
+      if (!stream) return;
+      const [track] = stream.getVideoTracks();
+      if (!track) return;
+      track.enabled = !document.hidden;
+    });
+
+    // Optional: stop camera when leaving the page
+    window.addEventListener('beforeunload', () => {
+      const stream = window.__cameraStream;
+      if (stream) stream.getTracks().forEach(t => t.stop());
+    });
+  </script>
 </div>

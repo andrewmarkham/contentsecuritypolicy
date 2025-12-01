@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
 
@@ -10,16 +10,21 @@
 		https://api.nuget.org/v3/index.json;
 		https://nuget.optimizely.com/feed/packages.svc;
 	</RestoreSources>
+    <ExcludeTestMsTest>true</ExcludeTestMsTest>
+  <ExcludeTestNUnit>false</ExcludeTestNUnit>
+  <ExcludeTestXunit>true</ExcludeTestXunit>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EPiServer.CMS.UI.Core" Version="12.*" />
     <PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.*" /> 
     <PackageReference Include="EPiServer.Framework" Version="12.*" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
-    <PackageReference Include="NUnit" Version="3.13.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
-    <PackageReference Include="coverlet.collector" Version="3.0.2" />
+
+
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+  <PackageReference Include="NUnit" Version="4.4.0" />
+  <PackageReference Include="NUnit3TestAdapter" Version="5.2.0" />
+  <PackageReference Include="coverlet.collector" Version="6.0.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,10 +9,12 @@ import { RefForm } from '../csp/types/types';
 export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; handleSaved: (success: boolean) => void; }, ref: Ref<RefForm>) => {
 
     const { state, dispatch } = useContext(AppContext);
-
     const [form] = Form.useForm();
 
+    const [mode, setMode] = React.useState<number | undefined>(props.header.mode);
+
     useImperativeHandle(ref, () => ({ RequestSave }));
+    
     function RequestSave() {
         console.log("Request Save ");
         form.submit();
@@ -47,7 +49,7 @@ export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; h
             initialValues={props.header}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            onFieldsChange={(changedFields, allFields) => { console.log(changedFields, allFields); }}
+            onFieldsChange={(changedFields, allFields) => { setMode(changedFields.find(field => field.name[0] === "mode")?.value) }}
             autoComplete="off"
         >
             <Form.Item<SecurityHeader>
@@ -77,7 +79,7 @@ export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; h
 
             <Form.Item<SecurityHeader>
                 label="Domain" name="domain"
-                hidden={(props.header?.mode !== 2)}>
+                hidden={!(props.header.name === "X-Frame-Options" && mode === 2)}>
                 <Input variant="outlined" />
             </Form.Item>
 

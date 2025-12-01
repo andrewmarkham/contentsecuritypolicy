@@ -51,8 +51,4 @@ public abstract class BaseCspPolicyRepository : ICspPolicyRepository
             this.Update(p);
         }
     }
-
-    public abstract CspSettings Settings();
-
-    public abstract bool SaveSettings(CspSettings settings);
 }
