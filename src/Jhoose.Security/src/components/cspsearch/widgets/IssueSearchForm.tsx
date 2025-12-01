@@ -10,6 +10,7 @@ export function IssueSearchForm(props: {
     directives: Array<SelectValue>,
     initialDirective?: string | null,
     browsers: Array<SelectValue>,
+    types: Array<SelectValue>,
     initialBrowser?: string | null,
     initialQuery?: string | null,
     onSearch: (searchParams: SearchParams) => void
@@ -25,6 +26,7 @@ export function IssueSearchForm(props: {
         dateFrom: values.dateFrom,
         browser: values.browser,
         directive: values.directive,
+        type: values.type,
         query: values.query
       };
   
@@ -65,6 +67,17 @@ export function IssueSearchForm(props: {
           </Col>
           <Col span={2}>
           </Col>
+        <Col span={8}>
+          <Form.Item name="type" label="Types">
+            <Select
+              mode="multiple"
+              style={{ minWidth: '200px', width: '100%' }}
+              placeholder="Please select"
+              options={props.types}
+            />
+          </Form.Item>
+        </Col>
+
         <Col span={8}>
           <Form.Item name="browser" label="Browser">
             <Select

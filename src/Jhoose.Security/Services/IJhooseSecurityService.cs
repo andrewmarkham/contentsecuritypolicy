@@ -5,5 +5,6 @@ namespace Jhoose.Security.Services;
 public interface IJhooseSecurityService
 {
     void AddContentSecurityPolicy(HttpResponse response);
+    void AddPermissionsPolicy(HttpResponse response);
     void AddHeaders(HttpResponse response);
 }

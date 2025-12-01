@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_NO: 2.5.0.${{ github.run_number }}  
-  BUILD_NO_PRE: 2.5.0-rc.${{ github.run_number }} 
+  BUILD_NO: 2.6.0.${{ github.run_number }}  
+  BUILD_NO_PRE: 2.6.0-rc.${{ github.run_number }} 
 
 jobs:
   build:
@@ -22,7 +22,10 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: | 
+          8.0.x
+          9.0.x
+          10.0.x
 
     - name: Configure Source
       working-directory: ./src/Jhoose.Security
@@ -49,11 +52,26 @@ jobs:
       run: dotnet build --configuration PreRelease -p:Version=${{ env.BUILD_NO_PRE }}
       working-directory: ./src/Jhoose.Security
 
+    - name: Run Jhoose.Security.Core.Tests
+      working-directory: ./src/Tests/Jhoose.Security.Core.Tests
+      run: dotnet test Jhoose.Security.Core.Tests.csproj    --configuration Release --logger "trx;LogFileName=test_results.trx"
 
-    - name: Test
-      working-directory: ./src/Jhoose.Security
-      run: dotnet test --configuration Release  --no-build --verbosity normal
-    
+    - name: Run Jhoose.Security.Reporting.Tests
+      working-directory: ./src/Tests/Jhoose.Security.Reporting.Tests
+      run: dotnet test Jhoose.Security.Reporting.Tests.csproj  --configuration Release --logger "trx;LogFileName=test_results.trx"
+
+    - name: Run Jhoose.Security.Tests
+      working-directory: ./src/Tests/Jhoose.Security.Tests
+      run: dotnet test Jhoose.Security.Tests.csproj --configuration Release --logger "trx;LogFileName=test_results.trx"
+
+    - name: Report tests
+      if: always()
+      uses: dorny/test-reporter@v1
+      with:
+        name: NUnit Tests
+        path: './src/**/test_results.trx'
+        reporter: dotnet-trx
+
     - name: nuget push
       if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release')
       working-directory: ./src/Jhoose.Security

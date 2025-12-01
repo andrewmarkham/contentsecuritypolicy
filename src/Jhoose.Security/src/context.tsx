@@ -30,6 +30,7 @@ const initialState: ApplicationState = {
         networkError: false,
         settings: { 
                 mode: "on", 
+                permissionMode: "on",
                 reportingMode: 0,
                 reportingUrl: "",
                 reportToUrl: "",

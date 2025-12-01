@@ -17,11 +17,13 @@ public class StandardCspProvider : ICspProvider
     private readonly string nonceValue;
 
     private readonly ICspPolicyRepository policyRepository;
+    private readonly ISettingsRepository settingsRepository;
     private readonly ISiteDefinitionResolver siteDefinitionResolver;
 
-    public StandardCspProvider(ICspPolicyRepository policyRepository, ISiteDefinitionResolver siteDefinitionResolver)
+    public StandardCspProvider(ICspPolicyRepository policyRepository, ISettingsRepository settingsRepository, ISiteDefinitionResolver siteDefinitionResolver)
     {
         this.policyRepository = policyRepository;
+        this.settingsRepository = settingsRepository;
         this.siteDefinitionResolver = siteDefinitionResolver;
         this.nonceValue = Guid.NewGuid().ToString();
     }
@@ -30,7 +32,7 @@ public class StandardCspProvider : ICspProvider
     {
         get
         {
-            return this.policyRepository.Settings();
+            return this.settingsRepository.Settings();
         }
     }
 
@@ -49,9 +51,8 @@ public class StandardCspProvider : ICspProvider
 
         if (!(settings.Mode == "off" || settings.ReportingMode == ReportingMode.None))
         {
-            yield return new ReportingEndpointHeader(settings, host);
-            yield return new ReportToHeader(settings, host);
-
+            yield return new ReportingEndpointHeader(settings, host, "csp-endpoint");
+            yield return new ReportToHeader(settings, host, "csp-endpoint");
         }
 
         // for global report only
@@ -89,6 +90,7 @@ public class StandardCspProvider : ICspProvider
     public void Initialize()
     {
         this.policyRepository.Bootstrap();
+        this.settingsRepository.Bootstrap();
     }
 
 }

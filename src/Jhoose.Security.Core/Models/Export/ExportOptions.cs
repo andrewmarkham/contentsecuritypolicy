@@ -7,4 +7,5 @@ public record ExportOptions
     public bool ExportCsp => Options.Contains("csp");
     public bool ExportHeaders => Options.Contains("headers");
     public bool ExportSettings => Options.Contains("settings");
+    public bool ExportPermissions => Options.Contains("permissions");
 }

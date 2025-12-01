@@ -6,7 +6,7 @@ src/Jhoose.Security/bin/
 src/Jhoose.Security/node_modules/
 
 src/Jhoose.Security/obj/
-
+src/Jhoose.Security.Reporting.Tests/obj/
 src/Jhoose.Security.Core/bin/
 
 src/Jhoose.Security.Core/obj/
@@ -64,3 +64,10 @@ src/Sample/Foundation/obj/
 src/Sample/Foundation/node_modules/
 
 src/Sample/Foundation/App_Data/
+
+src/Tests/Jhoose.Security.Reporting.Tests/bin/
+src/Tests/Jhoose.Security.Reporting.Tests/obj/Debug/net8.0/Jhoose.Security.Reporting.Tests.AssemblyInfo.cs
+src/Tests/Jhoose.Security.Reporting.Tests/obj/Debug/net8.0/Jhoose.Security.Reporting.Tests.AssemblyInfoInputs.cache
+src/Tests/Jhoose.Security.Reporting.Tests/obj/Debug/net8.0/Jhoose.Security.Reporting.Tests.csproj.AssemblyReference.cache
+
+src/Tests/Jhoose.Security.Reporting.Tests/obj/

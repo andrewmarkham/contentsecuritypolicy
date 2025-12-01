@@ -8,8 +8,9 @@ import { Typography } from "antd";
 
 import { SecurityHeaders } from './components/securityheaders/SecurityHeaders';
 
-import {CspModule} from './components/csp/CspModule';
-import {ModuleSettings} from './components/settings/ModuleSettings';
+import { CspModule } from './components/csp/CspModule';
+import { ModuleSettings } from './components/settings/ModuleSettings';
+import { PermissionPolicyModule } from './components/permissionpolicy/PermissionPolicyModule';
 
 import React from 'react';
 
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/" element={<SecurityDashboard />} />
                 <Route path="/cspissues" element={<CspIssueSearch />} />
                 <Route path="/csp" element={<CspModule />} />
+                <Route path="/permissions" element={<PermissionPolicyModule />} />
                 <Route path="/headers" element={ <SecurityHeaders /> } />
                 <Route path="/settings" element={ <ModuleSettings /> } />
             </Routes> 

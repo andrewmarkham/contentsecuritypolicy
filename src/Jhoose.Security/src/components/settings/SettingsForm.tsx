@@ -84,7 +84,7 @@ export const SettingsForm = () => {
         onFinishFailed={onFinishFailed}
         onFieldsChange={(changedFields, allFields) => { 
           setIsDirty(true); 
-          setIsCSPDisabled(allFields.find(f => f.name[0] === "mode")?.value === "off");
+          setIsCSPDisabled(allFields.find(f => f.name[0] === "mode")?.value === "off" && allFields.find(f => f.name[0] === "permissionMode")?.value === "off");
           setReportingMode(allFields.find(f => f.name[0] === "reportingMode")?.value);
         } }
         autoComplete="off">
@@ -93,6 +93,15 @@ export const SettingsForm = () => {
 
       <Form.Item<SecuritySettings>
         label="Mode" name="mode">
+        <Select
+          placeholder="Control the mode of the module"
+          options={options} />
+      </Form.Item>
+
+      <Divider orientation="left">Permission Policy Mode</Divider>
+
+      <Form.Item<SecuritySettings>
+        label="Mode" name="permissionMode">
         <Select
           placeholder="Control the mode of the module"
           options={options} />

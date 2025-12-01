@@ -9,12 +9,11 @@ using Jhoose.Security.Core;
 using Jhoose.Security.Core.Cache;
 using Jhoose.Security.Core.Configuration;
 using Jhoose.Security.Core.Models;
+
 using Jhoose.Security.Core.Models.SecurityHeaders;
 using Jhoose.Security.Core.Repository;
 
 using Microsoft.AspNetCore.Http;
-
-using Newtonsoft.Json;
 
 namespace Jhoose.Security.Repository;
 
@@ -64,14 +63,15 @@ public class StandardResponseHeadersRepository : IResponseHeadersRepository
 
             foreach (ResponseHeaderStorageItem<ResponseHeader> p in policies)
             {
-                string json = p.SerializedValue;
+                var responseHeader = System.Text.Json.JsonSerializer.Deserialize<ResponseHeader>(p.SerializedValue);
 
-                Type t = GetType(p.TypeName);
-
-                yield return (ResponseHeader)JsonConvert.DeserializeObject(json, t)!;
+                yield return FixResponseHeaderHelper.IsFixRequired(p.TypeName) ? 
+                                FixResponseHeaderHelper.ApplyFix(responseHeader, p.SerializedValue) : 
+                                responseHeader!;
             }
         }
     }
+
 
     public T Update<T>(T policy) where T : ResponseHeader
     {

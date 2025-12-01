@@ -25,7 +25,11 @@ public class InitialiseHostedService : IHostedService
 
             var p = this.serviceProvider.GetService(typeof(IResponseHeadersProvider)) as IResponseHeadersProvider;
             p?.Initialize();
-        }, cancellationToken);
+
+            var pp = this.serviceProvider.GetService(typeof(IPermissionsProvider)) as IPermissionsProvider;
+            pp?.Initialize();
+            
+        }, cancellationToken);  
     }
 
     public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;

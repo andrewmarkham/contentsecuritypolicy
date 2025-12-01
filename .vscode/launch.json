@@ -29,7 +29,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "BuildFoundationAll",
-            "program": "${workspaceFolder}/src/Sample/Foundation/bin/Debug/net6.0/Foundation.dll",
+            "program": "${workspaceFolder}/src/Sample/Foundation/bin/Debug/net8.0/Foundation.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Sample/Foundation",
             "stopAtEntry": false,

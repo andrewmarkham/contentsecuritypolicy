@@ -1,11 +1,7 @@
 namespace Jhoose.Security.Core.Models.CSP;
 
 
-public class CspPolicyHeader : CspPolicyHeaderBase
+public class CspPolicyHeader(CspSettings settings, string host) : CspPolicyHeaderBase(settings, host)
 {
-    public CspPolicyHeader(CspSettings settings, string host) : base(settings, host)
-    {
-    }
-
     public override string Name => "Content-Security-Policy";
 }
