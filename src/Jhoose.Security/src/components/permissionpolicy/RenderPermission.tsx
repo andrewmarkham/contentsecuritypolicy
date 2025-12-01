@@ -1,6 +1,7 @@
 import React from 'react';
 import { RenderDefaultPermission } from './RenderDefaultPermission';
 import { Permission } from './types';
+import MutedOutlined from '@ant-design/icons/lib/icons/MutedOutlined';
 
 
 export const RenderPermission: React.FC<{ permission: Permission | undefined; defaultValue: string; isListing: boolean }> = ({ permission, defaultValue, isListing }) => {
@@ -49,7 +50,7 @@ export const RenderPermission: React.FC<{ permission: Permission | undefined; de
                 <RenderDefaultPermission defaultValue={defaultValue} permissionStyling={permissionStyling}   />
             ) : (
                 <div style={{margin: "0 10px"}}>
-                    <p style={permissionStyling}>{permissionDisplay}</p>
+                    <p style={permissionStyling}>{permissionDisplay}{permission?.mode === "report" ? <span style={{marginLeft: "5px"}} title="Configured as report only"><MutedOutlined /></span> : <></>}</p>
                 </div>
             )}
         </>

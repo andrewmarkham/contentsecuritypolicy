@@ -171,7 +171,7 @@ app.get('/api/jhoose/permissions', async (req, res) => {
   //var jsonData = fs.readFileSync(path.join(__dirname + '/permissions-data.json'));
   var importdata = [
     { key: 'fullscreen', mode: 'enabled', scope: 'self', allowlist: [] },
-    { key: 'accelerometer', mode: 'enabled', scope: 'all', allowlist: [] },
+    { key: 'accelerometer', mode: 'report', scope: 'all', allowlist: [] },
     { key: 'ambient-light-sensor', mode: 'disabled', scope: 'self', allowlist: [
 
     ] },

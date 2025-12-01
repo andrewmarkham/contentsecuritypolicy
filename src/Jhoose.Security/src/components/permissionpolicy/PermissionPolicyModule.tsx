@@ -9,7 +9,7 @@ import { CollapsiblePanel } from '../CollapsiblePanel/CollapsiblePanel';
 import { PermissionPolicy,Permission } from './types';
 
 import { PermissionPolicyData, browserDetails } from './Data/PermissionPolicyData';
-import { CheckCircleTwoTone, CloseCircleTwoTone, InfoCircleOutlined } from '@ant-design/icons';
+import { CheckCircleTwoTone, CloseCircleTwoTone, InfoCircleOutlined, MutedOutlined } from '@ant-design/icons';
 
 import bcd, { Identifier } from '@mdn/browser-compat-data' 
 import { PermissionEditor } from './PermissionEditor';

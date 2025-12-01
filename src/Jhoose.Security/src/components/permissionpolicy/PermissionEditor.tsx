@@ -86,7 +86,7 @@ export const PermissionEditor: React.FC<{ data: Partial<Permission>, default: st
                                 />
                         </label>
                     </Cell>
-                {permissionData.mode === "enabled" || permissionData.mode === "report" && (
+                {(permissionData.mode === "enabled" || permissionData.mode === "report") && (
                     <Cell>
                         <label>
                             <span style={{marginRight: "5px"}}>Scope:</span>
