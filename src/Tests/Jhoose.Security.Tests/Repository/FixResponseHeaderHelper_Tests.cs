@@ -14,9 +14,10 @@ namespace Jhoose.Security.Tests.Repository
     public class FixResponseHeaderHelper_Tests
     {
         [TestCaseSource(typeof(FixResponseHeaderTestDataClass), nameof(FixResponseHeaderTestDataClass.TestTypes))]
-        public bool IsFixRequired_Tests(string typeName)
+        public bool IsFixRequired_Tests(ResponseHeader header, string typeName)
         {
-            return FixResponseHeaderHelper.IsFixRequired(typeName);
+            var retVal = FixResponseHeaderHelper.IsFixRequired(header,typeName);
+            return retVal;
         }
 
         [Test]
@@ -24,23 +25,42 @@ namespace Jhoose.Security.Tests.Repository
         {
             var typeName = typeof(ResponseHeader).AssemblyQualifiedName!;
 
-            var requiresFix = FixResponseHeaderHelper.IsFixRequired(typeName);
+            var requiresFix = FixResponseHeaderHelper.IsFixRequired(new ResponseHeader(), typeName);
+
+            Assert.That(requiresFix, Is.True);
+        }
+        
+        [Test]
+        public void IsFixRequired_ReturnsFalse_ForResponseHeaderType()
+        {
+            var typeName = typeof(StrictTransportSecurityHeader).AssemblyQualifiedName!;
+
+            var requiresFix = FixResponseHeaderHelper.IsFixRequired(new StrictTransportSecurityHeader(), typeName);
+
+            Assert.That(requiresFix, Is.False);
+        }
+        [Test]
+        public void IsFixRequired_ReturnsTrue_ForConcreteHeaderType()
+        {
+            var typeName = typeof(StrictTransportSecurityHeader).AssemblyQualifiedName!;
+
+            var requiresFix = FixResponseHeaderHelper.IsFixRequired(new ResponseHeader(), typeName);
 
             Assert.That(requiresFix, Is.True);
         }
 
         [Test]
-        public void IsFixRequired_ReturnsFalse_ForConcreteHeaderType()
+        public void IsFixRequired_ReturnsFalse_ForConcreteHeaderType1()
         {
             var typeName = typeof(StrictTransportSecurityHeader).AssemblyQualifiedName!;
 
-            var requiresFix = FixResponseHeaderHelper.IsFixRequired(typeName);
+            var requiresFix = FixResponseHeaderHelper.IsFixRequired(new StrictTransportSecurityHeader(), typeName);
 
             Assert.That(requiresFix, Is.False);
         }
 
-        [TestCaseSource(nameof(ff))]
-        public void ApplyFix_RehydratesKnownHeaders1(string json, Type expectedType, Action<ResponseHeader> assertResult)
+        [TestCaseSource(nameof(Issues_of_Incorrect_Serialization))]
+        public void ApplyFix_RehydratesKnownHeaders_Issues_of_Incorrect_Serialization(string json, Type expectedType, Action<ResponseHeader> assertResult)
         {
             var original = JsonSerializer.Deserialize<ResponseHeader>(json);
 
@@ -52,7 +72,23 @@ namespace Jhoose.Security.Tests.Repository
             assertResult(result);
         }
 
-        private static IEnumerable<TestCaseData> ff()
+        [TestCaseSource(nameof(Issues_of_Incorrect_Deserialization))]
+        public void ApplyFix_RehydratesKnownHeaders_Issues_of_Incorrect_Deserialization(string typeName, string json, Type expectedType, Action<ResponseHeader> assertResult)
+        {
+            var original = JsonSerializer.Deserialize<ResponseHeader>(json);
+
+            Assert.That(original, Is.Not.Null, "Deserialization should produce a response header");
+
+            var fixRequired = FixResponseHeaderHelper.IsFixRequired(original,typeName);
+            Assert.That(fixRequired, Is.True, "Fix should be required for ResponseHeader type");
+
+            var result = FixResponseHeaderHelper.ApplyFix(original!, json);
+
+            Assert.That(result, Is.TypeOf(expectedType));
+            assertResult(result);
+        }
+
+        private static IEnumerable<TestCaseData> Issues_of_Incorrect_Serialization()
         {
             yield return new TestCaseData(
                 "{\"Id\":\"a2fd4a4a-eb3a-487f-ab7f-c5bf6232be8f\",\"Enabled\":true,\"Name\":\"Strict-Transport-Security\",\"Value\":\"max-age=3153; includeSubDomains\"}",
@@ -317,6 +353,21 @@ namespace Jhoose.Security.Tests.Repository
                 }))
                 .SetName("XPermittedCrossDomainPoliciesHeader_All");
         }
+    
+        private static IEnumerable<TestCaseData> Issues_of_Incorrect_Deserialization()
+        {
+            yield return new TestCaseData(
+                "Jhoose.Security.Core.Models.SecurityHeaders.StrictTransportSecurityHeader, Jhoose.Security.Core, Version=2.4.2.335, Culture=neutral, PublicKeyToken=null",
+                "{\"Name\":\"Strict-Transport-Security\",\"Value\":\"max-age=3153; includeSubDomains\",\"MaxAge\":31536000,\"IncludeSubDomains\":true,\"Id\":\"742d4f0c-7119-4f43-9d7c-0630de774f06\",\"Enabled\":true}",
+                typeof(StrictTransportSecurityHeader),
+                (Action<ResponseHeader>)(result =>
+                {
+                    var header = (StrictTransportSecurityHeader)result;
+                    Assert.That(header.MaxAge, Is.EqualTo(3153));
+                    Assert.That(header.IncludeSubDomains, Is.True);
+                }))
+                .SetName("StrictTransportSecurityHeader_IncludeSubDomains");
+        }
     }
 
     public class FixResponseHeaderTestDataClass
@@ -325,15 +376,25 @@ namespace Jhoose.Security.Tests.Repository
         {
             get
             {
-                yield return new TestCaseData(typeof(ResponseHeader).AssemblyQualifiedName!).Returns(true);
-                yield return new TestCaseData(typeof(CrossOriginEmbedderPolicyHeader).AssemblyQualifiedName!).Returns(false);
-                yield return new TestCaseData(typeof(CrossOriginOpenerPolicyHeader).AssemblyQualifiedName!).Returns(false);
-                yield return new TestCaseData(typeof(CrossOriginResourcePolicyHeader).AssemblyQualifiedName!).Returns(false);
-                yield return new TestCaseData(typeof(ReferrerPolicyHeader).AssemblyQualifiedName!).Returns(false);
-                yield return new TestCaseData(typeof(StrictTransportSecurityHeader).AssemblyQualifiedName!).Returns(false);
-                yield return new TestCaseData(typeof(XContentTypeOptionsHeader).AssemblyQualifiedName!).Returns(false);
-                yield return new TestCaseData(typeof(XFrameOptionsHeader).AssemblyQualifiedName!).Returns(false);
-                yield return new TestCaseData(typeof(XPermittedCrossDomainPoliciesHeader).AssemblyQualifiedName!).Returns(false);
+                yield return new TestCaseData(new ResponseHeader(), typeof(ResponseHeader).AssemblyQualifiedName!).Returns(true);
+                yield return new TestCaseData(new ResponseHeader(), typeof(CrossOriginEmbedderPolicyHeader).AssemblyQualifiedName!).Returns(true);
+                yield return new TestCaseData(new ResponseHeader(), typeof(CrossOriginOpenerPolicyHeader).AssemblyQualifiedName!).Returns(true);
+                yield return new TestCaseData(new ResponseHeader(), typeof(CrossOriginResourcePolicyHeader).AssemblyQualifiedName!).Returns(true);
+                yield return new TestCaseData(new ResponseHeader(), typeof(ReferrerPolicyHeader).AssemblyQualifiedName!).Returns(true);
+                yield return new TestCaseData(new ResponseHeader(), typeof(StrictTransportSecurityHeader).AssemblyQualifiedName!).Returns(true);
+                yield return new TestCaseData(new ResponseHeader(), typeof(XContentTypeOptionsHeader).AssemblyQualifiedName!).Returns(true);
+                yield return new TestCaseData(new ResponseHeader(), typeof(XFrameOptionsHeader).AssemblyQualifiedName!).Returns(true);
+                yield return new TestCaseData(new ResponseHeader(), typeof(XPermittedCrossDomainPoliciesHeader).AssemblyQualifiedName!).Returns(true);
+
+                yield return new TestCaseData(new CrossOriginEmbedderPolicyHeader(), typeof(ResponseHeader).AssemblyQualifiedName!).Returns(true);
+                yield return new TestCaseData(new CrossOriginEmbedderPolicyHeader(), typeof(CrossOriginEmbedderPolicyHeader).AssemblyQualifiedName!).Returns(false);
+                yield return new TestCaseData(new CrossOriginOpenerPolicyHeader(), typeof(CrossOriginOpenerPolicyHeader).AssemblyQualifiedName!).Returns(false);
+                yield return new TestCaseData(new CrossOriginResourcePolicyHeader(), typeof(CrossOriginResourcePolicyHeader).AssemblyQualifiedName!).Returns(false);
+                yield return new TestCaseData(new ReferrerPolicyHeader(), typeof(ReferrerPolicyHeader).AssemblyQualifiedName!).Returns(false);
+                yield return new TestCaseData(new StrictTransportSecurityHeader(), typeof(StrictTransportSecurityHeader).AssemblyQualifiedName!).Returns(false);
+                yield return new TestCaseData(new XContentTypeOptionsHeader(), typeof(XContentTypeOptionsHeader).AssemblyQualifiedName!).Returns(false);
+                yield return new TestCaseData(new XFrameOptionsHeader(), typeof(XFrameOptionsHeader).AssemblyQualifiedName!).Returns(false);
+                yield return new TestCaseData(new XPermittedCrossDomainPoliciesHeader(), typeof(XPermittedCrossDomainPoliciesHeader).AssemblyQualifiedName!).Returns(false);
             }
         }
     }

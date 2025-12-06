@@ -16,11 +16,12 @@ public class FixResponseHeaderHelper
     /// <summary>
     /// Determines if a fix is required based on the type name.
     /// </summary>
+    /// <param name="deserializedHeader"></param>
     /// <param name="typeName"></param>
     /// <returns></returns>
-    public static bool IsFixRequired(string typeName)
+    public static bool IsFixRequired(ResponseHeader deserializedHeader, string typeName)
     {
-        return GetType(typeName) == typeof(ResponseHeader);
+        return deserializedHeader.GetType() == typeof(ResponseHeader) ? true : GetType(typeName) == typeof(ResponseHeader);
     }
     /// <summary>
     /// Fixes the response type based on the original header name.

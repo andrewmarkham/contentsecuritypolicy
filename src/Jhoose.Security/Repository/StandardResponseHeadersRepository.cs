@@ -65,7 +65,7 @@ public class StandardResponseHeadersRepository : IResponseHeadersRepository
             {
                 var responseHeader = System.Text.Json.JsonSerializer.Deserialize<ResponseHeader>(p.SerializedValue);
 
-                yield return FixResponseHeaderHelper.IsFixRequired(p.TypeName) ? 
+                yield return FixResponseHeaderHelper.IsFixRequired(responseHeader, p.TypeName) ? 
                                 FixResponseHeaderHelper.ApplyFix(responseHeader, p.SerializedValue) : 
                                 responseHeader!;
             }
