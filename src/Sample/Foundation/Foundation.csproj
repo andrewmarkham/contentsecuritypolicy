@@ -32,7 +32,6 @@
     <!-- Optimizely Search & Navigation -->
     <PackageReference Include="EPiServer.Find.Cms" Version="16.2.0" />
     <PackageReference Include="EPiServer.Find.Commerce" Version="12.2.0" />
-    <PackageReference Include="Jhoose.Security.Admin" Version="2.6.0-rc.377" />
     <PackageReference Include="PowerSlice" Version="5.2.0" />
 
     <!-- Productivity enhancements, Tools, Other Add-ons -->
@@ -99,7 +98,7 @@
 	  <Folder Include="Infrastructure\Kpi\" />
 	  <Folder Include="wwwroot\" />
   </ItemGroup>
-<!--
+
 	<ItemGroup>
 		<ProjectReference Include="..\..\Jhoose.Security.Reporting\Jhoose.Security.Reporting.csproj">
 			<GlobalPropertiesToRemove>
@@ -116,5 +115,5 @@
 			</GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>
-  -->
+
 </Project>
