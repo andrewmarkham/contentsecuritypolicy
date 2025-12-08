@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Jhoose.Security.Core;
-using Jhoose.Security.Core.Cache;
-using Jhoose.Security.Core.Models;
-using Jhoose.Security.Core.Models.CSP;
-using Jhoose.Security.Core.Provider;
-
+using Jhoose.Security;
+using Jhoose.Security.Cache;
+using Jhoose.Security.Models;
+using Jhoose.Security.Models.CSP;
+using Jhoose.Security.Provider;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 

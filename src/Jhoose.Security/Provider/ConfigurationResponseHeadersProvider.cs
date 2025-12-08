@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using Jhoose.Security.Core.Configuration;
-using Jhoose.Security.Core.Models;
+using Jhoose.Security.Configuration;
+using Jhoose.Security.Models;
 
 using Microsoft.Extensions.Options;
 
-namespace Jhoose.Security.Core.Provider;
+namespace Jhoose.Security.Provider;
 
 /*Get the response headers from the configuration*/
 public class ConfigurationResponseHeadersProvider : IResponseHeadersProvider

@@ -3,10 +3,9 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-using Jhoose.Security.Authorization;
-using Jhoose.Security.Reporting;
-using Jhoose.Security.Reporting.Models.Dashboard;
-using Jhoose.Security.Reporting.Models.Search;
+using Jhoose.Security.Features.Reporting;
+using Jhoose.Security.Features.Reporting.Models.Dashboard;
+using Jhoose.Security.Features.Reporting.Models.Search;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +18,7 @@ namespace Jhoose.Security.Controllers.Api;
 
 [Route("api/jhoose/[controller]")]
 [ApiController]
-[Authorize(Policy = Constants.PolicyName)]
+[Authorize(Policy = Authorization.Constants.PolicyName)]
 public class DashboardController(
                      IDashboardService dashboardService,
                      ILogger<DashboardController> logger) : ControllerBase

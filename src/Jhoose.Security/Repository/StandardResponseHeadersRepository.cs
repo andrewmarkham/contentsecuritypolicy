@@ -1,19 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-using Jhoose.Security.Core;
-using Jhoose.Security.Core.Cache;
-using Jhoose.Security.Core.Configuration;
-using Jhoose.Security.Core.Models;
+using Jhoose.Security.Cache;
+using Jhoose.Security.Configuration;
+using Jhoose.Security.Models;
 
-using Jhoose.Security.Core.Models.SecurityHeaders;
-using Jhoose.Security.Core.Repository;
+using Jhoose.Security.Models.SecurityHeaders;
 
-using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Http;
 
 namespace Jhoose.Security.Repository;
 
@@ -23,16 +22,17 @@ public class StandardResponseHeadersRepository : IResponseHeadersRepository
     protected readonly ICacheManager cache;
 
     private readonly IDatabaseMode databaseMode;
-    private readonly IHttpContextAccessor httpContextAccessor;
+    //private readonly IHttpContextAccessor httpContextAccessor;
 
     public StandardResponseHeadersRepository(DynamicDataStoreFactory dataStoreFactory,
         ICacheManager cache,
-        IDatabaseMode databaseMode,
-        IHttpContextAccessor httpContextAccessor)
+        IDatabaseMode databaseMode
+        //IHttpContextAccessor httpContextAccessor
+        )
     {
         this.cache = cache;
         this.databaseMode = databaseMode;
-        this.httpContextAccessor = httpContextAccessor;
+        //this.httpContextAccessor = httpContextAccessor;
         this.dataStoreFactory = dataStoreFactory;
     }
 
@@ -63,7 +63,7 @@ public class StandardResponseHeadersRepository : IResponseHeadersRepository
 
             foreach (ResponseHeaderStorageItem<ResponseHeader> p in policies)
             {
-                var responseHeader = System.Text.Json.JsonSerializer.Deserialize<ResponseHeader>(p.SerializedValue);
+                var responseHeader = JsonSerializer.Deserialize<ResponseHeader>(p.SerializedValue);
 
                 yield return FixResponseHeaderHelper.IsFixRequired(responseHeader, p.TypeName) ? 
                                 FixResponseHeaderHelper.ApplyFix(responseHeader, p.SerializedValue) : 

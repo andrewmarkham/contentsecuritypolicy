@@ -3,7 +3,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Jhoose.Security.Core.Provider;
+using Jhoose.Security.Provider;
 
 using Microsoft.Extensions.Hosting;
 

@@ -4,10 +4,10 @@ using System.Linq;
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-using Jhoose.Security.Core;
-using Jhoose.Security.Core.Cache;
-using Jhoose.Security.Core.Models.Permissions;
-using Jhoose.Security.Core.Repository;
+using Jhoose.Security;
+using Jhoose.Security.Cache;
+using Jhoose.Security.Models.Permissions;
+using Jhoose.Security.Repository;
 
 using Microsoft.AspNetCore.Http;
 

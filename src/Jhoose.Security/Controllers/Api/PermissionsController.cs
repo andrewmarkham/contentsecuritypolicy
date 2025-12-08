@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-using Jhoose.Security.Authorization;
-using Jhoose.Security.Core.Models.Permissions;
-using Jhoose.Security.Core.Repository;
+using Jhoose.Security.Models.Permissions;
+using Jhoose.Security.Repository;
 using Jhoose.Security.Webhooks;
 
 using Microsoft.AspNetCore.Authorization;
@@ -24,7 +23,7 @@ namespace Jhoose.Security.Controllers.Api;
 /// <param name="logger">Logger instance for this controller.</param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
-[Authorize(Policy = Constants.PolicyName)]
+[Authorize(Policy = Authorization.Constants.PolicyName)]
 public class PermissionsController(IPermissionsRepository permissionsRepository,
                                 ISettingsRepository settingsRepository,
                                 IWebhookNotifications webhookNotifications,

@@ -7,16 +7,14 @@ using EPiServer.ServiceLocation;
 using EPiServer.Shell.Modules;
 
 using Jhoose.Security.Authorization;
-using Jhoose.Security.Core.Binders;
-using Jhoose.Security.Core.Cache;
-using Jhoose.Security.Core.Configuration;
-using Jhoose.Security.Core.Provider;
-using Jhoose.Security.Core.Repository;
-using Jhoose.Security.Core.Services;
-using Jhoose.Security.Middleware;
-using Jhoose.Security.Reporting.DependencyInjection;
+using Jhoose.Security.Binders;
+using Jhoose.Security.Cache;
+using Jhoose.Security.Configuration;
+using Jhoose.Security.Provider;
 using Jhoose.Security.Repository;
 using Jhoose.Security.Services;
+using Jhoose.Security.Middleware;
+
 using Jhoose.Security.Webhooks;
 
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +23,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Jhoose.Security.Features.Reporting.DependencyInjection;
 
 namespace Jhoose.Security.DependencyInjection;
 
@@ -97,7 +96,7 @@ public static class SecurityExtensions
 
         services.AddAuthorization(c =>
         {
-            c.AddPolicy(Constants.PolicyName, configurePolicy ?? DefaultPolicy);
+            c.AddPolicy(Authorization.Constants.PolicyName, configurePolicy ?? DefaultPolicy);
         });
 
         services.AddScoped<IWebhookNotifications, DefaultWebhookNotifications>();

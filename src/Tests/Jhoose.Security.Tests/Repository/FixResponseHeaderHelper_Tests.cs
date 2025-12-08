@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-using Jhoose.Security.Core.Models;
-using Jhoose.Security.Core.Models.SecurityHeaders;
+using Jhoose.Security.Models;
+using Jhoose.Security.Models.SecurityHeaders;
 using Jhoose.Security.Repository;
 
 using NUnit.Framework;
