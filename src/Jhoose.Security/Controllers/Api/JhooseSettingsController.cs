@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-using Jhoose.Security.Authorization;
-using Jhoose.Security.Core.Models.CSP;
-using Jhoose.Security.Core.Models.Export;
-using Jhoose.Security.Core.Repository;
-using Jhoose.Security.Core.Services;
+using Jhoose.Security.Models.CSP;
+using Jhoose.Security.Models.Export;
+using Jhoose.Security.Repository;
+using Jhoose.Security.Services;
 using Jhoose.Security.Webhooks;
 
 using Microsoft.AspNetCore.Authorization;
@@ -27,7 +26,7 @@ namespace Jhoose.Security.Controllers.Api;
 /// <param name="logger">Logger instance for the controller.</param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
-[Authorize(Policy = Constants.PolicyName)]
+[Authorize(Policy = Authorization.Constants.PolicyName)]
 public class SettingsController(ISettingsRepository settingsRepository,
                           IWebhookNotifications webhookNotifications,
                           IImportExportService importExportService,

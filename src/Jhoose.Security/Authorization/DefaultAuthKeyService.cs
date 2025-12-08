@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 
-using Jhoose.Security.Core.Cache;
-using Jhoose.Security.Core.Models.CSP;
-using Jhoose.Security.Core.Provider;
+using Jhoose.Security.Cache;
+using Jhoose.Security.Models.CSP;
+using Jhoose.Security.Provider;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -31,7 +31,7 @@ namespace Jhoose.Security.Authorization;
     public bool Validate(StringValues apiKeyHeader)
     {
         // get the policy settings
-        var policySettings = cache.Get<CspSettings>(Core.Constants.SettingsCacheKey, () => cspProvider.Settings, new TimeSpan(1, 0, 0));
+        var policySettings = cache.Get<CspSettings>(Jhoose.Security.Constants.SettingsCacheKey, () => cspProvider.Settings, new TimeSpan(1, 0, 0));
 
         var key = apiKeyHeader.FirstOrDefault();
 

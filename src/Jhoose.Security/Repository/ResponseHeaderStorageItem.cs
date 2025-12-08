@@ -1,7 +1,7 @@
 ﻿using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-using Jhoose.Security.Core.Models;
+using Jhoose.Security.Models;
 
 namespace Jhoose.Security.Repository;
 

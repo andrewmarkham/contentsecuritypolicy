@@ -5,10 +5,9 @@ using System.Linq;
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-using Jhoose.Security.Core;
-using Jhoose.Security.Core.Cache;
-using Jhoose.Security.Core.Models.CSP;
-using Jhoose.Security.Core.Repository;
+using Jhoose.Security.Cache;
+using Jhoose.Security.Models.CSP;
+
 
 using Microsoft.Extensions.Logging;
 
@@ -47,7 +46,7 @@ public class SettingsRepository : ISettingsRepository
                 PermissionMode = "off",
                 ReportingUrl = string.Empty,
                 WebhookUrls = new List<string>(),
-                AuthenticationKeys = new List<Core.Models.AuthenticationKey>()
+                AuthenticationKeys = new List<Models.AuthenticationKey>()
             };
             return s;
         }

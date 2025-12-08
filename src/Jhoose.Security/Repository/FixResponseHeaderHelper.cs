@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
 
-using Jhoose.Security.Core.Models;
+using Jhoose.Security.Models;
 
-using Jhoose.Security.Core.Models.SecurityHeaders;
+using Jhoose.Security.Models.SecurityHeaders;
 
 namespace Jhoose.Security.Repository;
 
