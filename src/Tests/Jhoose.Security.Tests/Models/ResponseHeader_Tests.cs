@@ -1,7 +1,6 @@
 using System.Collections;
 using NUnit.Framework;
-using Jhoose.Security.Models;
-using Jhoose.Security.Models.SecurityHeaders;
+using Jhoose.Security.Features.ResponseHeaders.Models;
 
 namespace Jhoose.Security.Tests
 {

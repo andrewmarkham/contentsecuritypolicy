@@ -3,7 +3,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Jhoose.Security.Provider;
+using Jhoose.Security.Features.CSP.Provider;
+using Jhoose.Security.Features.Permissions.Providers;
+using Jhoose.Security.Features.ResponseHeaders.Providers;
 
 using Microsoft.Extensions.Hosting;
 

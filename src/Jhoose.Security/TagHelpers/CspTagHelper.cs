@@ -1,4 +1,4 @@
-using Jhoose.Security.Provider;
+using Jhoose.Security.Features.CSP.Provider;
 
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
