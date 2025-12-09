@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-using Jhoose.Security.Repository;
+using Jhoose.Security.Features.Settings.Repository;
 using Jhoose.Security.Webhooks;
 
 using Microsoft.AspNetCore.Mvc;

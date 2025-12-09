@@ -6,10 +6,14 @@ using System.Text.Json;
 
 using Jhoose.Security.Authorization;
 using Jhoose.Security.Cache;
-using Jhoose.Security.Models;
-using Jhoose.Security.Models.CSP;
-using Jhoose.Security.Provider;
-using Jhoose.Security.Repository;
+using Jhoose.Security.Features.CSP.Models;
+using Jhoose.Security.Features.CSP.Provider;
+using Jhoose.Security.Features.Permissions.Providers;
+using Jhoose.Security.Features.ResponseHeaders.Models;
+using Jhoose.Security.Features.ResponseHeaders.Providers;
+using Jhoose.Security.Features.Settings.Models;
+using Jhoose.Security.Features.Settings.Repository;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

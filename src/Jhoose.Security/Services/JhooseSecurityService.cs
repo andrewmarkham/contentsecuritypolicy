@@ -5,9 +5,13 @@ using System.Linq;
 
 using Jhoose.Security;
 using Jhoose.Security.Cache;
-using Jhoose.Security.Models;
-using Jhoose.Security.Models.CSP;
-using Jhoose.Security.Provider;
+using Jhoose.Security.Features.CSP.Models;
+using Jhoose.Security.Features.CSP.Provider;
+using Jhoose.Security.Features.Permissions.Providers;
+using Jhoose.Security.Features.ResponseHeaders.Models;
+using Jhoose.Security.Features.ResponseHeaders.Providers;
+using Jhoose.Security.Features.Settings.Models;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 

@@ -2,8 +2,8 @@
 using System.Linq;
 
 using Jhoose.Security.Cache;
-using Jhoose.Security.Models.CSP;
-using Jhoose.Security.Provider;
+using Jhoose.Security.Features.CSP.Provider;
+using Jhoose.Security.Features.Settings.Models;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;

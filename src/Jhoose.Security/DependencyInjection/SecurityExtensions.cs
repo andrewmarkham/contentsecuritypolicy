@@ -7,11 +7,10 @@ using EPiServer.ServiceLocation;
 using EPiServer.Shell.Modules;
 
 using Jhoose.Security.Authorization;
-using Jhoose.Security.Binders;
+
 using Jhoose.Security.Cache;
 using Jhoose.Security.Configuration;
-using Jhoose.Security.Provider;
-using Jhoose.Security.Repository;
+
 using Jhoose.Security.Services;
 using Jhoose.Security.Middleware;
 
@@ -24,6 +23,18 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Jhoose.Security.Features.Reporting.DependencyInjection;
+using Jhoose.Security.Features.CSP.Provider;
+using Jhoose.Security.Features.CSP.Repository;
+using Jhoose.Security.Features.Permissions.Providers;
+using Jhoose.Security.Features.Permissions.Repository;
+using Jhoose.Security.Features.ResponseHeaders.Providers;
+using Jhoose.Security.Features.ResponseHeaders.Repository;
+using Jhoose.Security.Features.Settings.Repository;
+using Jhoose.Security.Features.ResponseHeaders.Binders;
+using Jhoose.Security.Features.CSP.Binders;
+using Jhoose.Security.Features.Settings.Binders;
+using Jhoose.Security.Features.ImportExport.Services;
+using Jhoose.Security.Features.ImportExport.Repository;
 
 namespace Jhoose.Security.DependencyInjection;
 
