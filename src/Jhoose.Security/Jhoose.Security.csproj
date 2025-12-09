@@ -10,7 +10,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.6.1.0</Version>
+		<Version>2.6.2.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -50,6 +50,7 @@
                     Removed support for .NET6 and .NET7
                     Fixed some bugs (CRLF in header values, UI issues with header management)
             2.6.1 - Fixed bug with Resource Header serialization / deserialization
+            2.6.2 - Fixed another bug with (CRLF in header values)
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
