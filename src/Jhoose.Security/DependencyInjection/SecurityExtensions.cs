@@ -5,16 +5,7 @@ using System.Linq;
 using EPiServer.Authorization;
 using EPiServer.ServiceLocation;
 using EPiServer.Shell.Modules;
-
-using Jhoose.Security.Authorization;
-
-using Jhoose.Security.Cache;
 using Jhoose.Security.Configuration;
-
-using Jhoose.Security.Services;
-using Jhoose.Security.Middleware;
-
-using Jhoose.Security.Webhooks;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +26,11 @@ using Jhoose.Security.Features.CSP.Binders;
 using Jhoose.Security.Features.Settings.Binders;
 using Jhoose.Security.Features.ImportExport.Services;
 using Jhoose.Security.Features.ImportExport.Repository;
+using Jhoose.Security.Middleware;
+using Jhoose.Security.Features.Core.Services;
+using Jhoose.Security.Features.Core.Webhooks;
+using Jhoose.Security.Features.Core.Cache;
+using Jhoose.Security.Features.Api.Authorization;
 
 namespace Jhoose.Security.DependencyInjection;
 
@@ -107,7 +103,7 @@ public static class SecurityExtensions
 
         services.AddAuthorization(c =>
         {
-            c.AddPolicy(Authorization.Constants.PolicyName, configurePolicy ?? DefaultPolicy);
+            c.AddPolicy(Constants.Authentication.PolicyName, configurePolicy ?? DefaultPolicy);
         });
 
         services.AddScoped<IWebhookNotifications, DefaultWebhookNotifications>();

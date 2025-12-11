@@ -9,7 +9,6 @@ using Jhoose.Security.Features.Permissions.Repository;
 using Jhoose.Security.Features.ResponseHeaders.Models;
 using Jhoose.Security.Features.Settings.Models;
 using Jhoose.Security.Features.Settings.Repository;
-using Jhoose.Security.Models;
 
 namespace Jhoose.Security.Features.Permissions.Providers;
 

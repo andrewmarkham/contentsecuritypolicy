@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using EPiServer.Shell;
 using EPiServer.Shell.Navigation;
 
-namespace Jhoose.Security;
+namespace Jhoose.Security.UI;
 
 /// <summary>
 /// Provides menu items for the Jhoose Security section in the EPiServer CMS.
@@ -28,7 +28,7 @@ namespace Jhoose.Security;
             Paths.ToResource(base.GetType(), "jhoosesecurityadmin"))
             {
                 SortIndex = SortIndex.First + 25,
-                AuthorizationPolicy = Authorization.Constants.PolicyName
+                AuthorizationPolicy = Constants.Authentication.PolicyName
             },
 
             new UrlMenuItem("Dashboard",
@@ -36,7 +36,7 @@ namespace Jhoose.Security;
             Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/"))
             {
                 SortIndex = SortIndex.First + 26,
-                AuthorizationPolicy = Authorization.Constants.PolicyName
+                AuthorizationPolicy = Constants.Authentication.PolicyName
             },
 
             new UrlMenuItem("Issue Search",
@@ -44,7 +44,7 @@ namespace Jhoose.Security;
             Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/cspissues"))
             {
                 SortIndex = SortIndex.First + 27,
-                AuthorizationPolicy = Authorization.Constants.PolicyName
+                AuthorizationPolicy = Constants.Authentication.PolicyName
             },
 
             new UrlMenuItem("Content Security",
@@ -52,7 +52,7 @@ namespace Jhoose.Security;
             Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/csp"))
             {
                 SortIndex = SortIndex.First + 28,
-                AuthorizationPolicy = Authorization.Constants.PolicyName
+                AuthorizationPolicy = Constants.Authentication.PolicyName
             },
 
             new UrlMenuItem("Response Headers",
@@ -60,7 +60,7 @@ namespace Jhoose.Security;
             Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/headers"))
             {
                 SortIndex = SortIndex.First + 29,
-                AuthorizationPolicy = Authorization.Constants.PolicyName
+                AuthorizationPolicy = Constants.Authentication.PolicyName
             },
 
             new UrlMenuItem("Permission Policy",
@@ -68,7 +68,7 @@ namespace Jhoose.Security;
             Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/permissions"))
             {
                 SortIndex = SortIndex.First + 30,
-                AuthorizationPolicy = Authorization.Constants.PolicyName
+                AuthorizationPolicy = Constants.Authentication.PolicyName
             },
 
             new UrlMenuItem("Settings",
@@ -76,7 +76,7 @@ namespace Jhoose.Security;
             Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/settings"))
             {
                 SortIndex = SortIndex.First + 31,
-                AuthorizationPolicy = Authorization.Constants.PolicyName
+                AuthorizationPolicy = Constants.Authentication.PolicyName
             }
         };
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Primitives;
 
-namespace Jhoose.Security.Authorization;
+namespace Jhoose.Security.Features.Api.Authorization;
 
 public interface IAuthKeyService
 {

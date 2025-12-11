@@ -3,7 +3,6 @@ using System;
 using System.Text.Json;
 
 using Jhoose.Security.Configuration;
-using Jhoose.Security.Webhooks;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,11 +11,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Jhoose.Security.Features.Reporting;
 using Jhoose.Security.Features.CSP.Repository;
-
-using Jhoose.Security.Controllers.Api;
 using Jhoose.Security.Features.ResponseHeaders.Repository;
 using Jhoose.Security.Features.ResponseHeaders.Models;
 using Jhoose.Security.Features.Settings.Repository;
+using Jhoose.Security.Features.Core.Webhooks;
+using Jhoose.Security.Features.Core.Controllers;
 
 namespace Jhoose.Security.Features.ResponseHeaders.Controllers;
 
@@ -32,7 +31,7 @@ namespace Jhoose.Security.Features.ResponseHeaders.Controllers;
 /// <param name="logger">Logger instance for the controller.</param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
-[Authorize(Policy = Authorization.Constants.PolicyName)]
+[Authorize(Policy = Constants.Authentication.PolicyName)]
 public class ResponseHeadersController(ICspPolicyRepository policyRepository,
                      IResponseHeadersRepository responseHeadersRepository,
                      ISettingsRepository settingsRepository,

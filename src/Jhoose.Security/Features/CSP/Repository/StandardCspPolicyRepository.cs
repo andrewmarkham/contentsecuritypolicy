@@ -4,7 +4,7 @@ using System.Linq;
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-using Jhoose.Security.Cache;
+using Jhoose.Security.Features.Core.Cache;
 using Jhoose.Security.Features.CSP.Models;
 
 using Microsoft.Extensions.Logging;

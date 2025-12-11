@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
 
-using Jhoose.Security.Cache;
+using Jhoose.Security.Features.Core.Cache;
 using Jhoose.Security.Features.CSP.Provider;
 using Jhoose.Security.Features.Settings.Models;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
-namespace Jhoose.Security.Authorization;
+namespace Jhoose.Security.Features.Api.Authorization;
 
 /// <summary>
 /// Provides default implementation for authentication key validation service.

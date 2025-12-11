@@ -71,6 +71,10 @@ public class CspPolicy
                 {
                     sb.Append(this.Value).Append("; ");
                 }
+                else 
+                {
+                    sb.Append(this.Value).Append("; ");
+                }
             }
             else
             {

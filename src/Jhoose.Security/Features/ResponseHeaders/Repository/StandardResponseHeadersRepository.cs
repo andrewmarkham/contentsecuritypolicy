@@ -6,8 +6,8 @@ using System.Text.Json;
 using EPiServer.Data;
 using EPiServer.Data.Dynamic;
 
-using Jhoose.Security.Cache;
 using Jhoose.Security.Configuration;
+using Jhoose.Security.Features.Core.Cache;
 using Jhoose.Security.Features.ResponseHeaders.Models;
 
 //using Microsoft.AspNetCore.Http;

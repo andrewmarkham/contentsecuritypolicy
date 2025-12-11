@@ -2,12 +2,13 @@
 using System;
 using System.Linq;
 
+using Jhoose.Security.Features.Core.Webhooks;
 using Jhoose.Security.Features.Settings.Repository;
-using Jhoose.Security.Webhooks;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jhoose.Security.Controllers.Api;
+namespace Jhoose.Security.Features.Core.Controllers;
+
 /// <summary>
 /// Base controller that provides webhook notification helpers.
 /// </summary>

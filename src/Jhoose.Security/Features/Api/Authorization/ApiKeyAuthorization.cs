@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Jhoose.Security.Authorization;
+namespace Jhoose.Security.Features.Api.Authorization;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
 public class ApiKeyAuthorizationAttribute : Attribute, IAuthorizationFilter
@@ -13,7 +13,7 @@ public class ApiKeyAuthorizationAttribute : Attribute, IAuthorizationFilter
     {
         var service = context.HttpContext.RequestServices.GetService<IAuthKeyService>();
 
-        var authHeader = context.HttpContext.Request.Headers[Constants.ApiKey];
+        var authHeader = context.HttpContext.Request.Headers[Constants.Authentication.ApiKey];
 
         if (!service?.Validate(authHeader) ?? false)
         {
