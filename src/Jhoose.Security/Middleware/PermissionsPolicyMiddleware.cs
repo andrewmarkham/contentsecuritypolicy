@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-using Jhoose.Security.Services;
+using Jhoose.Security.Features.Core.Services;
 
 using Microsoft.AspNetCore.Http;
 

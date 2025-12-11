@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-using Jhoose.Security.Controllers.Api;
+using Jhoose.Security.Features.Core.Controllers;
+using Jhoose.Security.Features.Core.Webhooks;
 using Jhoose.Security.Features.CSP.Models;
 using Jhoose.Security.Features.CSP.Repository;
 using Jhoose.Security.Features.Settings.Repository;
-using Jhoose.Security.Webhooks;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,7 +26,7 @@ namespace Jhoose.Security.Features.CSP.Controllers;
 /// <param name="logger">Logger for diagnostic messages.</param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
-[Authorize(Policy = Authorization.Constants.PolicyName)]
+[Authorize(Policy = Constants.Authentication.PolicyName)]
 public class CspController(ICspPolicyRepository policyRepository,
                       ISettingsRepository settingsRepository,
                       IWebhookNotifications webhookNotifications,

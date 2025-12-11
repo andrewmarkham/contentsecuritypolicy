@@ -5,6 +5,9 @@ using System.Text.Json;
 
 namespace Jhoose.Security.Helpers;
 
+/// <summary>
+/// Provides functionality to compute a hash for an object.
+/// </summary>
 public static class ObjectHasher
 {
     private static readonly JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };

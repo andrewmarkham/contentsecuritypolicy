@@ -3,8 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Jhoose.Security;
-using Jhoose.Security.Cache;
+using Jhoose.Security.Features.Core.Cache;
 using Jhoose.Security.Features.CSP.Models;
 using Jhoose.Security.Features.CSP.Provider;
 using Jhoose.Security.Features.Permissions.Providers;
@@ -15,31 +14,24 @@ using Jhoose.Security.Features.Settings.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Jhoose.Security.Services;
+namespace Jhoose.Security.Features.Core.Services;
 
-public class JhooseSecurityService : IJhooseSecurityService
+/// <summary>
+/// Service responsible for managing and applying security headers to HTTP responses,
+/// including Content Security Policy (CSP), custom response headers, and Permissions-Policy headers.
+/// </summary>
+/// <remarks>
+/// This service integrates with caching mechanisms to optimize header retrieval and applies
+/// security headers to outgoing HTTP responses. It handles CSP directives with nonce generation,
+/// custom security headers, and browser permissions policies while avoiding conflicts with existing headers.
+/// </remarks>
+public class JhooseSecurityService(ICspProvider cspProvider,
+                             IResponseHeadersProvider responseHeaderProvider,
+                             IPermissionsProvider permissionsProvider,
+    ICacheManager cache,
+    ILogger<JhooseSecurityService> logger) : IJhooseSecurityService
 {
-    private readonly ICspProvider cspProvider;
-    private readonly IResponseHeadersProvider responseHeaderProvider;
-    private readonly IPermissionsProvider permissionsProvider;
-    private readonly ICacheManager cache;
-
-    private readonly ILogger<JhooseSecurityService> logger;
-
-    public JhooseSecurityService(ICspProvider cspProvider,
-                                 IResponseHeadersProvider responseHeaderProvider,
-                                 IPermissionsProvider permissionsProvider,
-        ICacheManager cache,
-        ILogger<JhooseSecurityService> logger)
-    {
-        this.cspProvider = cspProvider;
-        this.responseHeaderProvider = responseHeaderProvider;
-        this.permissionsProvider = permissionsProvider;
-        this.cache = cache;
-        this.logger = logger;
-
-    }
-
+    /// <inheritdoc/>
     public void AddHeaders(HttpResponse response)
     {
         try
@@ -71,6 +63,7 @@ public class JhooseSecurityService : IJhooseSecurityService
         }
     }
 
+    /// <inheritdoc/>
     public void AddContentSecurityPolicy(HttpResponse response)
     {
         try
@@ -88,7 +81,7 @@ public class JhooseSecurityService : IJhooseSecurityService
 
             foreach (var header in headerValues)
             {
-                header.NonceValue = this.cspProvider.GenerateNonce();
+                header.NonceValue = cspProvider.GenerateNonce();
 
 
                 if (response.Headers.ContainsKey(header.Name))
@@ -110,11 +103,12 @@ public class JhooseSecurityService : IJhooseSecurityService
         }
     }
 
+    /// <inheritdoc/>
     public void AddPermissionsPolicy(HttpResponse response)
     {
         try
         {
-                        // get the policy settings
+            // get the policy settings
             var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => cspProvider.Settings, new TimeSpan(1, 0, 0));
             if (!policySettings.IsPermissionsEnabled)
             {
@@ -141,5 +135,4 @@ public class JhooseSecurityService : IJhooseSecurityService
             logger.LogError(ex, "Failed to add Permissions-Policy header");
         }
     }
-
 }

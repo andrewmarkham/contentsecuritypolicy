@@ -12,9 +12,9 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Version>3.0.0.0</Version>
 		<Authors>Andrew Markham</Authors>
-		<Description>Interface to manage Content Security Policy and OWASP Recommended response headers</Description>
+		<Description>Interface to manage Content Security Policy, Permissions Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
-		<Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
+		<Tags>Jhoose;Episerver;Optimizely;Content Security Policy;Permissions Policy</Tags>
 		<ReleaseNotes>
 		    1.1.0 - Added the ability to output the recommended security headers.
 			1.1.1 - Added option to disable any of the recommended security headers.
@@ -53,7 +53,6 @@
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
-		  ../Jhoose.Security.Core/bin/Debug;
 		  https://api.nuget.org/v3/index.json;
 		  https://nuget.optimizely.com/feed/packages.svc;
 	  	</RestoreSources>
@@ -64,7 +63,7 @@
 	  	</RestoreSources>
 		<Configurations>Debug;Release;PreRelease</Configurations>
 		<ReleaseVersion>2.5.0.0</ReleaseVersion>
-
+        <NoWarn>1587, 1591</NoWarn>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net8.0|AnyCPU'">
 		<DebugType>portable</DebugType>
@@ -85,11 +84,6 @@
 		</PackageReference>
 		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
         <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" PrivateAssets="all" />
-		<ProjectReference Include="..\Jhoose.Security.Reporting\Jhoose.Security.Reporting.csproj" PrivateAssets="all" />
 	</ItemGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
 		<Exec Command="npm run publish" />

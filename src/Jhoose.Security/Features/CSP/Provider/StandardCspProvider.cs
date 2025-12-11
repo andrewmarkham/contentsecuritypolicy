@@ -10,7 +10,6 @@ using Jhoose.Security.Features.CSP.Models;
 using Jhoose.Security.Features.CSP.Repository;
 using Jhoose.Security.Features.Settings.Models;
 using Jhoose.Security.Features.Settings.Repository;
-using Jhoose.Security.Models;
 
 namespace Jhoose.Security.Features.CSP.Provider;
 
