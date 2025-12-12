@@ -72,16 +72,15 @@
 		<DebugType>embedded</DebugType>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
-		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
-		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
-		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0" />
-		<PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
+		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework" Version="[12.22.3,13)" />
+
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.11" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
+
 		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
         <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
 	</ItemGroup>
