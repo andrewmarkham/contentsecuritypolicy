@@ -9,46 +9,35 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Jhoose.Security.Features.Reporting;
-using Jhoose.Security.Features.CSP.Repository;
-using Jhoose.Security.Features.ResponseHeaders.Repository;
+
 using Jhoose.Security.Features.ResponseHeaders.Models;
 using Jhoose.Security.Features.Settings.Repository;
 using Jhoose.Security.Features.Core.Webhooks;
 using Jhoose.Security.Features.Core.Controllers;
+using Jhoose.Security.Features.Core;
 
 namespace Jhoose.Security.Features.ResponseHeaders.Controllers;
 
 /// <summary>
 /// Controller for managing response headers and related operations.
 /// </summary>
-/// <param name="policyRepository">Repository for CSP policies.</param>
 /// <param name="responseHeadersRepository">Repository for response headers.</param>
 /// <param name="settingsRepository">Repository for application settings.</param>
 /// <param name="options">Injected options for JhooseSecurity.</param>
 /// <param name="webhookNotifications">Service for sending webhook notifications.</param>
-/// <param name="dashboardService">Service for dashboard reporting.</param>
 /// <param name="logger">Logger instance for the controller.</param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
 [Authorize(Policy = Constants.Authentication.PolicyName)]
-public class ResponseHeadersController(ICspPolicyRepository policyRepository,
-                     IResponseHeadersRepository responseHeadersRepository,
+public class ResponseHeadersController(
+                     ResponseHeaderRepository responseHeadersRepository,
                      ISettingsRepository settingsRepository,
                      IOptions<JhooseSecurityOptions> options,
                      IWebhookNotifications webhookNotifications,
-                     IDashboardService dashboardService,
                      ILogger<ResponseHeadersController> logger) : NotificationBaseController(settingsRepository, webhookNotifications)
 {
-    //private static readonly JsonSerializerSettings jsonSerializerSettings = new() { ContractResolver = new CamelCasePropertyNamesContractResolver() };
     private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-
-    private readonly ICspPolicyRepository policyRepository = policyRepository;
-    private readonly IResponseHeadersRepository responseHeadersRepository = responseHeadersRepository;
-    private readonly IWebhookNotifications webhookNotifications = webhookNotifications;
-    private readonly IDashboardService dashboardService = dashboardService;
     private readonly JhooseSecurityOptions options = options.Value;
-    private readonly ILogger<ResponseHeadersController> logger = logger;
 
     [HttpGet]
     [ProducesResponseType(typeof(ResponseHeader), StatusCodes.Status200OK)]
@@ -61,16 +50,13 @@ public class ResponseHeadersController(ICspPolicyRepository policyRepository,
     {
         try
         {
-            var items = this.responseHeadersRepository.List();
+            var items = responseHeadersRepository.Load();
 
             var resp = new
             {
                 UseHeadersUI = this.options.UseHeadersUI,
                 Headers = items
             };
-
-            //string json = JsonConvert.SerializeObject(resp, jsonSerializerSettings);
-            //return Content(json, "application/json");
 
             return new JsonResult(resp, jsonSerializerOptions)
             {
@@ -96,13 +82,9 @@ public class ResponseHeadersController(ICspPolicyRepository policyRepository,
     {
         try
         {
-            var result = this.responseHeadersRepository.Update(header);
-
-            //string json = JsonConvert.SerializeObject(result, jsonSerializerSettings);
+            var result = responseHeadersRepository.Save(header);
 
             this.NotifyWebhooks();
-
-            //return Content(json, "application/json");
 
             return new JsonResult(result, jsonSerializerOptions)
             {

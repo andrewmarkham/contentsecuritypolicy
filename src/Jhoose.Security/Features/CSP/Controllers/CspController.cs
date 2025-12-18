@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
+using Jhoose.Security.Features.Core;
 using Jhoose.Security.Features.Core.Controllers;
 using Jhoose.Security.Features.Core.Webhooks;
 using Jhoose.Security.Features.CSP.Models;
-using Jhoose.Security.Features.CSP.Repository;
+
 using Jhoose.Security.Features.Settings.Repository;
 
 using Microsoft.AspNetCore.Authorization;
@@ -27,7 +28,7 @@ namespace Jhoose.Security.Features.CSP.Controllers;
 [Route("api/jhoose/[controller]")]
 [ApiController]
 [Authorize(Policy = Constants.Authentication.PolicyName)]
-public class CspController(ICspPolicyRepository policyRepository,
+public class CspController(ContentSecurityPolicyRepository policyRepository,
                       ISettingsRepository settingsRepository,
                       IWebhookNotifications webhookNotifications,
                       ILogger<CspController> logger) : NotificationBaseController(settingsRepository, webhookNotifications)
@@ -35,7 +36,7 @@ public class CspController(ICspPolicyRepository policyRepository,
     private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
     private readonly ILogger<CspController> logger = logger;
-    private readonly ICspPolicyRepository policyRepository = policyRepository;
+    private readonly ContentSecurityPolicyRepository policyRepository = policyRepository;
 
     [HttpGet]
     [ProducesResponseType(typeof(List<CspPolicy>), StatusCodes.Status200OK)]
@@ -48,7 +49,7 @@ public class CspController(ICspPolicyRepository policyRepository,
     {
         try
         {
-            return new JsonResult(policyRepository.List(), jsonSerializerOptions)
+            return new JsonResult(policyRepository.Load(), jsonSerializerOptions)
             {
                 StatusCode = StatusCodes.Status200OK,
             };
@@ -77,7 +78,7 @@ public class CspController(ICspPolicyRepository policyRepository,
         {
             this.NotifyWebhooks();
 
-            return new JsonResult(policyRepository.Update(policy), jsonSerializerOptions)
+            return new JsonResult(policyRepository.Save(policy), jsonSerializerOptions)
             {
                 StatusCode = StatusCodes.Status200OK,
             };

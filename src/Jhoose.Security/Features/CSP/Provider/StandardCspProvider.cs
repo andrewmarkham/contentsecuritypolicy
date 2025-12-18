@@ -6,8 +6,9 @@ using System.Linq;
 using EPiServer.Core;
 using EPiServer.Web;
 
+using Jhoose.Security.Features.Core;
 using Jhoose.Security.Features.CSP.Models;
-using Jhoose.Security.Features.CSP.Repository;
+
 using Jhoose.Security.Features.Settings.Models;
 using Jhoose.Security.Features.Settings.Repository;
 
@@ -17,11 +18,11 @@ public class StandardCspProvider : ICspProvider
 {
     private readonly string nonceValue;
 
-    private readonly ICspPolicyRepository policyRepository;
+    private readonly ContentSecurityPolicyRepository policyRepository;
     private readonly ISettingsRepository settingsRepository;
     private readonly ISiteDefinitionResolver siteDefinitionResolver;
 
-    public StandardCspProvider(ICspPolicyRepository policyRepository, ISettingsRepository settingsRepository, ISiteDefinitionResolver siteDefinitionResolver)
+    public StandardCspProvider(ContentSecurityPolicyRepository policyRepository, ISettingsRepository settingsRepository, ISiteDefinitionResolver siteDefinitionResolver)
     {
         this.policyRepository = policyRepository;
         this.settingsRepository = settingsRepository;
@@ -47,7 +48,7 @@ public class StandardCspProvider : ICspProvider
         var rootRef = ContentReference.IsNullOrEmpty(ContentReference.StartPage) ? ContentReference.RootPage : ContentReference.StartPage;
         var host = this.siteDefinitionResolver.GetByContent(rootRef, true).SiteUrl.ToString();
 
-        var policies = this.policyRepository.List();
+        var policies = this.policyRepository.Load().ToList();
         var settings = this.Settings;
 
         if (!(settings.Mode == "off" || settings.ReportingMode == ReportingMode.None))
@@ -90,7 +91,7 @@ public class StandardCspProvider : ICspProvider
 
     public void Initialize()
     {
-        this.policyRepository.Bootstrap();
+        //this.policyRepository.Bootstrap();
         this.settingsRepository.Bootstrap();
     }
 

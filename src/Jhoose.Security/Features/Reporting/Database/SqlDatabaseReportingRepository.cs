@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using EPiServer.Shell;
 
+using Jhoose.Security.Features.Database;
 using Jhoose.Security.Features.Reporting.Models;
 using Jhoose.Security.Features.Reporting.Models.Dashboard;
 using Jhoose.Security.Features.Reporting.Models.Search;

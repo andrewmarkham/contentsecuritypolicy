@@ -10,8 +10,6 @@ using Jhoose.Security.Configuration;
 using Jhoose.Security.Features.Core.Cache;
 using Jhoose.Security.Features.ResponseHeaders.Models;
 
-//using Microsoft.AspNetCore.Http;
-
 namespace Jhoose.Security.Features.ResponseHeaders.Repository;
 
 public class StandardResponseHeadersRepository : IResponseHeadersRepository
@@ -20,7 +18,6 @@ public class StandardResponseHeadersRepository : IResponseHeadersRepository
     protected readonly ICacheManager cache;
 
     private readonly IDatabaseMode databaseMode;
-    //private readonly IHttpContextAccessor httpContextAccessor;
 
     public StandardResponseHeadersRepository(DynamicDataStoreFactory dataStoreFactory,
         ICacheManager cache,

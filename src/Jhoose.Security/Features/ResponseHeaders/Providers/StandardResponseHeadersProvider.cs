@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 
+using Jhoose.Security.Features.Core;
 using Jhoose.Security.Features.ResponseHeaders.Models;
-using Jhoose.Security.Features.ResponseHeaders.Repository;
 
 namespace Jhoose.Security.Features.ResponseHeaders.Providers;
 
 public class StandardResponseHeadersProvider : IResponseHeadersProvider
 {
-    private readonly IResponseHeadersRepository responseHeadersRepository;
+    private readonly ResponseHeaderRepository responseHeadersRepository;
 
-    public StandardResponseHeadersProvider(IResponseHeadersRepository responseHeadersRepository
+    public StandardResponseHeadersProvider(ResponseHeaderRepository responseHeadersRepository
         )
     {
         this.responseHeadersRepository = responseHeadersRepository;
@@ -17,11 +17,11 @@ public class StandardResponseHeadersProvider : IResponseHeadersProvider
 
     public void Initialize()
     {
-        this.responseHeadersRepository.Bootstrap();
+        //this.responseHeadersRepository.Bootstrap();
     }
 
     public IEnumerable<ResponseHeader> ResponseHeaders()
     {
-        return this.responseHeadersRepository.List();
+        return this.responseHeadersRepository.Load();
     }
 }

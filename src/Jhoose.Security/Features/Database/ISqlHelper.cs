@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Data.SqlClient;
 
-namespace Jhoose.Security.Features.Reporting.Database;
+namespace Jhoose.Security.Features.Database;
 
 public interface ISqlHelper
 {
