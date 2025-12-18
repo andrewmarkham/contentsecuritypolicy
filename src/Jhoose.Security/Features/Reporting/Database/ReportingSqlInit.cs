@@ -1,93 +1,17 @@
-using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Jhoose.Security.Features.Database;
 
 namespace Jhoose.Security.Features.Reporting.Database;
 
-public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedService
+public class ReportingSqlInit
 {
-    protected const string DBVersion = "1.1.3";
-
-    private readonly ILogger<SqlInit> logger = logger;
-    private readonly ISqlHelper isqlHelper = isqlHelper;
-
-    public Task StartAsync(CancellationToken cancellationToken)
-    {
-        return Task.Run(async () =>
-        {
-            var currentDBVersion = await GetCurrentVersion();
-            if (currentDBVersion != DBVersion)
-            {
-                await CreateUpdateTable();
-                await CreateStoredProcedure();
-
-                await SetCurrentVersion(DBVersion);
-            }
-
-        }, cancellationToken);
-    }
-
-
-    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
-
-    private async Task<bool> SecurityReportingExists()
+    internal static async Task CreateUpdateTable(ISqlHelper isqlHelper)
     {
         var sqlCommand = """
-            IF (EXISTS (SELECT * 
-              FROM INFORMATION_SCHEMA.TABLES 
-             WHERE TABLE_NAME = 'SecurityReportToVersion'))
+            IF EXISTS (SELECT * FROM sysobjects WHERE name='SecurityReportToVersion' AND xtype='U')
             BEGIN
-                SELECT 1
-            END
-            ELSE
-            BEGIN
-                SELECT 0
-            END
-            """;
-
-        var result = await isqlHelper.ExecuteScalar<int>(sqlCommand);
-        return result > 0;
-    }
-    private async Task<string> GetCurrentVersion()
-    {
-        string version = string.Empty;
-
-        if (!await SecurityReportingExists())
-        {
-            return version;
-        }
-
-        var sqlCommand = "SELECT Version FROM SecurityReportToVersion";
-        await isqlHelper.ExecuteReader(sqlCommand, [], readerAction: reader =>
-        {
-            if (reader.Read())
-            {
-                version = reader.GetString(0);
-            }
-
-            return version;
-        });
-
-        return version;
-    }
-
-
-    private async Task SetCurrentVersion(string version)
-    {
-        await isqlHelper.ExecuteNonQuery("DELETE FROM SecurityReportToVersion");
-        await isqlHelper.ExecuteNonQuery($"INSERT INTO SecurityReportToVersion VALUES ('{version}')");
-    }
-
-    private async Task CreateUpdateTable()
-    {
-        var sqlCommand = """
-            IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='SecurityReportToVersion' AND xtype='U')
-            BEGIN
-                CREATE TABLE SecurityReportToVersion (
-                    Version         NVARCHAR(10)
-                )
+                DROP TABLE SecurityReportToVersion
             END
             IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='SecurityReportTo' AND xtype='U')
             BEGIN
@@ -132,7 +56,7 @@ public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedSe
         await isqlHelper.ExecuteNonQuery(sqlCommand);
     }
 
-    private async Task CreateStoredProcedure()
+    internal static async Task CreateStoredProcedure(ISqlHelper isqlHelper)
     {
         var sqlCommand = """
             CREATE OR ALTER PROCEDURE GetSecurityReportSummary(@From AS DATETIME,@To AS DATETIME, @Type AS CHAR(10), @Period AS CHAR(5)) AS 

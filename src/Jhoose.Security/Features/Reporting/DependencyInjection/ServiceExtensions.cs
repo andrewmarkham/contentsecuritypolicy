@@ -18,8 +18,6 @@ public static class SecurityExtensions
 
         services.AddHttpUserAgentParser();
 
-        services.AddHostedService<SqlInit>();
-
         services.AddSingleton<IReportingRepositoryFactory, ReportingRepositoryFactory>();
 
         // ElasticSearch
@@ -28,7 +26,6 @@ public static class SecurityExtensions
         services.ConfigureOptions<ElasticSearchReportingOptionsSetup>();
 
         // SQL
-        services.AddSingleton<ISqlHelper, SqlHelper>();
         services.AddSingleton<IReportingRepository, SqlDatabaseReportingRepository>();
 
         services.AddSingleton<IDashboardService, DashboardService>();
@@ -50,9 +47,7 @@ public static class SecurityExtensions
         var rateLimiting = jhooseOptions?.RateLimiting;
         if (rateLimiting?.Enabled ?? false)
         {
-#if NET7_0_OR_GREATER
             applicationBuilder.UseRateLimiter();
-#endif
         }
 
         return applicationBuilder;

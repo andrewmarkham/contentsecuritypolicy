@@ -15,11 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Jhoose.Security.Features.Reporting.DependencyInjection;
 using Jhoose.Security.Features.CSP.Provider;
-using Jhoose.Security.Features.CSP.Repository;
-using Jhoose.Security.Features.Permissions.Providers;
-using Jhoose.Security.Features.Permissions.Repository;
+
 using Jhoose.Security.Features.ResponseHeaders.Providers;
-using Jhoose.Security.Features.ResponseHeaders.Repository;
+
 using Jhoose.Security.Features.Settings.Repository;
 using Jhoose.Security.Features.ResponseHeaders.Binders;
 using Jhoose.Security.Features.CSP.Binders;
@@ -31,6 +29,10 @@ using Jhoose.Security.Features.Core.Services;
 using Jhoose.Security.Features.Core.Webhooks;
 using Jhoose.Security.Features.Core.Cache;
 using Jhoose.Security.Features.Api.Authorization;
+using Jhoose.Security.Features.Reporting.Database;
+using Jhoose.Security.Features.Database;
+using Jhoose.Security.Features.Core;
+using Jhoose.Security.Features.Permissions.Providers;
 
 namespace Jhoose.Security.DependencyInjection;
 
@@ -60,19 +62,24 @@ public static class SecurityExtensions
             });
         });
 
+        services.AddHostedService<JhooseSqlInit>();
+        services.AddSingleton<ISqlHelper, SqlHelper>();
 
-        services.AddScoped<ICspPolicyRepository, StandardCspPolicyRepository>();
+        services.AddScoped<ContentSecurityPolicyRepository, ContentSecurityPolicyRepository>();
         services.AddScoped<ICspProvider, StandardCspProvider>();
+
         services.AddScoped<ISettingsRepository, SettingsRepository>();
+
         services.AddSingleton<ICacheManager, EpiserverCacheManager>();
         services.AddScoped<IJhooseSecurityService, JhooseSecurityService>();
 
-        services.AddScoped<IResponseHeadersRepository, StandardResponseHeadersRepository>();
+        services.AddScoped<ResponseHeaderRepository, ResponseHeaderRepository>();
         services.AddScoped<IAuthKeyService, DefaultAuthKeyService>();
         services.AddScoped<IImportExportService, ImportExportService>();
 
 
-        services.AddScoped<IPermissionsRepository, StandardPermissionsRepository>();
+        services.AddScoped<PermissionsPolicyRepository, PermissionsPolicyRepository>();
+        //services.AddScoped<IPermissionsRepository, StandardPermissionsRepository>();
         services.AddScoped<IPermissionsProvider, StandardPermissionsProvider>();
 
         services.AddScoped<IImportRepository, JhooseImportRepository>();
@@ -80,7 +87,7 @@ public static class SecurityExtensions
         services.AddSingleton<IResponseHeadersProvider>((sp) =>
         {
             var options = sp.GetService<IOptions<JhooseSecurityOptions>>();
-            var repo = sp.GetService<IResponseHeadersRepository>();
+            var repo = sp.GetService<ResponseHeaderRepository>();
 
             if (options is null) throw new ArgumentNullException($"{nameof(options)} is null");
             if (repo is null) throw new ArgumentNullException($"{nameof(repo)} is null");

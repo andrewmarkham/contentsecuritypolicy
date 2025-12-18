@@ -72,16 +72,18 @@
 		<DebugType>embedded</DebugType>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Dapper" Version="2.1.66" />
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
 		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.22.3,13)" />
 		<PackageReference Include="EPiServer.Framework" Version="[12.22.3,13)" />
 
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.11" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
 
 		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
+
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.11" />
         <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
 	</ItemGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">

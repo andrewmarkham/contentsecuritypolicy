@@ -9,7 +9,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Jhoose.Security.Features.Reporting.Database;
+namespace Jhoose.Security.Features.Database;
 
 public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> options) : ISqlHelper
 {
