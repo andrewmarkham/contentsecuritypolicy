@@ -66,6 +66,7 @@
 		<Configurations>Debug;Release;PreRelease</Configurations>
 		<ReleaseVersion>2.5.0.0</ReleaseVersion>
 
+    <NoWarn>1902,1903</NoWarn>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net8.0|AnyCPU'">
 		<DebugType>portable</DebugType>
