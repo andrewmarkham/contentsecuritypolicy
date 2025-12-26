@@ -34,6 +34,7 @@ public class ProblemJsonFormatter : TextInputFormatter
             context.HttpContext.Request.Headers.TryGetValue("User-Agent", out var userAgent);
 
             var apiStreamReader = new ReportApiStreamReader(parser);
+            
             var reports = await apiStreamReader.ReadAsync(
                 httpContext.Request.Body,
                 userAgent.ToString() ?? string.Empty,

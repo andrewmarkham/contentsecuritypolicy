@@ -50,7 +50,7 @@ public class ProblemJsonFormatterBenchmark
         return true;
     }
 
-        [Benchmark]
+    [Benchmark]
     public async Task<bool> NativeSerializationBenchmark()
     {
         var reader = new ReportApiStreamReader(parser);

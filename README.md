@@ -288,3 +288,4 @@ X-API-Key: ...
  |2.6.0|Added ability to manage Permissions Policy<br/>Added Support for .NET10<br/>Removed support for .NET6 and .NET7<br/>Fixed some bugs (CRLF in header values, UI issues with header management)|
  |2.6.1|Fixed bug with Resource Header serialization / deserialization|
  |2.6.2|Fixed another bug with (CRLF in header values)|
+ |2.6.3|Fixed performance issues with the reporting API.|

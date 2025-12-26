@@ -142,7 +142,7 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
         long totalBytesConsumed = 0;
 
         var reader = new Utf8JsonReader(buffer, isFinalBlock: true, state: prevState);
-
+        
         while (!isComplete)
         {
             reader.Read();
@@ -156,6 +156,9 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
                         // We will parse the body based on the report type
                         int startingPosition = buffer.Slice((int)reader.BytesConsumed - 1).IndexOf((byte)'}');
                         bodyBuffer = buffer.Slice((int)reader.BytesConsumed - 1,startingPosition+1);
+
+                        if (reportType != ReportType.Firefox_CSP_Report)
+                            reader.Skip();
                     } 
                     else
                     {
@@ -263,11 +266,6 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
                 case JsonTokenType.StartObject:
                     break;
                 case JsonTokenType.PropertyName:
-                    if (reader.ValueTextEquals("csp-report"))
-                    {
-
-                    } 
-
                     currentBodyPropertyName = reader.ValueSpan switch
                         {
                             var span when span.SequenceEqual("blockedURL"u8) => CurrentBodyPropertyName.BlockedURL,
