@@ -25,8 +25,8 @@ public class RateLimitingOptionsSetup(IServiceProvider services) : IConfigureOpt
         {
             options.AddFixedWindowLimiter("fixed", o =>
             {
-                o.PermitLimit = rateLimiting?.PermitLimit ?? 100;
-                o.QueueLimit = rateLimiting?.QueueLimit ?? 100;
+                o.PermitLimit = rateLimiting?.PermitLimit ?? 10000;
+                o.QueueLimit = rateLimiting?.QueueLimit ?? 10000;
                 o.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
                 o.Window = TimeSpan.FromSeconds(rateLimiting?.WindowSeconds ?? 60);
             });

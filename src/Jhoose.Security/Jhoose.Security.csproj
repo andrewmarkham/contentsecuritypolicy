@@ -51,6 +51,7 @@
                     Fixed some bugs (CRLF in header values, UI issues with header management)
             2.6.1 - Fixed bug with Resource Header serialization / deserialization
             2.6.2 - Fixed another bug with (CRLF in header values)
+            2.6.3 - Fixed performance issues with the reporting API.
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
@@ -66,6 +67,7 @@
 		<Configurations>Debug;Release;PreRelease</Configurations>
 		<ReleaseVersion>2.5.0.0</ReleaseVersion>
 
+    <NoWarn>1902,1903</NoWarn>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net8.0|AnyCPU'">
 		<DebugType>portable</DebugType>

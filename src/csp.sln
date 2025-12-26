@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jhoose.Security.Reporting.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jhoose.Security.Core.Tests", "Tests\Jhoose.Security.Core.Tests\Jhoose.Security.Core.Tests.csproj", "{22B2A4DE-4D88-43CD-A1B8-2C788FDEFD01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceBenchMarks", "Tests\PerformanceBenchMarks\PerformanceBenchMarks.csproj", "{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,6 +130,18 @@ Global
 		{22B2A4DE-4D88-43CD-A1B8-2C788FDEFD01}.Release|x64.Build.0 = Release|Any CPU
 		{22B2A4DE-4D88-43CD-A1B8-2C788FDEFD01}.Release|x86.ActiveCfg = Release|Any CPU
 		{22B2A4DE-4D88-43CD-A1B8-2C788FDEFD01}.Release|x86.Build.0 = Release|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Debug|x64.Build.0 = Debug|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Debug|x86.Build.0 = Debug|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Release|x64.ActiveCfg = Release|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Release|x64.Build.0 = Release|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Release|x86.ActiveCfg = Release|Any CPU
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +151,7 @@ Global
 		{8DFD9636-3289-435E-8F33-E4FBEDE64A3E} = {2D7BE326-A9E7-47B0-80F5-3EC293A2B43A}
 		{CA0982DB-ED9C-43D9-BC2F-D6D297B39399} = {BDB51695-6CB4-4F7F-9823-11A610CF6013}
 		{22B2A4DE-4D88-43CD-A1B8-2C788FDEFD01} = {BDB51695-6CB4-4F7F-9823-11A610CF6013}
+		{CE4FA63D-002B-4EBE-BC15-7FAAB86C5800} = {BDB51695-6CB4-4F7F-9823-11A610CF6013}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D6AE7B6-18F7-43EA-A3FB-0A1E1C3FDD48}

@@ -12,6 +12,7 @@
 		  https://nuget.optimizely.com/feed/packages.svc;
   	</RestoreSources>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+     <NoWarn>1902,1903</NoWarn>
   </PropertyGroup>
 
 
@@ -26,6 +27,7 @@
 
   <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
     <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
+    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>

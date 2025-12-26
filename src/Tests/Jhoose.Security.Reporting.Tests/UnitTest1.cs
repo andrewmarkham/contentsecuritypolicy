@@ -11,8 +11,7 @@ public class ReportApiStreamReaderTests
     public async Task ReadAsync_SmallJson()
     {
         var json = """
-        [
-            {
+        [{
                 "age": 29160,
                 "body": {
                     "blockedURL": "https://images1.cmp.optimizely.com/Zz1iNDYxNTIxZTU0NDgxMWVmYTcyZDdlMmVhODJlZDNlNA==?width=1440",
@@ -54,8 +53,7 @@ public class ReportApiStreamReaderTests
                 "type": "deprecation",
                 "url": "https://localhost:5001/",
                 "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
-            }
-        ]
+            }]
         """;
 
         var p = new HttpUserAgentParserDefaultProvider();
@@ -63,7 +61,7 @@ public class ReportApiStreamReaderTests
         await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
         var reader = new ReportApiStreamReader(p);
 
-        var result = await reader.ReadAsync(stream, "UnitTestAgent/1.0");
+        var result = await reader.ReadAsync(stream, "UnitTestAgent/1.0").ToListAsync();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Count, Is.EqualTo(3));
@@ -73,8 +71,7 @@ public class ReportApiStreamReaderTests
     public async Task ReadAsync_LargeJson()
     {
         var json = """
-        [
-            {
+        [{
                 "age": 29165,
                 "body": {
                     "blockedURL": "https://fonts.gstatic.com/s/thasadith/v13/mtG44_1TIqPYrd_f5R1oo0MV8ia-FnZE.woff2",
@@ -1779,8 +1776,7 @@ public class ReportApiStreamReaderTests
                 "type": "deprecation",
                 "url": "https://localhost:5001/",
                 "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
-            }
-        ]
+            }]
         """;
 
         var p = new HttpUserAgentParserDefaultProvider();
@@ -1788,7 +1784,7 @@ public class ReportApiStreamReaderTests
         await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
         var reader = new ReportApiStreamReader(p);
 
-        var result = await reader.ReadAsync(stream, "UnitTestAgent/1.0");
+        var result = await reader.ReadAsync(stream, "UnitTestAgent/1.0").ToListAsync();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Count, Is.EqualTo(101));
@@ -1817,7 +1813,7 @@ public class ReportApiStreamReaderTests
         await using var stream = new MemoryStream(Encoding.UTF8.GetBytes(json));
         var reader = new ReportApiStreamReader(p);
 
-        var result = await reader.ReadAsync(stream, "UnitTestAgent/1.0");
+        var result = await reader.ReadAsync(stream, "UnitTestAgent/1.0").ToListAsync();
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Count, Is.EqualTo(1));

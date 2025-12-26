@@ -71,3 +71,9 @@ src/Tests/Jhoose.Security.Reporting.Tests/obj/Debug/net8.0/Jhoose.Security.Repor
 src/Tests/Jhoose.Security.Reporting.Tests/obj/Debug/net8.0/Jhoose.Security.Reporting.Tests.csproj.AssemblyReference.cache
 
 src/Tests/Jhoose.Security.Reporting.Tests/obj/
+
+src/Tests/PerformanceBenchMarks/BenchmarkDotNet.Artifacts/
+
+src/Tests/PerformanceBenchMarks/bin/
+
+src/Tests/PerformanceBenchMarks/obj/
