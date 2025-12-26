@@ -20,17 +20,14 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-    <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="2.0.3" />
-  </ItemGroup>
 
-
-  <ItemGroup Condition="'$(TargetFramework)' != 'net6.0'">
-    <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
+  <ItemGroup Condition="'$(TargetFramework)' != 'net10.0'">
+    
     <PackageReference Include="System.Linq.Async" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+  <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
 		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
