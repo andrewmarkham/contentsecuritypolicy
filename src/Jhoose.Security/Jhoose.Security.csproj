@@ -50,6 +50,8 @@
                     Removed support for .NET6 and .NET7
                     Fixed some bugs (CRLF in header values, UI issues with header management)
             2.6.1 - Fixed bug with Resource Header serialization / deserialization
+            2.6.2 - Fixed another bug with (CRLF in header values)
+            2.6.3 - Fixed performance issues with the reporting API.
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
@@ -71,6 +73,11 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
 		<DebugType>embedded</DebugType>
 	</PropertyGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' != 'net10.0'">
+    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+    </ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="Dapper" Version="2.1.66" />
 		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
