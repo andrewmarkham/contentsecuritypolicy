@@ -14,6 +14,7 @@ using Jhoose.Security.Features.Reporting.Models.Dashboard;
 using Jhoose.Security.Features.Reporting.Models.Search;
 
 using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient.Server;
 using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.Reporting.Database;
@@ -45,29 +46,39 @@ public class SqlDatabaseReportingRepository : IReportingRepository
 
         await sqlHelper.ExecuteNonQuery(
             sqlCommand,
-            sqlHelper.CreateParameter<int>("Age", DbType.Int32, reportTo.Age),
-            sqlHelper.CreateParameter<DateTime>("RecievedAt", DbType.DateTime, reportTo.RecievedAt),
-            sqlHelper.CreateParameter<DateTime>("RecievedAtMin", DbType.DateTime, recievedAtMin),
-            sqlHelper.CreateParameter<DateTime>("RecievedAtHour", DbType.DateTime, recievedAtHour),
-            sqlHelper.CreateParameter<string>("Type", DbType.String, reportTo.Type),
-            sqlHelper.CreateParameter<string>("Url", DbType.String, reportTo.Url),
-            sqlHelper.CreateParameter<string>("UserAgent", DbType.String, reportTo.UserAgent),
-            sqlHelper.CreateParameter<string>("Browser", DbType.String, reportTo.Browser),
-            sqlHelper.CreateParameter<string>("Version", DbType.String, reportTo.Version),
-            sqlHelper.CreateParameter<string>("OS", DbType.String, reportTo.OS),
-            sqlHelper.CreateParameter<string>("Directive", DbType.String, reportTo.Directive),
-            sqlHelper.CreateParameter<string>("BlockedUri", DbType.String, reportTo.Message ?? string.Empty),
-            sqlHelper.CreateParameter<string>("Body", DbType.String, JsonSerializer.Serialize(reportTo.Body)));
+            sqlHelper.CreateParameter<int>("Age", SqlDbType.Int, reportTo.Age),
+            sqlHelper.CreateParameter<DateTime>("RecievedAt", SqlDbType.DateTime, reportTo.RecievedAt),
+            sqlHelper.CreateParameter<DateTime>("RecievedAtMin", SqlDbType.DateTime, recievedAtMin),
+            sqlHelper.CreateParameter<DateTime>("RecievedAtHour", SqlDbType.DateTime, recievedAtHour),
+            sqlHelper.CreateParameter<string>("Type", SqlDbType.NVarChar, reportTo.Type),
+            sqlHelper.CreateParameter<string>("Url", SqlDbType.NVarChar, reportTo.Url),
+            sqlHelper.CreateParameter<string>("UserAgent", SqlDbType.NVarChar, reportTo.UserAgent),
+            sqlHelper.CreateParameter<string>("Browser", SqlDbType.NVarChar, reportTo.Browser),
+            sqlHelper.CreateParameter<string>("Version", SqlDbType.NVarChar, reportTo.Version),
+            sqlHelper.CreateParameter<string>("OS", SqlDbType.NVarChar, reportTo.OS),
+            sqlHelper.CreateParameter<string>("Directive", SqlDbType.NVarChar, reportTo.Directive),
+            sqlHelper.CreateParameter<string>("BlockedUri", SqlDbType.NVarChar, reportTo.Message ?? string.Empty),
+            sqlHelper.CreateParameter<string>("Body", SqlDbType.NVarChar, JsonSerializer.Serialize(reportTo.Body)));
+    }
+
+    public async Task AddReports(IEnumerable<ReportTo<IReportToBody>> reportTos)
+    {
+        await sqlHelper.ExecuteStoredProcedure<IEnumerable<SqlDataRecord>>(
+            "InsertSecurityReportTo",
+            new List<SqlParameter>
+            {
+                sqlHelper.CreateParameter("ReportTos", SqlDbType.Structured, CreateReportToRecords(reportTos))
+            });
     }
 
     public async Task<DashboardSummary> GetDashboardSummary(DashboardSummary summary)
     {
         var parameters = new List<SqlParameter>
         {
-            sqlHelper.CreateParameter("@From", DbType.DateTime, summary.Query.From),
-            sqlHelper.CreateParameter("@To", DbType.DateTime, summary.Query.To),
-            sqlHelper.CreateParameter("@Type", DbType.String, summary.Query.Type.ToLower()),
-            sqlHelper.CreateParameter("@Period", DbType.String, "min")
+            sqlHelper.CreateParameter("@From", SqlDbType.DateTime, summary.Query.From),
+            sqlHelper.CreateParameter("@To", SqlDbType.DateTime, summary.Query.To),
+            sqlHelper.CreateParameter("@Type", SqlDbType.NVarChar, summary.Query.Type.ToLower()),
+            sqlHelper.CreateParameter("@Period", SqlDbType.NVarChar, "min")
         };
 
         await sqlHelper.ExecuteStoredProcedure("GetSecurityReportSummary", parameters, (reader) =>
@@ -84,7 +95,7 @@ public class SqlDatabaseReportingRepository : IReportingRepository
 
         return await sqlHelper.ExecuteNonQuery(
             sqlCommand,
-            sqlHelper.CreateParameter<DateTime>("BeforeDate", DbType.DateTime, beforeDate));
+            sqlHelper.CreateParameter<DateTime>("BeforeDate", SqlDbType.DateTime, beforeDate));
 
     }
 
@@ -95,15 +106,15 @@ public class SqlDatabaseReportingRepository : IReportingRepository
         var sqlCommand = "SecurityReportSearch";
         var parameters = new List<SqlParameter>
         {
-            sqlHelper.CreateParameter<int>("@PageSize", DbType.Int32, searchParams.PageSize),
-            sqlHelper.CreateParameter<int>("@RecordFrom", DbType.Int32, from),
-            sqlHelper.CreateParameter<DateTime>("@DateFrom", DbType.DateTime, searchParams.Filters?.DateFrom ?? DateTime.UtcNow.AddYears(-1)),
-            sqlHelper.CreateParameter<string>("@Query", DbType.String, searchParams?.Filters?.Query ?? string.Empty),
-            sqlHelper.CreateParameter<string>("@Directive", DbType.String, string.Join(',',searchParams?.Filters?.Directive ?? []) ),
-            sqlHelper.CreateParameter<string>("@Browser", DbType.String, string.Join(',',searchParams?.Filters?.Browser ?? [])),
-            sqlHelper.CreateParameter<string>("@Type", DbType.String, string.Join(',',searchParams?.Filters?.Type ?? [])),
-            sqlHelper.CreateParameter<string>("@SortOrder", DbType.String, searchParams?.SortOrder == "ascend" ? "A" : "D"),
-            sqlHelper.CreateParameter<int>("@MaxRows", DbType.Int32, 100000)
+            sqlHelper.CreateParameter<int>("@PageSize", SqlDbType.Int, searchParams.PageSize),
+            sqlHelper.CreateParameter<int>("@RecordFrom", SqlDbType.Int, from),
+            sqlHelper.CreateParameter<DateTime>("@DateFrom", SqlDbType.DateTime, searchParams.Filters?.DateFrom ?? DateTime.UtcNow.AddYears(-1)),
+            sqlHelper.CreateParameter<string>("@Query", SqlDbType.NVarChar, searchParams?.Filters?.Query ?? string.Empty),
+            sqlHelper.CreateParameter<string>("@Directive", SqlDbType.NVarChar, string.Join(',',searchParams?.Filters?.Directive ?? []) ),
+            sqlHelper.CreateParameter<string>("@Browser", SqlDbType.NVarChar, string.Join(',',searchParams?.Filters?.Browser ?? [])),
+            sqlHelper.CreateParameter<string>("@Type", SqlDbType.NVarChar, string.Join(',',searchParams?.Filters?.Type ?? [])),
+            sqlHelper.CreateParameter<string>("@SortOrder", SqlDbType.NVarChar, searchParams?.SortOrder == "ascend" ? "A" : "D"),
+            sqlHelper.CreateParameter<int>("@MaxRows", SqlDbType.Int, 100000)
         };
         var searchResults = new CspSearchResults();
 
@@ -115,6 +126,51 @@ public class SqlDatabaseReportingRepository : IReportingRepository
         return searchResults;
     }
 
+private static IEnumerable<SqlDataRecord> CreateReportToRecords(
+    IEnumerable<ReportTo<IReportToBody>> reportTos)
+{
+    var metaData = new[]
+    {
+        new SqlMetaData("Age", SqlDbType.Int),
+        new SqlMetaData("RecievedAt", SqlDbType.DateTime),
+        new SqlMetaData("RecievedAtMin", SqlDbType.DateTime),
+        new SqlMetaData("RecievedAtHour", SqlDbType.DateTime),
+        new SqlMetaData("Type", SqlDbType.NVarChar, 200),
+        new SqlMetaData("Url", SqlDbType.NVarChar, 2000),
+        new SqlMetaData("UserAgent", SqlDbType.NVarChar, 1000),
+        new SqlMetaData("Browser", SqlDbType.NVarChar, 200),
+        new SqlMetaData("Version", SqlDbType.NVarChar, 100),
+        new SqlMetaData("OS", SqlDbType.NVarChar, 200),
+        new SqlMetaData("Directive", SqlDbType.NVarChar, 500),
+        new SqlMetaData("BlockedUri", SqlDbType.NVarChar, 2000),
+        new SqlMetaData("Body", SqlDbType.NVarChar, -1)
+    };
+
+    var record = new SqlDataRecord(metaData);
+
+    foreach (var c in reportTos)
+    {
+
+        DateTime recievedAtMin = c.RecievedAt.AddSeconds(-c.RecievedAt.Second).AddMilliseconds(-c.RecievedAt.Millisecond);
+        DateTime recievedAtHour = recievedAtMin.AddMinutes(-c.RecievedAt.Minute);
+
+        record.SetInt32(0, c.Age);
+        record.SetDateTime(1, c.RecievedAt);
+        record.SetDateTime(2, recievedAtMin);
+        record.SetDateTime(3, recievedAtHour);
+        record.SetString(4, c.Type);
+        record.SetString(5, c.Url);
+        record.SetString(6, c.UserAgent);
+        record.SetString(7, c.Browser);
+        record.SetString(8, c.Version);
+        record.SetString(9, c.OS);
+        record.SetString(10, c.Directive);
+        record.SetString(11, c.Message ?? string.Empty);
+        record.SetString(12, JsonSerializer.Serialize(c.Body));
+
+        yield return record;
+    }
+}
     private static DashboardSummary PopulateDashboardSummary(SqlDataReader reader, DashboardSummary summary)
     {
 

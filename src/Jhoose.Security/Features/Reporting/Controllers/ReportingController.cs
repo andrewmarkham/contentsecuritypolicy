@@ -28,9 +28,7 @@ public class ReportingController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] List<ReportTo<IReportToBody>> reportTos)
     {
-        foreach (var reportTo in reportTos)
-            await reportingRepository.AddReport(reportTo);
-
+        await reportingRepository.AddReports(reportTos);
         return Ok();
     }
 

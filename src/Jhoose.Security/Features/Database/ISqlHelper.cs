@@ -21,6 +21,5 @@ public interface ISqlHelper
 
     Task<T?> ExecuteScalar<T>(string sqlCommand, params SqlParameter[] parameters);
 
-    SqlParameter CreateParameter<T>(string parameterName, DbType dbType, T value);
-    //public SqlParameter CreateParameter(string parameterName, DbType dbType, int size);
+    SqlParameter CreateParameter<T>(string parameterName, SqlDbType dbType, T value);
 }

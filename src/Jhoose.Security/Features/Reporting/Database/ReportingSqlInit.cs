@@ -54,6 +54,31 @@ public class ReportingSqlInit
         """;
 
         await isqlHelper.ExecuteNonQuery(sqlCommand);
+
+        sqlCommand = """
+            IF NOT EXISTS (SELECT * FROM systypes WHERE name='SecurityReportToTvp')
+            BEGIN
+                CREATE TYPE SecurityReportToTvp AS TABLE 
+                (
+                    Age             INT,
+                    RecievedAt      DATETIME,
+                    RecievedAtMin   DATETIME,
+                    RecievedAtHour  DATETIME,
+                    Type            NVARCHAR(30),
+                    Url             NVARCHAR(512),
+                    UserAgent       NVARCHAR(512),
+                    
+                    Browser         NVARCHAR(20),
+                    Version         NVARCHAR(20),
+                    OS              NVARCHAR(20),
+                    Directive       NVARCHAR(20),
+                    BlockedUri      NVARCHAR(1024),
+                    Body            NVARCHAR(max)
+                )
+            END
+        """;
+
+        await isqlHelper.ExecuteNonQuery(sqlCommand);
     }
 
     internal static async Task CreateStoredProcedure(ISqlHelper isqlHelper)
@@ -202,6 +227,21 @@ public class ReportingSqlInit
                     COUNT(*) AS Total 
                 FROM #TempSearchData
 
+            END
+            """;
+        await isqlHelper.ExecuteNonQuery(sqlCommand);
+
+        await isqlHelper.ExecuteNonQuery(sqlCommand);
+
+                sqlCommand = """
+            CREATE OR ALTER PROCEDURE InsertSecurityReportTo
+                @ReportTos SecurityReportToTvp READONLY
+            AS
+            BEGIN
+                SET NOCOUNT ON;
+                INSERT INTO SecurityReportTo (Age, RecievedAt, RecievedAtMin, RecievedAtHour, Type, Url, UserAgent, Browser, Version, OS, Directive, BlockedUri, Body)
+                SELECT Age, RecievedAt, RecievedAtMin, RecievedAtHour, Type, Url, UserAgent, Browser, Version, OS, Directive, BlockedUri, Body
+                FROM @ReportTos;
             END
             """;
         await isqlHelper.ExecuteNonQuery(sqlCommand);

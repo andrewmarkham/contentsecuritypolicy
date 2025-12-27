@@ -12,29 +12,75 @@ public interface IReportToBody
     string? Message { get; }
 }
 
-public record CspReportToBody([property: JsonPropertyName("documentURL")] string? DocumentURL, 
-[property: JsonPropertyName("disposition")] string? Disposition, 
-[property: JsonPropertyName("referrer")] string? Referrer, 
-[property: JsonPropertyName("effectiveDirective")] string? EffectiveDirective, 
-[property: JsonPropertyName("blockedURL")] string? BlockedURL, 
-[property: JsonPropertyName("originalPolicy")] string? OriginalPolicy, 
-[property: JsonPropertyName("statusCode")] int? StatusCode, 
-[property: JsonPropertyName("sample")] string? Sample) : IReportToBody
-//[property: JsonPropertyName("message")] string? Message, 
-//[property: JsonPropertyName("policyId")] string? PolicyId)
+
+public sealed class CspReportToBody : IReportToBody
 {
+    [JsonConstructor]
+    public CspReportToBody(string? documentURL, string? disposition, string? referrer,
+        string? effectiveDirective, string? blockedURL, string? originalPolicy,
+        int? statusCode, string? sample)
+        => (DocumentURL, Disposition, Referrer, EffectiveDirective, BlockedURL, OriginalPolicy, StatusCode, Sample)
+         = (documentURL, disposition, referrer, effectiveDirective, blockedURL, originalPolicy, statusCode, sample);
+
+    [JsonPropertyName("documentURL")] public string? DocumentURL { get; }
+    [JsonPropertyName("disposition")] public string? Disposition { get; }
+    [JsonPropertyName("referrer")] public string? Referrer { get; }
+    [JsonPropertyName("effectiveDirective")] public string? EffectiveDirective { get; }
+    [JsonPropertyName("blockedURL")] public string? BlockedURL { get; }
+    [JsonPropertyName("originalPolicy")] public string? OriginalPolicy { get; }
+    [JsonPropertyName("statusCode")] public int? StatusCode { get; }
+    [JsonPropertyName("sample")] public string? Sample { get; }
+
     public string? Directive => EffectiveDirective;
     public string? Message => BlockedURL;
 }
 
-public record PermissionsReportToBody([property: JsonPropertyName("disposition")] string? Disposition, [property: JsonPropertyName("policyId")] string? PolicyId, [property: JsonPropertyName("message")] string? Message, [property: JsonPropertyName("sourceFile")] string? SourceFile, [property: JsonPropertyName("lineNumber")] int? LineNumber, [property: JsonPropertyName("columnNumber")] int? ColumnNumber) : IReportToBody
+public sealed class PermissionsReportToBody : IReportToBody
 {
+    [JsonConstructor]
+    public PermissionsReportToBody(
+        string? disposition,
+        string? policyId,
+        string? message,
+        string? sourceFile,
+        int? lineNumber,
+        int? columnNumber)
+        => (Disposition, PolicyId, Message, SourceFile, LineNumber, ColumnNumber)
+         = (disposition, policyId, message, sourceFile, lineNumber, columnNumber);
+
+    [JsonPropertyName("disposition")] public string? Disposition { get; }
+    [JsonPropertyName("policyId")] public string? PolicyId { get; }
+    [JsonPropertyName("message")] public string? Message { get; }
+    [JsonPropertyName("sourceFile")] public string? SourceFile { get; }
+    [JsonPropertyName("lineNumber")] public int? LineNumber { get; }
+    [JsonPropertyName("columnNumber")] public int? ColumnNumber { get; }
+
     public string? Directive => PolicyId;
-    //public string? Message => Message;
+
+    // Satisfy IReportToBody (your interface requires it)
+    string? IReportToBody.Message => Message;
 }
 
-public record DeprecationReportToBody([property: JsonPropertyName("id")] string? Id, [property: JsonPropertyName("lineNumber")] int? LineNumber, [property: JsonPropertyName("columnNumber")] int? ColumnNumber, [property: JsonPropertyName("message")] string? Message, [property: JsonPropertyName("sourceFile")] string? SourceFile) : IReportToBody
+public sealed class DeprecationReportToBody : IReportToBody
 {
+    [JsonConstructor]
+    public DeprecationReportToBody(
+        string? id,
+        int? lineNumber,
+        int? columnNumber,
+        string? message,
+        string? sourceFile)
+        => (Id, LineNumber, ColumnNumber, Message, SourceFile)
+         = (id, lineNumber, columnNumber, message, sourceFile);
+
+    [JsonPropertyName("id")] public string? Id { get; }
+    [JsonPropertyName("lineNumber")] public int? LineNumber { get; }
+    [JsonPropertyName("columnNumber")] public int? ColumnNumber { get; }
+    [JsonPropertyName("message")] public string? Message { get; }
+    [JsonPropertyName("sourceFile")] public string? SourceFile { get; }
+
     public string? Directive => Id;
-    //public string? Message => Message;
-};
+
+    // satisfy interface
+    string? IReportToBody.Message => Message;
+}

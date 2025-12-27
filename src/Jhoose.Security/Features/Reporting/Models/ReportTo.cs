@@ -3,50 +3,25 @@ using System.Text.Json.Serialization;
 
 namespace Jhoose.Security.Features.Reporting.Models;
 
-public record ReportTo<T> where T : IReportToBody
+public sealed class ReportTo<T> where T : IReportToBody
 {
     [JsonConstructor]
-    public ReportTo(
-        int age,
-        string type,
-        string url,
-        string userAgent,
-        T body,
-        DateTime recievedAt
-    )
-    {
-        Age = age;
-        RecievedAt = recievedAt;
-        Type = type;
-        Url = url;
-        UserAgent = userAgent;
-        Body = body;
-        Browser = string.Empty;
-        Version = string.Empty;
-        OS = string.Empty;
-    }
+    public ReportTo(int age, string type, string url, string userAgent, T? body, DateTime recievedAt)
+        => (Age, Type, Url, UserAgent, Body, RecievedAt) = (age, type, url, userAgent, body, recievedAt);
 
-    [JsonPropertyName("age")]
-    public int Age { get; }
+    [JsonPropertyName("age")] public int Age { get; }
+    [JsonPropertyName("type")] public string Type { get; }
+    [JsonPropertyName("url")] public string Url { get; }
+    [JsonPropertyName("user_agent")] public string UserAgent { get; }
+    [JsonPropertyName("body")] public T? Body { get; }
+    public DateTime RecievedAt { get; }
 
-    public DateTime RecievedAt { get; set; }
+    // Optional enrichment: only set when you have real values
+    public string? Browser { get; set; }
+    public string? Version { get; set; }
+    public string? OS { get; set; }
 
-    [JsonPropertyName("type")]
-    public string Type { get; }
-
-    [JsonPropertyName("url")]
-    public string Url { get; }
-
-    [JsonPropertyName("user_agent")]
-    public string UserAgent { get; set; }
-    public string Browser { get; set; }
-    public string Version { get; set; }
-    public string OS { get; set; }
-
-    public string Directive => Body.Directive ?? string.Empty;
-
-    public string? Message => Body.Message;
-
-    [JsonPropertyName("body")]
-    public T Body { get; }
+    // Avoid forcing empty strings; let null mean “missing”
+    public string? Directive => Body?.Directive;
+    public string? Message => Body?.Message;
 }

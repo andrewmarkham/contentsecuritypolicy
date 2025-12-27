@@ -286,3 +286,6 @@ X-API-Key: ...
  |2.4.2| Ensure CSP policy header syntax is valid when using 'None' Option for any policy |
  |2.5.0|Added Import / Export functionality<br/>Added support for .NET9<br/>Fixed minor UI bugs |
  |2.6.0|Added ability to manage Permissions Policy<br/>Added Support for .NET10<br/>Removed support for .NET6 and .NET7<br/>Fixed some bugs (CRLF in header values, UI issues with header management)|
+ |2.6.1|Fixed bug with Resource Header serialization / deserialization|
+ |2.6.2|Fixed another bug with (CRLF in header values)|
+ |2.6.3|Fixed performance issues with the reporting API.|

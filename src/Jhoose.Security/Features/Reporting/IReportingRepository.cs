@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Jhoose.Security.Features.Reporting.Models;
@@ -13,6 +14,8 @@ public interface IReportingRepository
 
     Task AddReport(ReportTo<IReportToBody> reportTo);
 
+    Task AddReports(IEnumerable<ReportTo<IReportToBody>> reportTo);
+    
     Task<DashboardSummary> GetDashboardSummary(DashboardSummary summary);
 
     Task<int> PurgeReporingData(DateTime beforeDate);

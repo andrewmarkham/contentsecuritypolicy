@@ -54,6 +54,14 @@ public class ElasticSearchReportingRepository : IReportingRepository
                                 i => i.Index(IndexName));
     }
 
+    public async Task AddReports(IEnumerable<ReportTo<IReportToBody>> reportTos)
+    {
+        await CreateIndexIsNeeded();
+
+        var bulkResponse = await client.Value.BulkAsync(b => b
+            .Index(options.Value.IndexName)
+            .IndexMany(reportTos));
+    }
     public async Task<DashboardSummary> GetDashboardSummary(DashboardSummary summary)
     {
         await CreateIndexIsNeeded();

@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,7 +22,7 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
         try
         {
             using var connection = new SqlConnection(options.ConnectionString);
-            connection.Open();
+            await connection.OpenAsync();
             using var command = new SqlCommand(sqlCommand, connection);
 
             command.Parameters.AddRange(parameters);
@@ -39,7 +40,7 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
         try
         {
             using var connection = new SqlConnection(options.ConnectionString);
-            connection.Open();
+            await connection.OpenAsync();
             using var command = new SqlCommand(sqlCommand, connection);
 
             command.Parameters.AddRange(parameters);
@@ -60,7 +61,7 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
         try
         {
             using var connection = new SqlConnection(options.ConnectionString);
-            connection.Open();
+            await connection.OpenAsync();
             using var command = new SqlCommand(sqlCommand, connection);
 
             foreach (var parameter in parameters ?? [])
@@ -68,12 +69,10 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
                 command.Parameters.Add(parameter);
             }
 
-            var reader = await command.ExecuteReaderAsync();
+            await using var reader = await command.ExecuteReaderAsync(CommandBehavior.CloseConnection);
 
             if (readerAction is not null)
                 results = readerAction(reader);
-
-            reader.Close();
 
             return results ?? default;
 
@@ -100,7 +99,7 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
         {
             using var connection = new SqlConnection(options.ConnectionString);
 
-            var command = new SqlCommand(storedProcedureName, connection)
+            using var command = new SqlCommand(storedProcedureName, connection)
             {
                 CommandType = CommandType.StoredProcedure
 
@@ -113,13 +112,12 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
 
             command.Parameters.Add("@returnValue", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
 
-            command.Connection.Open();
-            var reader = await command.ExecuteReaderAsync();
+            await command.Connection.OpenAsync();
+            await using var reader = await command.ExecuteReaderAsync(CommandBehavior.CloseConnection);
 
             if (readerAction is not null)
                 readerAction(reader);
 
-            reader.Close();
             value = (int)command.Parameters["@returnValue"].Value;
         }
         catch (Exception ex)
@@ -130,12 +128,12 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
         return value;
     }
 
-    public SqlParameter CreateParameter<T>(string parameterName, DbType dbType, T value)
+    public SqlParameter CreateParameter<T>(string parameterName, SqlDbType dbType, T value)
     {
         var parameter = new SqlParameter
         {
             ParameterName = parameterName,
-            DbType = dbType,
+            SqlDbType = dbType,
             Direction = ParameterDirection.Input,
             Value = value
         };
