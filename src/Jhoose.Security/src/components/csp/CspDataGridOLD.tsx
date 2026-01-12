@@ -9,20 +9,14 @@ import { Cell } from "../DataTable/Cell";
 import { Header } from "../DataTable/Header";
 import { AppContext } from '../../context';
 import { Toaster } from '../toaster';
-import { ContentSecurityPolicyData } from './Data/ContentSecurityPolicies';
-import { Row } from '../DataTable/Row';
 
-export function CspDataGrid() {
+export function CspDataGridOLD() {
 
-    //const { state, dispatch } = useContext(AppContext);
-
-    const [ isLoading, setIsLoading ] = React.useState(false);
-
-    const [ isSaving, setIsSaving ] = React.useState(false);
+    const { state, dispatch } = useContext(AppContext);
 
     useEffect(() =>{
         console.log("dispatch called")
-        //dispatch({state: state.csp, actionType: "load", dispatcher: dispatch })
+        dispatch({state: state.csp, actionType: "load", dispatcher: dispatch })
     }, []);
 
     function save(){
@@ -30,7 +24,7 @@ export function CspDataGrid() {
     }
     return(
         <>
-        <Toaster show={isLoading || isSaving} message={isLoading ? "Loading..." : "Saving..."} />
+        <Toaster show={state.csp.loading || state.csp.saving} message={state.csp.loading ? "Loading..." : "Saving..."} />
 
         <Table /*disabled={props.disabled}*/ >
             <Header>
@@ -41,16 +35,10 @@ export function CspDataGrid() {
                 <Cell width="100px">&nbsp;</Cell>
             </Header>
                 <>
-                {ContentSecurityPolicyData.map(r => {
-                    return (
-                        <Row>
-                            <Cell width="150px">{r.policyName}</Cell>
-                            <Cell>Options</Cell>
-                            <Cell>Schema</Cell>
-                            <Cell>Value</Cell>
-                            <Cell width="100px">&nbsp;</Cell>
-                        </Row>
-                    )
+                {state.csp.data?.map(r => {
+                    return (r.policyName !== "sandbox"  ?
+                        <CspDataRow key={r.id} row={r as CspPolicy} save={save}/> :
+                        <CspSandboxDataRow key={r.id} row={r as CspSandboxPolicy} save={save} /> )
                 })}
                 </>
         </Table>

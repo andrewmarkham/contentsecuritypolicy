@@ -1,14 +1,119 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+import { ContentSecurityPolicy } from "../types/types";
 
-using Jhoose.Security.Features.CSP.Models;
 
-namespace Jhoose.Security.Features.CSP.Repository;
+export const ContentSecurityPolicyData: ContentSecurityPolicy[] = [
+    {
+        policyName: "default-src",
+        order: 1,
+        level: 1,
+        summaryText: "The default-src directive defines the default policy for fetching resources such as JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media. Not all directives fallback to default-src."
+    },
+    {
+        policyName: "script-src",
+        order: 2,
+        level: 1,
+        summaryText: "Defines valid sources of JavaScript."
+    },
+    {
+        policyName: "style-src",
+        order: 3,
+        level: 1,
+        summaryText: "Defines valid sources of stylesheets or CSS."
+    },
+    {
+        policyName: "img-src",
+        order: 4,
+        level: 1,
+        summaryText: "Defines valid sources of images."
+    },
+    {
+        policyName: "connect-src",
+        order: 5,
+        level: 1,
+        summaryText: "Applies to XMLHttpRequest (AJAX), WebSocket, fetch(), <a ping> or EventSource. If not allowed the browser emulates a 400 HTTP status code."
+    },
+    {
+        policyName: "font-src",
+        order: 6,
+        level: 1,
+        summaryText: "Defines valid sources of font resources (loaded via @font-face)."
+    },
+    {
+        policyName: "object-src",
+        order: 7,
+        level: 1,
+        summaryText: "Defines valid sources of plugins, eg &lt;object&gt;, &lt;embed&gt; or &lt;applet&gt;."
+    },
+    {
+        policyName: "media-src",
+        order: 8,
+        level: 1,
+        summaryText: "Defines valid sources of audio and video, eg HTML5 &lt;audio&gt;, &lt;video&gt; elements."
+    },
+    {
+        policyName: "frame-src",
+        order: 9,
+        level: 1,
+        summaryText: "Defines valid sources for loading frames. In CSP Level 2 frame-src was deprecated in favor of the child-src directive. CSP Level 3, has undeprecated frame-src and it will continue to defer to child-src if not present."
+    },
+    {
+        policyName: "sandbox",
+        order: 10,
+        level: 1,
+        summaryText: "Enables a sandbox for the requested resource similar to the iframe sandbox attribute. The sandbox applies a same origin policy, prevents popups, plugins and script execution is blocked. You can keep the sandbox value empty to keep all restrictions in place, or add values: allow-forms allow-same-origin allow-scripts allow-popups, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-presentation, allow-popups-to-escape-sandbox, and allow-top-navigation"
+    },
+    {
+        policyName: "child-src",
+        order: 11,
+        level: 2,
+        summaryText: "Defines valid sources for web workers and nested browsing contexts loaded using elements such as &lt;frame&gt; and &lt;iframe&gt;"
+    },
+    {
+        policyName: "form-action",
+        order: 12,
+        level: 2,
+        summaryText: "Defines valid sources that can be used as an HTML &lt;form&gt; action."
+    },
+    {
+        policyName: "frame-ancestors",
+        order: 13,
+        level: 2,
+        summaryText: "Defines valid sources for embedding the resource using &lt;frame&gt; &lt;iframe&gt; &lt;object&gt; &lt;embed&gt; &lt;applet&gt;. Setting this directive to 'none' should be roughly equivalent to X-Frame-Options: DENY"
+    },
+    {
+        policyName: "base-uri",
+        order: 15,
+        level: 2,
+        summaryText: "Defines a set of allowed URLs which can be used in the src attribute of a HTML base tag."
+    },
+    {
+        policyName: "worker-src",   
+        order: 16,
+        level: 3,
+        summaryText: "Restricts the URLs which may be loaded as a Worker, SharedWorker or ServiceWorker."
+    },
+    {
+        policyName: "manifest-src",
+        order: 17,
+        level: 3,
+        summaryText: "Restricts the URLs that application manifests can be loaded."
+    },
+    {
+        policyName: "prefetch-src",
+        order: 18,
+        level: 3,
+        summaryText: "Defines valid sources for request prefetch and prerendering, for example via the link tag with rel='prefetch' or rel='prerender'"
+    },
+    {
+        policyName: "navigate-to",
+        order: 19,
+        level: 3,
+        summaryText: "Restricts the URLs that the document may navigate to by any means. For example when a link is clicked, a form is submitted, or window.location is invoked. If form-action is present then this directive is ignored for form submissions."
+    }
+]
 
-[Obsolete(error:true, message:"Use BaseCspPolicyRepository instead")]
-public abstract class BaseCspPolicyRepository : ICspPolicyRepository
-{
+
+/**
     private readonly List<CspPolicy> defaultPolicies = new List<CspPolicy> {
         new CspPolicy { PolicyName = "default-src",     Order=1, Level = CspPolicyLevel.Level1,  SummaryText="<p>The default-src directive defines the default policy for fetching resources such as JavaScript, Images, CSS, Fonts, AJAX requests, Frames, HTML5 Media. Not all directives fallback to default-src.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
         new CspPolicy { PolicyName = "script-src",      Order=2, Level = CspPolicyLevel.Level1, SummaryText="<p>Defines valid sources of JavaScript.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
@@ -38,19 +143,4 @@ public abstract class BaseCspPolicyRepository : ICspPolicyRepository
         new CspPolicy { PolicyName = "prefetch-src",    Order=18, Level = CspPolicyLevel.Level3, SummaryText="<p>Defines valid sources for request prefetch and prerendering, for example via the link tag with rel='prefetch' or rel='prerender'</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() },
         new CspPolicy { PolicyName = "navigate-to",     Order=19, Level = CspPolicyLevel.Level3, SummaryText="<p>Restricts the URLs that the document may navigate to by any means. For example when a link is clicked, a form is submitted, or window.location is invoked. If form-action is present then this directive is ignored for form submissions.</p>", SchemaSource = new SchemaSource(), Options = new CspOptions() }
     };
-    public abstract List<CspPolicy> List();
-    public abstract CspPolicy Update(CspPolicy policy);
-
-    public virtual void Bootstrap()
-    {
-        if (this.List().Any())
-        {
-            return;
-        }
-
-        foreach (var p in this.defaultPolicies)
-        {
-            this.Update(p);
-        }
-    }
-}
+ */

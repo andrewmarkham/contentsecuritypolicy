@@ -33,6 +33,9 @@ using Jhoose.Security.Features.Reporting.Database;
 using Jhoose.Security.Features.Database;
 using Jhoose.Security.Features.Core;
 using Jhoose.Security.Features.Permissions.Providers;
+using Jhoose.Security.Features.Permissions.Models;
+using Jhoose.Security.Features.ResponseHeaders.Models;
+using Jhoose.Security.Features.CSP.Models;
 
 namespace Jhoose.Security.DependencyInjection;
 
@@ -65,7 +68,7 @@ public static class SecurityExtensions
         services.AddHostedService<JhooseSqlInit>();
         services.AddSingleton<ISqlHelper, SqlHelper>();
 
-        services.AddScoped<ContentSecurityPolicyRepository, ContentSecurityPolicyRepository>();
+        services.AddKeyedScoped<ISecurityRepository<CspPolicy>, ContentSecurityPolicyRepository>("csp");
         services.AddScoped<ICspProvider, StandardCspProvider>();
 
         services.AddScoped<ISettingsRepository, SettingsRepository>();
@@ -73,13 +76,12 @@ public static class SecurityExtensions
         services.AddSingleton<ICacheManager, EpiserverCacheManager>();
         services.AddScoped<IJhooseSecurityService, JhooseSecurityService>();
 
-        services.AddScoped<ResponseHeaderRepository, ResponseHeaderRepository>();
+        services.AddKeyedScoped<ISecurityRepository<ResponseHeader>, ResponseHeaderRepository>("response");
         services.AddScoped<IAuthKeyService, DefaultAuthKeyService>();
         services.AddScoped<IImportExportService, ImportExportService>();
 
 
-        services.AddScoped<PermissionsPolicyRepository, PermissionsPolicyRepository>();
-        //services.AddScoped<IPermissionsRepository, StandardPermissionsRepository>();
+        services.AddKeyedScoped<ISecurityRepository<PermissionPolicy>, PermissionsPolicyRepository>("permissions");
         services.AddScoped<IPermissionsProvider, StandardPermissionsProvider>();
 
         services.AddScoped<IImportRepository, JhooseImportRepository>();
@@ -87,7 +89,7 @@ public static class SecurityExtensions
         services.AddSingleton<IResponseHeadersProvider>((sp) =>
         {
             var options = sp.GetService<IOptions<JhooseSecurityOptions>>();
-            var repo = sp.GetService<ResponseHeaderRepository>();
+            var repo = sp.GetKeyedService<ISecurityRepository<ResponseHeader>>("response");
 
             if (options is null) throw new ArgumentNullException($"{nameof(options)} is null");
             if (repo is null) throw new ArgumentNullException($"{nameof(repo)} is null");

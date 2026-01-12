@@ -12,6 +12,7 @@ using Jhoose.Security.Features.Settings.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.Permissions.Controllers;
@@ -27,7 +28,7 @@ namespace Jhoose.Security.Features.Permissions.Controllers;
 [Route("api/jhoose/[controller]")]
 [ApiController]
 [Authorize(Policy = Constants.Authentication.PolicyName)]
-public class PermissionsController(PermissionsPolicyRepository permissionsRepository,
+public class PermissionsController([FromKeyedServices("permissions")] ISecurityRepository<PermissionPolicy>  permissionsRepository,
                                 ISettingsRepository settingsRepository,
                                 IWebhookNotifications webhookNotifications,
                                 ILogger<PermissionsController> logger) : NotificationBaseController(settingsRepository, webhookNotifications)
@@ -35,7 +36,7 @@ public class PermissionsController(PermissionsPolicyRepository permissionsReposi
     private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
 
     private readonly ILogger<PermissionsController> logger = logger;
-    private readonly PermissionsPolicyRepository permissionsRepository = permissionsRepository;
+    private readonly ISecurityRepository<PermissionPolicy> permissionsRepository = permissionsRepository;
 
     [HttpGet]
     [ProducesResponseType(typeof(List<PermissionPolicy>), StatusCodes.Status200OK)]

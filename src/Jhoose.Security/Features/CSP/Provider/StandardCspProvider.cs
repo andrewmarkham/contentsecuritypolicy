@@ -12,17 +12,19 @@ using Jhoose.Security.Features.CSP.Models;
 using Jhoose.Security.Features.Settings.Models;
 using Jhoose.Security.Features.Settings.Repository;
 
+using Microsoft.Extensions.DependencyInjection;
+
 namespace Jhoose.Security.Features.CSP.Provider;
 
 public class StandardCspProvider : ICspProvider
 {
     private readonly string nonceValue;
 
-    private readonly ContentSecurityPolicyRepository policyRepository;
+    private readonly ISecurityRepository<CspPolicy> policyRepository;
     private readonly ISettingsRepository settingsRepository;
     private readonly ISiteDefinitionResolver siteDefinitionResolver;
 
-    public StandardCspProvider(ContentSecurityPolicyRepository policyRepository, ISettingsRepository settingsRepository, ISiteDefinitionResolver siteDefinitionResolver)
+    public StandardCspProvider([FromKeyedServices("csp")] ISecurityRepository<CspPolicy> policyRepository, ISettingsRepository settingsRepository, ISiteDefinitionResolver siteDefinitionResolver)
     {
         this.policyRepository = policyRepository;
         this.settingsRepository = settingsRepository;
