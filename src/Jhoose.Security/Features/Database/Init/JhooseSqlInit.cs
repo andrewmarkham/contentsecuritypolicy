@@ -105,8 +105,7 @@ public class JhooseSqlInit(ILogger<JhooseSqlInit> logger, ISqlHelper isqlHelper)
                     Id              UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
                     Name            NVARCHAR(50),
                     Directive       NVARCHAR(50),
-                    Value           NVARCHAR(max),
-                    RecievedAtHour  DATETIME
+                    Value           NVARCHAR(max)
                 )
             END
             

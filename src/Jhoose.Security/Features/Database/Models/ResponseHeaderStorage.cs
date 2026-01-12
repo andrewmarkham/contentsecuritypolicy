@@ -10,3 +10,5 @@ namespace Jhoose.Security.Features.Data.Models;
 /// <param name="Directive">The directive or policy type associated with the header.</param>
 /// <param name="Value">The serializable value to be set for the response header directive.</param>
 public record ResponseHeaderStorage(Guid Id, string Name, string Directive, string Value);
+
+

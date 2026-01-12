@@ -12,6 +12,7 @@ using Jhoose.Security.Features.ResponseHeaders.Models;
 
 namespace Jhoose.Security.Features.ResponseHeaders.Repository;
 
+[Obsolete(error:true, message:"Use BaseCspPolicyRepository instead")]
 public class StandardResponseHeadersRepository : IResponseHeadersRepository
 {
     protected readonly DynamicDataStoreFactory dataStoreFactory;

@@ -1,9 +1,11 @@
+using System;
 using System.Collections.Generic;
 
 using Jhoose.Security.Features.ResponseHeaders.Models;
 
 namespace Jhoose.Security.Features.ResponseHeaders.Repository;
 
+[Obsolete(error:true, message:"Use BaseCspPolicyRepository instead")]
 public interface IResponseHeadersRepository
 {
     IEnumerable<ResponseHeader> List();

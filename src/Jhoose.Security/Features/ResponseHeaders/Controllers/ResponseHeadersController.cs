@@ -15,6 +15,7 @@ using Jhoose.Security.Features.Settings.Repository;
 using Jhoose.Security.Features.Core.Webhooks;
 using Jhoose.Security.Features.Core.Controllers;
 using Jhoose.Security.Features.Core;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Jhoose.Security.Features.ResponseHeaders.Controllers;
 
@@ -30,7 +31,7 @@ namespace Jhoose.Security.Features.ResponseHeaders.Controllers;
 [ApiController]
 [Authorize(Policy = Constants.Authentication.PolicyName)]
 public class ResponseHeadersController(
-                     ResponseHeaderRepository responseHeadersRepository,
+                     [FromKeyedServices("response")] ISecurityRepository<ResponseHeader>  responseHeadersRepository,
                      ISettingsRepository settingsRepository,
                      IOptions<JhooseSecurityOptions> options,
                      IWebhookNotifications webhookNotifications,

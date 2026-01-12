@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,6 +11,8 @@ using Jhoose.Security.Features.CSP.Models;
 using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.CSP.Repository;
+
+[Obsolete(error:true, message:"Use BaseCspPolicyRepository instead")]
 public class StandardCspPolicyRepository : BaseCspPolicyRepository
 {
     protected readonly DynamicDataStoreFactory dataStoreFactory;

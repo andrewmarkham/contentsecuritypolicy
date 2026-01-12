@@ -1,12 +1,17 @@
 using System.Linq;
 
-using Jhoose.Security.Features.CSP.Repository;
+using Jhoose.Security.Features.Core;
+using Jhoose.Security.Features.CSP.Models;
+
 using Jhoose.Security.Features.ImportExport.Models;
-using Jhoose.Security.Features.Permissions.Repository;
-using Jhoose.Security.Features.ResponseHeaders.Repository;
+using Jhoose.Security.Features.Permissions.Models;
+
+using Jhoose.Security.Features.ResponseHeaders.Models;
+
 using Jhoose.Security.Features.Settings.Repository;
 using Jhoose.Security.Helpers;
 
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.ImportExport.Services;
@@ -14,14 +19,14 @@ namespace Jhoose.Security.Features.ImportExport.Services;
 public class ImportExportService : IImportExportService
 {
     private readonly ILogger<ImportExportService> logger;
-    private readonly ICspPolicyRepository policyRepository;
-    private readonly IResponseHeadersRepository responseHeadersRepository;
-    private readonly IPermissionsRepository permissionsRepository;
+    private readonly ISecurityRepository<CspPolicy> policyRepository;
+    private readonly ISecurityRepository<ResponseHeader>  responseHeadersRepository;
+    private readonly ISecurityRepository<PermissionPolicy> permissionsRepository;
     private readonly ISettingsRepository settingsRepository;
 
-    public ImportExportService(ICspPolicyRepository policyRepository,
-                              IResponseHeadersRepository responseHeadersRepository,
-                              IPermissionsRepository permissionsRepository,
+    public ImportExportService([FromKeyedServices("csp")] ISecurityRepository<CspPolicy> policyRepository,
+                              [FromKeyedServices("response")] ISecurityRepository<ResponseHeader>  responseHeadersRepository,
+                              [FromKeyedServices("permissions")] ISecurityRepository<PermissionPolicy> permissionsRepository,
                               ISettingsRepository settingsRepository,
                               ILogger<ImportExportService> logger)
     {
@@ -62,9 +67,9 @@ public class ImportExportService : IImportExportService
         {
             Metadata = new ExportMetadata(),
             CspSettings = includeSettings ? settingsRepository.Settings() : null,
-            CspPolicies = includeCsp ? policyRepository.List() : null,
-            Permissions = includePermissions ? [.. permissionsRepository.List()] : null,
-            ResponseHeaders = includeHeaders ? [.. responseHeadersRepository.List()] : null
+            CspPolicies = includeCsp ? [.. policyRepository.Load()] : null,
+            Permissions = includePermissions ? [.. permissionsRepository.Load()] : null,
+            ResponseHeaders = includeHeaders ? [.. responseHeadersRepository.Load()] : null
         };
 
         var hash = ObjectHasher.ComputeHash(export);
@@ -85,14 +90,14 @@ public class ImportExportService : IImportExportService
     {
         if (export.CspPolicies != null && export.CspPolicies.Count > 0)
         {
-            var existingPolicies = policyRepository.List();
+            var existingPolicies = policyRepository.Load();
             foreach (var policy in export.CspPolicies)
             {
                 var existingPolicy = existingPolicies.FirstOrDefault(p => p.PolicyName == policy.PolicyName);
                 if (existingPolicy != null)
                 {
                     policy.Id = existingPolicy.Id; // Update
-                    policyRepository.Update(policy);
+                    policyRepository.Save(policy);
                 }
             }
         }
@@ -105,7 +110,7 @@ public class ImportExportService : IImportExportService
             permissionsRepository.Clear();
             foreach (var policy in export.Permissions)
             {
-                permissionsRepository.Update(policy);
+                permissionsRepository.Save(policy);
             }
         }
     }
@@ -113,14 +118,14 @@ public class ImportExportService : IImportExportService
     {
         if (export.ResponseHeaders != null && export.ResponseHeaders.Count > 0)
         {
-            var existingHeaders = responseHeadersRepository.List();
+            var existingHeaders = responseHeadersRepository.Load();
             foreach (var header in export.ResponseHeaders)
             {
                 var existingHeader = existingHeaders.FirstOrDefault(h => h.Name == header.Name);
                 if (existingHeader != null)
                 {
                     header.Id = existingHeader.Id; // Update
-                    responseHeadersRepository.Update(header);
+                    responseHeadersRepository.Save(header);
                 }
             }
         }

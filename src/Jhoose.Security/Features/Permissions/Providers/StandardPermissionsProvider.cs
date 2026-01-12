@@ -6,20 +6,22 @@ using EPiServer.Web;
 
 using Jhoose.Security.Features.Core;
 using Jhoose.Security.Features.CSP.Models;
-
+using Jhoose.Security.Features.Permissions.Models;
 using Jhoose.Security.Features.ResponseHeaders.Models;
 using Jhoose.Security.Features.Settings.Models;
 using Jhoose.Security.Features.Settings.Repository;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Jhoose.Security.Features.Permissions.Providers;
 
 public class StandardPermissionsProvider : IPermissionsProvider
 {
-    private readonly PermissionsPolicyRepository permissionsRepository;
+    private readonly ISecurityRepository<PermissionPolicy> permissionsRepository;
     private readonly ISiteDefinitionResolver siteDefinitionResolver;
     private readonly ISettingsRepository settingsRepository;
 
-    public StandardPermissionsProvider(PermissionsPolicyRepository permissionsRepository, ISettingsRepository settingsRepository, ISiteDefinitionResolver siteDefinitionResolver)
+    public StandardPermissionsProvider([FromKeyedServices("permissions")] ISecurityRepository<PermissionPolicy> permissionsRepository, ISettingsRepository settingsRepository, ISiteDefinitionResolver siteDefinitionResolver)
     {
         this.permissionsRepository = permissionsRepository;
         this.settingsRepository = settingsRepository;

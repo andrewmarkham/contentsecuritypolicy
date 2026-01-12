@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +11,7 @@ using Jhoose.Security.Features.Permissions.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Jhoose.Security.Features.Permissions.Repository;
-
+[Obsolete(error:true, message:"Use BaseCspPolicyRepository instead")]
 public class StandardPermissionsRepository : IPermissionsRepository
 {
     protected readonly DynamicDataStoreFactory dataStoreFactory;
