@@ -53,4 +53,12 @@ public abstract class CspPolicyHeaderBase : ResponseHeader
     public List<CspPolicy>? Policies { get; set; }
 
     public override string Value => this.BuildValue(this.reportUrl, this.NonceValue);
+
+    /// <summary>
+    /// Creates a shallow copy of this header to avoid race conditions when modifying cached instances.
+    /// </summary>
+    public virtual CspPolicyHeaderBase Clone()
+    {
+        return (CspPolicyHeaderBase)this.MemberwiseClone();
+    }
 }
