@@ -90,11 +90,12 @@ public class JhooseController(ICspProvider cspProvider,
         if (policySettings.IsEnabled)
         {
             // get the policy
-            var headerValues = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey,
+            var cachedHeaderValues = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey,
                 () => [.. cspProvider.PolicyHeaders()], new TimeSpan(1, 0, 0));
 
-            foreach (var header in headerValues)
+            foreach (var cachedHeader in cachedHeaderValues)
             {
+                var header = cachedHeader.Clone();
                 header.NonceValue = nonce;
                 yield return new KeyValuePair<string, string>(header.Name, header.Value);
             }

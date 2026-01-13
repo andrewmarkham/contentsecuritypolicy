@@ -77,12 +77,13 @@ public class JhooseSecurityService(ICspProvider cspProvider,
             }
 
             // get the policy
-            var headerValues = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders().ToList(), new TimeSpan(1, 0, 0));
-
-            foreach (var header in headerValues)
+            var cachedHeaders = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders().ToList(), new TimeSpan(1, 0, 0));
+            var nonceValue = this.cspProvider.GenerateNonce();
+            
+            foreach (var cachedHeader in cachedHeaders)
             {
-                header.NonceValue = cspProvider.GenerateNonce();
-
+                var header = cachedHeader.Clone();
+                header.NonceValue = nonceValue;
 
                 if (response.Headers.ContainsKey(header.Name))
                 {
