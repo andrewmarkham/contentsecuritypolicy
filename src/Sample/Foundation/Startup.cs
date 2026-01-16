@@ -260,6 +260,7 @@ namespace Foundation
             {
                 o.UseHeadersUI = true;
                 o.ExclusionPaths.Add("/Episerver");
+                o.Reporting.RateLimiting.Enabled = false;
             });
         }
 

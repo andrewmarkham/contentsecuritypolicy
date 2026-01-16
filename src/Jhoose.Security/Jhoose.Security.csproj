@@ -93,9 +93,11 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.11" />
         <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
 	</ItemGroup>
+    <!--
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
 		<Exec Command="npm run publish" />
 	</Target>
+    -->
 	<ItemGroup Label="Packaging">
 		<Content Remove="src\**" />
 		<Content Remove="node_modules\**" />

@@ -78,7 +78,7 @@ public class JhooseSecurityService(ICspProvider cspProvider,
 
             // get the policy
             var cachedHeaders = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders().ToList(), new TimeSpan(1, 0, 0));
-            var nonceValue = this.cspProvider.GenerateNonce();
+            var nonceValue = cspProvider.GenerateNonce();
             
             foreach (var cachedHeader in cachedHeaders)
             {
