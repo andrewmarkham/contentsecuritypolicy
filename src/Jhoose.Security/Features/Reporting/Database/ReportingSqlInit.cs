@@ -112,21 +112,29 @@ public class SqlInit(ILogger<SqlInit> logger, ISqlHelper isqlHelper) : IHostedSe
             END
             
             IF (INDEXPROPERTY(OBJECT_ID('SecurityReportTo'), 'IDX_RecievedAt', 'IndexID') IS NULL)
-                CREATE NONCLUSTERED INDEX IDX_RecievedAt ON SecurityReportTo (RecievedAt)
+                DROP INDEX IDX_RecievedAt ON SecurityReportTo
 
             IF (INDEXPROPERTY(OBJECT_ID('SecurityReportTo'), 'IDX_RecievedAtMin', 'IndexID') IS NULL)
                 CREATE NONCLUSTERED INDEX IDX_RecievedAtMin ON SecurityReportTo (RecievedAtMin)
             
-
             IF (INDEXPROPERTY(OBJECT_ID('SecurityReportTo'), 'IDX_Url', 'IndexID') IS NULL)
-                CREATE NONCLUSTERED INDEX IDX_Url ON SecurityReportTo (Url)
+                DROP INDEX IDX_Url ON SecurityReportTo
             
             IF (INDEXPROPERTY(OBJECT_ID('SecurityReportTo'), 'IDX_Browser', 'IndexID') IS NULL)
-                CREATE NONCLUSTERED INDEX IDX_Browser ON SecurityReportTo (Browser)
+                DROP INDEX IDX_Browser ON SecurityReportTo
             
             IF (INDEXPROPERTY(OBJECT_ID('SecurityReportTo'), 'IDX_Directive', 'IndexID') IS NULL)
-                CREATE NONCLUSTERED INDEX IDX_Directive ON SecurityReportTo (Directive)
+                DROP INDEX IDX_Directive ON SecurityReportTo
 
+            IF (INDEXPROPERTY(OBJECT_ID('SecurityReportTo'), 'IDX_SecurityReportTo_RecievedAtMin_Browser', 'IndexID') IS NULL)
+                CREATE NONCLUSTERED INDEX IDX_SecurityReportTo_RecievedAtMin_Browser
+                    ON SecurityReportTo (RecievedAtMin, Browser)
+                    INCLUDE (Id, RecievedAt, Url, Directive, BlockedUri, Type);
+
+            IF (INDEXPROPERTY(OBJECT_ID('SecurityReportTo'), 'IDX_SecurityReportTo_RecievedAtMin_Directive', 'IndexID') IS NULL)
+                CREATE NONCLUSTERED INDEX IDX_SecurityReportTo_RecievedAtMin_Directive
+                    ON SecurityReportTo (RecievedAtMin, Directive)
+                    INCLUDE (Id, RecievedAt, Url, Browser, BlockedUri, Type);
         """;
 
         await isqlHelper.ExecuteNonQuery(sqlCommand);
