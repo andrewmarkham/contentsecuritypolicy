@@ -3,8 +3,8 @@ import React, { useContext, useEffect } from 'react';
 
 import { Flex, Typography } from 'antd';
 import { AppContext } from '../../context';
-import { IssueSearch } from './widgets/IssueSearch';
-import { DashboardDisabled } from '../dashboard/widgets/IssueSummary/DashboardDisabled';
+import { IssueSearch } from './Widgets/IssueSearch';
+import { DashboardDisabled } from '../Dashboard/Widgets/IssueSummary/DashboardDisabled';
 
 export function CspIssueSearch() {
 
@@ -30,4 +30,3 @@ export function CspIssueSearch() {
 
     );
 }
-

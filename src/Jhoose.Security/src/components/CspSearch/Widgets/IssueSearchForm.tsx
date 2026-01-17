@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button, Col, DatePicker, Form, Input, Row, Select } from 'antd';
 
-import { SearchParams, SelectValue } from './types/types';
+import { SearchParams, SelectValue } from './Types/types';
 
 
 export function IssueSearchForm(props: {

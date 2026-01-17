@@ -1,10 +1,10 @@
 import React, { Ref, forwardRef, useContext, useImperativeHandle, } from 'react';
 import { getHeaderOptions } from './SecurityHeaderHelper';
-import { SecurityHeader } from './types/securityHeader';
+import { SecurityHeader } from './Types/securityHeader';
 import type { FormProps } from 'antd';
 import { Checkbox, Form, Input, InputNumber, Select } from 'antd';
 import { AppContext } from '../../context';
-import { RefForm } from '../csp/types/types';
+import { RefForm } from '../Csp/Types/types';
 
 export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; handleSaved: (success: boolean) => void; }, ref: Ref<RefForm>) => {
 

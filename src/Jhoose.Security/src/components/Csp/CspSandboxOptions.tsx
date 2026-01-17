@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Row,Checkbox, Flex } from 'antd';
-import { SandboxOptions } from './types/types';
+import { SandboxOptions } from './Types/types';
 
 type SandboxSummary = {
     label: string,

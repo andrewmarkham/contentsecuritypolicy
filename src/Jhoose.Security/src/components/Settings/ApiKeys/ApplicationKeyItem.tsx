@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { Button, Input } from 'antd';
 import {CloseCircleFilled, CheckCircleFilled, DeleteFilled } from '@ant-design/icons';
-import { AuthenticationKey } from "../../csp/types/types";
+import { AuthenticationKey } from "../../Csp/Types/types";
 import { ApplicationKeylineRevoke } from "./ApplicationKeylineRevoke";
 import { Cell } from "../../DataTable/Cell";
 import { Row } from "../../DataTable/Row";

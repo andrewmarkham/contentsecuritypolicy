@@ -7,9 +7,9 @@ import type { CheckboxOptionType } from 'antd/es/checkbox';
 
 import { WebHooksUi } from "./Webhooks/WebHooksUi";
 import { ApiKeys } from "./ApiKeys/ApiKeys";
-import { AuthenticationKey, SecuritySettings } from "../csp/types/types";
+import { AuthenticationKey, SecuritySettings } from "../Csp/Types/types";
 import { AppContext } from "../../context";
-import { Toaster } from "../toaster";
+import { Toaster } from "../Toaster";
 import { RcFile, UploadChangeParam } from "antd/es/upload/interface";
 import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { EditSecurityHeader } from './EditSecurityHeader';
 import { getLabelForHeaderOption } from './SecurityHeaderHelper';
 
-import { SecurityHeader } from './types/securityHeader';
+import { SecurityHeader } from './Types/securityHeader';
 import { Table } from '../DataTable/Table';
 import { Row } from '../DataTable/Row';
 import { Cell } from '../DataTable/Cell';
@@ -11,7 +11,7 @@ import { AppContext } from '../../context';
 import { Typography, message } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 
-import { Toaster } from '../toaster';
+import { Toaster } from '../Toaster';
 
 type Props = {
     data: SecurityHeader[],

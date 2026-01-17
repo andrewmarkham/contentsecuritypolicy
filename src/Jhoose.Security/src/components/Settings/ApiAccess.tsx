@@ -5,9 +5,9 @@ import type { TabsProps } from 'antd';
 
 import { WebHooksUi } from "./Webhooks/WebHooksUi";
 import { ApiKeys } from "./ApiKeys/ApiKeys";
-import { AuthenticationKey, SecuritySettings } from "../csp/types/types";
+import { AuthenticationKey, SecuritySettings } from "../Csp/Types/types";
 import { AppContext } from "../../context";
-import { Toaster } from "../toaster";
+import { Toaster } from "../Toaster";
 
 type Props = {
     settings: SecuritySettings,

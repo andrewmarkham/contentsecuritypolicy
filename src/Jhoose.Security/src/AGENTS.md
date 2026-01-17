@@ -21,8 +21,12 @@ The parent folder is the C# application that delivers the API's used by the inte
  - Typescript
  - React19
  - UI Components Ant Design https://ant.design/
- - Styling is handled by vanilla CSS
+ - Styling is handled by vanilla CSS, NO TAILWIND
 
 
- ## Development Approach
- 
+## Development Approach
+
+- Naming convention (frontend): use CamelCase (PascalCase) for component folders, component file names, and component exports; keep non-component utilities/types in lower camel case.
+
+ ## Current Project State
+ - Refactoring of code base to deliver a consistent naming convention and improve approaches.

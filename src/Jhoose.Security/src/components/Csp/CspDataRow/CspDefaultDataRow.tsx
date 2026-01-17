@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
-import { CspPolicy } from '../types/types';
+import { CspPolicy } from '../Types/types';
 import { EditDefaultCspItem } from '../CspEditItem/EditDefaultCspItem';
 import { getPolicyOptionsDisplay, getSchemaSourceDisplay } from '../helpers';
 import { Cell } from "../../DataTable/Cell";

@@ -3,7 +3,7 @@ import React, { useState, useMemo, useContext, } from 'react';
 import { CspOptions } from '../CspOptions';
 
 import { CspSchemaSources } from '../CspSchemaSources';
-import { CspPolicy, PolicyOptions, SchemaSource } from '../types/types';
+import { CspPolicy, PolicyOptions, SchemaSource } from '../Types/types';
 import { getPolicyOptionsDisplay, getSchemaSourceDisplay, isScriptPolicy as _isScriptPolicy } from '../helpers';
 import { Checkbox, Divider, Flex, Input, Modal } from 'antd';
 import { AppContext } from '../../../context';

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SecuritySettings } from "../csp/types/types";
+import { SecuritySettings } from "../Csp/Types/types";
 import { AppContext } from "../../context";
 import { Button, Divider, Form, FormProps, Input, Select, Skeleton, Space } from "antd";
-import { Toaster } from "../toaster";
+import { Toaster } from "../Toaster";
 
 
 export const SettingsForm = () => {

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { Dispatcher, HeaderAction } from './types';
 import { ApplicationState, HeadersState } from '../types';
-import { SecurityHeader } from '../components/securityheaders/types/securityHeader';
+import { SecurityHeader } from '../components/SecurityHeaders/Types/securityHeader';
 
 export const headerAppReducer = (state : HeadersState, action: HeaderAction): HeadersState => {
     

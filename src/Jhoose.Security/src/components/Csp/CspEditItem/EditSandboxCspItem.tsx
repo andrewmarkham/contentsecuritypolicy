@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useContext } from 'react';
 
-import { CspSandboxPolicy, SandboxOptions } from '../types/types';
+import { CspSandboxPolicy, SandboxOptions } from '../Types/types';
 import { CspSandboxOptions } from '../CspSandboxOptions';
 import { getSandboxOptionsDisplay } from '../helpers';
 import { Divider, Flex, Modal } from 'antd';

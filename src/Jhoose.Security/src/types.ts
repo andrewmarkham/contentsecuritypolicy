@@ -1,5 +1,5 @@
-import { CspPolicy, CspSandboxPolicy, SecuritySettings } from './components/csp/types/types';
-import { SecurityHeader } from './components/securityheaders/types/securityHeader';
+import { CspPolicy, CspSandboxPolicy, SecuritySettings } from './components/Csp/Types/types';
+import { SecurityHeader } from './components/SecurityHeaders/Types/securityHeader';
 
 type BaseState = {
   loading: boolean;

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Typography } from "antd";
 
-import { AuthenticationKey } from "../../csp/types/types";
+import { AuthenticationKey } from "../../Csp/Types/types";
 import { ApplicationKeyAdd } from "./ApplicationKeyAdd";
 import { ApplicationKeyItem } from "./ApplicationKeyItem";
 import { Table } from "../../DataTable/Table";
