@@ -6,6 +6,7 @@ namespace Jhoose.Security.Features.Permissions.Models;
 /// <summary>
 /// Represents a permission policy.
 /// </summary>
+/// <param name="Id"></param>
 /// <param name="Key"></param>
 /// <param name="Mode"></param>
 /// <param name="Scope"></param>
