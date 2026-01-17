@@ -1,4 +1,5 @@
 using System;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,7 @@ public class ProblemJsonFormatter : TextInputFormatter
                 httpContext.RequestAborted).ToListAsync();
 
             return await InputFormatterResult.SuccessAsync(reports);
+
         }
         catch (Exception ex)
         {

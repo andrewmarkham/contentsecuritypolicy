@@ -13,28 +13,18 @@ using Jhoose.Security.Features.ResponseHeaders.Models;
 namespace Jhoose.Security.Features.ResponseHeaders.Repository;
 
 [Obsolete(error:true, message:"Use BaseCspPolicyRepository instead")]
-public class StandardResponseHeadersRepository : IResponseHeadersRepository
-{
-    protected readonly DynamicDataStoreFactory dataStoreFactory;
-    protected readonly ICacheManager cache;
-
-    private readonly IDatabaseMode databaseMode;
-
-    public StandardResponseHeadersRepository(DynamicDataStoreFactory dataStoreFactory,
-        ICacheManager cache,
-        IDatabaseMode databaseMode
+public class StandardResponseHeadersRepository(DynamicDataStoreFactory dataStoreFactory,
+    ICacheManager cache,
+    IDatabaseMode databaseMode
         //IHttpContextAccessor httpContextAccessor
-        )
-    {
-        this.cache = cache;
-        this.databaseMode = databaseMode;
-        //this.httpContextAccessor = httpContextAccessor;
-        this.dataStoreFactory = dataStoreFactory;
-    }
+        ) : IResponseHeadersRepository
+{
+    protected readonly DynamicDataStoreFactory dataStoreFactory = dataStoreFactory;
+    protected readonly ICacheManager cache = cache;
 
     public void Bootstrap()
     {
-        if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
+        if (databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
             return;
 
         Remap<ResponseHeader>();
@@ -53,18 +43,18 @@ public class StandardResponseHeadersRepository : IResponseHeadersRepository
 
     public IEnumerable<ResponseHeader> List()
     {
-        using (var s = GetStore())
+        using var s = GetStore();
+        var policies = s.LoadAll<ResponseHeaderStorageItem<ResponseHeader>>();
+
+        foreach (ResponseHeaderStorageItem<ResponseHeader> p in policies)
         {
-            var policies = s.LoadAll<ResponseHeaderStorageItem<ResponseHeader>>();
+            var responseHeader = JsonSerializer.Deserialize<ResponseHeader>(p.SerializedValue);
+            if (responseHeader == null)
+                continue;
 
-            foreach (ResponseHeaderStorageItem<ResponseHeader> p in policies)
-            {
-                var responseHeader = JsonSerializer.Deserialize<ResponseHeader>(p.SerializedValue);
-
-                yield return FixResponseHeaderHelper.IsFixRequired(responseHeader, p.TypeName) ? 
-                                FixResponseHeaderHelper.ApplyFix(responseHeader, p.SerializedValue) : 
-                                responseHeader!;
-            }
+            yield return FixResponseHeaderHelper.IsFixRequired(responseHeader, p.TypeName) ?
+                            FixResponseHeaderHelper.ApplyFix(responseHeader, p.SerializedValue) :
+                            responseHeader!;
         }
     }
 
@@ -91,7 +81,7 @@ public class StandardResponseHeadersRepository : IResponseHeadersRepository
 
     private void Remap<T>()
     {
-        if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
+        if (databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
             return;
 
         var definition = StoreDefinition.Get(typeof(T).FullName);

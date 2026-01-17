@@ -153,28 +153,15 @@ public class ElasticSearchReportingRepository : IReportingRepository
             Id = Guid.NewGuid().ToString(),
             Age = d.Age,
             RecievedAt = d.RecievedAt,
-            Type = d.Directive,
-            Url = d.Url,
-            UserAgent = d.Browser,
-            Browser = d.Browser,
-            Version = d.Browser,
-            Os = d.Browser,
-            Directive = d.Directive,
-            BlockedUri = d.Message ?? string.Empty,
-            /*Body = new BodyData
-            {
-                DocumentUrl = d.Body.DocumentURL,
-                Disposition = d.Body.Disposition,
-                Referrer = d.Body.Referrer,
-                EffectiveDirective = d.Body.EffectiveDirective,
-                BlockedUrl = d.Body.BlockedURL,
-                OriginalPolicy = d.Body.OriginalPolicy,
-                StatusCode = d.Body.StatusCode ?? -1,
-                Sample = d.Body.Sample,
-                SourceFile = d.Body.SourceFile,
-                LineNumber = d.Body.LineNumber ?? -1,
-                ColumnNumber = d.Body.ColumnNumber ?? -1
-            }*/
+            Type = d?.Directive ?? string.Empty,
+            Url = d?.Url ?? string.Empty,
+            UserAgent = d?.Browser ?? string.Empty,
+            Browser = d?.Browser ?? string.Empty,
+            Version = d?.Browser ?? string.Empty,
+            Os = d?.Browser ?? string.Empty,
+            Directive = d?.Directive ?? string.Empty,
+            BlockedUri = d?.Message ?? string.Empty,
+
         }).ToList();
 
         return new CspSearchResults
@@ -201,9 +188,9 @@ public class ElasticSearchReportingRepository : IReportingRepository
             await client.Value.Indices.CreateAsync<ReportTo<IReportToBody>>(IndexName,
                 index => index.Mappings(m =>
                 m.Properties(p =>
-                    p.Keyword(t => t.Directive)
+                    p.Keyword(t => t.Directive!)
                      .Keyword(t => t.Type)
-                     .Keyword(t => t.Browser)
+                     .Keyword(t => t.Browser!)
                      .Keyword(t => t.Url)
                      .Date(t => t.RecievedAt))));
         }

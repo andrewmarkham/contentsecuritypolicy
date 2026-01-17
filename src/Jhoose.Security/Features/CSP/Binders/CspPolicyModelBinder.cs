@@ -18,15 +18,24 @@ public class CspPolicyModelBinder : IModelBinder
         JsonNode? jsonNode;
         CspPolicy? cspPolicy;
 
-        jsonNode = await JsonNode.ParseAsync(bindingContext.ActionContext.HttpContext.Request.Body);
+        try
+        {
+            jsonNode = await JsonNode.ParseAsync(bindingContext.ActionContext.HttpContext.Request.Body);
 
-        if (jsonNode is not null)
-        {
-            cspPolicy = jsonNode.Deserialize<CspPolicy>(serializerOptions);
-            bindingContext.Result = ModelBindingResult.Success(cspPolicy);
+            if (jsonNode is not null)
+            {
+                cspPolicy = jsonNode.Deserialize<CspPolicy>(serializerOptions);
+                bindingContext.Result = ModelBindingResult.Success(cspPolicy);
+            }
+            else
+            {
+                bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Request body was empty.");
+                bindingContext.Result = ModelBindingResult.Failed();
+            }
         }
-        else
+        catch (JsonException)
         {
+            bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Request body was not valid JSON.");
             bindingContext.Result = ModelBindingResult.Failed();
         }
     }

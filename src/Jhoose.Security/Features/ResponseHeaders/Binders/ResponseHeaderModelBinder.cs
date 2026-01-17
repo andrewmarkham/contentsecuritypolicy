@@ -20,7 +20,16 @@ public class ResponseHeaderModelBinder : IModelBinder
         JsonNode? jsonNode;
         ResponseHeader? responseHeader;
 
-        jsonNode = await JsonNode.ParseAsync(bindingContext.ActionContext.HttpContext.Request.Body);
+        try
+        {
+            jsonNode = await JsonNode.ParseAsync(bindingContext.ActionContext.HttpContext.Request.Body);
+        }
+        catch (JsonException)
+        {
+            bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Request body was not valid JSON.");
+            bindingContext.Result = ModelBindingResult.Failed();
+            return;
+        }
 
         var typeMappings = new Dictionary<string, Type>
         {
@@ -47,8 +56,15 @@ public class ResponseHeaderModelBinder : IModelBinder
             }
             else
             {
+                var typeName = responseName?.GetValue<string>() ?? string.Empty;
+                bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, $"Unsupported response header type '{typeName}'.");
                 bindingContext.Result = ModelBindingResult.Failed();
             }
+        }
+        else
+        {
+            bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Request body was empty.");
+            bindingContext.Result = ModelBindingResult.Failed();
         }
     }
 }

@@ -19,111 +19,136 @@ using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.Reporting.Database;
 
-public class SqlDatabaseReportingRepository : IReportingRepository
+public class SqlDatabaseReportingRepository(ILogger<SqlDatabaseReportingRepository> logger, ISqlHelper sqlHelper) : IReportingRepository
 {
-    private readonly ISqlHelper sqlHelper;
-    private readonly ILogger<SqlDatabaseReportingRepository> logger;
-
-    public SqlDatabaseReportingRepository(ILogger<SqlDatabaseReportingRepository> logger, ISqlHelper sqlHelper)
-    {
-        this.sqlHelper = sqlHelper;
-        this.logger = logger;
-    }
-
     public string Type => "Sql";
 
     public async Task AddReport(ReportTo<IReportToBody> reportTo)
     {
-        var sqlCommand = """
-                INSERT INTO SecurityReportTo 
-                    (Age, RecievedAt, RecievedAtMin, RecievedAtHour, Type, Url, UserAgent, Browser, Version, OS, Directive, BlockedUri, Body)
-                VALUES 
-                    (@Age, @RecievedAt, @RecievedAtMin, @RecievedAtHour, @Type, @Url, @UserAgent, @Browser, @Version, @OS, @Directive, @BlockedUri, @Body)
-                """;
+        try {
+            var sqlCommand = """
+                    INSERT INTO SecurityReportTo 
+                        (Age, RecievedAt, RecievedAtMin, RecievedAtHour, Type, Url, UserAgent, Browser, Version, OS, Directive, BlockedUri, Body)
+                    VALUES 
+                        (@Age, @RecievedAt, @RecievedAtMin, @RecievedAtHour, @Type, @Url, @UserAgent, @Browser, @Version, @OS, @Directive, @BlockedUri, @Body)
+                    """;
 
-        DateTime recievedAtMin = reportTo.RecievedAt.AddSeconds(-reportTo.RecievedAt.Second).AddMilliseconds(-reportTo.RecievedAt.Millisecond);
-        DateTime recievedAtHour = recievedAtMin.AddMinutes(-reportTo.RecievedAt.Minute);
+            DateTime recievedAtMin = reportTo.RecievedAt.AddSeconds(-reportTo.RecievedAt.Second).AddMilliseconds(-reportTo.RecievedAt.Millisecond);
+            DateTime recievedAtHour = recievedAtMin.AddMinutes(-reportTo.RecievedAt.Minute);
 
-        await sqlHelper.ExecuteNonQuery(
-            sqlCommand,
-            sqlHelper.CreateParameter<int>("Age", SqlDbType.Int, reportTo.Age),
-            sqlHelper.CreateParameter<DateTime>("RecievedAt", SqlDbType.DateTime, reportTo.RecievedAt),
-            sqlHelper.CreateParameter<DateTime>("RecievedAtMin", SqlDbType.DateTime, recievedAtMin),
-            sqlHelper.CreateParameter<DateTime>("RecievedAtHour", SqlDbType.DateTime, recievedAtHour),
-            sqlHelper.CreateParameter<string>("Type", SqlDbType.NVarChar, reportTo.Type),
-            sqlHelper.CreateParameter<string>("Url", SqlDbType.NVarChar, reportTo.Url),
-            sqlHelper.CreateParameter<string>("UserAgent", SqlDbType.NVarChar, reportTo.UserAgent),
-            sqlHelper.CreateParameter<string>("Browser", SqlDbType.NVarChar, reportTo.Browser),
-            sqlHelper.CreateParameter<string>("Version", SqlDbType.NVarChar, reportTo.Version),
-            sqlHelper.CreateParameter<string>("OS", SqlDbType.NVarChar, reportTo.OS),
-            sqlHelper.CreateParameter<string>("Directive", SqlDbType.NVarChar, reportTo.Directive),
-            sqlHelper.CreateParameter<string>("BlockedUri", SqlDbType.NVarChar, reportTo.Message ?? string.Empty),
-            sqlHelper.CreateParameter<string>("Body", SqlDbType.NVarChar, JsonSerializer.Serialize(reportTo.Body)));
+            await sqlHelper.ExecuteNonQuery(
+                sqlCommand,
+                sqlHelper.CreateParameter<int>("Age", SqlDbType.Int, reportTo.Age),
+                sqlHelper.CreateParameter<DateTime>("RecievedAt", SqlDbType.DateTime, reportTo.RecievedAt),
+                sqlHelper.CreateParameter<DateTime>("RecievedAtMin", SqlDbType.DateTime, recievedAtMin),
+                sqlHelper.CreateParameter<DateTime>("RecievedAtHour", SqlDbType.DateTime, recievedAtHour),
+                sqlHelper.CreateParameter<string>("Type", SqlDbType.NVarChar, reportTo.Type),
+                sqlHelper.CreateParameter<string>("Url", SqlDbType.NVarChar, reportTo.Url),
+                sqlHelper.CreateParameter<string>("UserAgent", SqlDbType.NVarChar, reportTo.UserAgent),
+                sqlHelper.CreateParameter<string>("Browser", SqlDbType.NVarChar, reportTo?.Browser ?? string.Empty),
+                sqlHelper.CreateParameter<string>("Version", SqlDbType.NVarChar, reportTo?.Version ?? string.Empty),
+                sqlHelper.CreateParameter<string>("OS", SqlDbType.NVarChar, reportTo?.OS ?? string.Empty),
+                sqlHelper.CreateParameter<string>("Directive", SqlDbType.NVarChar, reportTo?.Directive ?? string.Empty),
+                sqlHelper.CreateParameter<string>("BlockedUri", SqlDbType.NVarChar, reportTo?.Message ?? string.Empty),
+                sqlHelper.CreateParameter<string>("Body", SqlDbType.NVarChar, JsonSerializer.Serialize(reportTo?.Body)));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Insert of report to failed");
+            throw;
+        }
     }
 
     public async Task AddReports(IEnumerable<ReportTo<IReportToBody>> reportTos)
     {
-        await sqlHelper.ExecuteStoredProcedure<IEnumerable<SqlDataRecord>>(
-            "InsertSecurityReportTo",
-            new List<SqlParameter>
-            {
-                sqlHelper.CreateParameter("ReportTos", SqlDbType.Structured, CreateReportToRecords(reportTos))
-            });
+        try {
+            await sqlHelper.ExecuteStoredProcedure<IEnumerable<SqlDataRecord>>(
+                "InsertSecurityReportTo",
+                [
+                    sqlHelper.CreateParameter("ReportTos", SqlDbType.Structured, CreateReportToRecords(reportTos))
+                ]);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Bulk insert of report tos failed");
+            throw;
+        }
     }
 
     public async Task<DashboardSummary> GetDashboardSummary(DashboardSummary summary)
     {
-        var parameters = new List<SqlParameter>
-        {
-            sqlHelper.CreateParameter("@From", SqlDbType.DateTime, summary.Query.From),
-            sqlHelper.CreateParameter("@To", SqlDbType.DateTime, summary.Query.To),
-            sqlHelper.CreateParameter("@Type", SqlDbType.NVarChar, summary.Query.Type.ToLower()),
-            sqlHelper.CreateParameter("@Period", SqlDbType.NVarChar, "min")
-        };
+        try {
+            var parameters = new List<SqlParameter>
+            {
+                sqlHelper.CreateParameter("@From", SqlDbType.DateTime, summary.Query.From),
+                sqlHelper.CreateParameter("@To", SqlDbType.DateTime, summary.Query.To),
+                sqlHelper.CreateParameter("@Type", SqlDbType.NVarChar, summary.Query.Type.ToLower()),
+                sqlHelper.CreateParameter("@Period", SqlDbType.NVarChar, "min")
+            };
 
-        await sqlHelper.ExecuteStoredProcedure("GetSecurityReportSummary", parameters, (reader) =>
-        {
-            return PopulateDashboardSummary(reader, summary);
-        });
+            await sqlHelper.ExecuteStoredProcedure("GetSecurityReportSummary", parameters, (reader) =>
+            {
+                return PopulateDashboardSummary(reader, summary);
+            });
 
-        return summary;
+            return summary;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Get dashboard summary failed");
+            throw;
+        }
     }
 
     public async Task<int> PurgeReporingData(DateTime beforeDate)
     {
-        var sqlCommand = "DELETE FROM SecurityReportTo WHERE RecievedAt < @BeforeDate";
+        try {
+            var sqlCommand = "DELETE FROM SecurityReportTo WHERE RecievedAt < @BeforeDate";
 
-        return await sqlHelper.ExecuteNonQuery(
-            sqlCommand,
-            sqlHelper.CreateParameter<DateTime>("BeforeDate", SqlDbType.DateTime, beforeDate));
+            return await sqlHelper.ExecuteNonQuery(
+                sqlCommand,
+                sqlHelper.CreateParameter<DateTime>("BeforeDate", SqlDbType.DateTime, beforeDate));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Purge reporting data failed");
+            throw;
+        }
 
     }
 
     public async Task<CspSearchResults> Search(CspSearchParams searchParams)
     {
-        var from = (searchParams.Page - 1) * searchParams.PageSize;
+        try {
+            var from = (searchParams.Page - 1) * searchParams.PageSize;
 
-        var sqlCommand = "SecurityReportSearch";
-        var parameters = new List<SqlParameter>
+            var sqlCommand = "SecurityReportSearch";
+            var parameters = new List<SqlParameter>
+            {
+                sqlHelper.CreateParameter<int>("@PageSize", SqlDbType.Int, searchParams.PageSize),
+                sqlHelper.CreateParameter<int>("@RecordFrom", SqlDbType.Int, from),
+                sqlHelper.CreateParameter<DateTime>("@DateFrom", SqlDbType.DateTime, searchParams.Filters?.DateFrom ?? DateTime.UtcNow.AddYears(-1)),
+                sqlHelper.CreateParameter<string>("@Query", SqlDbType.NVarChar, searchParams?.Filters?.Query ?? string.Empty),
+                sqlHelper.CreateParameter<string>("@Directive", SqlDbType.NVarChar, string.Join(',',searchParams?.Filters?.Directive ?? []) ),
+                sqlHelper.CreateParameter<string>("@Browser", SqlDbType.NVarChar, string.Join(',',searchParams?.Filters?.Browser ?? [])),
+                sqlHelper.CreateParameter<string>("@Type", SqlDbType.NVarChar, string.Join(',',searchParams?.Filters?.Type ?? [])),
+                sqlHelper.CreateParameter<string>("@SortOrder", SqlDbType.NVarChar, searchParams?.SortOrder == "ascend" ? "A" : "D"),
+                sqlHelper.CreateParameter<int>("@MaxRows", SqlDbType.Int, 100000)
+            };
+            var searchResults = new CspSearchResults();
+
+            await sqlHelper.ExecuteStoredProcedure(sqlCommand, parameters, (reader) =>
+            {
+                return GetCspSearchResults(reader, searchResults);
+            });
+
+            return searchResults;
+        }
+        catch (Exception ex)
         {
-            sqlHelper.CreateParameter<int>("@PageSize", SqlDbType.Int, searchParams.PageSize),
-            sqlHelper.CreateParameter<int>("@RecordFrom", SqlDbType.Int, from),
-            sqlHelper.CreateParameter<DateTime>("@DateFrom", SqlDbType.DateTime, searchParams.Filters?.DateFrom ?? DateTime.UtcNow.AddYears(-1)),
-            sqlHelper.CreateParameter<string>("@Query", SqlDbType.NVarChar, searchParams?.Filters?.Query ?? string.Empty),
-            sqlHelper.CreateParameter<string>("@Directive", SqlDbType.NVarChar, string.Join(',',searchParams?.Filters?.Directive ?? []) ),
-            sqlHelper.CreateParameter<string>("@Browser", SqlDbType.NVarChar, string.Join(',',searchParams?.Filters?.Browser ?? [])),
-            sqlHelper.CreateParameter<string>("@Type", SqlDbType.NVarChar, string.Join(',',searchParams?.Filters?.Type ?? [])),
-            sqlHelper.CreateParameter<string>("@SortOrder", SqlDbType.NVarChar, searchParams?.SortOrder == "ascend" ? "A" : "D"),
-            sqlHelper.CreateParameter<int>("@MaxRows", SqlDbType.Int, 100000)
-        };
-        var searchResults = new CspSearchResults();
-
-        await sqlHelper.ExecuteStoredProcedure(sqlCommand, parameters, (reader) =>
-        {
-            return GetCspSearchResults(reader, searchResults);
-        });
-
-        return searchResults;
+            logger.LogError(ex, "Search reporting data failed");
+            throw;
+        }
     }
 
 private static IEnumerable<SqlDataRecord> CreateReportToRecords(
