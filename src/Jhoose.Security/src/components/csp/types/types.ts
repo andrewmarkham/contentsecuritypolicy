@@ -2,9 +2,9 @@ export type Mode = "on" | "off" | "report";
 export type ReportingMode = 0 | 1 | 2;
 
 export interface AuthenticationKey {
-    readonly name: string;
-    readonly key: string;
-    readonly revoked: boolean;
+    name: string;
+    key: string;
+    revoked: boolean;
 }
 
 export interface SecuritySettings {
@@ -13,8 +13,8 @@ export interface SecuritySettings {
     reportingMode: ReportingMode;
     reportingUrl: string;
     reportToUrl: string;
-    webhookUrls: ReadonlyArray<string>;
-    authenticationKeys: ReadonlyArray<AuthenticationKey>;
+    webhookUrls: Array<string>;
+    authenticationKeys: Array<AuthenticationKey>;
 }
 
 export interface ContentSecurityPolicy {
@@ -38,7 +38,7 @@ export type SchemaSource = {
 
 export type PolicyOptionName = "wildcard" | "none" | "self" | "wasmUnsafeEval" | "unsafeEval" | "unsafeHashes" | "unsafeInline" | "strictDynamic" | "nonce";
 
-export type PolicyOptions = Readonly<Record<PolicyOptionName, boolean>>;
+export type PolicyOptions = Record<PolicyOptionName, boolean>;
 
 export interface SandboxOptions {
     enabled: boolean;
