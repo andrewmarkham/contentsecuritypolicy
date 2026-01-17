@@ -1,4 +1,4 @@
-import { CspPolicy, CspSandboxPolicy } from "./types/types";
+import { CspPolicy, CspSandboxPolicy } from "./Types/types";
 
 export function getPolicyOptionsDisplay(policy: CspPolicy): string {
     var v = "";

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ApplicationState, CspState } from '../types';
 import { Dispatcher, CspAction } from './types';
-import { CspPolicy, CspSandboxPolicy, PolicyOptions, SandboxOptions, SchemaSource } from '../components/csp/types/types';
+import { CspPolicy, CspSandboxPolicy, PolicyOptions, SandboxOptions, SchemaSource } from '../components/Csp/Types/types';
 
 export const cspAppReducer = (state : CspState, action: CspAction): CspState  => {
     if (action.actionType === "save") {

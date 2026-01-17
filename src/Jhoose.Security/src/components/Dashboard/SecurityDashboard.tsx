@@ -2,9 +2,9 @@
 import React, { useContext, useEffect } from 'react';
 
 import { Flex, Typography } from 'antd';
-import { IssueSummary } from './widgets/IssueSummary/IssueSummary';
+import { IssueSummary } from './Widgets/IssueSummary/IssueSummary';
 import { AppContext } from '../../context';
-import { DashboardDisabled } from './widgets/IssueSummary/DashboardDisabled';
+import { DashboardDisabled } from './Widgets/IssueSummary/DashboardDisabled';
 
 export function SecurityDashboard() {
 
@@ -30,4 +30,3 @@ export function SecurityDashboard() {
 
     );
 }
-

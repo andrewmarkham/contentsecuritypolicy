@@ -4,7 +4,7 @@ import { Permission } from '././types';
 import { Radio,Select, Input, Flex, Button } from 'antd';
 import { Row } from '../DataTable/Row';
 import { Cell } from '../DataTable/Cell';
-import { Toaster } from '../toaster';
+import { Toaster } from '../Toaster';
 import { RenderPermission } from './RenderPermission';
 
 const { TextArea } = Input;

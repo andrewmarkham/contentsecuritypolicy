@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ApplicationState, SettingsState } from '../types';
-import { SecuritySettings } from '../components/csp/types/types';
+import { SecuritySettings } from '../components/Csp/Types/types';
 
 import { Dispatcher, SettingsAction } from './types';
 

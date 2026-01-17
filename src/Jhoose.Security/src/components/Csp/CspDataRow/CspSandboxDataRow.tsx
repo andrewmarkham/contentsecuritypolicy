@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { CspPolicy, CspSandboxPolicy } from '../types/types';
+import { CspPolicy, CspSandboxPolicy } from '../Types/types';
 import { EditSandboxCspItem } from '../CspEditItem/EditSandboxCspItem';
 import { getSandboxOptionsDisplay } from '../helpers';
 import { Cell } from "../../DataTable/Cell";

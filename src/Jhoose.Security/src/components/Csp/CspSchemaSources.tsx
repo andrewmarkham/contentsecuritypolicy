@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Checkbox, Flex } from 'antd';
-import { SchemaSource } from './types/types';
+import { SchemaSource } from './Types/types';
 
 type Props = {
     disabled: boolean,

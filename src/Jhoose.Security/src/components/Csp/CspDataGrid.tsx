@@ -3,12 +3,12 @@ import React, { useContext, useEffect } from 'react';
 import {CspDataRow} from './CspDataRow/CspDefaultDataRow';
 import {CspSandboxDataRow} from './CspDataRow/CspSandboxDataRow';
 
-import { CspPolicy, CspSandboxPolicy } from './types/types';
+import { CspPolicy, CspSandboxPolicy } from './Types/types';
 import { Table } from '../DataTable/Table';
 import { Cell } from "../DataTable/Cell";
 import { Header } from "../DataTable/Header";
 import { AppContext } from '../../context';
-import { Toaster } from '../toaster';
+import { Toaster } from '../Toaster';
 import { ContentSecurityPolicyData } from './Data/ContentSecurityPolicies';
 import { Row } from '../DataTable/Row';
 

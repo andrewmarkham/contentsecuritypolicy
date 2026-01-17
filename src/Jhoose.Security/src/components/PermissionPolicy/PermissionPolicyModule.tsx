@@ -13,7 +13,7 @@ import { CheckCircleTwoTone, CloseCircleTwoTone, InfoCircleOutlined, MutedOutlin
 
 import bcd, { Identifier } from '@mdn/browser-compat-data' 
 import { PermissionEditor } from './PermissionEditor';
-import { Toaster } from '../toaster';
+import { Toaster } from '../Toaster';
 import { RenderPermission } from './RenderPermission';
 
 

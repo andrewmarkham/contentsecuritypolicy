@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
 
-import { SecurityHeader } from './types/securityHeader';
+import { SecurityHeader } from './Types/securityHeader';
 
 import { Modal } from 'antd';
 import { ResponseHeaderForm } from './ResponseHeaderForm';
-import { RefForm } from '../csp/types/types';
+import { RefForm } from '../Csp/Types/types';
 
 type Props = {
     header: SecurityHeader

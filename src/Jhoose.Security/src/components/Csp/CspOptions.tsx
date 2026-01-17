@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { PolicyOptions } from './types/types';
+import { PolicyOptions } from './Types/types';
 import { Checkbox, Flex } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox/Checkbox';
 

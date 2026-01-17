@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, Dispatch } from 'react';
 
-import { CspPolicy, CspSandboxPolicy, SecuritySettings } from "./components/csp/types/types";
-import { SecurityHeader } from "./components/securityheaders/types/securityHeader";
+import { CspPolicy, CspSandboxPolicy, SecuritySettings } from "./components/Csp/Types/types";
+import { SecurityHeader } from "./components/SecurityHeaders/Types/securityHeader";
 import { ApplicationState } from "./types";
 import { CspAction, HeaderAction, SettingsAction } from "./reducers/types";
 import { cspAppReducer } from "./reducers/cspAppReducer";

@@ -1,4 +1,4 @@
-import { ContentSecurityPolicy } from "../types/types";
+import { ContentSecurityPolicy } from "../Types/types";
 
 
 export const ContentSecurityPolicyData: ContentSecurityPolicy[] = [

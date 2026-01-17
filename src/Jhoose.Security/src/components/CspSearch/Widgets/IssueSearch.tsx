@@ -9,7 +9,7 @@ import type { ColumnsType, FilterValue, SorterResult, TableCurrentDataSource } f
 
 import { format } from "date-fns";
 import { useSearchParams } from 'react-router-dom';
-import { SearchParams, SelectValue, RowDataType, TableParams, TablePaginationConfig} from './types/types';
+import { SearchParams, SelectValue, RowDataType, TableParams, TablePaginationConfig} from './Types/types';
 
 import { IssueSearchForm } from './IssueSearchForm';
 
