@@ -5,12 +5,12 @@ const isDevelopment = process.env.NODE_ENV === 'development'
 
 module.exports = {
   mode: 'development',
-  entry: './src/app.tsx',
+  entry: './app.tsx',
   devtool: 'inline-source-map',
   //watch: true,
   output: {
     filename: 'csp-app.js',
-    path: path.resolve(__dirname, 'dist/Jhoose.Security/ClientResources'),
+    path: path.resolve(__dirname, '../dist/Jhoose.Security/ClientResources'),
   },
   module: {
     rules: [

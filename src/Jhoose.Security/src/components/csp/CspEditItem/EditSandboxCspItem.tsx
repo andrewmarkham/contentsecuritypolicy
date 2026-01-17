@@ -57,7 +57,9 @@ export function EditSandboxCspItem(props: Props) {
                 <Flex vertical>
                     <div>
                         <h3>{policy.policyName}</h3>
+                        {/* 
                         <div className="summary" dangerouslySetInnerHTML={{__html: policy.summaryText}}></div>
+                        */}
                     </div>
 
                     <div>
