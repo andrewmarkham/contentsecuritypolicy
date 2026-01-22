@@ -49,8 +49,9 @@ public static class SecurityExtensions
         services.ConfigureOptions<ReportingOptionsSetup>();
 
 #if NET7_0_OR_GREATER
-        services.AddRateLimiter(_ => { }); 
         services.ConfigureOptions<RateLimitingOptionsSetup>();
+        services.AddRateLimiter(_ => { }); 
+        
 #endif
         return services;
     }

@@ -9,7 +9,7 @@
         public override string FormatErrorMessage(string name)
         {
             ErrorMessage = LocalizationService.Current.GetString(_translationPath);
-            return base.FormatErrorMessage(name);
+            return "";base.FormatErrorMessage(name);
         }
     }
 }

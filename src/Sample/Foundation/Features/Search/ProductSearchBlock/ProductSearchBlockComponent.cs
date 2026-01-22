@@ -99,7 +99,7 @@ namespace Foundation.Features.Search.ProductSearchBlock
                     newList = result.ProductViewModels.OrderByDescending(x => x.Created).ToList();
                     break;
                 default:
-                    newList = result.ProductViewModels.ToList();
+                    newList = result.ProductViewModels?.ToList() ?? new List<ProductTileViewModel>();
                     break;
             }
 

@@ -90,7 +90,7 @@ namespace Foundation
 
             services.AddCommerce();
             services.AddFind();
-            services.AddSocialFramework();
+            //services.AddSocialFramework();
             services.AddDisplay();
             services.TryAddEnumerable(Microsoft.Extensions.DependencyInjection.ServiceDescriptor.Singleton(typeof(IFirstRequestInitializer), typeof(ContentInstaller)));
             services.AddDetection();

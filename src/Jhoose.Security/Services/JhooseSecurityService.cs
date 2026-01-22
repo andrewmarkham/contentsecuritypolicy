@@ -81,12 +81,15 @@ public class JhooseSecurityService : IJhooseSecurityService
             }
 
             // get the policy
-            var headerValues = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders().ToList(), new TimeSpan(1, 0, 0));
+            var cachedHeaders = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, () => [.. cspProvider.PolicyHeaders()], new TimeSpan(1, 0, 0));
 
-            foreach (var header in headerValues)
+            var nonceValue = this.cspProvider.GenerateNonce();
+            
+            // Clone headers to avoid modifying cached objects (prevents race conditions)
+            foreach (var cachedHeader in cachedHeaders)
             {
-                header.NonceValue = this.cspProvider.GenerateNonce();
-
+                var header = cachedHeader.Clone();
+                header.NonceValue = nonceValue;
 
                 if (response.Headers.ContainsKey(header.Name))
                 {
@@ -97,8 +100,6 @@ public class JhooseSecurityService : IJhooseSecurityService
                     response.Headers.Append(header.Name, header.Value);
                 }
             }
-            
-
         }
         catch (Exception ex)
         {

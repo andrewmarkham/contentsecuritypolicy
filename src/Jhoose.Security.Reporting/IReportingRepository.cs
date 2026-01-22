@@ -10,6 +10,8 @@ public interface IReportingRepository
 
     Task AddReport(ReportTo<IReportToBody> reportTo);
 
+    Task AddReports(IEnumerable<ReportTo<IReportToBody>> reportTo);
+
     Task<DashboardSummary> GetDashboardSummary(DashboardSummary summary);
 
     Task<int> PurgeReporingData(DateTime beforeDate);
