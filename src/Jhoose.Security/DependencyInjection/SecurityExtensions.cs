@@ -36,6 +36,9 @@ using Jhoose.Security.Features.Permissions.Providers;
 using Jhoose.Security.Features.Permissions.Models;
 using Jhoose.Security.Features.ResponseHeaders.Models;
 using Jhoose.Security.Features.CSP.Models;
+using Jhoose.Security.Features.Permissions.Repository;
+using Jhoose.Security.Features.ResponseHeaders.Repository;
+using Jhoose.Security.Features.CSP.Repository;
 
 namespace Jhoose.Security.DependencyInjection;
 
@@ -48,8 +51,6 @@ public static class SecurityExtensions
             Action<JhooseSecurityOptions>? options = null,
             Action<AuthorizationPolicyBuilder>? configurePolicy = null)
     {
-        services.AddHostedService<InitialiseHostedService>();
-
         services.Configure<JhooseSecurityOptions>(configuration.GetSection(JhooseSecurityOptions.JhooseSecurity));
 
         if (options != null)
@@ -68,7 +69,13 @@ public static class SecurityExtensions
         services.AddHostedService<JhooseSqlInit>();
         services.AddSingleton<ISqlHelper, SqlHelper>();
 
-        services.AddKeyedScoped<ISecurityRepository<CspPolicy>, ContentSecurityPolicyRepository>("csp");
+        services.AddScoped<ISecurityRepository<CspPolicy>, ContentSecurityPolicyRepository>();
+        services.Intercept<ISecurityRepository<CspPolicy>>((locator, inner) =>
+        {
+            var cache = locator.GetRequiredService<ICacheManager>();
+            return new CachedSecurityRepository<CspPolicy>(inner, cache);
+        });
+
         services.AddScoped<ICspProvider, StandardCspProvider>();
 
         services.AddScoped<ISettingsRepository, SettingsRepository>();
@@ -76,12 +83,25 @@ public static class SecurityExtensions
         services.AddSingleton<ICacheManager, EpiserverCacheManager>();
         services.AddScoped<IJhooseSecurityService, JhooseSecurityService>();
 
-        services.AddKeyedScoped<ISecurityRepository<ResponseHeader>, ResponseHeaderRepository>("response");
+        services.AddScoped<ISecurityRepository<ResponseHeader>, ResponseHeaderRepository>();
+
+        services.Intercept<ISecurityRepository<ResponseHeader>>((locator, inner) =>
+        {
+            var cache = locator.GetRequiredService<ICacheManager>();
+            return new CachedSecurityRepository<ResponseHeader>(inner, cache);
+        });
+
         services.AddScoped<IAuthKeyService, DefaultAuthKeyService>();
         services.AddScoped<IImportExportService, ImportExportService>();
 
 
-        services.AddKeyedScoped<ISecurityRepository<PermissionPolicy>, PermissionsPolicyRepository>("permissions");
+        services.AddScoped<ISecurityRepository<PermissionPolicy>, PermissionsPolicyRepository>();
+        services.Intercept<ISecurityRepository<PermissionPolicy>>((locator, inner) =>
+        {
+            var cache = locator.GetRequiredService<ICacheManager>();
+            return new CachedSecurityRepository<PermissionPolicy>(inner, cache);
+        });
+
         services.AddScoped<IPermissionsProvider, StandardPermissionsProvider>();
 
         services.AddScoped<IImportRepository, JhooseImportRepository>();
@@ -89,7 +109,7 @@ public static class SecurityExtensions
         services.AddSingleton<IResponseHeadersProvider>((sp) =>
         {
             var options = sp.GetService<IOptions<JhooseSecurityOptions>>();
-            var repo = sp.GetKeyedService<ISecurityRepository<ResponseHeader>>("response");
+            var repo = sp.GetService<ISecurityRepository<ResponseHeader>>();
 
             if (options is null) throw new ArgumentNullException($"{nameof(options)} is null");
             if (repo is null) throw new ArgumentNullException($"{nameof(repo)} is null");

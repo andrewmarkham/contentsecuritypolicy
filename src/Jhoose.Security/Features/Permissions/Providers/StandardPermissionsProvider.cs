@@ -11,35 +11,19 @@ using Jhoose.Security.Features.ResponseHeaders.Models;
 using Jhoose.Security.Features.Settings.Models;
 using Jhoose.Security.Features.Settings.Repository;
 
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Jhoose.Security.Features.Permissions.Providers;
 
-public class StandardPermissionsProvider : IPermissionsProvider
+public class StandardPermissionsProvider(ISecurityRepository<PermissionPolicy> permissionsRepository, 
+    ISettingsRepository settingsRepository, 
+    ISiteDefinitionResolver siteDefinitionResolver) : IPermissionsProvider
 {
-    private readonly ISecurityRepository<PermissionPolicy> permissionsRepository;
-    private readonly ISiteDefinitionResolver siteDefinitionResolver;
-    private readonly ISettingsRepository settingsRepository;
-
-    public StandardPermissionsProvider([FromKeyedServices("permissions")] ISecurityRepository<PermissionPolicy> permissionsRepository, ISettingsRepository settingsRepository, ISiteDefinitionResolver siteDefinitionResolver)
-    {
-        this.permissionsRepository = permissionsRepository;
-        this.settingsRepository = settingsRepository;
-        this.siteDefinitionResolver = siteDefinitionResolver;
-    }
-
-    public void Initialize()
-    {
-        //this.permissionsRepository.Bootstrap();
-    }
-
     public IEnumerable<ResponseHeader> PermissionPolicies()
     {
         var rootRef = ContentReference.IsNullOrEmpty(ContentReference.StartPage) ? ContentReference.RootPage : ContentReference.StartPage;
-        var host = this.siteDefinitionResolver.GetByContent(rootRef, true).SiteUrl.ToString();
+        var host = siteDefinitionResolver.GetByContent(rootRef, true).SiteUrl.ToString();
 
-        var policies = this.permissionsRepository.Load("Permissions-Policy");
-        var settings = this.settingsRepository.Settings();
+        var policies = permissionsRepository.Load();
+        var settings = settingsRepository.Load();
 
         if (!(settings.PermissionMode == "off" || settings.ReportingMode == ReportingMode.None))
         {

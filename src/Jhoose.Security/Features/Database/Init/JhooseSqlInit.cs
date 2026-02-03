@@ -110,7 +110,18 @@ public class JhooseSqlInit(ILogger<JhooseSqlInit> logger, ISqlHelper isqlHelper)
             END
             
             IF (INDEXPROPERTY(OBJECT_ID('ResponseHeaders'), 'IDX_HeaderAndDirective', 'IndexID') IS NULL)
-                CREATE NONCLUSTERED INDEX IDX_HeaderAndDirective ON ResponseHeaders (Name, Directive)            
+                CREATE NONCLUSTERED INDEX IDX_HeaderAndDirective ON ResponseHeaders (Name, Directive)  
+
+            IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='JhooseSecuritySettings' AND xtype='U')
+            BEGIN
+                CREATE TABLE JhooseSecuritySettings (
+                    Id              INT NOT NULL
+                                    CONSTRAINT PK_AppSettings PRIMARY KEY
+                                    CONSTRAINT CK_AppSettings_SingleRow CHECK (Id = 1),
+                    Value           NVARCHAR(max)
+                )
+            END
+                          
         """;
 
         await isqlHelper.ExecuteNonQuery(sqlCommand);
@@ -262,6 +273,23 @@ public class JhooseSqlInit(ILogger<JhooseSqlInit> logger, ISqlHelper isqlHelper)
                     COUNT(*) AS Total 
                 FROM #TempSearchData
 
+            END
+            """;
+        await isqlHelper.ExecuteNonQuery(sqlCommand);
+
+            sqlCommand = """
+            CREATE OR ALTER PROCEDURE UpdateJhooseSecuritySettings(@Value AS NVARCHAR(max)) AS
+            BEGIN
+                UPDATE JhooseSecuritySettings
+                SET
+                    Value = @Value
+                WHERE Id = 1;
+
+                IF @@ROWCOUNT = 0
+                BEGIN
+                    INSERT INTO JhooseSecuritySettings (Id, Value)
+                    VALUES (1, @Value);
+                END
             END
             """;
         await isqlHelper.ExecuteNonQuery(sqlCommand);

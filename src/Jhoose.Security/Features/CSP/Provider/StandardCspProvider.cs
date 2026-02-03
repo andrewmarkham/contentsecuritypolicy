@@ -12,31 +12,19 @@ using Jhoose.Security.Features.CSP.Models;
 using Jhoose.Security.Features.Settings.Models;
 using Jhoose.Security.Features.Settings.Repository;
 
-using Microsoft.Extensions.DependencyInjection;
-
 namespace Jhoose.Security.Features.CSP.Provider;
 
-public class StandardCspProvider : ICspProvider
+public class StandardCspProvider(ISecurityRepository<CspPolicy> policyRepository,
+    ISettingsRepository settingsRepository,
+    ISiteDefinitionResolver siteDefinitionResolver) : ICspProvider
 {
-    private readonly string nonceValue;
-
-    private readonly ISecurityRepository<CspPolicy> policyRepository;
-    private readonly ISettingsRepository settingsRepository;
-    private readonly ISiteDefinitionResolver siteDefinitionResolver;
-
-    public StandardCspProvider([FromKeyedServices("csp")] ISecurityRepository<CspPolicy> policyRepository, ISettingsRepository settingsRepository, ISiteDefinitionResolver siteDefinitionResolver)
-    {
-        this.policyRepository = policyRepository;
-        this.settingsRepository = settingsRepository;
-        this.siteDefinitionResolver = siteDefinitionResolver;
-        this.nonceValue = Guid.NewGuid().ToString();
-    }
+    private readonly string nonceValue = Guid.NewGuid().ToString();
 
     public CspSettings Settings
     {
         get
         {
-            return this.settingsRepository.Settings();
+            return settingsRepository.Load();
         }
     }
 
@@ -48,9 +36,9 @@ public class StandardCspProvider : ICspProvider
     public IEnumerable<CspPolicyHeaderBase> PolicyHeaders()
     {
         var rootRef = ContentReference.IsNullOrEmpty(ContentReference.StartPage) ? ContentReference.RootPage : ContentReference.StartPage;
-        var host = this.siteDefinitionResolver.GetByContent(rootRef, true).SiteUrl.ToString();
+        var host = siteDefinitionResolver.GetByContent(rootRef, true).SiteUrl.ToString();
 
-        var policies = this.policyRepository.Load().ToList();
+        var policies = policyRepository.Load().ToList();
         var settings = this.Settings;
 
         if (!(settings.Mode == "off" || settings.ReportingMode == ReportingMode.None))
@@ -71,7 +59,7 @@ public class StandardCspProvider : ICspProvider
         {
             var actionPolicies = policies.Where(p => !p.ReportOnly).ToList();
 
-            if (actionPolicies.Any())
+            if (actionPolicies.Count != 0)
             {
                 yield return new CspPolicyHeader(settings, host)
                 {
@@ -90,11 +78,4 @@ public class StandardCspProvider : ICspProvider
             }
         }
     }
-
-    public void Initialize()
-    {
-        //this.policyRepository.Bootstrap();
-        this.settingsRepository.Bootstrap();
-    }
-
 }

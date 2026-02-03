@@ -12,8 +12,6 @@ public class CspSettings
         this.PermissionMode = "off";
         this.ReportingMode = ReportingMode.None;
     }
-
-    public Guid Id { get; set; }
     public string Mode { get; set; }
     public string PermissionMode { get; set; }
     public ReportingMode ReportingMode { get; set; }

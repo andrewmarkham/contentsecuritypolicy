@@ -23,7 +23,7 @@ public abstract class NotificationBaseController(
     /// </summary>
     protected virtual void NotifyWebhooks()
     {
-        var settings = settingsRepository.Settings();
+        var settings = settingsRepository.Load();
         var webhoookUrls = settings.WebhookUrls?.Select(u => new Uri(u)).ToList() ?? [];
 
         webhookNotifications.Notify(webhoookUrls);

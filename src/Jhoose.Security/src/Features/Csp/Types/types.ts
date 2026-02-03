@@ -71,3 +71,15 @@ export type CspSandboxPolicy = Omit<CspPolicy, "schemaSource" | "options"> & {
 export interface RefForm {
     RequestSave: () => void;
 }
+
+export type RowProps = {  
+    policyName: string,
+    policy: CspPolicy | null,
+    policyData: ContentSecurityPolicy
+}
+
+export type SandboxRowProps = {  
+    policyName: string,
+    policy: CspSandboxPolicy | null,
+    policyData: ContentSecurityPolicy
+}

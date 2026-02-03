@@ -14,10 +14,9 @@ public interface ISqlHelper
         IEnumerable<SqlParameter>? parameters,
         Func<SqlDataReader, T>? readerAction = null);
 
-    Task<int> ExecuteStoredProcedure<T>(string storedProcedureName,
+    Task<T?> ExecuteStoredProcedure<T>(string storedProcedureName,
                                                   IEnumerable<SqlParameter> parameters,
-                                                  Func<SqlDataReader, T>? readerAction = null,
-                                                  int defaultReturnValue = -1);
+                                                  Func<SqlDataReader, T>? readerAction = null);
 
     Task<T?> ExecuteScalar<T>(string sqlCommand, params SqlParameter[] parameters);
 

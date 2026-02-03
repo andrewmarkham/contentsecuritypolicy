@@ -96,6 +96,7 @@ export function PermissionPolicyModule() {
                                         className="permission-policy__panel">
                                         <PermissionEditor data={permissionRecord || {
                                                 key: permission.name,
+                                                scope: "self",
                                                 mode: "default"
                                             } as Permission}
                                             default={permission.defaultAllowlist}

@@ -10,7 +10,5 @@ public interface ICspProvider
     CspSettings Settings { get; }
     IEnumerable<CspPolicyHeaderBase> PolicyHeaders();
 
-    void Initialize();
-
     string GenerateNonce();
 }

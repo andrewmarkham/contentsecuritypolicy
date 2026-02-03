@@ -39,6 +39,12 @@ export function useUpdateCspPolicyMutation() {
         if (!current) {
           return [updatedPolicy];
         }
+        const index = current.findIndex((policy) => policy.id === updatedPolicy.id);
+
+        if (index === -1) {
+          return [...current, updatedPolicy];
+        }
+
         return current.map((policy) =>
           policy.id === updatedPolicy.id ? updatedPolicy : policy
         );

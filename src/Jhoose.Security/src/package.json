@@ -9,7 +9,7 @@
     "server": "npx node ./index.js",
     "dev": "webpack --config webpack.config.js",
     "watch": "npx webpack watch --config webpack.config.js && node ./index.js",
-    "copy": "cp ../dist/Jhoose.Security/ClientResources/csp-app.js ../Sample/DemoSite/modules/_protected/Jhoose.Security/ClientResources/csp-app.js"
+    "copy": "cp ../dist/Jhoose.Security/ClientResources/csp-app.js ../../Sample/Foundation/modules/_protected/Jhoose.Security/ClientResources/csp-app.js"
   },
   "keywords": [],
   "author": "",
