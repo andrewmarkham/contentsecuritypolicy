@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Concurrent;
+using System.Threading;
 
 using EPiServer.Framework.Cache;
 
@@ -10,10 +12,8 @@ namespace Jhoose.Security.Features.Core.Cache;
 /// <param name="cache"></param>
 public class EpiserverCacheManager(ISynchronizedObjectInstanceCache cache) : ICacheManager
 {
-    
-    #pragma warning disable IDE0330
-    private static readonly object lockObject = new();
-    #pragma warning restore IDE0330
+    private static readonly ConcurrentDictionary<string, SemaphoreSlim> keyLocks = new(StringComparer.Ordinal);
+    private static readonly TimeSpan lockWaitTimeout = TimeSpan.FromSeconds(2);
 
     /// <inheritdoc/>
     public void Insert(string cacheKey, object value, TimeSpan duration)
@@ -24,26 +24,60 @@ public class EpiserverCacheManager(ISynchronizedObjectInstanceCache cache) : ICa
     }
 
     /// <inheritdoc/>
-    public T Get<T>(string cacheKey) where T : class
+    public T? Get<T>(string cacheKey) where T : class
     {
-        return cache.Get<T>(cacheKey, ReadStrategy.Wait);
+        if (cache.TryGet<T>(cacheKey, ReadStrategy.Wait, out var cachedValue))
+        {
+            return cachedValue;
+        }
+
+        var semaphore = keyLocks.GetOrAdd(cacheKey, _ => new SemaphoreSlim(1, 1));
+        if (!semaphore.Wait(lockWaitTimeout))
+        {
+            return cache.TryGet<T>(cacheKey, ReadStrategy.Wait, out cachedValue) ? cachedValue : null;
+        }
+        try
+        {
+            return cache.TryGet<T>(cacheKey, ReadStrategy.Wait, out cachedValue) ? cachedValue : null;
+        }
+        finally
+        {
+            semaphore.Release();
+        }
     }
 
     /// <inheritdoc/>
-    public T Get<T>(string cacheKey, Func<T> getValue, TimeSpan duration) where T : class
+    public T? Get<T>(string cacheKey, Func<T> getValue, TimeSpan duration) where T : class
     {
-        lock (lockObject)
+        if (cache.TryGet<T>(cacheKey, ReadStrategy.Wait, out var cachedValue))
         {
-            T cachedValue = cache.Get<T>(cacheKey, ReadStrategy.Wait);
+            return cachedValue;
+        }
 
-            if (cachedValue == null)
+        var semaphore = keyLocks.GetOrAdd(cacheKey, _ => new SemaphoreSlim(1, 1));
+        if (!semaphore.Wait(lockWaitTimeout))
+        {
+            if (cache.TryGet<T>(cacheKey, ReadStrategy.Wait, out cachedValue))
             {
-                cachedValue = getValue();
-
-                this.Insert(cacheKey, cachedValue, duration);
+                return cachedValue;
             }
 
+            return getValue();
+        }
+        try
+        {
+            if (cache.TryGet<T>(cacheKey, ReadStrategy.Wait, out cachedValue))
+            {
+                return cachedValue;
+            }
+
+            cachedValue = getValue();
+            this.Insert(cacheKey, cachedValue, duration);
             return cachedValue;
+        }
+        finally
+        {
+            semaphore.Release();
         }
     }
 

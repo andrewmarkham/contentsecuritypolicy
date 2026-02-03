@@ -1,6 +1,12 @@
 import { CspPolicy, CspSandboxPolicy } from "../Types/types";
 
-export function getPolicyOptionsDisplay(policy: CspPolicy): string {
+export function getPolicyOptionsDisplay(policy: CspPolicy | null): string {
+
+    if (!policy) {
+        return "";
+    }
+    
+
     var v = "";
     if (policy.options)
     {
@@ -23,7 +29,12 @@ export function getPolicyOptionsDisplay(policy: CspPolicy): string {
     return v;
 }
 
-export function getSchemaSourceDisplay(policy: CspPolicy): string {
+export function getSchemaSourceDisplay(policy: CspPolicy | null): string {
+
+    if (!policy) {
+        return "";
+    }
+    
     var v = "";
 
     if (!policy.options.none && policy.schemaSource)
@@ -52,8 +63,12 @@ export function isScriptPolicy(policy: CspPolicy): boolean{
     return false;
 }
 
-export function getSandboxOptionsDisplay(policy: CspSandboxPolicy): string {
-    //var v = `${policy.policyName} `;
+export function getSandboxOptionsDisplay(policy: CspSandboxPolicy | null): string {
+    
+    if (!policy) {
+        return "";
+    }
+
     var v = "";
     // sandboxOptions
     if (policy.sandboxOptions?.enabled ?? false) {

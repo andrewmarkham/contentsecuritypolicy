@@ -89,12 +89,11 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
         return results;
     }
 
-    public async Task<int> ExecuteStoredProcedure<T>(string storedProcedureName,
+    public async Task<T?> ExecuteStoredProcedure<T>(string storedProcedureName,
                                                   IEnumerable<SqlParameter> parameters,
-                                                  Func<SqlDataReader, T>? readerAction = null,
-                                                  int defaultReturnValue = -1)
+                                                  Func<SqlDataReader, T>? readerAction = null)
     {
-        var value = defaultReturnValue;
+        T? result = default;
         try
         {
             using var connection = new SqlConnection(options.ConnectionString);
@@ -110,22 +109,18 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
                 command.Parameters.Add(parameter);
             }
 
-            command.Parameters.Add("@returnValue", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
-
             await command.Connection.OpenAsync();
             await using var reader = await command.ExecuteReaderAsync(CommandBehavior.CloseConnection);
 
             if (readerAction is not null)
-                readerAction(reader);
-
-            value = (int)command.Parameters["@returnValue"].Value;
+                result = readerAction(reader);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error while running stored procedure");
         }
 
-        return value;
+        return result;
     }
 
     public SqlParameter CreateParameter<T>(string parameterName, SqlDbType dbType, T value)

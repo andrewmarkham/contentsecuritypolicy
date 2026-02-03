@@ -1,35 +1,34 @@
 import React, { useMemo, useState } from 'react';
 
-import { CspPolicy } from '../../Types/types';
+import { ContentSecurityPolicy, CspPolicy, CspSandboxPolicy, RowProps } from '../../Types/types';
 
 import { getPolicyOptionsDisplay, getSchemaSourceDisplay } from '../../lib/helpers';
 import { Cell } from "../../../../components/DataTable/Cell";
 import { Row } from "../../../../components/DataTable/Row";
 import { MutedOutlined } from '@ant-design/icons';
 import { EditDefaultCspItem } from '../CspEditItem/EditDefaultCspItem';
+import { v4 as uuidv4 } from 'uuid';
 
-type Props = {  
-    row: CspPolicy,
-    save: (data: CspPolicy) => void
-}
 
-export function CspDataRow(props: Props) {
+    
+export function CspDataRow(props: RowProps) {
 
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const [emptyPolicy] = useState(() => createEmptyPolicy(props.policyName));
 
-    const policy = props.row;
+    const policy = props.policy ?? emptyPolicy;
 
     const options = useMemo(() => {
         return getPolicyOptionsDisplay(policy);
-    }, [policy.options]);
+    }, [policy?.options]);
 
     const schema = useMemo(() => {
         return getSchemaSourceDisplay(policy);
-    }, [policy.schemaSource]);
+    }, [policy?.schemaSource]);
 
     return(
         <>
-        <Row key={policy.id} >
+        <Row key={policy.policyName} >
             <Cell width="150px">
                 <button className="linkButton" onClick={() => setIsEditOpen(true)}>{policy.policyName}</button>
             </Cell>
@@ -53,4 +52,34 @@ export function CspDataRow(props: Props) {
         </Row>
         </>
     );
+}
+function createEmptyPolicy(policyName: string): CspPolicy {
+    return {
+        id: uuidv4(),
+        policyName,
+        options: {
+            wildcard: false,
+            none: false,
+            self: false,
+            unsafeEval: false,
+            wasmUnsafeEval: false,
+            unsafeHashes: false,
+            unsafeInline: false,
+            strictDynamic: false,
+            nonce: false,
+        },
+        schemaSource: {
+            enabled: false,
+            http: false,
+            https: false,
+            data: false,
+            mediastream: false,
+            blob: false,
+            filesystem: false,
+            ws: false,
+            wss: false,
+        },
+        value: '',
+        reportOnly: false,
+    };
 }

@@ -1,21 +1,19 @@
 import React, { useMemo, useState } from 'react';
-import { CspPolicy, CspSandboxPolicy } from '../../Types/types';
+import { CspSandboxPolicy, SandboxRowProps } from '../../Types/types';
 
 import { getSandboxOptionsDisplay } from '../../lib/helpers';
 import { Cell } from "../../../../components/DataTable/Cell";
 import { Row } from "../../../../components/DataTable/Row";
 import { MutedOutlined } from '@ant-design/icons';
 import { EditSandboxCspItem } from '../CspEditItem/EditSandboxCspItem';
+import { v4 as uuidv4 } from 'uuid';
 
-type Props = {  
-    row: CspSandboxPolicy,
-    save: (data: CspPolicy) => void
-}
 
-export function CspSandboxDataRow(props: Props) {
+export function CspSandboxDataRow(props: SandboxRowProps) {
 
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const policy = props.row;
+    const [emptyPolicy] = useState(() => createEmptyPolicy(props.policyName));
+    const policy = props.policy ?? emptyPolicy;
 
     const options = useMemo(() => {
         return getSandboxOptionsDisplay(policy);
@@ -23,7 +21,7 @@ export function CspSandboxDataRow(props: Props) {
 
     return(
         <>
-        <Row key={policy.id} >
+        <Row key={props.policyName} >
             <Cell width="150px">
                 <button className="linkButton" onClick={() => setIsEditOpen(true)}>{policy.policyName}</button>
             </Cell>
@@ -45,3 +43,27 @@ export function CspSandboxDataRow(props: Props) {
         </>
     );
 }
+function createEmptyPolicy(policyName: string): CspSandboxPolicy {
+    return {
+        id: uuidv4(),
+        policyName,
+        sandboxOptions: {
+            enabled: false,
+            allowDownloads: false,
+            allowForms: false,
+            allowModals: false,
+            allowOrientationLock: false,
+            allowPointerLock: false,
+            allowPopups: false,
+            allowPopupsToEscapeSandbox: false,
+            allowPresentation: false,
+            allowSameOrigin: false,
+            allowScripts: false,
+            allowTopNavigation: false,
+            allowTopNavigationByUserActivation: false,
+            allowTopNavigationToCustomProtocols: false,
+        },
+        value: '',
+        reportOnly: false
+    };
+}       

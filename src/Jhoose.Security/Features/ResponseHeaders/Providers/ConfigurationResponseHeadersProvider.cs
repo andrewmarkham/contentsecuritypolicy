@@ -18,9 +18,5 @@ public class ConfigurationResponseHeadersProvider : IResponseHeadersProvider
         securityHeaders = options?.Value.Headers;
     }
 
-    public void Initialize()
-    {
-    }
-
     public IEnumerable<ResponseHeader> ResponseHeaders() => securityHeaders ?? Enumerable.Empty<ResponseHeader>();
 }

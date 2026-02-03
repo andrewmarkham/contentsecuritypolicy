@@ -84,7 +84,7 @@ public class JhooseController(ICspProvider cspProvider,
     private IEnumerable<KeyValuePair<string, string>> GetContentSecurityPolicy(string nonce)
     {
         // get the policy settings
-        var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => settingsRepository.Settings(),
+        var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => settingsRepository.Load(),
             new TimeSpan(1, 0, 0));
 
         if (policySettings.IsEnabled)
@@ -105,7 +105,7 @@ public class JhooseController(ICspProvider cspProvider,
     private IEnumerable<KeyValuePair<string, string>> GetContentPermissionsPolicy()
     {
         // get the policy settings
-        var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => settingsRepository.Settings(),
+        var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => settingsRepository.Load(),
             new TimeSpan(1, 0, 0));
 
         if (policySettings.IsPermissionsEnabled)

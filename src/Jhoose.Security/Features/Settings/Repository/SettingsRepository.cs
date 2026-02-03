@@ -1,105 +1,93 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using EPiServer.Data;
-using EPiServer.Data.Dynamic;
 
 using Jhoose.Security.Features.Core.Cache;
 using Jhoose.Security.Features.Settings.Models;
+using Dapper;
 
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Data;
+using System.Text.Json;
+
 
 namespace Jhoose.Security.Features.Settings.Repository;
 
-public class SettingsRepository : ISettingsRepository
+public class SettingsRepository(
+                ICacheManager cache,
+                ILogger<SettingsRepository> logger,
+                IConfiguration configuration
+    ) : ISettingsRepository
 {
-    public SettingsRepository(DynamicDataStoreFactory dataStoreFactory,
-    ICacheManager cache,
-    IDatabaseMode databaseMode,
-    ILogger<SettingsRepository> logger
-    )
+    private static readonly TimeSpan settingsCacheDuration = TimeSpan.FromHours(1);
+    protected virtual string ConnectionString => configuration.GetConnectionString("EPiServerDB") ?? string.Empty;
+    public  CspSettings Load()
     {
-        this.cache = cache;
-        this.databaseMode = databaseMode;
-        this.logger = logger;
-        this.dataStoreFactory = dataStoreFactory;
-
-    }
-
-    private readonly ICacheManager cache;
-    private readonly IDatabaseMode databaseMode;
-    private readonly ILogger<SettingsRepository> logger;
-    protected readonly DynamicDataStoreFactory dataStoreFactory;
-    
-    public  CspSettings Settings()
-    {
-        using (var ss = GetSettingstore())
+        var cachedSettings = cache.Get<CspSettings>(Constants.SettingsCacheKey);
+        if (cachedSettings is not null)
         {
-            var s = ss.Items<CspSettings>().FirstOrDefault();
-
-            s = s ?? new CspSettings
-            {
-                Id = Guid.NewGuid(),
-                Mode = "report",
-                PermissionMode = "off",
-                ReportingUrl = string.Empty,
-                WebhookUrls = new List<string>(),
-                AuthenticationKeys = new List<Models.AuthenticationKey>()
-            };
-            return s;
+            return cachedSettings;
         }
+
+        CspSettings? settings = null;
+
+        try
+        {
+            var sql = "SELECT TOP 1 Value FROM JhooseSecuritySettings";
+            using var connection = new SqlConnection(ConnectionString);
+            var settingsJson = connection.QuerySingleOrDefault<string>(sql);
+
+            settings = settingsJson is not null
+                ? JsonSerializer.Deserialize<CspSettings>(settingsJson) : null;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error loading jhoose security settings from database");
+        }
+
+        cachedSettings = settings ?? new CspSettings
+        {
+            Mode = "report",
+            PermissionMode = "off",
+            ReportingUrl = string.Empty,
+            WebhookUrls = [],
+            AuthenticationKeys = []
+        };
+
+        cache.Insert(Constants.SettingsCacheKey, cachedSettings, settingsCacheDuration);
+        return cachedSettings;
     }
 
     public  bool SaveSettings(CspSettings settings)
     {
-        using (var ss = GetSettingstore())
-        {
-            this.cache.Remove(Constants.SettingsCacheKey);
-            this.cache.Remove(Constants.PolicyCacheKey);
-            this.cache.Remove(Constants.ResponseHeadersCacheKey);
-            this.cache.Remove(Constants.PermissionPolicyCacheKey);
-   
-            try
+        using var connection = new SqlConnection(ConnectionString);
+
+        try
+        {   
+            connection.Open();
+
+            SqlCommand command = new("UpdateJhooseSecuritySettings", connection)
             {
-                var id = ss.Save(settings, Identity.NewIdentity(settings.Id));
+                CommandType = CommandType.StoredProcedure
+            };
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                this.logger.LogError(ex, "Error saving settings");
-                return false;
-            }
+            command.Parameters.AddWithValue("@value", JsonSerializer.Serialize(settings));
+            command.ExecuteNonQuery();
+            return true;
         }
-    }
-
-    public void Bootstrap()
-    {
-        if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
-            return;
-
-        Remap<CspSettings>();
-    }
-
-    private void Remap<T>()
-    {
-        if (this.databaseMode.DatabaseMode == DatabaseMode.ReadOnly)
-            return;
-
-        var definition = StoreDefinition.Get(typeof(T).FullName);
-
-        if (definition != null)
+        catch (Exception ex)
         {
-            definition.Remap(typeof(T));
-            definition.CommitChanges();
+            logger.LogError(ex, "Error saving settings");
+            return false;
         }
+        finally
+        {
+            connection.Close();
 
-    }
-    private DynamicDataStore GetSettingstore()
-    {
-        var storeParams = new StoreDefinitionParameters();
-
-        return dataStoreFactory.CreateStore(typeof(CspSettings).FullName, typeof(CspSettings));
+            cache.Remove(Constants.SettingsCacheKey);
+            cache.Remove(Constants.PolicyCacheKey);
+            cache.Remove(Constants.ResponseHeadersCacheKey);
+            cache.Remove(Constants.PermissionPolicyCacheKey);
+        }
     }
 }

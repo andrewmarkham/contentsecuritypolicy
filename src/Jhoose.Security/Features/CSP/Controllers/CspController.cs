@@ -13,7 +13,6 @@ using Jhoose.Security.Features.Settings.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.CSP.Controllers;
@@ -29,7 +28,7 @@ namespace Jhoose.Security.Features.CSP.Controllers;
 [Route("api/jhoose/[controller]")]
 [ApiController]
 [Authorize(Policy = Constants.Authentication.PolicyName)]
-public class CspController([FromKeyedServices("csp")] ISecurityRepository<CspPolicy>  policyRepository,
+public class CspController(ISecurityRepository<CspPolicy>  policyRepository,
                       ISettingsRepository settingsRepository,
                       IWebhookNotifications webhookNotifications,
                       ILogger<CspController> logger) : NotificationBaseController(settingsRepository, webhookNotifications)

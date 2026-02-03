@@ -12,6 +12,8 @@ import { getErrorMessage, useCspPoliciesQuery } from '../lib/cspQueries';
 import { message } from 'antd';
 import { useIsMutating } from '@tanstack/react-query';
 
+import {ContentSecurityPolicyData} from '../Data/ContentSecurityPolicies';
+
 export function CspDataGrid() {
 
     const [messageApi, contextHolder] = message.useMessage();
@@ -25,6 +27,7 @@ export function CspDataGrid() {
     }, [cspPoliciesQuery.error, messageApi]);
 
     const policies = cspPoliciesQuery.data ?? [];
+
     return(
         <>
         {contextHolder}
@@ -42,10 +45,14 @@ export function CspDataGrid() {
                 <Cell width="100px">&nbsp;</Cell>
             </Header>
                 <>
-                {policies.map((r) => {
-                    return (r.policyName !== "sandbox"  ?
-                        <CspDataRow key={r.id} row={r as CspPolicy} save={() => null}/> :
-                        <CspSandboxDataRow key={r.id} row={r as CspSandboxPolicy} save={() => null} /> )
+                {Object.entries(ContentSecurityPolicyData).map(([key, policyData]) => {
+
+                    var policy = policies.find(p => p.policyName === key);
+
+                    return (
+                        key !== "sandbox"  ?
+                        <CspDataRow key={key} policy={policy as CspPolicy} policyData={policyData} policyName={key} /> :
+                        <CspSandboxDataRow key={key} policy={policy as CspSandboxPolicy} policyData={policyData} policyName={key} /> )
                 })}
                 </>
         </Table>

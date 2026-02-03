@@ -4,12 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Jhoose.Security.Features.Core.Cache;
-using Jhoose.Security.Features.CSP.Models;
 using Jhoose.Security.Features.CSP.Provider;
 using Jhoose.Security.Features.Permissions.Providers;
 using Jhoose.Security.Features.ResponseHeaders.Models;
 using Jhoose.Security.Features.ResponseHeaders.Providers;
-using Jhoose.Security.Features.Settings.Models;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -69,7 +67,7 @@ public class JhooseSecurityService(ICspProvider cspProvider,
         try
         {
             // get the policy settings
-            var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => cspProvider.Settings, new TimeSpan(1, 0, 0));
+            var policySettings = cspProvider.Settings;
 
             if (!policySettings.IsEnabled)
             {
@@ -77,7 +75,7 @@ public class JhooseSecurityService(ICspProvider cspProvider,
             }
 
             // get the policy
-            var cachedHeaders = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey, () => cspProvider.PolicyHeaders().ToList(), new TimeSpan(1, 0, 0));
+            var cachedHeaders = cspProvider.PolicyHeaders().ToList();
             var nonceValue = cspProvider.GenerateNonce();
             
             foreach (var cachedHeader in cachedHeaders)
@@ -87,7 +85,8 @@ public class JhooseSecurityService(ICspProvider cspProvider,
 
                 if (response.Headers.ContainsKey(header.Name))
                 {
-                    logger.LogWarning($"Header : {header.Name} already exists in the reponse, the Jhoose CSP module will not override this");
+                    if (logger.IsEnabled(LogLevel.Warning))
+                        logger.LogWarning("Header : {Name} already exists in the reponse, the Jhoose CSP module will not override this", header.Name);
                 }
                 else
                 {
@@ -110,19 +109,20 @@ public class JhooseSecurityService(ICspProvider cspProvider,
         try
         {
             // get the policy settings
-            var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => cspProvider.Settings, new TimeSpan(1, 0, 0));
+            var policySettings = cspProvider.Settings;
             if (!policySettings.IsPermissionsEnabled)
             {
                 return;
             }
-
-            var headerValues = cache.Get<List<ResponseHeader>>(Constants.PermissionPolicyCacheKey, () => [..permissionsProvider.PermissionPolicies()], new TimeSpan(1, 0, 0));
+    
+            var headerValues = permissionsProvider.PermissionPolicies();
 
             foreach (var header in headerValues)
             {
                 if (response.Headers.ContainsKey(header.Name))
                 {
-                    logger.LogWarning($"Header : {header.Name} already exists in the reponse, the Jhoose CSP module will not override this");
+                    if (logger.IsEnabled(LogLevel.Warning))
+                        logger.LogWarning("Header : {Name} already exists in the reponse, the Jhoose Permissions-Policy module will not override this", header.Name);
                 }
                 else
                 {

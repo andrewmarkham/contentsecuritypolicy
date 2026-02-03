@@ -11,7 +11,6 @@ using Jhoose.Security.Features.ResponseHeaders.Models;
 using Jhoose.Security.Features.Settings.Repository;
 using Jhoose.Security.Helpers;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.ImportExport.Services;
@@ -24,9 +23,9 @@ public class ImportExportService : IImportExportService
     private readonly ISecurityRepository<PermissionPolicy> permissionsRepository;
     private readonly ISettingsRepository settingsRepository;
 
-    public ImportExportService([FromKeyedServices("csp")] ISecurityRepository<CspPolicy> policyRepository,
-                              [FromKeyedServices("response")] ISecurityRepository<ResponseHeader>  responseHeadersRepository,
-                              [FromKeyedServices("permissions")] ISecurityRepository<PermissionPolicy> permissionsRepository,
+    public ImportExportService(ISecurityRepository<CspPolicy> policyRepository,
+                              ISecurityRepository<ResponseHeader>  responseHeadersRepository,
+                              ISecurityRepository<PermissionPolicy> permissionsRepository,
                               ISettingsRepository settingsRepository,
                               ILogger<ImportExportService> logger)
     {
@@ -66,7 +65,7 @@ public class ImportExportService : IImportExportService
         var export = new JhoooseSecurityExport
         {
             Metadata = new ExportMetadata(),
-            CspSettings = includeSettings ? settingsRepository.Settings() : null,
+            CspSettings = includeSettings ? settingsRepository.Load() : null,
             CspPolicies = includeCsp ? [.. policyRepository.Load()] : null,
             Permissions = includePermissions ? [.. permissionsRepository.Load()] : null,
             ResponseHeaders = includeHeaders ? [.. responseHeadersRepository.Load()] : null

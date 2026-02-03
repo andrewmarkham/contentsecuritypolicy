@@ -54,7 +54,7 @@ public class SettingsController(ISettingsRepository settingsRepository,
     {
         try
         {
-            var settings = settingsRepository.Settings();
+            var settings = settingsRepository.Load();
 
             return new JsonResult(settings, jsonSerializerOptions)
             {

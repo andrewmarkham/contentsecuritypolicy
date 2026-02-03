@@ -4,9 +4,7 @@ namespace Jhoose.Security.Features.Settings.Repository;
 
 public interface ISettingsRepository
 {
-    CspSettings Settings();
+    CspSettings Load();
 
     bool SaveSettings(CspSettings settings);
-
-    void Bootstrap();
 }

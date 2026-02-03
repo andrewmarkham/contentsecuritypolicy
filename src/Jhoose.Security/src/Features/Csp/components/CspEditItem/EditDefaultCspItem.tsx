@@ -95,7 +95,7 @@ export function EditDefaultCspItem(props: Props) {
         <>
         {contextHolder}
         <Modal
-            destroyOnClose
+            destroyOnHidden
             title={title}
             open={props.isOpen}
             onOk={handleOk}
