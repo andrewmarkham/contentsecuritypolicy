@@ -9,6 +9,7 @@ public class CspPolicy
     public CspPolicy()
     {
         this.Id = Guid.NewGuid();
+        this.Site = string.Empty;
         this.Order = 1;
         this.Level = CspPolicyLevel.Level1;
         this.ReportOnly = false;
@@ -22,6 +23,8 @@ public class CspPolicy
     }
 
     public Guid Id { get; set; }
+
+    public string Site { get; set; }
     public int Order { get; set; }
 
     public CspPolicyLevel Level { get; set; }

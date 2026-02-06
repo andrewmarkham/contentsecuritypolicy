@@ -5,6 +5,7 @@ import './collapsiblePanel.css';
 
 export type CollapsiblePanelProps = {
     header: ReactNode;
+    headerSuffix?: ReactNode;
     defaultExpanded?: boolean;
     className?: string;
     headerClassName?: string;
@@ -15,6 +16,7 @@ export type CollapsiblePanelProps = {
 export function CollapsiblePanel(props: PropsWithChildren<CollapsiblePanelProps>) {
     const {
         header,
+        headerSuffix,
         defaultExpanded = false,
         className,
         headerClassName,
@@ -50,6 +52,11 @@ export function CollapsiblePanel(props: PropsWithChildren<CollapsiblePanelProps>
                 <div className="collapsible-panel__header-body">
                     {header}
                 </div>
+                {headerSuffix && (
+                    <div className="collapsible-panel__header-suffix">
+                        {headerSuffix}
+                    </div>
+                )}
                 <span
                     className={`collapsible-panel__icon ${isExpanded ? 'collapsible-panel__icon--expanded' : ''}`}
                     aria-hidden="true"

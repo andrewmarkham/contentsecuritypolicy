@@ -19,6 +19,12 @@ async function updateCspPolicy(policy: CspRecord): Promise<CspRecord> {
   });
 }
 
+async function deleteCspPolicy(id: string): Promise<void> {
+  await requestJson<void>(`/api/jhoose/csp/${id}`, {
+    method: 'DELETE',
+  });
+}
+
 export function useCspPoliciesQuery() {
   return useQuery({
     queryKey: cspQueryKey,
@@ -48,6 +54,23 @@ export function useUpdateCspPolicyMutation() {
         return current.map((policy) =>
           policy.id === updatedPolicy.id ? updatedPolicy : policy
         );
+      });
+    },
+  });
+}
+
+export function useDeleteCspPolicyMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ['cspPolicy'],
+    mutationFn: deleteCspPolicy,
+    onSuccess: (_data, id) => {
+      queryClient.setQueryData<CspRecord[]>(cspQueryKey, (current) => {
+        if (!current) {
+          return current;
+        }
+        return current.filter((policy) => policy.id !== id);
       });
     },
   });

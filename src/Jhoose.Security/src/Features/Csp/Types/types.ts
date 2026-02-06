@@ -57,6 +57,7 @@ export interface SandboxOptions {
 }
 export interface CspPolicy {
     id: string;
+    site: string;
     policyName: string;
     reportOnly: boolean;
     schemaSource: SchemaSource;
@@ -72,14 +73,24 @@ export interface RefForm {
     RequestSave: () => void;
 }
 
+export type PolicySource = "default" | "inherited" | "overridden";
+
 export type RowProps = {  
     policyName: string,
     policy: CspPolicy | null,
-    policyData: ContentSecurityPolicy
+    policyData: ContentSecurityPolicy,
+    source: PolicySource,
+    siteId: string,
+    siteName: string,
+    inheritedPolicy: CspPolicy | null
 }
 
 export type SandboxRowProps = {  
     policyName: string,
     policy: CspSandboxPolicy | null,
-    policyData: ContentSecurityPolicy
+    policyData: ContentSecurityPolicy,
+    source: PolicySource,
+    siteId: string,
+    siteName: string,
+    inheritedPolicy: CspSandboxPolicy | null
 }

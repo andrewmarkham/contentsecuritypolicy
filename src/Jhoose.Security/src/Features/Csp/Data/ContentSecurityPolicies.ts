@@ -49,7 +49,7 @@ export const ContentSecurityPolicyData: Record<string, ContentSecurityPolicy> = 
     "sandbox": {
         order: 10,
         level: 1,
-        summaryText: "Enables a sandbox for the requested resource similar to the iframe sandbox attribute. The sandbox applies a same origin policy, prevents popups, plugins and script execution is blocked. You can keep the sandbox value empty to keep all restrictions in place, or add values: allow-forms allow-same-origin allow-scripts allow-popups, allow-modals, allow-orientation-lock, allow-pointer-lock, allow-presentation, allow-popups-to-escape-sandbox, and allow-top-navigation"
+        summaryText: "Enables a sandbox for the requested resource similar to the iframe sandbox attribute. The sandbox applies a same origin policy, prevents popups, plugins and script execution is blocked."
     },
     "child-src": {
         order: 11,
