@@ -12,3 +12,5 @@ export type Permission = {
     scope: "all" | "self" ;
     allowlist: string[];
 };
+
+export type PermissionSource = "default" | "inherited" | "overridden";

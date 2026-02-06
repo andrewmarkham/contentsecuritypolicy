@@ -1,12 +1,13 @@
 
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Tooltip, Typography, message } from 'antd';
+import { Alert, Flex, Tag, Tooltip, Typography, message } from 'antd';
 import { Table } from '../../components/DataTable/Table';
 import { Cell } from '../../components/DataTable/Cell';
 import { Header } from '../../components/DataTable/Header';
 import { CollapsiblePanel } from '../../components/CollapsiblePanel/CollapsiblePanel';
-import { Permission, PermissionPolicy } from './Types/types';
+import { Permission, PermissionPolicy, PermissionSource } from './Types/types';
+import { WebsiteSelector, GLOBAL_DEFAULT_SITE_ID } from '../../components/WebsiteSelector/WebsiteSelector';
 
 import { PermissionPolicyData, browserDetails } from './Data/PermissionPolicyData';
 import { CheckCircleTwoTone, CloseCircleTwoTone, InfoCircleOutlined } from '@ant-design/icons';
@@ -17,6 +18,26 @@ import { Toaster } from '../../components/Toaster';
 import { RenderPermission } from './components/RenderPermission';
 import { getErrorMessage, usePermissionsQuery } from './lib/permissionQueries';
 
+function createDefaultPermission(name: string): Permission {
+    return {
+        key: name,
+        scope: "self",
+        mode: "default",
+        allowlist: [],
+    };
+}
+
+function SourceTag(props: { source: PermissionSource }) {
+    switch (props.source) {
+        case "default":
+            return <Tag color="blue">Global default</Tag>;
+        case "overridden":
+            return <Tag color="gold">Overridden</Tag>;
+        default:
+            return <Tag>Inherited</Tag>;
+    }
+}
+
 
 
 export function PermissionPolicyModule() {
@@ -25,6 +46,9 @@ export function PermissionPolicyModule() {
 
     const [messageApi, contextHolder] = message.useMessage();
     const permissionsQuery = usePermissionsQuery();
+    const [activeWebsiteId, setActiveWebsiteId] = useState<string>(GLOBAL_DEFAULT_SITE_ID);
+    const [selectedWebsiteLabel, setSelectedWebsiteLabel] = useState<string>('Global Default');
+    const [siteOverrides, setSiteOverrides] = useState<Record<string, Record<string, Permission>>>({});
 
     const permissionPolicy = bcd.http["headers"]["Permissions-Policy"];
     const permissionPolicyRecords = permissionPolicy as Record<string, Identifier | undefined>;
@@ -37,6 +61,51 @@ export function PermissionPolicyModule() {
 
     const permissions = permissionsQuery.data ?? [];
     const isLoading = permissionsQuery.isLoading || permissionsQuery.isFetching;
+    const isDefaultWebsite = activeWebsiteId === GLOBAL_DEFAULT_SITE_ID;
+    const selectedOverrides = siteOverrides[activeWebsiteId] ?? {};
+    const overrideCount = Object.keys(selectedOverrides).length;
+
+    const defaultPermissionsByKey = useMemo(() => {
+        return permissions.reduce((acc, permission) => {
+            acc[permission.key] = permission;
+            return acc;
+        }, {} as Record<string, Permission>);
+    }, [permissions]);
+
+    const saveSiteOverride = useCallback((permission: Permission) => {
+        if (isDefaultWebsite) {
+            return;
+        }
+
+        setSiteOverrides((current) => ({
+            ...current,
+            [activeWebsiteId]: {
+                ...(current[activeWebsiteId] ?? {}),
+                [permission.key]: permission,
+            },
+        }));
+    }, [activeWebsiteId, isDefaultWebsite]);
+
+    const clearSiteOverride = useCallback((permissionKey: string) => {
+        if (isDefaultWebsite) {
+            return;
+        }
+
+        setSiteOverrides((current) => {
+            const existingSiteOverrides = current[activeWebsiteId];
+            if (!existingSiteOverrides || !existingSiteOverrides[permissionKey]) {
+                return current;
+            }
+
+            const nextSiteOverrides = { ...existingSiteOverrides };
+            delete nextSiteOverrides[permissionKey];
+
+            return {
+                ...current,
+                [activeWebsiteId]: nextSiteOverrides,
+            };
+        });
+    }, [activeWebsiteId, isDefaultWebsite]);
 
     return(
         <>
@@ -63,6 +132,23 @@ export function PermissionPolicyModule() {
                     <PermissionCompatibilityHeaderMatrix data={permissionPolicy} />
                 </div>
 
+                <Flex gap={12} align="flex-end" style={{marginBottom: "14px"}} wrap>
+                    <WebsiteSelector
+                        value={activeWebsiteId}
+                        onChange={setActiveWebsiteId}
+                        onSiteChange={(site) => setSelectedWebsiteLabel(site.name)}
+                    />
+                </Flex>
+
+                {!isDefaultWebsite && (
+                    <Alert
+                        style={{marginBottom: "14px"}}
+                        type="info"
+                        showIcon
+                        message={`${selectedWebsiteLabel} inherits from Global Default by default`}
+                        description={`${overrideCount} permission override${overrideCount === 1 ? "" : "s"} configured for this website.`}
+                    />
+                )}
 
                 <Table>
                         <Header>
@@ -73,7 +159,10 @@ export function PermissionPolicyModule() {
 
                         {PermissionPolicyData.map((permission : PermissionPolicy) => {
                             const compatibilityData = permissionPolicyRecords[permission.name];
-                            const permissionRecord = permissions.find(p => p.key === permission.name);
+                            const defaultPermission = defaultPermissionsByKey[permission.name];
+                            const overridePermission = !isDefaultWebsite ? selectedOverrides[permission.name] : undefined;
+                            const permissionRecord = overridePermission ?? defaultPermission ?? createDefaultPermission(permission.name);
+                            const source: PermissionSource = isDefaultWebsite ? "default" : (overridePermission ? "overridden" : "inherited");
                             return (
                                 <React.Fragment key={permission.name}>
                                     <CollapsiblePanel
@@ -93,14 +182,17 @@ export function PermissionPolicyModule() {
                                                 </div>
                                             </div>
                                         }
+                                        headerSuffix={<SourceTag source={source} />}
                                         className="permission-policy__panel">
-                                        <PermissionEditor data={permissionRecord || {
-                                                key: permission.name,
-                                                scope: "self",
-                                                mode: "default"
-                                            } as Permission}
+                                        <PermissionEditor
+                                            data={permissionRecord}
                                             default={permission.defaultAllowlist}
-                                            />
+                                            source={source}
+                                            siteName={selectedWebsiteLabel}
+                                            inheritedPermission={defaultPermission ?? createDefaultPermission(permission.name)}
+                                            onSaveSiteOverride={!isDefaultWebsite ? (value) => saveSiteOverride(value) : undefined}
+                                            onClearSiteOverride={!isDefaultWebsite ? () => clearSiteOverride(permission.name) : undefined}
+                                        />
                                         <PermissionCompatibilityMatrix data={compatibilityData} />
                                     </CollapsiblePanel>
                                 </React.Fragment>

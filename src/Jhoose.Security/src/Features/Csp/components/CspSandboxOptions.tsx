@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Col, Row,Checkbox, Flex } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Checkbox, Flex } from 'antd';
 import { SandboxOptions } from '../Types/types';
 
 type SandboxSummary = {
@@ -24,12 +24,17 @@ var labels: Record<string, SandboxSummary> = {
 
 type Props = {
     options: SandboxOptions,
-    update: any
+    update: any,
+    disabled?: boolean
 }
 
 export function CspSandboxOptions(props: Props) {
 
     var [options, setOptions] = useState(props.options);
+
+    useEffect(() => {
+        setOptions(props.options);
+    }, [props.options]);
 
     function setPolicyValue(key: string) {
 
@@ -46,24 +51,24 @@ export function CspSandboxOptions(props: Props) {
     <fieldset>
         <legend>Options</legend>
         <Flex gap="large" vertical>
-            <Checkbox checked={options.enabled} onChange={(e) => {
+            <Checkbox disabled={props.disabled} checked={options.enabled} onChange={(e) => {
                 setPolicyValue("enabled");
             }}>Enabled</Checkbox>
 
             <Flex gap="large" wrap>
-                <SandboxOptionsCell enabled={options.enabled} name="allowDownloads" value={options.allowDownloads} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowForms" value={options.allowForms} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowModals" value={options.allowModals} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowOrientationLock" value={options.allowOrientationLock} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowPointerLock" value={options.allowPointerLock} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowPopups" value={options.allowPopups} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowPopupsToEscapeSandbox" value={options.allowPopupsToEscapeSandbox} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowPresentation" value={options.allowPresentation} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowSameOrigin" value={options.allowSameOrigin} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowScripts" value={options.allowScripts} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigation" value={options.allowTopNavigation} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigationByUserActivation" value={options.allowTopNavigationByUserActivation} setPolicyValue={setPolicyValue} />
-                <SandboxOptionsCell enabled={options.enabled} name="allowTopNavigationToCustomProtocols" value={options.allowTopNavigationToCustomProtocols} setPolicyValue={setPolicyValue} />         
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowDownloads" value={options.allowDownloads} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowForms" value={options.allowForms} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowModals" value={options.allowModals} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowOrientationLock" value={options.allowOrientationLock} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowPointerLock" value={options.allowPointerLock} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowPopups" value={options.allowPopups} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowPopupsToEscapeSandbox" value={options.allowPopupsToEscapeSandbox} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowPresentation" value={options.allowPresentation} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowSameOrigin" value={options.allowSameOrigin} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowScripts" value={options.allowScripts} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowTopNavigation" value={options.allowTopNavigation} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowTopNavigationByUserActivation" value={options.allowTopNavigationByUserActivation} setPolicyValue={setPolicyValue} />
+                <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowTopNavigationToCustomProtocols" value={options.allowTopNavigationToCustomProtocols} setPolicyValue={setPolicyValue} />         
             </Flex>
         </Flex>    
     </fieldset>);
@@ -71,6 +76,7 @@ export function CspSandboxOptions(props: Props) {
 
 type SandboxOptionsCellProps = {
     name: string,
+    disabled?: boolean,
     enabled: boolean,
     value: boolean,
     setPolicyValue: (key: string) => void
@@ -79,7 +85,7 @@ type SandboxOptionsCellProps = {
 function SandboxOptionsCell(props: SandboxOptionsCellProps) {
     var sumary = labels[props.name];
     return (
-        <Checkbox title={sumary.descrption} disabled={!props.enabled} checked={props.value} onChange={(e) => {
+        <Checkbox title={sumary.descrption} disabled={props.disabled || !props.enabled} checked={props.value} onChange={(e) => {
             props.setPolicyValue(props.name);
         }}>{sumary.label}</Checkbox>
     );

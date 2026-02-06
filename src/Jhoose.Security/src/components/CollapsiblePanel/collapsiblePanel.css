@@ -44,6 +44,11 @@
     align-items: center;
 }
 
+.collapsible-panel__header-suffix {
+    display: inline-flex;
+    align-items: center;
+}
+
 .collapsible-panel__content {
     border-top: 1px solid #b8b8b8;
     padding: 12px;

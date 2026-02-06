@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { PolicyOptions } from '../Types/types';
 import { Checkbox, Flex } from 'antd';
@@ -7,11 +7,16 @@ import { CheckboxChangeEvent } from 'antd/es/checkbox/Checkbox';
 type Props = {  
     options: PolicyOptions,
     update: any,
-    showScriptOptions: boolean
+    showScriptOptions: boolean,
+    disabled?: boolean
 }
 export function CspOptions(props: Props) {
 
     var [options, setOptions] = useState<PolicyOptions>(props.options);
+
+    useEffect(() => {
+        setOptions(props.options);
+    }, [props.options]);
 
     function setPolicyValue(key:string) {
 
@@ -28,45 +33,45 @@ export function CspOptions(props: Props) {
         <legend>Options</legend>
         <Flex gap="large" vertical>
             <div>
-                <Checkbox checked={options.none} onChange={(e:CheckboxChangeEvent) => {
+                <Checkbox disabled={props.disabled} checked={options.none} onChange={(e:CheckboxChangeEvent) => {
                     setPolicyValue("none");
                 }}>None</Checkbox>
             </div>
             <Flex gap="large" wrap>
-                    <Checkbox disabled={options.none} checked={options.wildcard} onChange={() => {
+                    <Checkbox disabled={props.disabled || options.none} checked={options.wildcard} onChange={() => {
                         setPolicyValue("wildcard");
                     }}>Wildcard</Checkbox>
 
-                    <Checkbox disabled={options.none} checked={options.self} onChange={() => {
+                    <Checkbox disabled={props.disabled || options.none} checked={options.self} onChange={() => {
                         setPolicyValue("self");
                     }}>Self</Checkbox>
 
                     {props.showScriptOptions &&
                     <>
 
-                        <Checkbox disabled={options.none} checked={options.nonce} onChange={() => {
+                        <Checkbox disabled={props.disabled || options.none} checked={options.nonce} onChange={() => {
                             setPolicyValue("nonce");
                         }}>Nonce</Checkbox>
  
-                        <Checkbox disabled={options.none} checked={options.unsafeEval} onChange={() => {
+                        <Checkbox disabled={props.disabled || options.none} checked={options.unsafeEval} onChange={() => {
                             setPolicyValue("unsafeEval");
                         }}>Unsafe Eval</Checkbox>
 
-                        <Checkbox disabled={options.none} checked={options.wasmUnsafeEval} onChange={() => {
+                        <Checkbox disabled={props.disabled || options.none} checked={options.wasmUnsafeEval} onChange={() => {
                             setPolicyValue("wasmUnsafeEval");
                         }}>Wasm Unsafe Eval</Checkbox>
 
 
-                        <Checkbox disabled={options.none} checked={options.unsafeHashes} onChange={() => {
+                        <Checkbox disabled={props.disabled || options.none} checked={options.unsafeHashes} onChange={() => {
                             setPolicyValue("unsafeHashes");
                         }}>Unsafe Hashes</Checkbox>
 
-                        <Checkbox disabled={options.none} checked={options.unsafeInline} onChange={(t) => {
+                        <Checkbox disabled={props.disabled || options.none} checked={options.unsafeInline} onChange={(t) => {
                             setPolicyValue("unsafeInline");
                         }}>Unsafe Inline</Checkbox>
 
 
-                        <Checkbox disabled={options.none} checked={options.strictDynamic} onChange={() => {
+                        <Checkbox disabled={props.disabled || options.none} checked={options.strictDynamic} onChange={() => {
                             setPolicyValue("strictDynamic");
                         }}>Strict Dynamic</Checkbox>
                 </>}

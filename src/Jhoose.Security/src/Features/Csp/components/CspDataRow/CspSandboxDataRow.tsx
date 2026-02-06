@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { CspSandboxPolicy, SandboxRowProps } from '../../Types/types';
+import { CspSandboxPolicy, PolicySource, SandboxRowProps } from '../../Types/types';
 
 import { getSandboxOptionsDisplay } from '../../lib/helpers';
 import { Cell } from "../../../../components/DataTable/Cell";
@@ -7,12 +7,13 @@ import { Row } from "../../../../components/DataTable/Row";
 import { MutedOutlined } from '@ant-design/icons';
 import { EditSandboxCspItem } from '../CspEditItem/EditSandboxCspItem';
 import { v4 as uuidv4 } from 'uuid';
+import { Tag } from 'antd';
 
 
 export function CspSandboxDataRow(props: SandboxRowProps) {
 
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const [emptyPolicy] = useState(() => createEmptyPolicy(props.policyName));
+    const [emptyPolicy] = useState(() => createEmptyPolicy(props.policyName, props.siteId));
     const policy = props.policy ?? emptyPolicy;
 
     const options = useMemo(() => {
@@ -32,9 +33,16 @@ export function CspSandboxDataRow(props: SandboxRowProps) {
                     key={policy.id} 
                     isOpen={isEditOpen} 
                     policy={policy} 
+                    siteId={props.siteId}
+                    siteName={props.siteName}
+                    source={props.source}
+                    inheritedPolicy={props.inheritedPolicy}
                     onClose={() => {
                         setIsEditOpen(false);
                     }}/>
+            </Cell>
+            <Cell width="70px">
+                <SourceTag source={props.source} />
             </Cell>
             <Cell width="100px" align='right'>
                 {policy.reportOnly ? <span title="Configured as report only"><MutedOutlined /></span> : <></>}
@@ -43,10 +51,11 @@ export function CspSandboxDataRow(props: SandboxRowProps) {
         </>
     );
 }
-function createEmptyPolicy(policyName: string): CspSandboxPolicy {
+function createEmptyPolicy(policyName: string, siteId: string): CspSandboxPolicy {
     return {
         id: uuidv4(),
         policyName,
+        site: siteId,
         sandboxOptions: {
             enabled: false,
             allowDownloads: false,
@@ -66,4 +75,15 @@ function createEmptyPolicy(policyName: string): CspSandboxPolicy {
         value: '',
         reportOnly: false
     };
-}       
+}
+
+function SourceTag(props: { source: PolicySource }) {
+    switch (props.source) {
+        case "default":
+            return <Tag color="blue">Global default</Tag>;
+        case "overridden":
+            return <Tag color="gold">Overridden</Tag>;
+        default:
+            return <Tag>Inherited</Tag>;
+    }
+}

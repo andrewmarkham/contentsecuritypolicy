@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Checkbox, Flex } from 'antd';
 import { SchemaSource } from '../Types/types';
 
@@ -11,6 +11,10 @@ type Props = {
 export function CspSchemaSources(props: Props) {
 
     var [schemaSource, setSchemaSource] = useState(props.schemaSource);
+
+    useEffect(() => {
+        setSchemaSource(props.schemaSource);
+    }, [props.schemaSource]);
 
     function setPolicyValue(key: string) {
 

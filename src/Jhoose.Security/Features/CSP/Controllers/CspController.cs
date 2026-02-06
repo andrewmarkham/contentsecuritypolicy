@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 
 using Jhoose.Security.Features.Core;
@@ -86,6 +87,40 @@ public class CspController(ISecurityRepository<CspPolicy>  policyRepository,
         catch (Exception ex)
         {
             logger.LogError(ex, "Error updating CSP policy");
+            return Problem(ex.Message, statusCode: 500);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    /// <summary>
+    /// Deletes a CSP policy by id.
+    /// </summary>
+    /// <param name="id">The CSP policy id to delete.</param>
+    public ActionResult Delete(Guid id)
+    {
+        try
+        {
+            var policy = policyRepository.Load().FirstOrDefault(p => p.Id == id);
+            if (policy == null)
+            {
+                return NotFound();
+            }
+
+            var deleted = policyRepository.Delete(policy);
+            if (!deleted)
+            {
+                return Problem("Failed to delete CSP policy.", statusCode: 500);
+            }
+
+            this.NotifyWebhooks();
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error deleting CSP policy");
             return Problem(ex.Message, statusCode: 500);
         }
     }

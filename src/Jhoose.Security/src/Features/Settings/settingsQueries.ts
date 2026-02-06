@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { getErrorMessage, requestJson } from '../../lib/requestJson';
 import { SecuritySettings } from '../Csp/Types/types';
+import { Site } from './Types/types';
 
 const settingsQueryKey = ['settings'];
 
@@ -35,5 +36,19 @@ export function useUpdateSettingsMutation() {
     onSuccess: (data) => {
       queryClient.setQueryData(settingsQueryKey, data);
     },
+  });
+}
+
+
+async function fetchSites(): Promise<Site[]> {
+  return requestJson<Site[]>('/api/jhoose/settings/sites');
+}
+
+export function useSitesQuery() {
+  return useQuery({
+    queryKey: ['sites'],
+    queryFn: fetchSites,
+    staleTime: 30000,
+    retry: 1,
   });
 }

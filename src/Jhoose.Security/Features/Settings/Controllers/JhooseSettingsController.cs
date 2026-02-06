@@ -182,4 +182,30 @@ public class SettingsController(ISettingsRepository settingsRepository,
         importRepository.Delete(id);
         return StatusCode(StatusCodes.Status204NoContent);
     }
+
+    [HttpGet]
+    [Route("sites")]
+    [ProducesResponseType(typeof(List<Site>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<Site>), StatusCodes.Status500InternalServerError)]
+    public ActionResult Sites()
+    {
+        var sites = new List<Site>
+        {
+            new Site { Id = "*", Name = "All Sites" },
+            new Site { Id = "site1", Name = "Sites 1" },
+            new Site { Id = "site2", Name = "Sites 2" },
+            new Site { Id = "site3", Name = "Sites 3" }
+        };
+        
+        return new JsonResult(sites, jsonSerializerOptions)
+        {
+            StatusCode = StatusCodes.Status200OK,
+        };
+    }
+
+    public class Site
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+    }
 }

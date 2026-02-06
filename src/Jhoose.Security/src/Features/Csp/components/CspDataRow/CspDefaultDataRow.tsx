@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
-import { ContentSecurityPolicy, CspPolicy, CspSandboxPolicy, RowProps } from '../../Types/types';
+import { CspPolicy, PolicySource, RowProps } from '../../Types/types';
 
 import { getPolicyOptionsDisplay, getSchemaSourceDisplay } from '../../lib/helpers';
 import { Cell } from "../../../../components/DataTable/Cell";
@@ -8,13 +8,12 @@ import { Row } from "../../../../components/DataTable/Row";
 import { MutedOutlined } from '@ant-design/icons';
 import { EditDefaultCspItem } from '../CspEditItem/EditDefaultCspItem';
 import { v4 as uuidv4 } from 'uuid';
+import { Tag } from 'antd';
 
-
-    
 export function CspDataRow(props: RowProps) {
 
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const [emptyPolicy] = useState(() => createEmptyPolicy(props.policyName));
+    const [emptyPolicy] = useState(() => createEmptyPolicy(props.policyName, props.siteId));
 
     const policy = props.policy ?? emptyPolicy;
 
@@ -41,10 +40,17 @@ export function CspDataRow(props: RowProps) {
                     key={policy.id} 
                     isOpen={isEditOpen} 
                     policy={policy} 
+                    siteId={props.siteId}
+                    siteName={props.siteName}
+                    source={props.source}
+                    inheritedPolicy={props.inheritedPolicy}
                     onClose={() => {
                         setIsEditOpen(false);
                     }}/>
                 </>
+            </Cell>
+            <Cell width="70px">
+                <SourceTag source={props.source} />
             </Cell>
             <Cell width="100px" align='right'>
                 {policy.reportOnly ? <span title="Configured as report only"><MutedOutlined /></span> : <></>}
@@ -53,10 +59,11 @@ export function CspDataRow(props: RowProps) {
         </>
     );
 }
-function createEmptyPolicy(policyName: string): CspPolicy {
+function createEmptyPolicy(policyName: string, siteId: string): CspPolicy {
     return {
         id: uuidv4(),
         policyName,
+        site: siteId,
         options: {
             wildcard: false,
             none: false,
@@ -82,4 +89,15 @@ function createEmptyPolicy(policyName: string): CspPolicy {
         value: '',
         reportOnly: false,
     };
+}
+
+function SourceTag(props: { source: PolicySource }) {
+    switch (props.source) {
+        case "default":
+            return <Tag color="blue">Global default</Tag>;
+        case "overridden":
+            return <Tag color="gold">Overridden</Tag>;
+        default:
+            return <Tag>Inherited</Tag>;
+    }
 }
