@@ -5,6 +5,7 @@ export interface AuthenticationKey {
     name: string;
     key: string;
     revoked: boolean;
+    site: string;
 }
 
 export interface SecuritySettings {
@@ -15,6 +16,8 @@ export interface SecuritySettings {
     reportToUrl: string;
     webhookUrls: Array<string>;
     authenticationKeys: Array<AuthenticationKey>;
+    siteModes?: Record<string, Mode>;
+    permissionModesBySite?: Record<string, Mode>;
 }
 
 export interface ContentSecurityPolicy {

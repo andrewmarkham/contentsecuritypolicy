@@ -87,11 +87,18 @@ public class JhooseController(ICspProvider cspProvider,
         var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => settingsRepository.Load(),
             new TimeSpan(1, 0, 0));
 
-        if (policySettings.IsEnabled)
+        var siteId = ResolveSiteId();
+        if (policySettings.IsEnabledForSite(siteId))
         {
             // get the policy
-            var cachedHeaderValues = cache.Get<List<CspPolicyHeaderBase>>(Constants.PolicyCacheKey,
-                () => [.. cspProvider.PolicyHeaders()], new TimeSpan(1, 0, 0));
+            var policyCache = cache.Get<Dictionary<string, List<CspPolicyHeaderBase>>>(Constants.PolicyCacheKey)
+                ?? new Dictionary<string, List<CspPolicyHeaderBase>>(StringComparer.OrdinalIgnoreCase);
+            if (!policyCache.TryGetValue(siteId, out var cachedHeaderValues))
+            {
+                cachedHeaderValues = [.. cspProvider.PolicyHeaders()];
+                policyCache[siteId] = cachedHeaderValues;
+                cache.Insert(Constants.PolicyCacheKey, policyCache, new TimeSpan(1, 0, 0));
+            }
 
             foreach (var cachedHeader in cachedHeaderValues)
             {
@@ -108,16 +115,29 @@ public class JhooseController(ICspProvider cspProvider,
         var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => settingsRepository.Load(),
             new TimeSpan(1, 0, 0));
 
-        if (policySettings.IsPermissionsEnabled)
+        var siteId = ResolveSiteId();
+        if (policySettings.IsPermissionsEnabledForSite(siteId))
         {
             // get the policy
-            var headerValues = cache.Get<List<ResponseHeader>>(Constants.PermissionPolicyCacheKey,
-                () => [.. permissionsProvider.PermissionPolicies()], new TimeSpan(1, 0, 0));
+            var permissionsCache = cache.Get<Dictionary<string, List<ResponseHeader>>>(Constants.PermissionPolicyCacheKey)
+                ?? new Dictionary<string, List<ResponseHeader>>(StringComparer.OrdinalIgnoreCase);
+            if (!permissionsCache.TryGetValue(siteId, out var headerValues))
+            {
+                headerValues = [.. permissionsProvider.PermissionPolicies()];
+                permissionsCache[siteId] = headerValues;
+                cache.Insert(Constants.PermissionPolicyCacheKey, permissionsCache, new TimeSpan(1, 0, 0));
+            }
 
             foreach (var header in headerValues)
             {
                 yield return new KeyValuePair<string, string>(header.Name, header.Value);
             }
         }
+    }
+
+    private string ResolveSiteId()
+    {
+        var host = HttpContext?.Request?.Host.Host;
+        return string.IsNullOrWhiteSpace(host) ? "*" : host;
     }
 }

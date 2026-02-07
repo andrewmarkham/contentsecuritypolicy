@@ -1,31 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Button, Input } from 'antd';
+import { Button, Input, Select } from 'antd';
 import {CloseCircleFilled, CheckCircleFilled, DeleteFilled } from '@ant-design/icons';
 import { AuthenticationKey } from "../../Csp/Types/types";
-import { ApplicationKeylineRevoke } from "./ApplicationKeylineRevoke";
 import { Cell } from "../../../components/DataTable/Cell";
 import { Row } from "../../../components/DataTable/Row";
 
+type SiteOption = { value: string; label: string };
 
-export function ApplicationKeyItem(props: { item: AuthenticationKey; index: number; isNewRecord: boolean; isAddOpen: boolean; handleUpdate: (index: number, value: string) => void; handleDelete: (index: number) => void; handleRevoke: (index: number) => void; }) {
+export function ApplicationKeyItem(props: { item: AuthenticationKey; index: number; isNewRecord: boolean; isAddOpen: boolean; siteOptions: SiteOption[]; siteName: string; handleUpdate: (index: number, value: string, siteId?: string) => void; handleSiteChange: (index: number, siteId: string) => void; handleDelete: (index: number) => void; handleRevoke: (index: number) => void; }) {
     const { item, index, isNewRecord } = { ...props };
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const [isRevokeOpen, setIsRevokeOpen] = useState(false);
     const [isNameValid, setIsNameValid] = useState(true);
+    const [nameValue, setNameValue] = useState(item.name);
+    const [siteValue, setSiteValue] = useState(item.site);
+
+    useEffect(() => {
+        setNameValue(item.name);
+    }, [item.name]);
+
+    useEffect(() => {
+        setSiteValue(item.site);
+    }, [item.site]);
 
     function handleUpdate(action: string, value: string) {
         setIsEditOpen(false);
 
         if (action === 'UPDATE') {
-            props.handleUpdate(index, value);
+            props.handleUpdate(index, value, siteValue);
         } else if (action === 'CANCELADD')
             handleDelete(index);
     }
 
     function handleRevoke(action: boolean, index: number) {
-        setIsRevokeOpen(false);
-
         if (action) {
             props.handleRevoke(index);
         }
@@ -40,6 +47,9 @@ export function ApplicationKeyItem(props: { item: AuthenticationKey; index: numb
             <Cell width="25%">
                 {RenderNameCell(item.name, isNewRecord)}
             </Cell>
+            <Cell width="20%">
+                {RenderSiteCell(item.site)}
+            </Cell>
             <Cell>
                 <RenderKeyCell item={item} isAddOpen={props.isAddOpen} index={index} handleRevoke={handleRevoke} />
             </Cell>
@@ -50,12 +60,27 @@ export function ApplicationKeyItem(props: { item: AuthenticationKey; index: numb
     );
 
     function RenderKeyCell(props: { item: AuthenticationKey; index: number; isAddOpen: boolean; handleRevoke: (action: boolean, index: number) => void; }) {
-        if (isRevokeOpen)
-            return <ApplicationKeylineRevoke disabled={props.isAddOpen} index={index} handleRevoke={handleRevoke} />;
-        else if (item.revoked)
+        if (item.revoked)
             return <span className="italic">Revoked: {item.key} </span>;
         else
             return <span>{item.key}</span>;
+    }
+
+    function RenderSiteCell(site: string) {
+        if (isNewRecord) {
+            return (
+                <Select
+                    value={siteValue}
+                    options={props.siteOptions}
+                    onChange={(value) => {
+                        setSiteValue(value);
+                        props.handleSiteChange(index, value);
+                    }}
+                    style={{ width: "100%" }}
+                />
+            );
+        }
+        return <span>{props.siteName}</span>;
     }
 
     function validateName(name: string) {
@@ -70,12 +95,12 @@ export function ApplicationKeyItem(props: { item: AuthenticationKey; index: numb
     function RenderNameCell(name: string, isNew: boolean) {
         if (isNew)
             return <Input
-                defaultValue={name}
+                value={nameValue}
                 required={true}
                 placeholder="Enter name of Api Key"
                 type="text"
                 status={isNameValid ? '' : 'error'}
-                onChange={(e) => { item.name = e.target.value; }} />;
+                onChange={(e) => { setNameValue(e.target.value); }} />;
         else
             return <span>{name}</span>;
     }
@@ -83,11 +108,11 @@ export function ApplicationKeyItem(props: { item: AuthenticationKey; index: numb
     function RenderActionCell(item: AuthenticationKey, isNewRecord: boolean) {
         if (isNewRecord) {
             return (<div>
-                <Button title="Save" className='iconButton' icon={<CheckCircleFilled />} onClick={() => validateName(item.name)}>Save</Button>
+                <Button title="Save" className='iconButton' icon={<CheckCircleFilled />} onClick={() => validateName(nameValue)}>Save</Button>
                 <Button title="Cancel" className='iconButton' icon={<CloseCircleFilled />} onClick={() => handleUpdate('CANCELADD', '')}>Cancel</Button>
             </div>);
         } else if (!item.revoked)
-            return <Button disabled={props.isAddOpen} onClick={() => setIsRevokeOpen(true)}>Revoke</Button>;
+            return <Button disabled={props.isAddOpen} onClick={() => handleRevoke(true, index)}>Revoke</Button>;
 
 
         else

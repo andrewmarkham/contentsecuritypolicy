@@ -1,13 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 
-import { Button, Divider, Form, Skeleton, Space, Tabs, Checkbox, Upload, Table, Popconfirm, Tooltip, message } from 'antd';
+import { Button, Divider, Form, Space, Checkbox, Upload, Table, Popconfirm, Tooltip, message } from 'antd';
 import DeleteOutlined from "@ant-design/icons/lib/icons/DeleteOutlined";
-import type { TabsProps, UploadFile, UploadProps } from 'antd';
+import type { UploadFile } from 'antd';
 import type { CheckboxOptionType } from 'antd/es/checkbox';
-
-import { WebHooksUi } from "./Webhooks/WebHooksUi";
-import { ApiKeys } from "./ApiKeys/ApiKeys";
-import { AuthenticationKey, SecuritySettings } from "../Csp/Types/types";
 import { Toaster } from "../../components/Toaster";
 import { RcFile, UploadChangeParam } from "antd/es/upload/interface";
 import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
@@ -16,11 +12,10 @@ import ImportOutlined from "@ant-design/icons/lib/icons/ImportOutlined";
 import { getErrorMessage, useSettingsQuery } from "./settingsQueries";
 
 type Props = {
-    settings: SecuritySettings,
-    handleUpdate: (settings: SecuritySettings) => void
+    refreshToken?: number;
 }
 
-export function ImportExport() {
+export function ImportExport({ refreshToken }: Props) {
 
     const [messageApi, contextHolder] = message.useMessage();
     const settingsQuery = useSettingsQuery();
@@ -30,6 +25,12 @@ export function ImportExport() {
             messageApi.error(getErrorMessage(settingsQuery.error));
         }
     }, [messageApi, settingsQuery.error]);
+
+    useEffect(() => {
+        if (refreshToken !== undefined) {
+            settingsQuery.refetch();
+        }
+    }, [refreshToken]);
 
     return (
 

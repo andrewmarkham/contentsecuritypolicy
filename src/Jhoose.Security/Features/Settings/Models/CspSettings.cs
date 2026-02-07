@@ -11,10 +11,15 @@ public class CspSettings
         this.Mode = "off";
         this.PermissionMode = "off";
         this.ReportingMode = ReportingMode.None;
+        this.SiteModes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        this.PermissionModesBySite = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     }
     public string Mode { get; set; }
     public string PermissionMode { get; set; }
     public ReportingMode ReportingMode { get; set; }
+
+    public Dictionary<string, string> SiteModes { get; set; }
+    public Dictionary<string, string> PermissionModesBySite { get; set; }
 
     /// <summary>
     /// Used for the report-uri directive
@@ -47,5 +52,34 @@ public class CspSettings
 
     [JsonIgnore]
     public string PermissionPolicyHeader => this.PermissionMode.Equals("on", StringComparison.CurrentCultureIgnoreCase) ? "Permissions-Policy" : "Permissions-Policy-Report-Only";
+
+    public string GetModeForSite(string siteId)
+    {
+        var key = NormalizeSiteId(siteId);
+        if (this.SiteModes != null && this.SiteModes.TryGetValue(key, out var mode))
+        {
+            return mode;
+        }
+        return this.Mode;
+    }
+
+    public string GetPermissionModeForSite(string siteId)
+    {
+        var key = NormalizeSiteId(siteId);
+        if (this.PermissionModesBySite != null && this.PermissionModesBySite.TryGetValue(key, out var mode))
+        {
+            return mode;
+        }
+        return this.PermissionMode;
+    }
+
+    public bool IsEnabledForSite(string siteId) => !GetModeForSite(siteId).Equals("off", StringComparison.CurrentCultureIgnoreCase);
+
+    public bool IsPermissionsEnabledForSite(string siteId) => !GetPermissionModeForSite(siteId).Equals("off", StringComparison.CurrentCultureIgnoreCase);
+
+    private static string NormalizeSiteId(string siteId)
+    {
+        return string.IsNullOrWhiteSpace(siteId) ? "*" : siteId.Trim();
+    }
 
 }
