@@ -22,6 +22,12 @@ async function updateSecurityHeader(header: SecurityHeader): Promise<SecurityHea
   });
 }
 
+async function deleteSecurityHeader(id: string): Promise<void> {
+  await requestJson<void>(`/api/jhoose/responseheaders/${id}`, {
+    method: 'DELETE',
+  });
+}
+
 export function useSecurityHeadersQuery() {
   return useQuery({
     queryKey: headersQueryKey,
@@ -42,11 +48,34 @@ export function useUpdateSecurityHeaderMutation() {
         if (!current) {
           return { useHeadersUI: true, headers: [updatedHeader] };
         }
+        const exists = current.headers.some((header) => header.id === updatedHeader.id);
         return {
           ...current,
-          headers: current.headers.map((header) =>
-            header.id === updatedHeader.id ? updatedHeader : header
-          ),
+          headers: exists
+            ? current.headers.map((header) =>
+                header.id === updatedHeader.id ? updatedHeader : header
+              )
+            : [...current.headers, updatedHeader],
+        };
+      });
+    },
+  });
+}
+
+export function useDeleteSecurityHeaderMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ['securityHeader'],
+    mutationFn: deleteSecurityHeader,
+    onSuccess: (_data, id) => {
+      queryClient.setQueryData<HeadersResponse>(headersQueryKey, (current) => {
+        if (!current) {
+          return current;
+        }
+        return {
+          ...current,
+          headers: current.headers.filter((header) => header.id !== id),
         };
       });
     },

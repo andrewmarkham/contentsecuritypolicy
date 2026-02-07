@@ -6,5 +6,6 @@ export type SecurityHeader = {
     domain?: string,
     value?: string,
     id: string,
-    enabled: boolean
+    enabled: boolean,
+    site?: string
   }
