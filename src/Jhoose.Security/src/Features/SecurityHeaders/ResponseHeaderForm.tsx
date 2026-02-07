@@ -6,7 +6,7 @@ import { Checkbox, Form, Input, InputNumber, Select, message } from 'antd';
 import { RefForm } from '../Csp/Types/types';
 import { getErrorMessage, useUpdateSecurityHeaderMutation } from './securityHeaderQueries';
 
-export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; handleSaved: (success: boolean) => void; }, ref: Ref<RefForm>) => {
+export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; handleSaved: (success: boolean) => void; disabled?: boolean }, ref: Ref<RefForm>) => {
 
     const [messageApi, contextHolder] = message.useMessage();
     const updateHeaderMutation = useUpdateSecurityHeaderMutation();
@@ -21,6 +21,12 @@ export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; h
             messageApi.error(getErrorMessage(updateHeaderMutation.error));
         }
     }, [messageApi, updateHeaderMutation.error]);
+
+    useEffect(() => {
+        form.resetFields();
+        form.setFieldsValue(props.header);
+        setMode(props.header.mode);
+    }, [form, props.header]);
     
     function RequestSave() {
         console.log("Request Save ");
@@ -61,32 +67,32 @@ export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; h
             <Form.Item<SecurityHeader>
                 label="Enabled" name="enabled"
                 valuePropName="checked">
-                <Checkbox />
+                <Checkbox disabled={props.disabled} />
             </Form.Item>
 
             <Form.Item<SecurityHeader>
                 label="Mode" name="mode"
                 hidden={(typeof (props.header?.mode) === "undefined")}>
-                <Select options={getHeaderOptions(props.header.name)} />
+                <Select disabled={props.disabled} options={getHeaderOptions(props.header.name)} />
             </Form.Item>
 
             <Form.Item<SecurityHeader>
                 label="Include SubDomains" name="includeSubDomains"
                 valuePropName="checked"
                 hidden={(typeof (props.header?.maxAge) === "undefined")}>
-                <Checkbox />
+                <Checkbox disabled={props.disabled} />
             </Form.Item>
 
             <Form.Item<SecurityHeader>
                 label="Max Age" name="maxAge"
                 hidden={(typeof (props.header?.maxAge) === "undefined")}>
-                <InputNumber min={1} max={31536000} />
+                <InputNumber disabled={props.disabled} min={1} max={31536000} />
             </Form.Item>
 
             <Form.Item<SecurityHeader>
                 label="Domain" name="domain"
                 hidden={!(props.header.name === "X-Frame-Options" && mode === 2)}>
-                <Input variant="outlined" />
+                <Input disabled={props.disabled} variant="outlined" />
             </Form.Item>
 
         </Form>

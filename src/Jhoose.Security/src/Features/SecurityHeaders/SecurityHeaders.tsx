@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { EditSecurityHeader } from './EditSecurityHeader';
 import { getLabelForHeaderOption } from './SecurityHeaderHelper';
 
@@ -7,12 +7,14 @@ import { Table } from '../../components/DataTable/Table';
 import { Row } from '../../components/DataTable/Row';
 import { Cell } from '../../components/DataTable/Cell';
 import { Header } from '../../components/DataTable/Header';
-import { Typography, message } from 'antd';
+import { Alert, Flex, Tag, Typography, message } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 
 import { Toaster } from '../../components/Toaster';
 import { getErrorMessage, useSecurityHeadersQuery } from './securityHeaderQueries';
 import { useIsMutating } from '@tanstack/react-query';
+import { WebsiteSelector, GLOBAL_DEFAULT_SITE_ID } from '../../components/WebsiteSelector/WebsiteSelector';
+import { SiteOverrideAlert } from '../../components/SiteOverrideAlert/SiteOverrideAlert';
 
 type Props = {
     data: SecurityHeader[],
@@ -33,6 +35,8 @@ export function SecurityHeaders() {
 
     const [currentHeader, setCurrentHeader] = useState<SecurityHeader>(dummy);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activeWebsiteId, setActiveWebsiteId] = useState<string>(GLOBAL_DEFAULT_SITE_ID);
+    const [selectedWebsiteLabel, setSelectedWebsiteLabel] = useState<string>('Global Default');
 
     function closeModal() {
        setIsModalOpen(false);
@@ -65,11 +69,35 @@ export function SecurityHeaders() {
         return "";
     }
 
+    function getSource(header: SecurityHeader, hasOverride: boolean) {
+        if (isDefaultWebsite) {
+            return "default";
+        }
+        return hasOverride ? "overridden" : "inherited";
+    }
+
     useEffect(() => {
         if (headersQuery.error) {
             messageApi.error(getErrorMessage(headersQuery.error));
         }
     }, [headersQuery.error, messageApi]);
+
+    const headers = headersQuery.data?.headers ?? [];
+    const isDefaultWebsite = activeWebsiteId === GLOBAL_DEFAULT_SITE_ID;
+    const headersBySite = useMemo(() => {
+        return headers.reduce((acc, header) => {
+            const normalizedSite = (header.site ?? '').trim() || GLOBAL_DEFAULT_SITE_ID;
+            if (!acc[normalizedSite]) {
+                acc[normalizedSite] = {};
+            }
+            acc[normalizedSite][header.name] = header;
+            return acc;
+        }, {} as Record<string, Record<string, SecurityHeader>>);
+    }, [headers]);
+
+    const defaultHeadersByName = headersBySite[GLOBAL_DEFAULT_SITE_ID] ?? {};
+    const siteHeadersByName = headersBySite[activeWebsiteId] ?? {};
+    const overrideCount = Object.keys(siteHeadersByName).length;
     
     return (
         <>
@@ -83,24 +111,48 @@ export function SecurityHeaders() {
             <p>&nbsp;</p>
         </div>
         <div className="tab-container">
+                <Flex gap={12} align="flex-end" style={{marginBottom: "14px"}} wrap>
+                    <WebsiteSelector
+                        value={activeWebsiteId}
+                        onChange={setActiveWebsiteId}
+                        onSiteChange={(site) => setSelectedWebsiteLabel(site.name)}
+                    />
+                </Flex>
+
+                {!isDefaultWebsite && (
+                    <Alert
+                        style={{marginBottom: "14px"}}
+                        type="info"
+                        showIcon
+                        message={`${selectedWebsiteLabel} inherits from Global Default by default`}
+                        description={`${overrideCount} header override${overrideCount === 1 ? "" : "s"} configured for this website.`}
+                    />
+                )}
                 <Table>
                         <Header>
                             <Cell width="300px">Header</Cell>
                             <Cell>Configuration</Cell>
+                            <Cell width="70px">Source</Cell>
                             <Cell width="100px" align='right'>Enabled</Cell>
                         </Header>
 
-                        {headersQuery.data?.headers?.map((r : SecurityHeader) => {
+                        {Object.values(defaultHeadersByName).map((defaultHeader : SecurityHeader) => {
+                            const overrideHeader = !isDefaultWebsite ? siteHeadersByName[defaultHeader.name] : undefined;
+                            const header = overrideHeader ?? defaultHeader;
+                            const source = getSource(header, !!overrideHeader);
                             return (
-                                <Row key={r.id}>
+                                <Row key={header.id}>
                                     <Cell width="300px">
                                         <button className="linkButton" onClick={() => {
                                             setIsModalOpen(true);
-                                            setCurrentHeader(r);
-                                        }}>{r.name}</button>
+                                            setCurrentHeader(header);
+                                        }}>{header.name}</button>
                                     </Cell>
-                                    <Cell>{getValue(r)}</Cell>
-                                    <Cell width="100px" align='right'> {r.enabled ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <></>} </Cell>
+                                    <Cell>{getValue(header)}</Cell>
+                                    <Cell width="70px">
+                                        <SourceTag source={source} />
+                                    </Cell>
+                                    <Cell width="100px" align='right'> {header.enabled ? <CheckCircleTwoTone twoToneColor="#52c41a" /> : <></>} </Cell>
                                 </Row>
                             );
                         })}
@@ -110,10 +162,24 @@ export function SecurityHeaders() {
                 <EditSecurityHeader
                     close={() => closeModal()}
                     isOpen={isModalOpen}
-                    header={currentHeader} />
+                    header={currentHeader}
+                    siteId={activeWebsiteId}
+                    siteName={selectedWebsiteLabel}
+                    source={isDefaultWebsite ? "default" : ((currentHeader.site ?? '') === activeWebsiteId ? "overridden" : "inherited")}
+                    inheritedHeader={defaultHeadersByName[currentHeader.name] ?? null}
+                />
         </div>
         </>
     );
 }
 
-
+function SourceTag(props: { source: "default" | "inherited" | "overridden" }) {
+    switch (props.source) {
+        case "default":
+            return <Tag color="blue">Global default</Tag>;
+        case "overridden":
+            return <Tag color="gold">Overridden</Tag>;
+        default:
+            return <Tag>Inherited</Tag>;
+    }
+}

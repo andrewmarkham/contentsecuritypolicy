@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using System.Text.Json;
 
 using Jhoose.Security.Configuration;
@@ -94,6 +95,40 @@ public class ResponseHeadersController(
         catch (Exception ex)
         {
             logger.LogError(ex, "Error getting settings");
+            return Problem(ex.Message, statusCode: 500);
+        }
+    }
+
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    /// <summary>
+    /// Deletes a response header by id.
+    /// </summary>
+    /// <param name="id">The response header id to delete.</param>
+    public ActionResult Delete(Guid id)
+    {
+        try
+        {
+            var header = responseHeadersRepository.Load().FirstOrDefault(h => h.Id == id);
+            if (header == null)
+            {
+                return NotFound();
+            }
+
+            var deleted = responseHeadersRepository.Delete(header);
+            if (!deleted)
+            {
+                return Problem("Failed to delete response header.", statusCode: 500);
+            }
+
+            this.NotifyWebhooks();
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error deleting response header");
             return Problem(ex.Message, statusCode: 500);
         }
     }
