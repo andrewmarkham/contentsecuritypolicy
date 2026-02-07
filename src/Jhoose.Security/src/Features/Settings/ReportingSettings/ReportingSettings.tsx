@@ -3,6 +3,7 @@ import { SecuritySettings } from "../../Csp/Types/types";
 import { Button, Divider, Form, FormProps, Input, Select, Skeleton, Space, message } from "antd";
 import { Toaster } from "../../../components/Toaster/Toaster";
 import { getErrorMessage, useSettingsQuery, useUpdateSettingsMutation } from "../settingsQueries";
+import './ReportingSettings.css';
 
 type ReportingFormValues = Pick<SecuritySettings, "reportingMode" | "reportingUrl" | "reportToUrl">;
 
@@ -132,7 +133,7 @@ export const ReportingSettings = ({ onDirtyChange, refreshToken, resetDirtyToken
         form={form}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 800 }}
+        className="reporting-settings__form"
         disabled={settingsQuery.isLoading || settingsQuery.isFetching || updateSettingsMutation.isPending}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}

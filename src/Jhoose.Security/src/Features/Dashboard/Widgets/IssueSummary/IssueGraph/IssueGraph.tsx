@@ -3,6 +3,7 @@ import { Empty, Spin } from 'antd';
 import { Line } from '@ant-design/plots';
 import { LoadingOutlined } from '@ant-design/icons';
 import { IssueMetric } from "../types";
+import './IssueGraph.css';
 
 export type IssueGraphProps = {
     isLoading: boolean;
@@ -24,5 +25,5 @@ export const IssueGraph = (props: IssueGraphProps) => {
 
     return (props.isEmpty
         ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No issues Found" />
-        : <Spin indicator={<LoadingOutlined style={{ fontSize: 96 }} spin />} spinning={props.isLoading}><Line {...config} /></Spin>);
+        : <Spin indicator={<LoadingOutlined className="issue-graph__loading-icon" spin />} spinning={props.isLoading}><Line {...config} /></Spin>);
 };

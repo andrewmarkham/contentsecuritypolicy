@@ -1,0 +1,10 @@
+.issue-search-form {
+    max-width: none;
+    min-width: 80%;
+    padding: 8px;
+}
+
+.issue-search-form__control {
+    width: 100%;
+    min-width: 200px;
+}

@@ -1,10 +1,10 @@
 import React from 'react';
+import './RenderDefaultPermission.css';
 
-
-export const RenderDefaultPermission: React.FC<{ defaultValue: string; permissionStyling: any }> = ({ defaultValue, permissionStyling }) => {
+export const RenderDefaultPermission: React.FC<{ defaultValue: string; valueClassName?: string }> = ({ defaultValue, valueClassName }) => {
     return (
-        <div style={{margin: "0 10px"}}>
-            <p style={permissionStyling}>Using default configuration: {defaultValue}</p>
+        <div className="render-default-permission__wrapper">
+            <p className={valueClassName}>Using default configuration: {defaultValue}</p>
         </div>
     );
 };

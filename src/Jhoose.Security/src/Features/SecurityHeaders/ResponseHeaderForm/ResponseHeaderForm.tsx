@@ -5,6 +5,7 @@ import type { FormProps } from 'antd';
 import { Checkbox, Form, Input, InputNumber, Select, message } from 'antd';
 import { RefForm } from '../../Csp/Types/types';
 import { getErrorMessage, useUpdateSecurityHeaderMutation } from '../securityHeaderQueries';
+import './ResponseHeaderForm.css';
 
 export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; handleSaved: (success: boolean) => void; disabled?: boolean }, ref: Ref<RefForm>) => {
 
@@ -57,7 +58,7 @@ export const ResponseHeaderForm = forwardRef((props: { header: SecurityHeader; h
             form={form}
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 800 }}
+            className="response-header-form"
             initialValues={props.header}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}

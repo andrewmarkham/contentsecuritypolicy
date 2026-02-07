@@ -5,6 +5,7 @@ import {CloseCircleFilled, CheckCircleFilled, DeleteFilled } from '@ant-design/i
 import { AuthenticationKey } from "../../../Csp/Types/types";
 import { Cell } from "../../../../components/DataTable/Cell/Cell";
 import { Row } from "../../../../components/DataTable/Row/Row";
+import './ApplicationKeyItem.css';
 
 type SiteOption = { value: string; label: string };
 
@@ -76,7 +77,7 @@ export function ApplicationKeyItem(props: { item: AuthenticationKey; index: numb
                         setSiteValue(value);
                         props.handleSiteChange(index, value);
                     }}
-                    style={{ width: "100%" }}
+                    className="application-key-item__select"
                 />
             );
         }
