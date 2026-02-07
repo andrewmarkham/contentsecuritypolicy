@@ -5,17 +5,16 @@ import type { TabsProps } from 'antd';
 
 import { WebHooksUi } from "./Webhooks/WebHooksUi";
 import { ApiKeys } from "./ApiKeys/ApiKeys";
-import { AuthenticationKey, SecuritySettings } from "../Csp/Types/types";
+import { AuthenticationKey } from "../Csp/Types/types";
 import { Toaster } from "../../components/Toaster";
 import { getErrorMessage, useSettingsQuery, useUpdateSettingsMutation } from "./settingsQueries";
 import { message } from "antd";
 
 type Props = {
-    settings: SecuritySettings,
-    handleUpdate: (settings: SecuritySettings) => void
-}
+    refreshToken?: number;
+};
 
-export function ApiAccess() {
+export function ApiAccess({ refreshToken }: Props) {
 
     const [messageApi, contextHolder] = message.useMessage();
     const settingsQuery = useSettingsQuery();
@@ -32,6 +31,12 @@ export function ApiAccess() {
             messageApi.error(getErrorMessage(updateSettingsMutation.error));
         }
     }, [messageApi, updateSettingsMutation.error]);
+
+    useEffect(() => {
+        if (refreshToken !== undefined) {
+            settingsQuery.refetch();
+        }
+    }, [refreshToken]);
     
     function handleWebhookUpdate(webhookUrls: string[]) {
         if (!settingsQuery.data) return;
@@ -43,9 +48,13 @@ export function ApiAccess() {
 
     function handleAuthKeysUpdate(authenticationKeys: AuthenticationKey[]) {
         if (!settingsQuery.data) return;
+        const normalizedKeys = authenticationKeys.map((key) => ({
+            ...key,
+            site: key.site ?? "*",
+        }));
         updateSettingsMutation.mutate({
             ...settingsQuery.data,
-            authenticationKeys,
+            authenticationKeys: normalizedKeys,
         });
     }
 

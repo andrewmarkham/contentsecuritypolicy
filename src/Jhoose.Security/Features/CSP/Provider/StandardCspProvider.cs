@@ -36,19 +36,22 @@ public class StandardCspProvider(ISecurityRepository<CspPolicy> policyRepository
     public IEnumerable<CspPolicyHeaderBase> PolicyHeaders()
     {
         var rootRef = ContentReference.IsNullOrEmpty(ContentReference.StartPage) ? ContentReference.RootPage : ContentReference.StartPage;
-        var host = siteDefinitionResolver.GetByContent(rootRef, true).SiteUrl.ToString();
+        var siteDefinition = siteDefinitionResolver.GetByContent(rootRef, true);
+        var host = siteDefinition.SiteUrl.ToString();
+        var siteId = string.IsNullOrWhiteSpace(siteDefinition.SiteUrl.Host) ? host : siteDefinition.SiteUrl.Host;
 
         var policies = policyRepository.Load().ToList();
         var settings = this.Settings;
+        var mode = settings.GetModeForSite(siteId);
 
-        if (!(settings.Mode == "off" || settings.ReportingMode == ReportingMode.None))
+        if (!(mode == "off" || settings.ReportingMode == ReportingMode.None))
         {
             yield return new ReportingEndpointHeader(settings, host, "csp-endpoint");
             yield return new ReportToHeader(settings, host, "csp-endpoint");
         }
 
         // for global report only
-        if (settings.Mode.Equals("report"))
+        if (mode.Equals("report"))
         {
             yield return new CspPolicyReportHeader(settings, host)
             {

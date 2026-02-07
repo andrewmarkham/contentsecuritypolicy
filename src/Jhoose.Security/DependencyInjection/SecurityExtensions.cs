@@ -68,6 +68,7 @@ public static class SecurityExtensions
 
         services.AddHostedService<JhooseSqlInit>();
         services.AddSingleton<ISqlHelper, SqlHelper>();
+        services.AddHttpContextAccessor();
 
         services.AddScoped<ISecurityRepository<CspPolicy>, ContentSecurityPolicyRepository>();
         services.Intercept<ISecurityRepository<CspPolicy>>((locator, inner) =>

@@ -1,7 +1,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
+
+using EPiServer.Web;
 
 using Jhoose.Security.Features.Core.Controllers;
 using Jhoose.Security.Features.Core.Webhooks;
@@ -33,13 +36,15 @@ public class SettingsController(ISettingsRepository settingsRepository,
                           IWebhookNotifications webhookNotifications,
                           IImportExportService importExportService,
                           IImportRepository importRepository,
-                          ILogger<SettingsController> logger) : NotificationBaseController(settingsRepository,webhookNotifications)
+                          ILogger<SettingsController> logger,
+                          ISiteDefinitionRepository siteDefinitionRepository) : NotificationBaseController(settingsRepository,webhookNotifications)
 {
      private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     private readonly ILogger<SettingsController> logger = logger;
     private readonly ISettingsRepository settingsRepository = settingsRepository;
     private readonly IImportExportService importExportService = importExportService;
     private readonly IImportRepository importRepository = importRepository;
+    private readonly ISiteDefinitionRepository siteDefinitionRepository = siteDefinitionRepository;
 
 
     /// <summary>
@@ -189,13 +194,18 @@ public class SettingsController(ISettingsRepository settingsRepository,
     [ProducesResponseType(typeof(List<Site>), StatusCodes.Status500InternalServerError)]
     public ActionResult Sites()
     {
-        var sites = new List<Site>
-        {
-            new Site { Id = "*", Name = "All Sites" },
-            new Site { Id = "site1", Name = "Sites 1" },
-            new Site { Id = "site2", Name = "Sites 2" },
-            new Site { Id = "site3", Name = "Sites 3" }
-        };
+        var sites = siteDefinitionRepository.List()
+            .Select(site =>
+            {
+                var siteUrl = site.SiteUrl;
+                var id = siteUrl is null
+                    ? site.Id.ToString()
+                    : string.IsNullOrWhiteSpace(siteUrl.Host) ? siteUrl.ToString() : siteUrl.Host;
+
+                return new Site { Id = id, Name = site.Name };
+            })
+            .OrderBy(site => site.Name)
+            .ToList();
         
         return new JsonResult(sites, jsonSerializerOptions)
         {

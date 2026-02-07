@@ -20,18 +20,21 @@ public class StandardPermissionsProvider(ISecurityRepository<PermissionPolicy> p
     public IEnumerable<ResponseHeader> PermissionPolicies()
     {
         var rootRef = ContentReference.IsNullOrEmpty(ContentReference.StartPage) ? ContentReference.RootPage : ContentReference.StartPage;
-        var host = siteDefinitionResolver.GetByContent(rootRef, true).SiteUrl.ToString();
+        var siteDefinition = siteDefinitionResolver.GetByContent(rootRef, true);
+        var host = siteDefinition.SiteUrl.ToString();
+        var siteId = string.IsNullOrWhiteSpace(siteDefinition.SiteUrl.Host) ? host : siteDefinition.SiteUrl.Host;
 
         var policies = permissionsRepository.Load();
         var settings = settingsRepository.Load();
+        var mode = settings.GetPermissionModeForSite(siteId);
 
-        if (!(settings.PermissionMode == "off" || settings.ReportingMode == ReportingMode.None))
+        if (!(mode == "off" || settings.ReportingMode == ReportingMode.None))
         {
             yield return new ReportingEndpointHeader(settings, host, "permissions-endpoint");
         }
 
         // for global report only
-        if (settings.PermissionMode.Equals("report"))
+        if (mode.Equals("report"))
         {
             yield return new PermissionsPolicyReportHeader(settings, host)
             {

@@ -69,7 +69,8 @@ public class JhooseSecurityService(ICspProvider cspProvider,
             // get the policy settings
             var policySettings = cspProvider.Settings;
 
-            if (!policySettings.IsEnabled)
+            var siteId = ResolveSiteId(response);
+            if (!policySettings.IsEnabledForSite(siteId))
             {
                 return;
             }
@@ -110,7 +111,8 @@ public class JhooseSecurityService(ICspProvider cspProvider,
         {
             // get the policy settings
             var policySettings = cspProvider.Settings;
-            if (!policySettings.IsPermissionsEnabled)
+            var siteId = ResolveSiteId(response);
+            if (!policySettings.IsPermissionsEnabledForSite(siteId))
             {
                 return;
             }
@@ -135,5 +137,11 @@ public class JhooseSecurityService(ICspProvider cspProvider,
             // Error is logged, but will not stop execution.
             logger.LogError(ex, "Failed to add Permissions-Policy header");
         }
+    }
+
+    private static string ResolveSiteId(HttpResponse response)
+    {
+        var host = response?.HttpContext?.Request?.Host.Host;
+        return string.IsNullOrWhiteSpace(host) ? "*" : host;
     }
 }
