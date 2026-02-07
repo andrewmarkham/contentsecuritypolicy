@@ -15,6 +15,12 @@ async function updatePermission(permission: Permission): Promise<Permission> {
   });
 }
 
+async function deletePermission(id: string): Promise<void> {
+  await requestJson<void>(`/api/jhoose/permissions/${id}`, {
+    method: 'DELETE',
+  });
+}
+
 export function usePermissionsQuery() {
   return useQuery({
     queryKey: permissionsQueryKey,
@@ -35,15 +41,32 @@ export function useUpdatePermissionMutation() {
         if (!current) {
           return [updatedPermission];
         }
-        const exists = current.some((permission) => permission.key === updatedPermission.key);
+        const exists = current.some((permission) => permission.id === updatedPermission.id);
         if (!exists) {
           return [...current, updatedPermission];
         }
         return current.map((permission) =>
-          permission.key === updatedPermission.key ? updatedPermission : permission
+          permission.id === updatedPermission.id ? updatedPermission : permission
         );
       });
       queryClient.invalidateQueries({ queryKey: permissionsQueryKey });
+    },
+  });
+}
+
+export function useDeletePermissionMutation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ['permission'],
+    mutationFn: deletePermission,
+    onSuccess: (_data, id) => {
+      queryClient.setQueryData<Permission[]>(permissionsQueryKey, (current) => {
+        if (!current) {
+          return current;
+        }
+        return current.filter((permission) => permission.id !== id);
+      });
     },
   });
 }

@@ -86,6 +86,39 @@ public class PermissionsController(ISecurityRepository<PermissionPolicy>  permis
             return Problem(ex.Message, statusCode: 500);
         }
     }
-}
 
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    /// <summary>
+    /// Deletes a permission policy by id.
+    /// </summary>
+    /// <param name="id">The permission policy id to delete.</param>
+    public ActionResult Delete(Guid id)
+    {
+        try
+        {
+            var policy = permissionsRepository.Load().FirstOrDefault(p => p.Id == id);
+            if (policy == null)
+            {
+                return NotFound();
+            }
+
+            var deleted = permissionsRepository.Delete(policy);
+            if (!deleted)
+            {
+                return Problem("Failed to delete permission policy.", statusCode: 500);
+            }
+
+            this.NotifyWebhooks();
+            return StatusCode(StatusCodes.Status204NoContent);
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error deleting Permissions policy");
+            return Problem(ex.Message, statusCode: 500);
+        }
+    }
+}
 

@@ -11,12 +11,12 @@ namespace Jhoose.Security.Features.Permissions.Models;
 /// <param name="Mode"></param>
 /// <param name="Scope"></param>
 /// <param name="Allowlist"></param>
-public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope, List<string> Allowlist)
+public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope, List<string> Allowlist, string? Site)
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="PermissionPolicy"/> class.
     /// </summary>
-    public PermissionPolicy() : this(Guid.NewGuid(), string.Empty, string.Empty, string.Empty, [])
+    public PermissionPolicy() : this(Guid.NewGuid(), string.Empty, string.Empty, string.Empty, [], string.Empty)
     {
     }
 
