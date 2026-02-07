@@ -1,7 +1,3 @@
-export type TableProps = {}
-
-export type RowProps = {}
-export type CellProps = {
-    width?: string
-    align?: 'left' | 'right' | 'center'
-}
+export type { TableProps } from './TableProps';
+export type { RowProps } from './RowProps';
+export type { CellProps } from './CellProps';
