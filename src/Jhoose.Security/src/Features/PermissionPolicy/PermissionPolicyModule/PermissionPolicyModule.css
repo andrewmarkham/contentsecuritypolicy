@@ -1,0 +1,113 @@
+.permission-policy__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.permission-policy__header-body {
+    max-width: 60%;
+}
+
+.permission-policy__code-tag {
+    display: inline-block;
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    background-color: #f6f8fa;
+    color: #24292f;
+    border-radius: 4px;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    padding: 2px 6px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 6px;
+}
+
+.permission-policy__toolbar {
+    margin-bottom: 14px;
+}
+
+.permission-policy__alert {
+    margin-bottom: 14px;
+}
+
+.permission-policy__compatibility {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 0;
+    border-top: 1px solid #f0f0f0;
+    padding-top: 10px;
+}
+
+.permission-policy__compatibility-title {
+    margin: 0 10px 0 0;
+    text-align: center;
+    line-height: 16px;
+    font-size: 14px;
+}
+
+.permission-policy__compatibility-item {
+    margin-right: 10px;
+}
+
+.permission-policy__compatibility-text {
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.permission-policy__compatibility-logo {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.permission-policy__matrix {
+    margin-top: 26px;
+    margin-bottom: 10px;
+}
+
+.permission-policy__matrix-grid {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1px 0 0 1px;
+    box-sizing: border-box;
+}
+
+.permission-policy__matrix-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    border: 1px solid black;
+    margin-left: -1px;
+    margin-top: -1px;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-align: center;
+}
+
+.permission-policy__matrix-label {
+    margin: 0;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12px;
+}
+
+.permission-policy__matrix-logo {
+    width: 16px;
+    height: 16px;
+    margin: 4px 0;
+}
+
+.permission-policy__matrix-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

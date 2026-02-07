@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Col, DatePicker, Form, Input, Row, Select } from 'antd';
 
 import { SearchParams, SelectValue } from '../Types/types';
+import './IssueSearchForm.css';
 
 
 export function IssueSearchForm(props: {
@@ -36,11 +37,7 @@ export function IssueSearchForm(props: {
   
     return (
       <Form
-        style={{
-          maxWidth: 'none',
-          minWidth:'80%',
-          padding: 8
-        }}
+        className="issue-search-form"
         disabled={props.loading}
         form={form}
         initialValues={{
@@ -54,7 +51,7 @@ export function IssueSearchForm(props: {
           <Col span={8}>
             <Form.Item name="dateFrom" label="Date From">
               <DatePicker
-                style={{ minWidth: '200px', width: '100%' }}
+                className="issue-search-form__control"
                 showTime
               />
             </Form.Item>
@@ -62,7 +59,7 @@ export function IssueSearchForm(props: {
           <Col span={8}>
             <Form.Item name="query">
               <Search placeholder="input search text" allowClear
-                style={{ width: '100%' }} />
+                className="issue-search-form__control" />
             </Form.Item>
           </Col>
           <Col span={2}>
@@ -71,7 +68,7 @@ export function IssueSearchForm(props: {
           <Form.Item name="type" label="Types">
             <Select
               mode="multiple"
-              style={{ minWidth: '200px', width: '100%' }}
+              className="issue-search-form__control"
               placeholder="Please select"
               options={props.types}
             />
@@ -82,7 +79,7 @@ export function IssueSearchForm(props: {
           <Form.Item name="browser" label="Browser">
             <Select
               mode="multiple"
-              style={{ minWidth: '200px', width: '100%' }}
+              className="issue-search-form__control"
               placeholder="Please select"
               options={props.browsers}
             />
@@ -92,7 +89,7 @@ export function IssueSearchForm(props: {
           <Form.Item name="directive" label="Directive">
             <Select
               mode="multiple"
-              style={{ minWidth: '200px', width: '100%' }}
+              className="issue-search-form__control"
               placeholder="Please select"
               options={props.directives}
             />

@@ -15,6 +15,7 @@ import { getErrorMessage, useSecurityHeadersQuery } from './securityHeaderQuerie
 import { useIsMutating } from '@tanstack/react-query';
 import { WebsiteSelector, GLOBAL_DEFAULT_SITE_ID } from '../../components/WebsiteSelector/WebsiteSelector';
 import { SiteOverrideAlert } from '../../components/SiteOverrideAlert/SiteOverrideAlert';
+import './SecurityHeaders.css';
 
 type Props = {
     data: SecurityHeader[],
@@ -111,7 +112,7 @@ export function SecurityHeaders() {
             <p>&nbsp;</p>
         </div>
         <div className="tab-container">
-                <Flex gap={12} align="flex-end" style={{marginBottom: "14px"}} wrap>
+                <Flex gap={12} align="flex-end" className="security-headers__toolbar" wrap>
                     <WebsiteSelector
                         value={activeWebsiteId}
                         onChange={setActiveWebsiteId}
@@ -121,7 +122,7 @@ export function SecurityHeaders() {
 
                 {!isDefaultWebsite && (
                     <Alert
-                        style={{marginBottom: "14px"}}
+                        className="security-headers__alert"
                         type="info"
                         showIcon
                         message={`${selectedWebsiteLabel} inherits from Global Default by default`}

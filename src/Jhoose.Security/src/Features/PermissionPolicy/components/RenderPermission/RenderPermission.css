@@ -1,0 +1,16 @@
+.render-permission__wrapper {
+    margin: 0 10px;
+}
+
+.render-permission__value {
+    display: inline-block;
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    background-color: #f6f8fa;
+    color: #24292f;
+    border-radius: 4px;
+    border: 1px solid rgba(27, 31, 35, 0.15);
+    padding: 2px 6px;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-bottom: 6px;
+}

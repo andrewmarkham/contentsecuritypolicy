@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { Button, Input } from 'antd';
 import {CloseCircleFilled, CheckCircleFilled } from '@ant-design/icons';
+import './WebHookInlineEdit.css';
 
 type Props = {
     item: string,
@@ -53,7 +54,7 @@ export function WebHookInlineEdit(props: Props) {
                     required={true}
                     type="url"
                     onChange={(e) => { setNewValue(e.target.value); }} />
-                <span className="error-message" style={{ display: hasError ? 'block' : 'none' }}>Invalid URL</span>
+                <span className={`webhook-inline-edit__error ${hasError ? 'webhook-inline-edit__error--visible' : ''}`}>Invalid URL</span>
             </div>
             <Button title="Update" className='iconButton' icon={<CheckCircleFilled />} onClick={(e) => handleUpdate('UPDATE', newValue)}>Update</Button>
             <Button title="Cancel" className='iconButton' icon={<CloseCircleFilled />} onClick={() => handleUpdate('CANCEL', '')}>Cancel</Button>

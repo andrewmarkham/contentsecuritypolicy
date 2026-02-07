@@ -4,6 +4,7 @@ import { Button, Divider, Form, FormProps, Select, Space, message } from "antd";
 import { Toaster } from "../../../components/Toaster/Toaster";
 import { GLOBAL_DEFAULT_SITE_ID, WebsiteSelector } from "../../../components/WebsiteSelector/WebsiteSelector";
 import { getErrorMessage, useSettingsQuery, useUpdateSettingsMutation } from "../settingsQueries";
+import './SettingsForm.css';
 
 
 type SettingsFormValues = SecuritySettings & {
@@ -141,12 +142,12 @@ export const SettingsForm = ({ onDirtyChange, refreshToken, resetDirtyToken }: P
         show={settingsQuery.isLoading || settingsQuery.isFetching || updateSettingsMutation.isPending}
         message={settingsQuery.isLoading || settingsQuery.isFetching ? "Loading..." : "Saving..."}
       />
-      <Form
+        <Form
         name="basic"
         form={form}
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
-        style={{ maxWidth: 800 }}
+        className="settings-form"
         disabled={settingsQuery.isLoading || settingsQuery.isFetching || updateSettingsMutation.isPending}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { Select, Typography } from 'antd';
 import { useSitesQuery } from '../../Features/Settings/settingsQueries';
 import { Site } from '../../Features/Settings/Types/types';
+import './WebsiteSelector.css';
 
 export const GLOBAL_DEFAULT_SITE_ID = '*';
 
@@ -63,9 +64,9 @@ export function WebsiteSelector(props: Props) {
 
     return (
         <div>
-            <Text style={{ display: 'block', marginBottom: '6px' }}>{props.label ?? 'Website'}</Text>
+            <Text className="website-selector__label">{props.label ?? 'Website'}</Text>
             <Select
-                style={{ width: props.width ?? '280px' }}
+                className={`website-selector__select ${getWidthClassName(props.width)}`}
                 value={props.value}
                 onChange={handleChange}
                 options={options}
@@ -73,4 +74,11 @@ export function WebsiteSelector(props: Props) {
             />
         </div>
     );
+}
+
+function getWidthClassName(width?: number | string) {
+    if (width === 320 || width === '320px') {
+        return 'website-selector__select--wide';
+    }
+    return 'website-selector__select--default';
 }

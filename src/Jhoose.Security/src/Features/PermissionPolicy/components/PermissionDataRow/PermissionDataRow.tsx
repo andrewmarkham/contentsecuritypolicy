@@ -7,6 +7,7 @@ import { Cell } from '../../../../components/DataTable/Cell/Cell';
 import { Row } from '../../../../components/DataTable/Row/Row';
 import { RenderPermission } from '../RenderPermission/RenderPermission';
 import { EditPermissionItem } from '../PermissionEditItem/EditPermissionItem/EditPermissionItem';
+import './PermissionDataRow.css';
 
 type Props = {
     policy: PermissionPolicy,
@@ -38,7 +39,7 @@ export function PermissionDataRow(props: Props) {
             </Cell>
             <Cell width="300px">
                 <Tooltip placement="topLeft" title={props.description}>
-                    <div style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <div className="permission-data-row__description">
                         {props.description}
                     </div>
                 </Tooltip>

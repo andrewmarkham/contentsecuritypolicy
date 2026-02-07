@@ -1,0 +1,7 @@
+.webhook-inline-edit__error {
+    display: none;
+}
+
+.webhook-inline-edit__error--visible {
+    display: block;
+}

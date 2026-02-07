@@ -1,27 +1,12 @@
 import React from 'react';
 import { RenderDefaultPermission } from '../RenderDefaultPermission/RenderDefaultPermission';
 import { Permission } from '../../Types/types';
+import './RenderPermission.css';
 
 
 export const RenderPermission: React.FC<{ permission: Permission | undefined; defaultValue: string; isListing: boolean }> = ({ permission, defaultValue, isListing }) => {
 
-    var permissionStyling  = {};
-    if (!isListing) {
-        permissionStyling = {
-                                display: 'inline-block',
-                                fontFamily: 'SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace',
-                                backgroundColor: '#f6f8fa',
-                                color: '#24292f',
-                                borderRadius: '4px',
-                                border: '1px solid rgba(27, 31, 35, 0.15)',
-                                padding: '2px 6px',
-                                fontSize: '12px',
-                                lineHeight: 1.6,
-                                marginBottom: '6px'
-                            };
-    } else {
-        permissionStyling = {};
-    }
+    const valueClassName = isListing ? "" : "render-permission__value";
 
     var permissionDisplay;
     switch (permission?.mode) {
@@ -46,10 +31,10 @@ export const RenderPermission: React.FC<{ permission: Permission | undefined; de
     return (
         <>
             {permission === undefined || permission.mode === "default" ? (
-                <RenderDefaultPermission defaultValue={defaultValue} permissionStyling={permissionStyling}   />
+                <RenderDefaultPermission defaultValue={defaultValue} valueClassName={valueClassName} />
             ) : (
-                <div style={{margin: "0 10px"}}>
-                    <p style={permissionStyling}>{permissionDisplay}</p>
+                <div className="render-permission__wrapper">
+                    <p className={valueClassName}>{permissionDisplay}</p>
                 </div>
             )}
         </>

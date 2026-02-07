@@ -10,6 +10,7 @@ import LoadingOutlined from "@ant-design/icons/lib/icons/LoadingOutlined";
 import PlusOutlined from "@ant-design/icons/lib/icons/PlusOutlined";
 import ImportOutlined from "@ant-design/icons/lib/icons/ImportOutlined";
 import { getErrorMessage, useSettingsQuery } from "../settingsQueries";
+import './ImportExport.css';
 
 type Props = {
     refreshToken?: number;
@@ -67,7 +68,7 @@ function HandleExport() {
                 form={form}
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
-                style={{ maxWidth: 800 }}
+                className="import-export__form"
                 onFinish={(values) => {
 
                     fetch('/api/jhoose/settings/export', {
@@ -135,7 +136,7 @@ function HandleImport() {
     const reloadFiles = () => setReloadFlag(f => f + 1);
 
     return (
-        <div style={{ maxWidth: 800, marginTop: 20 }}>
+        <div className="import-export__section">
             <Divider orientation="left">Import</Divider>
             <ListUploadedFiles reloadFlag={reloadFlag} />
             <UploadFile onUpload={reloadFiles} />
@@ -243,17 +244,7 @@ const UploadFile = ({ onUpload }: { onUpload: () => void }) => {
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
-                style={{
-                    border: dragActive ? "2px dashed #1890ff" : "2px dashed #ccc",
-                    background: dragActive ? "#e6f7ff" : "#fafafa",
-                    padding: "32px",
-                    textAlign: "center",
-                    borderRadius: "8px",
-                    cursor: "pointer",
-                    transition: "border-color 0.2s, background 0.2s",
-                    marginBottom: "16px",
-                    position: "relative"
-                }}
+                className={`import-export__dropzone ${dragActive ? "import-export__dropzone--active" : ""}`}
                 aria-label="Drop zone for file upload"
                 tabIndex={0}
             >
@@ -261,26 +252,26 @@ const UploadFile = ({ onUpload }: { onUpload: () => void }) => {
                     type="file"
                     accept=".json,application/json"
                     ref={inputRef}
-                    style={{ display: "none" }}
+                    className="import-export__file-input"
                     onChange={handleFileChange}
                 />
-                <div style={{ fontSize: "1.2em", color: dragActive ? "#1890ff" : "#888" }}>
+                <div className={`import-export__dropzone-text ${dragActive ? "import-export__dropzone-text--active" : ""}`}>
                     {dragActive ? "Drop your JSON file here" : "Drag & drop a JSON file here, or click to select"}
                 </div>
                 {fileName && (
                     <>
-                        <div style={{ marginTop: "12px", color: "#555" }}>
+                        <div className="import-export__selected-file">
                             <strong>Selected file:</strong> {fileName}
                         </div>
                         <button
                             type="button"
-                            style={{ zIndex: 100, marginTop: "18px", padding: "8px 24px", borderRadius: "4px", background: "#1890ff", color: "#fff", border: "none", fontWeight: "bold", cursor: importJson ? "pointer" : "not-allowed" }}
+                            className="import-export__upload-button"
                             onClick={e => { e.stopPropagation(); handleImport(); }}
                             disabled={!importJson || processing}
                         >
                             {processing ? (
                                 <span>
-                                    <LoadingOutlined style={{ marginRight: 8 }} /> Processing...
+                                    <LoadingOutlined className="import-export__loading-icon" /> Processing...
                                 </span>
                             ) : (
                                 "Upload File"
@@ -289,21 +280,8 @@ const UploadFile = ({ onUpload }: { onUpload: () => void }) => {
                     </>
                 )}
                 {processing && (
-                    <div style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        background: "rgba(255,255,255,0.7)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: "1.2em",
-                        color: "#1890ff",
-                        zIndex: 200
-                    }}>
-                        <LoadingOutlined style={{ marginRight: 8 }} /> Importing...
+                    <div className="import-export__overlay">
+                        <LoadingOutlined className="import-export__loading-icon" /> Importing...
                     </div>
                 )}
             </div>
@@ -450,7 +428,7 @@ const ListUploadedFiles = ({ reloadFlag }: { reloadFlag: number }) => {
                 dataSource={files}
                 loading={loading}
                 pagination={false}
-                style={{ marginTop: 10 }}
+                className="import-export__table"
             />
         </>
     );

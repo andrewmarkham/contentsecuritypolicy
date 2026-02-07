@@ -12,6 +12,7 @@ import { useSearchParams } from 'react-router-dom';
 import { SearchParams, SelectValue, RowDataType, TableParams, TablePaginationConfig} from '../Types/types';
 
 import { IssueSearchForm } from '../IssueSearchForm/IssueSearchForm';
+import './IssueSearch.css';
 
 const columns: ColumnsType<RowDataType> = [
   {
@@ -172,7 +173,7 @@ export function IssueSearch() {
 */
   return (
     <>
-      <Flex gap='small' justify='flex-end' style={{ padding: '1rem' }}>
+      <Flex gap='small' justify='flex-end' className="issue-search__toolbar">
         <IssueSearchForm
           loading={loading}
           directives={directiveOptions}
@@ -194,6 +195,5 @@ export function IssueSearch() {
     </>
   );
 }
-
 
 

@@ -81,7 +81,7 @@ export function EditSecurityHeader(props: Props){
 
     return (
         <Modal
-            destroyOnClose
+            destroyOnHidden
             title={title}
             open={props.isOpen}
             onOk={handleOk}

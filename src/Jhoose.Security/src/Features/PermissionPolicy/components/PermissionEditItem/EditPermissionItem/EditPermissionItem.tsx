@@ -6,6 +6,7 @@ import { RenderPermission } from '../../RenderPermission/RenderPermission';
 import { getErrorMessage, useDeletePermissionMutation, useUpdatePermissionMutation } from '../../../lib/permissionQueries';
 
 import { Flex, Input, Modal, Radio, Select, Typography, message } from 'antd';
+import './EditPermissionItem.css';
 
 type Props = {
     isOpen: boolean,
@@ -136,7 +137,7 @@ export function EditPermissionItem(props: Props) {
                     )}
 
                     <div>
-                        <Typography.Title level={4} style={{ marginBottom: 0 }}>
+                        <Typography.Title level={4} className="edit-permission-item__title">
                             {permissionData.key}
                         </Typography.Title>
                         <Typography.Text type="secondary">
@@ -145,9 +146,9 @@ export function EditPermissionItem(props: Props) {
                     </div>
 
                     <Flex align="center" gap={16} wrap={false}>
-                        <div style={{ minWidth: "300px" }}>
+                        <div className="edit-permission-item__mode">
                             <label>
-                                <span style={{ marginRight: "5px" }}>Mode:</span>
+                                <span className="edit-permission-item__label">Mode:</span>
                                 <Select
                                     options={[
                                         { value: 'default', label: <span>Default</span> },
@@ -155,7 +156,7 @@ export function EditPermissionItem(props: Props) {
                                         { value: 'report', label: <span>Enabled (Report Only)</span> },
                                         { value: 'disabled', label: <span>Disabled</span> },
                                     ]}
-                                    style={{ width: "200px" }}
+                                    className="edit-permission-item__select"
                                     value={permissionData?.mode || "default"}
                                     disabled={!isEditable}
                                     onChange={(value) => {
@@ -168,7 +169,7 @@ export function EditPermissionItem(props: Props) {
                         {(permissionData.mode === "enabled" || permissionData.mode === "report") && (
                             <div>
                                 <label>
-                                    <span style={{ marginRight: "5px" }}>Scope:</span>
+                                    <span className="edit-permission-item__label">Scope:</span>
 
                                     <Radio.Group
                                         value={permissionData?.scope || "self"}
@@ -192,7 +193,7 @@ export function EditPermissionItem(props: Props) {
                     {((permissionData.mode === "enabled" || permissionData.mode === "report") && permissionData.scope === "self") && (
                         <div>
                             <label>
-                                <span style={{ marginBottom: "10px", display: "block" }}>Allowlist:</span>
+                                <span className="edit-permission-item__allowlist-label">Allowlist:</span>
                                 <TextArea
                                     value={permissionData?.allowlist?.join(" ")}
                                     disabled={!isEditable}

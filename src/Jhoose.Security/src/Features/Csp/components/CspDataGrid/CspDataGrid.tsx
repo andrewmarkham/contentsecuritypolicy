@@ -14,6 +14,7 @@ import { useIsMutating } from '@tanstack/react-query';
 import { WebsiteSelector, GLOBAL_DEFAULT_SITE_ID } from '../../../../components/WebsiteSelector/WebsiteSelector';
 
 import {ContentSecurityPolicyData} from '../../Data/ContentSecurityPolicies';
+import './CspDataGrid.css';
 
 type CspRecord = CspPolicy | CspSandboxPolicy;
 
@@ -57,7 +58,7 @@ export function CspDataGrid() {
             message={cspPoliciesQuery.isLoading || cspPoliciesQuery.isFetching ? "Loading..." : "Saving..."}
         />
 
-        <Flex gap={12} align="flex-end" style={{marginBottom: "14px"}} wrap>
+        <Flex gap={12} align="flex-end" className="csp-data-grid__toolbar" wrap>
             <WebsiteSelector
                 value={activeWebsiteId}
                 onChange={setActiveWebsiteId}
@@ -67,7 +68,7 @@ export function CspDataGrid() {
 
         {!isDefaultWebsite && (
             <Alert
-                style={{marginBottom: "14px"}}
+                className="csp-data-grid__alert"
                 type="info"
                 showIcon
                 message={`${selectedWebsiteLabel} inherits from Global Default by default`}
