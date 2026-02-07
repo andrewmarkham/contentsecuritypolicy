@@ -82,7 +82,7 @@ export function CspDataGrid() {
                 <Cell>Schema</Cell>
                 <Cell>Value</Cell>
                 <Cell width="70px">Source</Cell>
-                <Cell width="100px">&nbsp;</Cell>
+                <Cell width="50px">&nbsp;</Cell>
             </Header>
                 <>
                 {Object.entries(ContentSecurityPolicyData).map(([key, policyData]) => {

@@ -52,7 +52,7 @@ export function CspDataRow(props: RowProps) {
             <Cell width="70px">
                 <SourceTag source={props.source} />
             </Cell>
-            <Cell width="100px" align='right'>
+            <Cell width="50px" align='right'>
                 {policy.reportOnly ? <span title="Configured as report only"><MutedOutlined /></span> : <></>}
             </Cell>
         </Row>
