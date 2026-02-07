@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { EditSecurityHeader } from './EditSecurityHeader';
+import { EditSecurityHeader } from './EditSecurityHeader/EditSecurityHeader';
 import { getLabelForHeaderOption } from './SecurityHeaderHelper';
 
 import { SecurityHeader } from './Types/securityHeader';
-import { Table } from '../../components/DataTable/Table';
-import { Row } from '../../components/DataTable/Row';
-import { Cell } from '../../components/DataTable/Cell';
-import { Header } from '../../components/DataTable/Header';
+import { Table } from '../../components/DataTable/Table/Table';
+import { Row } from '../../components/DataTable/Row/Row';
+import { Cell } from '../../components/DataTable/Cell/Cell';
+import { Header } from '../../components/DataTable/Header/Header';
 import { Alert, Flex, Tag, Typography, message } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 
-import { Toaster } from '../../components/Toaster';
+import { Toaster } from '../../components/Toaster/Toaster';
 import { getErrorMessage, useSecurityHeadersQuery } from './securityHeaderQueries';
 import { useIsMutating } from '@tanstack/react-query';
 import { WebsiteSelector, GLOBAL_DEFAULT_SITE_ID } from '../../components/WebsiteSelector/WebsiteSelector';

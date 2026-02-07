@@ -5,12 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { Form, Input, Modal, Select, Typography } from "antd";
 
 import { AuthenticationKey } from "../../Csp/Types/types";
-import { ApplicationKeyAdd } from "./ApplicationKeyAdd";
-import { ApplicationKeyItem } from "./ApplicationKeyItem";
-import { Table } from "../../../components/DataTable/Table";
-import { Cell } from "../../../components/DataTable/Cell";
-import { Header } from "../../../components/DataTable/Header";
-import { Row } from "../../../components/DataTable/Row";
+import { ApplicationKeyAdd } from "./ApplicationKeyAdd/ApplicationKeyAdd";
+import { ApplicationKeyItem } from "./ApplicationKeyItem/ApplicationKeyItem";
+import { Table } from "../../../components/DataTable/Table/Table";
+import { Cell } from "../../../components/DataTable/Cell/Cell";
+import { Header } from "../../../components/DataTable/Header/Header";
+import { Row } from "../../../components/DataTable/Row/Row";
 import { useSitesQuery } from "../settingsQueries";
 import { GLOBAL_DEFAULT_SITE_ID } from "../../../components/WebsiteSelector/WebsiteSelector";
 

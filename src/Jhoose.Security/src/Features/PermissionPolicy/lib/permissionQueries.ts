@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Permission } from './../Types/types';
+import { Permission } from '../Types/types';
 import { getErrorMessage, requestJson } from '../../../lib/requestJson';
 
 const permissionsQueryKey = ['permissions'];

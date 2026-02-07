@@ -3,11 +3,11 @@ import { Flex, Typography } from 'antd';
 
 
 import './IssueSummary.css';
-import { DashboardFilter } from "./DashboardFilter";
-import { IssueTotal } from "./IssueTotal";
-import { IssueItems } from "./IssueItems";
-import { IssueBox } from "./IssueBox";
-import { IssueGraph } from "./IssueGraph";
+import { DashboardFilter } from "./DashboardFilter/DashboardFilter";
+import { IssueTotal } from "./IssueTotal/IssueTotal";
+import { IssueItems } from "./IssueItems/IssueItems";
+import { IssueBox } from "./IssueBox/IssueBox";
+import { IssueGraph } from "./IssueGraph/IssueGraph";
 import { Dashboard } from "./types";
 
 const timeFilters = [

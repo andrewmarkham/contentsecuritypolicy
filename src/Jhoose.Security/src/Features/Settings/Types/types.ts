@@ -1,4 +1,1 @@
-export type Site = {
-    id: string;
-    name: string;
-};
+export type { Site } from './Site';
