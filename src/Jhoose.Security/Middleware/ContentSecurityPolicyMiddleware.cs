@@ -8,14 +8,9 @@ using Microsoft.Net.Http.Headers;
 
 namespace Jhoose.Security.Middleware;
 
-public class ContentSecurityPolicyMiddleware
+public class ContentSecurityPolicyMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public ContentSecurityPolicyMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
+    private readonly RequestDelegate _next = next;
 
     public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService)
     {

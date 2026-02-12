@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
-using EPiServer.Web;
-
 using Jhoose.Security.Features.Core.Controllers;
+using Jhoose.Security.Features.Core.Model;
+using Jhoose.Security.Features.Core.Services;
 using Jhoose.Security.Features.Core.Webhooks;
 using Jhoose.Security.Features.ImportExport.Models;
 using Jhoose.Security.Features.ImportExport.Repository;
@@ -29,6 +29,7 @@ namespace Jhoose.Security.Features.Settings.Controllers;
 /// <param name="importExportService">Service to perform import and export operations.</param>
 /// <param name="importRepository">Repository to persist and retrieve import records.</param>
 /// <param name="logger">Logger instance for the controller.</param>
+/// <param name="siteService"></param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
 [Authorize(Policy = Constants.Authentication.PolicyName)]
@@ -37,15 +38,10 @@ public class SettingsController(ISettingsRepository settingsRepository,
                           IImportExportService importExportService,
                           IImportRepository importRepository,
                           ILogger<SettingsController> logger,
-                          ISiteDefinitionRepository siteDefinitionRepository) : NotificationBaseController(settingsRepository,webhookNotifications)
+                          ISiteService siteService) : NotificationBaseController(settingsRepository,webhookNotifications)
 {
      private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-    private readonly ILogger<SettingsController> logger = logger;
     private readonly ISettingsRepository settingsRepository = settingsRepository;
-    private readonly IImportExportService importExportService = importExportService;
-    private readonly IImportRepository importRepository = importRepository;
-    private readonly ISiteDefinitionRepository siteDefinitionRepository = siteDefinitionRepository;
-
 
     /// <summary>
     /// Gets the CSP settings.
@@ -194,18 +190,7 @@ public class SettingsController(ISettingsRepository settingsRepository,
     [ProducesResponseType(typeof(List<Site>), StatusCodes.Status500InternalServerError)]
     public ActionResult Sites()
     {
-        var sites = siteDefinitionRepository.List()
-            .Select(site =>
-            {
-                var siteUrl = site.SiteUrl;
-                var id = siteUrl is null
-                    ? site.Id.ToString()
-                    : string.IsNullOrWhiteSpace(siteUrl.Host) ? siteUrl.ToString() : siteUrl.Host;
-
-                return new Site { Id = id, Name = site.Name };
-            })
-            .OrderBy(site => site.Name)
-            .ToList();
+        var sites = siteService.GetSites().ToList();
         
         return new JsonResult(sites, jsonSerializerOptions)
         {
@@ -213,9 +198,5 @@ public class SettingsController(ISettingsRepository settingsRepository,
         };
     }
 
-    public class Site
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
+
 }

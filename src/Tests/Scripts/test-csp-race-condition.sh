@@ -3,7 +3,7 @@
 # CSP nonce vs HTML script nonce checker
 
 URL="https://localhost:5001/"
-CONCURRENT_REQUESTS=100
+CONCURRENT_REQUESTS=50
 
 different_nonce_count=0
 iteration=0

@@ -1,6 +1,8 @@
 using System;
 using System.Text.Json.Serialization;
 
+using Jhoose.Security.Features.Core.Model;
+
 namespace Jhoose.Security.Features.ResponseHeaders.Models;
 
 
@@ -13,7 +15,7 @@ namespace Jhoose.Security.Features.ResponseHeaders.Models;
 [JsonDerivedType(typeof(CrossOriginEmbedderPolicyHeader), nameof(CrossOriginEmbedderPolicyHeader))]
 [JsonDerivedType(typeof(CrossOriginOpenerPolicyHeader), nameof(CrossOriginOpenerPolicyHeader))]
 [JsonDerivedType(typeof(CrossOriginResourcePolicyHeader), nameof(CrossOriginResourcePolicyHeader))]
-public class ResponseHeader : IResponseHeader
+public class ResponseHeader : IResponseHeader , ISitePolicy
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public bool Enabled { get; set; } = true;
@@ -21,4 +23,6 @@ public class ResponseHeader : IResponseHeader
 
     public virtual string Name { get; set; } = string.Empty;
     public virtual string Value { get; set; } = string.Empty;
+
+    public string GroupingKey => this.Name;
 }

@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 
 using System.Linq;
 
-using EPiServer.Core;
-using EPiServer.Web;
-
 using Jhoose.Security.Features.Core;
+using Jhoose.Security.Features.Core.Providers;
 using Jhoose.Security.Features.CSP.Models;
 
 using Jhoose.Security.Features.Settings.Models;
@@ -15,33 +12,14 @@ using Jhoose.Security.Features.Settings.Repository;
 namespace Jhoose.Security.Features.CSP.Provider;
 
 public class StandardCspProvider(ISecurityRepository<CspPolicy> policyRepository,
-    ISettingsRepository settingsRepository,
-    ISiteDefinitionResolver siteDefinitionResolver) : ICspProvider
+    ISettingsRepository settingsRepository) : HeaderProviderBase<CspPolicyHeaderBase>
 {
-    private readonly string nonceValue = Guid.NewGuid().ToString();
 
-    public CspSettings Settings
+    public override IEnumerable<CspPolicyHeaderBase> Headers(string siteId, string host)
     {
-        get
-        {
-            return settingsRepository.Load();
-        }
-    }
-
-    public string GenerateNonce()
-    {
-        return this.nonceValue;
-    }
-
-    public IEnumerable<CspPolicyHeaderBase> PolicyHeaders()
-    {
-        var rootRef = ContentReference.IsNullOrEmpty(ContentReference.StartPage) ? ContentReference.RootPage : ContentReference.StartPage;
-        var siteDefinition = siteDefinitionResolver.GetByContent(rootRef, true);
-        var host = siteDefinition.SiteUrl.ToString();
-        var siteId = string.IsNullOrWhiteSpace(siteDefinition.SiteUrl.Host) ? host : siteDefinition.SiteUrl.Host;
-
         var policies = policyRepository.Load().ToList();
-        var settings = this.Settings;
+
+        var settings = settingsRepository.Load();
         var mode = settings.GetModeForSite(siteId);
 
         if (!(mode == "off" || settings.ReportingMode == ReportingMode.None))
@@ -50,17 +28,19 @@ public class StandardCspProvider(ISecurityRepository<CspPolicy> policyRepository
             yield return new ReportToHeader(settings, host, "csp-endpoint");
         }
 
+        var mergedPolicies = this.MergePolicies(siteId, policies.ToList());
+            
         // for global report only
         if (mode.Equals("report"))
         {
             yield return new CspPolicyReportHeader(settings, host)
             {
-                Policies = policies
+                Policies = mergedPolicies
             };
         }
         else
         {
-            var actionPolicies = policies.Where(p => !p.ReportOnly).ToList();
+            var actionPolicies = mergedPolicies.Where(p => !p.ReportOnly).ToList();
 
             if (actionPolicies.Count != 0)
             {
@@ -70,9 +50,9 @@ public class StandardCspProvider(ISecurityRepository<CspPolicy> policyRepository
                 };
             }
 
-            var reportPolicies = policies.Where(p => p.ReportOnly).ToList();
+            var reportPolicies = mergedPolicies.Where(p => p.ReportOnly).ToList();
 
-            if (reportPolicies.Any())
+            if (reportPolicies.Count != 0)
             {
                 yield return new CspPolicyReportHeader(settings, host)
                 {

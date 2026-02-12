@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Select, Typography } from 'antd';
 import { useSitesQuery } from '../../Features/Settings/settingsQueries';
 import { Site } from '../../Features/Settings/Types/types';
 import './WebsiteSelector.css';
 
 export const GLOBAL_DEFAULT_SITE_ID = '*';
+const STORAGE_KEY = 'jhoose.selectedSiteId';
 
 type Props = {
     value: string,
@@ -23,6 +24,7 @@ export function WebsiteSelector(props: Props) {
     const { Text } = Typography;
     const sitesQuery = useSitesQuery();
     const sites = sitesQuery.data ?? [];
+    const hasInitialized = useRef(false);
 
     const options = useMemo(() => {
         const hasGlobalDefault = sites.some((site) => site.id === GLOBAL_DEFAULT_SITE_ID);
@@ -52,8 +54,32 @@ export function WebsiteSelector(props: Props) {
         }
     }, [props.value, props.onSiteChange, sites]);
 
+    useEffect(() => {
+        if (hasInitialized.current) {
+            return;
+        }
+
+        let storedSiteId: string | null = null;
+        try {
+            storedSiteId = window.localStorage.getItem(STORAGE_KEY);
+        } catch (error) {
+            storedSiteId = null;
+        }
+
+        if (storedSiteId && storedSiteId !== props.value) {
+            handleChange(storedSiteId);
+        }
+
+        hasInitialized.current = true;
+    }, [props.value, sites]);
+
     const handleChange = (siteId: string) => {
         props.onChange(siteId);
+        try {
+            window.localStorage.setItem(STORAGE_KEY, siteId);
+        } catch (error) {
+            // ignore storage issues
+        }
         const selectedSite = siteId === globalDefaultSite.id
             ? globalDefaultSite
             : sites.find((site) => site.id === siteId);

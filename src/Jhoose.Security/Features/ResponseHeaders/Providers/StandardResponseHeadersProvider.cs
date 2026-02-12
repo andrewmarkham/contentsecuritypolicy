@@ -1,22 +1,21 @@
+
 using System.Collections.Generic;
+using System.Linq;
 
 using Jhoose.Security.Features.Core;
+using Jhoose.Security.Features.Core.Providers;
 using Jhoose.Security.Features.ResponseHeaders.Models;
 
 namespace Jhoose.Security.Features.ResponseHeaders.Providers;
 
-public class StandardResponseHeadersProvider : IResponseHeadersProvider
+public class StandardResponseHeadersProvider(ISecurityRepository<ResponseHeader> responseHeadersRepository) : HeaderProviderBase<ResponseHeader>
 {
-    private readonly ISecurityRepository<ResponseHeader> responseHeadersRepository;
-
-    public StandardResponseHeadersProvider(ISecurityRepository<ResponseHeader> responseHeadersRepository
-        )
+    public override IEnumerable<ResponseHeader> Headers( string siteId, string host)
     {
-        this.responseHeadersRepository = responseHeadersRepository;
-    }
-
-    public IEnumerable<ResponseHeader> ResponseHeaders()
-    {
-        return this.responseHeadersRepository.Load();
+        var policies = responseHeadersRepository.Load() ?? [];
+        
+        var mergedPolicies = this.MergePolicies(siteId, policies.ToList());
+            
+        return mergedPolicies;
     }
 }

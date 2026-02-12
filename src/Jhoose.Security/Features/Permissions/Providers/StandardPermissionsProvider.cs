@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using EPiServer.Core;
-using EPiServer.Web;
-
 using Jhoose.Security.Features.Core;
+using Jhoose.Security.Features.Core.Providers;
 using Jhoose.Security.Features.CSP.Models;
+
 using Jhoose.Security.Features.Permissions.Models;
 using Jhoose.Security.Features.ResponseHeaders.Models;
 using Jhoose.Security.Features.Settings.Models;
@@ -14,17 +13,11 @@ using Jhoose.Security.Features.Settings.Repository;
 namespace Jhoose.Security.Features.Permissions.Providers;
 
 public class StandardPermissionsProvider(ISecurityRepository<PermissionPolicy> permissionsRepository, 
-    ISettingsRepository settingsRepository, 
-    ISiteDefinitionResolver siteDefinitionResolver) : IPermissionsProvider
+    ISettingsRepository settingsRepository) : HeaderProviderBase<ResponseHeader>
 {
-    public IEnumerable<ResponseHeader> PermissionPolicies()
+    public override IEnumerable<ResponseHeader> Headers(string siteId, string host)
     {
-        var rootRef = ContentReference.IsNullOrEmpty(ContentReference.StartPage) ? ContentReference.RootPage : ContentReference.StartPage;
-        var siteDefinition = siteDefinitionResolver.GetByContent(rootRef, true);
-        var host = siteDefinition.SiteUrl.ToString();
-        var siteId = string.IsNullOrWhiteSpace(siteDefinition.SiteUrl.Host) ? host : siteDefinition.SiteUrl.Host;
-
-        var policies = permissionsRepository.Load();
+        var policies = permissionsRepository.Load() ?? [];
         var settings = settingsRepository.Load();
         var mode = settings.GetPermissionModeForSite(siteId);
 
@@ -33,17 +26,19 @@ public class StandardPermissionsProvider(ISecurityRepository<PermissionPolicy> p
             yield return new ReportingEndpointHeader(settings, host, "permissions-endpoint");
         }
 
+        var mergedPolicies = this.MergePolicies(siteId, policies.ToList());
+            
         // for global report only
         if (mode.Equals("report"))
         {
             yield return new PermissionsPolicyReportHeader(settings, host)
             {
-                Policies = [..policies]
+                Policies = mergedPolicies
             };
         }
         else
         {
-            var actionPolicies = policies.Where(p => p.Mode != "report").ToList();
+            var actionPolicies = mergedPolicies.Where(p => p.Mode != "report").ToList();
 
             if (actionPolicies.Count > 0)
             {
@@ -53,7 +48,7 @@ public class StandardPermissionsProvider(ISecurityRepository<PermissionPolicy> p
                 };
             }
 
-            var reportPolicies = policies.Where(p => p.Mode == "report").ToList();
+            var reportPolicies = mergedPolicies.Where(p => p.Mode == "report").ToList();
 
             if (reportPolicies.Count > 0)
             {

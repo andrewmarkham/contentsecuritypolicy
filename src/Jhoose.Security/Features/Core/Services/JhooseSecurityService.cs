@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Jhoose.Security.Features.Core.Cache;
-using Jhoose.Security.Features.CSP.Provider;
-using Jhoose.Security.Features.Permissions.Providers;
+using Jhoose.Security.Features.Core.Providers;
+using Jhoose.Security.Features.CSP.Models;
+
 using Jhoose.Security.Features.ResponseHeaders.Models;
-using Jhoose.Security.Features.ResponseHeaders.Providers;
+
+using Jhoose.Security.Features.Settings.Repository;
 
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.Core.Services;
@@ -23,10 +26,13 @@ namespace Jhoose.Security.Features.Core.Services;
 /// security headers to outgoing HTTP responses. It handles CSP directives with nonce generation,
 /// custom security headers, and browser permissions policies while avoiding conflicts with existing headers.
 /// </remarks>
-public class JhooseSecurityService(ICspProvider cspProvider,
-                             IResponseHeadersProvider responseHeaderProvider,
-                             IPermissionsProvider permissionsProvider,
+public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<CspPolicyHeaderBase> cspProvider,
+                             [FromKeyedServices("responseHeaders")] IHeaderProvider<ResponseHeader> responseHeaderProvider,
+                             [FromKeyedServices("permissions")] IHeaderProvider<ResponseHeader> permissionsProvider,
     ICacheManager cache,
+    ISiteService siteService, 
+    ISettingsRepository settingsRepository,
+    INonceService nonceService,
     ILogger<JhooseSecurityService> logger) : IJhooseSecurityService
 {
     /// <inheritdoc/>
@@ -34,15 +40,18 @@ public class JhooseSecurityService(ICspProvider cspProvider,
     {
         try
         {
-            var headerValues = cache.Get<List<ResponseHeader>>(Constants.ResponseHeadersCacheKey, () => responseHeaderProvider.ResponseHeaders().ToList(), new TimeSpan(1, 0, 0));
 
-            var enabledHeaders = headerValues.Where(h => h.Enabled);
+            var siteId = siteService.ResolveSiteId(response) ?? string.Empty;
+            
+            var headerValues = cache.Get<List<ResponseHeader>>(Constants.ResponseHeadersCacheKey, () => [.. responseHeaderProvider.Headers(siteId, response.HttpContext.Request.Host.Host).Where(h => h.Enabled)], new TimeSpan(1, 0, 0));
+
+            var enabledHeaders = headerValues?.Where(h => h.Enabled) ?? [];
 
             foreach (var header in enabledHeaders)
             {
                 if (response.Headers.ContainsKey(header.Name))
                 {
-                    logger.LogWarning($"Header : {header.Name} already exists in the reponse, the Jhoose CSP module will not override this");
+                    logger.LogWarning("Header : {Name} already exists in the reponse, the Jhoose CSP module will not override this", header.Name);
                 }
                 else
                 {
@@ -67,17 +76,17 @@ public class JhooseSecurityService(ICspProvider cspProvider,
         try
         {
             // get the policy settings
-            var policySettings = cspProvider.Settings;
+            var policySettings = settingsRepository.Load();
 
-            var siteId = ResolveSiteId(response);
+            var siteId = siteService.ResolveSiteId(response) ?? string.Empty;
             if (!policySettings.IsEnabledForSite(siteId))
             {
                 return;
             }
 
             // get the policy
-            var cachedHeaders = cspProvider.PolicyHeaders().ToList();
-            var nonceValue = cspProvider.GenerateNonce();
+            var cachedHeaders = cspProvider.Headers(siteId, response.HttpContext.Request.Host.Host).ToList();
+            var nonceValue = nonceService.GenerateNonce();
             
             foreach (var cachedHeader in cachedHeaders)
             {
@@ -110,14 +119,14 @@ public class JhooseSecurityService(ICspProvider cspProvider,
         try
         {
             // get the policy settings
-            var policySettings = cspProvider.Settings;
-            var siteId = ResolveSiteId(response);
+            var policySettings = settingsRepository.Load();
+            var siteId = siteService.ResolveSiteId(response);
             if (!policySettings.IsPermissionsEnabledForSite(siteId))
             {
                 return;
             }
     
-            var headerValues = permissionsProvider.PermissionPolicies();
+            var headerValues = permissionsProvider.Headers(siteId, response.HttpContext.Request.Host.Host);
 
             foreach (var header in headerValues)
             {
@@ -139,9 +148,5 @@ public class JhooseSecurityService(ICspProvider cspProvider,
         }
     }
 
-    private static string ResolveSiteId(HttpResponse response)
-    {
-        var host = response?.HttpContext?.Request?.Host.Host;
-        return string.IsNullOrWhiteSpace(host) ? "*" : host;
-    }
+
 }

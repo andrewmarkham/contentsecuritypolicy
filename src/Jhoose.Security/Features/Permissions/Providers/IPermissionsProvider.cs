@@ -1,10 +1,11 @@
-using System.Collections.Generic;
+//using System.Collections.Generic;
 
-using Jhoose.Security.Features.ResponseHeaders.Models;
+//using Jhoose.Security.Features.ResponseHeaders.Models;
 
 namespace Jhoose.Security.Features.Permissions.Providers;
 
+/*
 public interface IPermissionsProvider
 {
-    IEnumerable<ResponseHeader> PermissionPolicies();
-}
+    IEnumerable<ResponseHeader> PermissionPolicies(string siteId, string host);
+}*/
