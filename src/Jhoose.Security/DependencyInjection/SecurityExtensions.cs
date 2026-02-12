@@ -39,6 +39,7 @@ using Jhoose.Security.Features.CSP.Models;
 using Jhoose.Security.Features.Permissions.Repository;
 using Jhoose.Security.Features.ResponseHeaders.Repository;
 using Jhoose.Security.Features.CSP.Repository;
+using Jhoose.Security.Features.Core.Providers;
 
 namespace Jhoose.Security.DependencyInjection;
 
@@ -77,8 +78,9 @@ public static class SecurityExtensions
             return new CachedSecurityRepository<CspPolicy>(inner, cache);
         });
 
-        services.AddScoped<ICspProvider, StandardCspProvider>();
+        services.AddKeyedScoped<IHeaderProvider<CspPolicyHeaderBase>, StandardCspProvider>("csp");
 
+        services.AddScoped<INonceService, NonceService>();
         services.AddScoped<ISettingsRepository, SettingsRepository>();
 
         services.AddSingleton<ICacheManager, EpiserverCacheManager>();
@@ -103,11 +105,12 @@ public static class SecurityExtensions
             return new CachedSecurityRepository<PermissionPolicy>(inner, cache);
         });
 
-        services.AddScoped<IPermissionsProvider, StandardPermissionsProvider>();
+        services.AddKeyedScoped<IHeaderProvider<ResponseHeader>, StandardPermissionsProvider>("permissions");
+        services.AddScoped<ISiteService, SiteService>();
 
         services.AddScoped<IImportRepository, JhooseImportRepository>();
 
-        services.AddSingleton<IResponseHeadersProvider>((sp) =>
+        services.AddKeyedScoped<IHeaderProvider<ResponseHeader>>("responseHeaders",(sp, key) =>
         {
             var options = sp.GetService<IOptions<JhooseSecurityOptions>>();
             var repo = sp.GetService<ISecurityRepository<ResponseHeader>>();
@@ -122,7 +125,7 @@ public static class SecurityExtensions
         });
 
         //hook in the csp nonce generation to the optimizely internal services, so the same value is always used
-        services.AddContentSecurityPolicyNonce(sp => sp.GetRequiredService<ICspProvider>().GenerateNonce());
+        services.AddContentSecurityPolicyNonce(sp => sp.GetRequiredService<INonceService>().GenerateNonce());
 
         services.AddControllers(options =>
         {

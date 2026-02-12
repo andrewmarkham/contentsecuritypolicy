@@ -2,9 +2,11 @@ using System;
 using System.Text;
 using System.Text.Json.Serialization;
 
+using Jhoose.Security.Features.Core.Model;
+
 namespace Jhoose.Security.Features.CSP.Models;
 
-public class CspPolicy
+public class CspPolicy  : ISitePolicy
 {
     public CspPolicy()
     {
@@ -41,6 +43,7 @@ public class CspPolicy
 
     [JsonIgnore]
     public string SummaryText { get; set; }
+    public string GroupingKey => this.PolicyName;
 
     public override string ToString()
     {

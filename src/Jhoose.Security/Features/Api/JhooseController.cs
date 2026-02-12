@@ -7,16 +7,18 @@ using System.Text.Json;
 using Jhoose.Security.Features.Api.Authorization;
 using Jhoose.Security.Features.Api.Models;
 using Jhoose.Security.Features.Core.Cache;
+using Jhoose.Security.Features.Core.Providers;
+using Jhoose.Security.Features.Core.Services;
 using Jhoose.Security.Features.CSP.Models;
-using Jhoose.Security.Features.CSP.Provider;
-using Jhoose.Security.Features.Permissions.Providers;
+
 using Jhoose.Security.Features.ResponseHeaders.Models;
-using Jhoose.Security.Features.ResponseHeaders.Providers;
+
 using Jhoose.Security.Features.Settings.Models;
 using Jhoose.Security.Features.Settings.Repository;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.Api;
@@ -29,14 +31,16 @@ namespace Jhoose.Security.Features.Api;
 /// <param name="responseHeaderProvider">The provider for response headers.</param>
 /// <param name="permissionsProvider">The provider for permissions policy headers.</param>
 /// <param name="cache">The cache manager for caching headers and settings.</param>
+/// <param name="siteService">The service for resolving site information.</param>
 /// <param name="logger">The logger for logging errors and information.</param>
 [Route("api/[controller]")]
 [ApiController]
-public class JhooseController(ICspProvider cspProvider,
+public class JhooseController([FromKeyedServices("csp")] IHeaderProvider<CspPolicyHeaderBase> cspProvider,
     ISettingsRepository settingsRepository,
-    IResponseHeadersProvider responseHeaderProvider,
-    IPermissionsProvider permissionsProvider,
+    [FromKeyedServices("responseHeaders")] IHeaderProvider<ResponseHeader> responseHeaderProvider,
+    [FromKeyedServices("permissions")] IHeaderProvider<ResponseHeader> permissionsProvider,    
     ICacheManager cache,
+    ISiteService siteService,
     ILogger<JhooseController> logger) : ControllerBase
 {
     private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
@@ -55,7 +59,9 @@ public class JhooseController(ICspProvider cspProvider,
     {
         try
         {
-            List<KeyValuePair<string, string>> headers = [..this.GetHeaders(), ..this.GetContentSecurityPolicy(headerRequest.Nonce), ..this.GetContentPermissionsPolicy()];
+            var siteId = siteService.ResolveSiteId(headerRequest.HostName);
+
+            List<KeyValuePair<string, string>> headers = [..this.GetHeaders(siteId!, headerRequest.HostName), ..this.GetContentSecurityPolicy(headerRequest.Nonce,siteId, headerRequest.HostName), ..this.GetContentPermissionsPolicy(siteId, headerRequest.HostName)];
 
             return new JsonResult(headers ?? [], jsonSerializerOptions)
             {
@@ -69,33 +75,31 @@ public class JhooseController(ICspProvider cspProvider,
         }
     }
 
-    private IEnumerable<KeyValuePair<string, string>> GetHeaders()
+    private IEnumerable<KeyValuePair<string, string>> GetHeaders(string siteId, string host)
     {
         var headerValues = cache.Get<List<ResponseHeader>>(Constants.ResponseHeadersCacheKey,
-            () => [.. responseHeaderProvider.ResponseHeaders().Where(h => h.Enabled)], new TimeSpan(1, 0, 0));
+            () => [.. responseHeaderProvider.Headers(siteId, host).Where(h => h.Enabled)], new TimeSpan(1, 0, 0));
 
-
-        foreach (var header in headerValues)
+        foreach (var header in headerValues ?? [])
         {
             yield return new KeyValuePair<string, string>(header.Name, header.Value);
         }
     }
 
-    private IEnumerable<KeyValuePair<string, string>> GetContentSecurityPolicy(string nonce)
+    private IEnumerable<KeyValuePair<string, string>> GetContentSecurityPolicy(string nonce,string siteId, string host)
     {
         // get the policy settings
         var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => settingsRepository.Load(),
             new TimeSpan(1, 0, 0));
-
-        var siteId = ResolveSiteId();
-        if (policySettings.IsEnabledForSite(siteId))
+            
+        if (policySettings!.IsEnabledForSite(siteId))
         {
             // get the policy
             var policyCache = cache.Get<Dictionary<string, List<CspPolicyHeaderBase>>>(Constants.PolicyCacheKey)
                 ?? new Dictionary<string, List<CspPolicyHeaderBase>>(StringComparer.OrdinalIgnoreCase);
             if (!policyCache.TryGetValue(siteId, out var cachedHeaderValues))
             {
-                cachedHeaderValues = [.. cspProvider.PolicyHeaders()];
+                cachedHeaderValues = [.. cspProvider.Headers(siteId, host)];
                 policyCache[siteId] = cachedHeaderValues;
                 cache.Insert(Constants.PolicyCacheKey, policyCache, new TimeSpan(1, 0, 0));
             }
@@ -109,21 +113,20 @@ public class JhooseController(ICspProvider cspProvider,
         }
     }
 
-    private IEnumerable<KeyValuePair<string, string>> GetContentPermissionsPolicy()
+    private IEnumerable<KeyValuePair<string, string>> GetContentPermissionsPolicy(string siteId, string host)
     {
         // get the policy settings
         var policySettings = cache.Get<CspSettings>(Constants.SettingsCacheKey, () => settingsRepository.Load(),
             new TimeSpan(1, 0, 0));
 
-        var siteId = ResolveSiteId();
-        if (policySettings.IsPermissionsEnabledForSite(siteId))
+        if (policySettings!.IsPermissionsEnabledForSite(siteId))
         {
             // get the policy
             var permissionsCache = cache.Get<Dictionary<string, List<ResponseHeader>>>(Constants.PermissionPolicyCacheKey)
                 ?? new Dictionary<string, List<ResponseHeader>>(StringComparer.OrdinalIgnoreCase);
             if (!permissionsCache.TryGetValue(siteId, out var headerValues))
             {
-                headerValues = [.. permissionsProvider.PermissionPolicies()];
+                headerValues = [.. permissionsProvider.Headers(siteId, host)];
                 permissionsCache[siteId] = headerValues;
                 cache.Insert(Constants.PermissionPolicyCacheKey, permissionsCache, new TimeSpan(1, 0, 0));
             }
@@ -133,11 +136,5 @@ public class JhooseController(ICspProvider cspProvider,
                 yield return new KeyValuePair<string, string>(header.Name, header.Value);
             }
         }
-    }
-
-    private string ResolveSiteId()
-    {
-        var host = HttpContext?.Request?.Host.Host;
-        return string.IsNullOrWhiteSpace(host) ? "*" : host;
     }
 }

@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using Jhoose.Security.Features.Core.Model;
+
 namespace Jhoose.Security.Features.Permissions.Models;
 /// <summary>
 /// Represents a permission policy.
@@ -11,7 +13,8 @@ namespace Jhoose.Security.Features.Permissions.Models;
 /// <param name="Mode"></param>
 /// <param name="Scope"></param>
 /// <param name="Allowlist"></param>
-public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope, List<string> Allowlist, string? Site)
+/// <param name="Site"></param>
+public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope, List<string> Allowlist, string Site) : ISitePolicy
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="PermissionPolicy"/> class.
@@ -20,6 +23,7 @@ public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope,
     {
     }
 
+    public string GroupingKey => this.Key;
     public override string ToString()
     {
 
