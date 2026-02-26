@@ -1,0 +1,78 @@
+.tag-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tag-input__label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2b2f33;
+}
+
+.tag-input__field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 6px 8px;
+    border: 1px solid #c7cdd6;
+    border-radius: 6px;
+    background: #ffffff;
+    min-height: 56px;
+}
+
+.tag-input__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    height: 28px;
+    border-radius: 16px;
+    border: 1px solid #c7cdd6;
+    background: #f6f8fb;
+    color: #2b2f33;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.tag-input__tag:hover {
+    border-color: #8792a2;
+    background: #eef2f7;
+}
+
+.tag-input__tag:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.tag-input__tag-remove {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.tag-input__input {
+    flex: 1 1 160px;
+    height: 28px;
+    padding: 4px 6px;
+    border: none;
+    font-size: 13px;
+    font-family: inherit;
+    color: #2b2f33;
+    background: transparent;
+}
+
+.tag-input__input:focus {
+    outline: none;
+}
+
+.tag-input__input:disabled {
+    color: #8a9199;
+}
+
+.tag-input__field:focus-within {
+    border-color: #5b8def;
+    box-shadow: 0 0 0 3px rgba(91, 141, 239, 0.2);
+}

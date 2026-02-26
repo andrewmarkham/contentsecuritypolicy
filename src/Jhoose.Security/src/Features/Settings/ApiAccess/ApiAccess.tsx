@@ -86,7 +86,10 @@ export function ApiAccess({ refreshToken }: Props) {
                     Accept: application/json<br />
                     Content-Type: application/json<br />
                     X-API-Key: ...<br />
-                    {"{"}'nonce': '1234567890' {"}"}
+                    {"{"}
+                           'nonce': '1234567890', 
+                           'hostName': 'example.com' 
+                    {"}"}
                 </pre>
                 <p>&nbsp;</p>`
 

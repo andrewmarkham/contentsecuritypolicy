@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import { SecurityHeader } from '../Types/securityHeader';
 
@@ -35,6 +35,7 @@ export function EditSecurityHeader(props: Props){
     const title = `Edit Response Header`;
 
     const formRef = useRef<RefForm>(null);
+    const formHeader = useMemo(() => ({ ...header, site: props.siteId }), [header, props.siteId]);
 
     useEffect(() => {
         setIsOverrideEnabled(props.source === "overridden");
@@ -111,7 +112,7 @@ export function EditSecurityHeader(props: Props){
                 />
             )}
             <ResponseHeaderForm 
-                header={{ ...header, site: props.siteId }}
+                header={formHeader}
                 disabled={!isEditable}
                 handleSaved={handleSaved}
                 ref={formRef} />

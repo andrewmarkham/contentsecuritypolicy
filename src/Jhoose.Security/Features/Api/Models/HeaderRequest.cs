@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace Jhoose.Security.Features.Api.Models;
 
 /// <summary>
@@ -5,4 +7,4 @@ namespace Jhoose.Security.Features.Api.Models;
 /// </summary>
 /// <param name="Nonce">The cryptographic nonce (number used once) value for the header.</param>
 /// <param name="HostName">The hostname for which the headers are requested.</param>
-public record HeaderRequest(string Nonce, string HostName);
+public record HeaderRequest([property: JsonPropertyName("nonce")] string Nonce, [property: JsonPropertyName("hostName")] string HostName);

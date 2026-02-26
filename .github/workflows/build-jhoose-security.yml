@@ -31,10 +31,10 @@ jobs:
       working-directory: ./src/Jhoose.Security
       run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "GithubBuild" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
 
-    - name: Use Node.js 22.12.0
+    - name: Use Node.js 22.21.0
       uses: actions/setup-node@v4
       with:
-        node-version: 22.12.0
+        node-version: 22.21.0
 
     - name: Run node
       working-directory: ./src/Jhoose.Security

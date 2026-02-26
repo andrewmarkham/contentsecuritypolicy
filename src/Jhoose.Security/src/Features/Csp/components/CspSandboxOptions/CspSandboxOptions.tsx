@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Checkbox, Flex } from 'antd';
 import { SandboxOptions } from '../../Types/types';
+import { FieldSet } from '../../../../components/FieldSet/FieldSet';
 
 type SandboxSummary = {
     label: string,
@@ -48,8 +49,7 @@ export function CspSandboxOptions(props: Props) {
     };
     
     return (
-    <fieldset>
-        <legend>Options</legend>
+    <FieldSet className="modal" legend="Options">
         <Flex gap="large" vertical>
             <Checkbox disabled={props.disabled} checked={options.enabled} onChange={(e) => {
                 setPolicyValue("enabled");
@@ -71,7 +71,7 @@ export function CspSandboxOptions(props: Props) {
                 <SandboxOptionsCell disabled={props.disabled} enabled={options.enabled} name="allowTopNavigationToCustomProtocols" value={options.allowTopNavigationToCustomProtocols} setPolicyValue={setPolicyValue} />         
             </Flex>
         </Flex>    
-    </fieldset>);
+    </FieldSet>);
 }
 
 type SandboxOptionsCellProps = {

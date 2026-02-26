@@ -52,6 +52,7 @@
             2.6.1 - Fixed bug with Resource Header serialization / deserialization
             2.6.2 - Fixed another bug with (CRLF in header values)
             2.6.3 - Fixed performance issues with the reporting API.
+            3.0.0 - Added multisite support, CSP and Permissions Policy, Security Headers can now be configured per site.
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
@@ -113,15 +114,15 @@
 		<Content Remove="*.json" />
 		<Content Remove="Jhoose.Security.Views\**" />
 		<!--  -->
-		<Content Include="build\net6.0\Jhoose.Security.Admin.targets" PackagePath="build\net6.0\Jhoose.Security.Admin.targets" />
+		<Content Include="build\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
-			<PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
+			<PackagePath>ContentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
 		<Content Include="Jhoose.Security.Views\Views\**" Exclude="src\**\*">
 			<Pack>true</Pack>
-			<PackagePath>content\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
+			<PackagePath>ContentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
 	</ItemGroup>

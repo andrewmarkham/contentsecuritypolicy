@@ -9,6 +9,8 @@ import { getPolicyOptionsDisplay, getSchemaSourceDisplay, isScriptPolicy as _isS
 import { Checkbox, Divider, Flex, Input, Modal, message } from 'antd';
 import { getErrorMessage, useDeleteCspPolicyMutation, useUpdateCspPolicyMutation } from '../../../lib/cspQueries';
 import { ContentSecurityPolicyData } from '../../../Data/ContentSecurityPolicies';
+import { FieldSet } from '../../../../../components/FieldSet/FieldSet';
+import { TagInput } from '../../../../../components/TagInput/TagInput';
 
 
 type Props = {
@@ -97,26 +99,26 @@ export function EditDefaultCspItem(props: Props) {
 
     const handleOk = () => {
         if (canUseSiteOverride && !isOverrideEnabled) {
-                if (props.source === "overridden") {
-                    const policyIdToDelete = overridePolicyId ?? policy.id;
-                    modal.confirm({
-                        title: "Revert to inherited policy?",
-                        content: "This will delete the site-specific override and restore the inherited policy.",
-                        okText: "Revert",
-                        cancelText: "Cancel",
-                        onOk: () =>
-                            deletePolicyMutation.mutate(policyIdToDelete, {
-                                onSuccess: () => {
-                                    messageApi.success('Override removed.');
-                                    props.onClose();
-                                },
-                            }),
-                    });
-                    return;
-                }
-                props.onClose();
+            if (props.source === "overridden") {
+                const policyIdToDelete = overridePolicyId ?? policy.id;
+                modal.confirm({
+                    title: "Revert to inherited policy?",
+                    content: "This will delete the site-specific override and restore the inherited policy.",
+                    okText: "Revert",
+                    cancelText: "Cancel",
+                    onOk: () =>
+                        deletePolicyMutation.mutate(policyIdToDelete, {
+                            onSuccess: () => {
+                                messageApi.success('Override removed.');
+                                props.onClose();
+                            },
+                        }),
+                });
                 return;
             }
+            props.onClose();
+            return;
+        }
 
         updatePolicyMutation.mutate({
             ...policy,
@@ -148,29 +150,28 @@ export function EditDefaultCspItem(props: Props) {
                 open={props.isOpen}
                 onOk={handleOk}
                 centered={true}
-                //confirmLoading={confirmLoading}
                 onCancel={handleCancel}
                 width={"75vw"}
             >
                 <Flex vertical>
                     <div>
                         {canUseSiteOverride && (
-                        <SiteOverrideAlert
-                            siteName={props.siteName}
-                            itemLabel="policy"
-                            isOverrideEnabled={isOverrideEnabled}
-                            onOverrideChange={(checked) => {
-                                setIsOverrideEnabled(checked);
-                                if (!checked && props.inheritedPolicy) {
-                                    setPolicy(props.inheritedPolicy);
-                                    setValue(props.inheritedPolicy.value);
-                                }
-                                if (checked && overridePolicyId === null) {
-                                    setOverridePolicyId(policy.id);
-                                }
-                            }}
-                        />
-                    )}
+                            <SiteOverrideAlert
+                                siteName={props.siteName}
+                                itemLabel="policy"
+                                isOverrideEnabled={isOverrideEnabled}
+                                onOverrideChange={(checked) => {
+                                    setIsOverrideEnabled(checked);
+                                    if (!checked && props.inheritedPolicy) {
+                                        setPolicy(props.inheritedPolicy);
+                                        setValue(props.inheritedPolicy.value);
+                                    }
+                                    if (checked && overridePolicyId === null) {
+                                        setOverridePolicyId(policy.id);
+                                    }
+                                }}
+                            />
+                        )}
 
                         <h3>{policy.policyName}</h3>
 
@@ -178,13 +179,12 @@ export function EditDefaultCspItem(props: Props) {
 
                     </div>
 
-                    <div >
-                        <fieldset>
-                            <legend>Mode</legend>
+                    <div>
+                        <FieldSet className="modal" legend="Mode">
                             <Checkbox disabled={!isEditable} checked={policy.reportOnly} onChange={(e) => {
                                 setPolicyValue("mode", e.target.value);
                             }}>Report Only</Checkbox>
-                        </fieldset>
+                        </FieldSet>
                     </div>
 
                     <div >
@@ -203,14 +203,13 @@ export function EditDefaultCspItem(props: Props) {
                     </div>
 
                     <div>
-                        <TextArea
-                            rows={4}
+                        <TagInput
                             disabled={!isEditable || (policy.options?.none ?? true)}
                             placeholder='Host Source'
                             value={policy.value}
                             onChange={(e) => {
-                                setPolicyValue("value", e.currentTarget.value);
-                            }} />
+                                setPolicyValue("value", e);
+                            }}/>
                         <Divider orientation="left">Policy</Divider>
                         <pre className='summary'>{calculatedPolicy}</pre>
                     </div>
