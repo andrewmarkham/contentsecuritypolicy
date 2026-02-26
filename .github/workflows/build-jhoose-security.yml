@@ -37,7 +37,7 @@ jobs:
         node-version: 22.21.0
 
     - name: Run node
-      working-directory: ./src/Jhoose.Security
+      working-directory: ./src/Jhoose.Security/src
       run: |
        npm install 
        npm run publish
