@@ -26,7 +26,12 @@ public class CspPolicy  : ISitePolicy
 
     public Guid Id { get; set; }
 
-    public string Site { get; set; }
+    public string Site
+    {
+        get => string.IsNullOrEmpty(field) ? "*" : field;
+        set => field = value ?? string.Empty;
+    }
+
     public int Order { get; set; }
 
     public CspPolicyLevel Level { get; set; }

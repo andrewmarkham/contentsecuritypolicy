@@ -26,6 +26,9 @@ dotnet add package Jhoose.Security.Admin
 Install-Package Jhoose.Security.Admin
 ```
 
+### Upgrade to V3.0.0
+If you are upgrading to version 3.x.x then please be aware that the database structure has changed.  You need to export your configuration before you upgrade, once complete you can then reimport the configuration.
+
 ### Dependencies
 
 - The module requires the compatibility level of the database to be >= 130
@@ -260,7 +263,10 @@ POST /api/jhoose/headers HTTP/1.1
 Accept: application/json
 Content-Type: application/json
 X-API-Key: ...
-{'nonce': '1234567890' }
+{
+    "nonce":"1234",
+    "hostName": "localhost"
+}
 ```
  ---
  ## Version History
@@ -289,3 +295,4 @@ X-API-Key: ...
  |2.6.1|Fixed bug with Resource Header serialization / deserialization|
  |2.6.2|Fixed another bug with (CRLF in header values)|
  |2.6.3|Fixed performance issues with the reporting API.<br/>Fixed a race condition that caused the nonce to leak across requests under high load.|
+ |3.0.0|Added multisite support, CSP and Permissions Policy, Security Headers can now be configured per site.  |

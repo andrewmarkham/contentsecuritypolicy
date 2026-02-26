@@ -36,6 +36,8 @@ namespace Jhoose.Security.Features.Api.Authorization;
         else
         {
             var siteId = siteService.ResolveSiteId(host);
+            var siteName = siteService.GetSites().FirstOrDefault(s => s.Id == siteId)?.Name ?? "Unknown";
+
             var foundKey = policySettings.AuthenticationKeys?.Any(k =>
                 !k.Revoked
                 && k.Key.Equals(key)
@@ -43,7 +45,7 @@ namespace Jhoose.Security.Features.Api.Authorization;
             ) ?? false;
 
             if (!foundKey && logger.IsEnabled(LogLevel.Trace))
-                logger.LogTrace("Authentication failed for key {key}", key);
+                logger.LogTrace("Authentication failed for key {key} on site {siteName}", key, siteName);
 
             return foundKey;
         }

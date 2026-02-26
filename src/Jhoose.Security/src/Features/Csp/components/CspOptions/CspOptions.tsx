@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { PolicyOptions } from '../../Types/types';
 import { Checkbox, Flex } from 'antd';
 import { CheckboxChangeEvent } from 'antd/es/checkbox/Checkbox';
+import { FieldSet } from '../../../../components/FieldSet/FieldSet';
 
-type Props = {  
+type Props = {
     options: PolicyOptions,
     update: any,
     showScriptOptions: boolean,
@@ -18,41 +19,40 @@ export function CspOptions(props: Props) {
         setOptions(props.options);
     }, [props.options]);
 
-    function setPolicyValue(key:string) {
+    function setPolicyValue(key: string) {
 
         var newOptions: PolicyOptions = { ...options };
 
-        var oldVal : boolean = options[key as keyof PolicyOptions];
+        var oldVal: boolean = options[key as keyof PolicyOptions];
         newOptions[key as keyof PolicyOptions] = !oldVal;
 
         setOptions(newOptions);
         props.update(newOptions);
     };
 
-    return (<fieldset>
-        <legend>Options</legend>
+    return (<FieldSet className="modal" legend="Options">
         <Flex gap="large" vertical>
             <div>
-                <Checkbox disabled={props.disabled} checked={options.none} onChange={(e:CheckboxChangeEvent) => {
+                <Checkbox disabled={props.disabled} checked={options.none} onChange={(e: CheckboxChangeEvent) => {
                     setPolicyValue("none");
                 }}>None</Checkbox>
             </div>
             <Flex gap="large" wrap>
-                    <Checkbox disabled={props.disabled || options.none} checked={options.wildcard} onChange={() => {
-                        setPolicyValue("wildcard");
-                    }}>Wildcard</Checkbox>
+                <Checkbox disabled={props.disabled || options.none} checked={options.wildcard} onChange={() => {
+                    setPolicyValue("wildcard");
+                }}>Wildcard</Checkbox>
 
-                    <Checkbox disabled={props.disabled || options.none} checked={options.self} onChange={() => {
-                        setPolicyValue("self");
-                    }}>Self</Checkbox>
+                <Checkbox disabled={props.disabled || options.none} checked={options.self} onChange={() => {
+                    setPolicyValue("self");
+                }}>Self</Checkbox>
 
-                    {props.showScriptOptions &&
+                {props.showScriptOptions &&
                     <>
 
                         <Checkbox disabled={props.disabled || options.none} checked={options.nonce} onChange={() => {
                             setPolicyValue("nonce");
                         }}>Nonce</Checkbox>
- 
+
                         <Checkbox disabled={props.disabled || options.none} checked={options.unsafeEval} onChange={() => {
                             setPolicyValue("unsafeEval");
                         }}>Unsafe Eval</Checkbox>
@@ -74,9 +74,9 @@ export function CspOptions(props: Props) {
                         <Checkbox disabled={props.disabled || options.none} checked={options.strictDynamic} onChange={() => {
                             setPolicyValue("strictDynamic");
                         }}>Strict Dynamic</Checkbox>
-                </>}
+                    </>}
             </Flex>
         </Flex>
 
-    </fieldset>);
+    </FieldSet>);
 }

@@ -19,7 +19,11 @@ public class ResponseHeader : IResponseHeader , ISitePolicy
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public bool Enabled { get; set; } = true;
-    public string Site { get; set; } = string.Empty;
+    public string Site
+    {
+        get => string.IsNullOrEmpty(field) ? "*" : field;
+        set => field = value ?? string.Empty;
+    }
 
     public virtual string Name { get; set; } = string.Empty;
     public virtual string Value { get; set; } = string.Empty;

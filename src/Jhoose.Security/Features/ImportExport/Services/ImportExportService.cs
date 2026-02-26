@@ -15,29 +15,29 @@ using Microsoft.Extensions.Logging;
 
 namespace Jhoose.Security.Features.ImportExport.Services;
 
-public class ImportExportService : IImportExportService
+public class ImportExportService(ISecurityRepository<CspPolicy> policyRepository,
+                          ISecurityRepository<ResponseHeader> responseHeadersRepository,
+                          ISecurityRepository<PermissionPolicy> permissionsRepository,
+                          ISettingsRepository settingsRepository,
+                          ILogger<ImportExportService> logger) : IImportExportService
 {
-    private readonly ILogger<ImportExportService> logger;
-    private readonly ISecurityRepository<CspPolicy> policyRepository;
-    private readonly ISecurityRepository<ResponseHeader>  responseHeadersRepository;
-    private readonly ISecurityRepository<PermissionPolicy> permissionsRepository;
-    private readonly ISettingsRepository settingsRepository;
-
-    public ImportExportService(ISecurityRepository<CspPolicy> policyRepository,
-                              ISecurityRepository<ResponseHeader>  responseHeadersRepository,
-                              ISecurityRepository<PermissionPolicy> permissionsRepository,
-                              ISettingsRepository settingsRepository,
-                              ILogger<ImportExportService> logger)
-    {
-        this.logger = logger;
-        this.policyRepository = policyRepository;
-        this.responseHeadersRepository = responseHeadersRepository;
-        this.permissionsRepository = permissionsRepository;
-        this.settingsRepository = settingsRepository;
-    }
-
     public void Import(JhoooseSecurityExport export)
     {
+        if (export.Metadata.Version == "1.0.0")
+        {
+            logger.LogInformation("Importing Jhoose Security export version 1.0.0");
+
+            // Handle settings changes
+            if (export.CspSettings != null)
+            {
+                export.CspSettings.SiteModes.Add("*", export.CspSettings.Mode);
+                export.CspSettings.PermissionModesBySite.Add("*", export.CspSettings.PermissionMode);
+                export.CspSettings.AuthenticationKeys?.ForEach(key => key.Site = "*");
+            }
+
+            
+        }
+
         //handle settings import
         HandleSettingsImport(export);
 
@@ -89,15 +89,11 @@ public class ImportExportService : IImportExportService
     {
         if (export.CspPolicies != null && export.CspPolicies.Count > 0)
         {
-            var existingPolicies = policyRepository.Load();
+            policyRepository.Clear();
+            
             foreach (var policy in export.CspPolicies)
             {
-                var existingPolicy = existingPolicies.FirstOrDefault(p => p.PolicyName == policy.PolicyName);
-                if (existingPolicy != null)
-                {
-                    policy.Id = existingPolicy.Id; // Update
-                    policyRepository.Save(policy);
-                }
+                policyRepository.Save(policy);
             }
         }
     }

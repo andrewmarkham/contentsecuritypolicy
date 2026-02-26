@@ -23,6 +23,12 @@ public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope,
     {
     }
 
+    public string Site
+    {
+        get => string.IsNullOrEmpty(field) ? "*" : field;
+        set => field = value ?? string.Empty;
+    }
+    
     public string GroupingKey => this.Key;
     public override string ToString()
     {
