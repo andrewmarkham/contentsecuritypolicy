@@ -14,6 +14,7 @@
     <Target Name="JhooseSecurityExcludeContentFilesFromCompile" BeforeTargets="CoreCompile">
         <ItemGroup>
             <Compile Remove="$(MSBuildThisFileDirectory)..\..\ContentFiles\any\any\modules\_protected\**\*.*" />
+            <Compile Remove="$(MSBuildProjectDirectory)\modules\_protected\**\*.*" />
         </ItemGroup>
-    </Target> 
+    </Target>
 </Project>
