@@ -10,4 +10,10 @@
             DestinationFolder="$(MSBuildProjectDirectory)\modules\_protected\%(RecursiveDir)"
         />
     </Target>
+
+    <Target Name="JhooseSecurityExcludeContentFilesFromCompile" BeforeTargets="CoreCompile">
+        <ItemGroup>
+            <Compile Remove="$(MSBuildThisFileDirectory)..\..\ContentFiles\any\any\modules\_protected\**\*.*" />
+        </ItemGroup>
+    </Target> 
 </Project>
