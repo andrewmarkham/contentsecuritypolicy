@@ -10,11 +10,11 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>2.6.2.0</Version>
+		<Version>3.0.0.0</Version>
 		<Authors>Andrew Markham</Authors>
-		<Description>Interface to manage Content Security Policy and OWASP Recommended response headers</Description>
+		<Description>Interface to manage Content Security Policy, Permissions Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
-		<Tags>Jhoose;Episerver;Optimizely;Content Security Policy</Tags>
+		<Tags>Jhoose;Episerver;Optimizely;Content Security Policy;Permissions Policy</Tags>
 		<ReleaseNotes>
 		    1.1.0 - Added the ability to output the recommended security headers.
 			1.1.1 - Added option to disable any of the recommended security headers.
@@ -52,10 +52,10 @@
             2.6.1 - Fixed bug with Resource Header serialization / deserialization
             2.6.2 - Fixed another bug with (CRLF in header values)
             2.6.3 - Fixed performance issues with the reporting API.
+            3.0.0 - Added multisite support, CSP and Permissions Policy, Security Headers can now be configured per site.
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
-		  ../Jhoose.Security.Core/bin/Debug;
 		  https://api.nuget.org/v3/index.json;
 		  https://nuget.optimizely.com/feed/packages.svc;
 	  	</RestoreSources>
@@ -66,8 +66,7 @@
 	  	</RestoreSources>
 		<Configurations>Debug;Release;PreRelease</Configurations>
 		<ReleaseVersion>2.5.0.0</ReleaseVersion>
-
-    <NoWarn>1902,1903</NoWarn>
+        <NoWarn>1587, 1591</NoWarn>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net8.0|AnyCPU'">
 		<DebugType>portable</DebugType>
@@ -75,28 +74,38 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
 		<DebugType>embedded</DebugType>
 	</PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.4.0,13)" />
-		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.4.0,13)" />
-		<PackageReference Include="EPiServer.Framework" Version="[12.4.0,13)" />
-		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.22" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0" />
-		<PackageReference Include="Teronis.MSBuild.Packaging.ProjectBuildInPackage" Version="1.0.0">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
-        <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
-	</ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' OR '$(TargetFramework)' == 'net9.0'">
+        <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+        <PackageReference Include="System.Linq.Async" Version="6.0.1" ExcludeAssets="All" />
+    </ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" PrivateAssets="all" />
-		<ProjectReference Include="..\Jhoose.Security.Reporting\Jhoose.Security.Reporting.csproj" PrivateAssets="all" />
+		<PackageReference Include="Dapper" Version="2.1.66" />
+		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework" Version="[12.22.3,13)" />
+
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
+
+		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
+
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.11" />
+        <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
+        <PackageReference Include="MimeKit" Version="4.14.0" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
+        <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
 	</ItemGroup>
+    <!--
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
 		<Exec Command="npm run publish" />
 	</Target>
+    -->
 	<ItemGroup Label="Packaging">
 		<Content Remove="src\**" />
 		<Content Remove="node_modules\**" />
@@ -105,15 +114,16 @@
 		<Content Remove="*.json" />
 		<Content Remove="Jhoose.Security.Views\**" />
 		<!--  -->
-		<Content Include="build\net6.0\Jhoose.Security.Admin.targets" PackagePath="build\net6.0\Jhoose.Security.Admin.targets" />
+		<Content Include="buildTransitive\Jhoose.Security.Admin.props" PackagePath="buildTransitive\Jhoose.Security.Admin.props" />
+		<Content Include="buildTransitive\Jhoose.Security.Admin.targets" PackagePath="buildTransitive\Jhoose.Security.Admin.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
-			<PackagePath>content\any\any\modules\_protected\Jhoose.Security;contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
+			<PackagePath>ContentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
 		<Content Include="Jhoose.Security.Views\Views\**" Exclude="src\**\*">
 			<Pack>true</Pack>
-			<PackagePath>content\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
+			<PackagePath>ContentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
 	</ItemGroup>

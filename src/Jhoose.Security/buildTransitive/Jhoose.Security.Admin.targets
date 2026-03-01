@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+    <ItemGroup>
+        <SourceScripts Include="$(MSBuildThisFileDirectory)..\..\ContentFiles\any\any\modules\_protected\**\*"/>
+    </ItemGroup>
+
+    <Target Name="CopyFiles" BeforeTargets="Build">
+        <Copy
+            SourceFiles="@(SourceScripts)"
+            DestinationFolder="$(MSBuildProjectDirectory)\modules\_protected\%(RecursiveDir)"
+        />
+    </Target>
+
+    <Target Name="JhooseSecurityExcludeContentFilesFromCompile" BeforeTargets="CoreCompile">
+        <ItemGroup>
+            <Compile Remove="$(MSBuildThisFileDirectory)..\..\ContentFiles\any\any\modules\_protected\**\*.*" />
+            <Compile Remove="$(MSBuildProjectDirectory)\modules\_protected\**\*.*" />
+        </ItemGroup>
+    </Target>
+</Project>

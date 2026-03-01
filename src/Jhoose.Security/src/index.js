@@ -271,7 +271,7 @@ app.get('/api/jhoose/settings/listimports', async (req, res) => {
 
   await snooze(1500);
 
-  var jsonData = fs.readFileSync(path.join(__dirname + '/csp-importdata.json'));
+  var jsonData = fs.readFileSync(path.join(__dirname + '/TestData/csp-importdata.json'));
   var importdata = JSON.parse(jsonData);
 
   res.json(importdata);
@@ -279,7 +279,20 @@ app.get('/api/jhoose/settings/listimports', async (req, res) => {
 
 app.get('/EPiServer/Shell/epiplatformnavigation', async(req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  res.sendFile(path.join(__dirname + '/menuItems.json' ));
+  res.sendFile(path.join(__dirname + '/TestData/menuItems.json' ));
+});
+
+app.get('/api/jhoose/settings/sites', async(req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+
+  var sites =[
+    { id : "*", name: "All Sites"},
+    { id : "site1", name: "Sites 1"},
+    { id : "site2", name: "Sites 2"},
+    { id : "site3", name: "Sites 3"},
+  ];
+
+  res.json(sites);
 });
 
 app.listen(port, () => {
@@ -295,7 +308,7 @@ function bootstrapDB() {
   var policiesCol = db.addCollection(collectionName, { indices: ['id'] });
 
   console.log(`Loading CSP json`);
-  var jsonData = fs.readFileSync(path.join(__dirname + '/testdata.json'));
+  var jsonData = fs.readFileSync(path.join(__dirname + '/TestData/csp-testdata.json'));
   var policiesJson = JSON.parse(jsonData);
 
   console.log(`Inserting CSP data into collection ${collectionName}`);

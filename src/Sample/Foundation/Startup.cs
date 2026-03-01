@@ -37,6 +37,7 @@ using System.IO;
 using TinymceDamPicker;
 using UNRVLD.ODP.VisitorGroups.Initilization;
 using Jhoose.Security.DependencyInjection;
+using EPiServer.Social.Framework;
 
 namespace Foundation
 {
@@ -259,6 +260,7 @@ namespace Foundation
             {
                 o.UseHeadersUI = true;
                 o.ExclusionPaths.Add("/Episerver");
+                o.Reporting.RateLimiting.Enabled = false;
             });
         }
 

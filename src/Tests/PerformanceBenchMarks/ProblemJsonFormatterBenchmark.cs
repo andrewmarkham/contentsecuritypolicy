@@ -1,12 +1,10 @@
-
-
 using System.Text;
 using System.Text.Json;
 
 using BenchmarkDotNet.Attributes;
 
-using Jhoose.Security.Reporting.Controllers;
-using Jhoose.Security.Reporting.Models;
+using Jhoose.Security.Features.Reporting.Controllers;
+using Jhoose.Security.Features.Reporting.Models;
 
 using Microsoft.IO;
 

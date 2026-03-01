@@ -1,0 +1,20 @@
+.edit-permission-item__title {
+    margin-bottom: 0;
+}
+
+.edit-permission-item__mode {
+    min-width: 300px;
+}
+
+.edit-permission-item__label {
+    margin-right: 5px;
+}
+
+.edit-permission-item__select {
+    width: 200px;
+}
+
+.edit-permission-item__allowlist-label {
+    margin-bottom: 10px;
+    display: block;
+}

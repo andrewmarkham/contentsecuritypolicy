@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_NO: 2.6.3.${{ github.run_number }}  
-  BUILD_NO_PRE: 2.6.3-rc.${{ github.run_number }} 
+  BUILD_NO: 3.0.0.${{ github.run_number }}  
+  BUILD_NO_PRE: 3.0.0-rc.${{ github.run_number }} 
 
 jobs:
   build:
@@ -31,13 +31,13 @@ jobs:
       working-directory: ./src/Jhoose.Security
       run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "GithubBuild" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
 
-    - name: Use Node.js 22.12.0
+    - name: Use Node.js 22.21.0
       uses: actions/setup-node@v4
       with:
-        node-version: 22.12.0
+        node-version: 22.21.0
 
     - name: Run node
-      working-directory: ./src/Jhoose.Security
+      working-directory: ./src/Jhoose.Security/src
       run: |
        npm install 
        npm run publish
@@ -51,14 +51,6 @@ jobs:
       if: github.ref != 'refs/heads/main'
       run: dotnet build --configuration PreRelease -p:Version=${{ env.BUILD_NO_PRE }}
       working-directory: ./src/Jhoose.Security
-
-    - name: Run Jhoose.Security.Core.Tests
-      working-directory: ./src/Tests/Jhoose.Security.Core.Tests
-      run: dotnet test Jhoose.Security.Core.Tests.csproj    --configuration Release --logger "trx;LogFileName=test_results.trx"
-
-    - name: Run Jhoose.Security.Reporting.Tests
-      working-directory: ./src/Tests/Jhoose.Security.Reporting.Tests
-      run: dotnet test Jhoose.Security.Reporting.Tests.csproj  --configuration Release --logger "trx;LogFileName=test_results.trx"
 
     - name: Run Jhoose.Security.Tests
       working-directory: ./src/Tests/Jhoose.Security.Tests

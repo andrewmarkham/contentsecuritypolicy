@@ -1,0 +1,534 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Jhoose.Security</name>
+    </assembly>
+    <members>
+        <member name="T:Jhoose.Security.Features.Api.Authorization.DefaultAuthKeyService">
+            <summary>
+            Provides default implementation for authentication key validation service.
+            </summary>
+        </member>
+        <member name="T:Jhoose.Security.Features.Api.JhooseController">
+            <summary>
+            API controller providing access to security headers, including Content Security Policy (CSP) and Permissions Policy.
+            </summary>
+            <param name="cspProvider">The provider for Content Security Policy headers.</param>
+            <param name="settingsRepository">The repository for accessing security settings.</param>
+            <param name="responseHeaderProvider">The provider for response headers.</param>
+            <param name="permissionsProvider">The provider for permissions policy headers.</param>
+            <param name="cache">The cache manager for caching headers and settings.</param>
+            <param name="logger">The logger for logging errors and information.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Api.JhooseController.#ctor(Jhoose.Security.Features.CSP.Provider.ICspProvider,Jhoose.Security.Features.Settings.Repository.ISettingsRepository,Jhoose.Security.Features.ResponseHeaders.Providers.IResponseHeadersProvider,Jhoose.Security.Features.Permissions.Providers.IPermissionsProvider,Jhoose.Security.Features.Core.Cache.ICacheManager,Microsoft.Extensions.Logging.ILogger{Jhoose.Security.Features.Api.JhooseController})">
+            <summary>
+            API controller providing access to security headers, including Content Security Policy (CSP) and Permissions Policy.
+            </summary>
+            <param name="cspProvider">The provider for Content Security Policy headers.</param>
+            <param name="settingsRepository">The repository for accessing security settings.</param>
+            <param name="responseHeaderProvider">The provider for response headers.</param>
+            <param name="permissionsProvider">The provider for permissions policy headers.</param>
+            <param name="cache">The cache manager for caching headers and settings.</param>
+            <param name="logger">The logger for logging errors and information.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Api.JhooseController.Headers(Jhoose.Security.Features.Api.Models.HeaderRequest)">
+            <summary>
+            Gets the security headers, including Content Security Policy (CSP) and Permissions Policy.
+            </summary>
+            <param name="headerRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Jhoose.Security.Features.Api.Models.HeaderRequest">
+            <summary>
+            Represents a request for header information containing a nonce value.
+            </summary>
+            <param name="Nonce">The cryptographic nonce (number used once) value for the header.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Api.Models.HeaderRequest.#ctor(System.String)">
+            <summary>
+            Represents a request for header information containing a nonce value.
+            </summary>
+            <param name="Nonce">The cryptographic nonce (number used once) value for the header.</param>
+        </member>
+        <member name="P:Jhoose.Security.Features.Api.Models.HeaderRequest.Nonce">
+            <summary>The cryptographic nonce (number used once) value for the header.</summary>
+        </member>
+        <member name="T:Jhoose.Security.Features.Core.Cache.EpiserverCacheManager">
+            <summary>
+            An implementation of <see cref="T:Jhoose.Security.Features.Core.Cache.ICacheManager"/> that utilizes Episerver's synchronized object instance cache for caching operations.
+            </summary>
+            <param name="cache"></param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Cache.EpiserverCacheManager.#ctor(EPiServer.Framework.Cache.ISynchronizedObjectInstanceCache)">
+            <summary>
+            An implementation of <see cref="T:Jhoose.Security.Features.Core.Cache.ICacheManager"/> that utilizes Episerver's synchronized object instance cache for caching operations.
+            </summary>
+            <param name="cache"></param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Cache.EpiserverCacheManager.Insert(System.String,System.Object,System.TimeSpan)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Cache.EpiserverCacheManager.Get``1(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Cache.EpiserverCacheManager.Get``1(System.String,System.Func{``0},System.TimeSpan)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Cache.EpiserverCacheManager.Remove(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Jhoose.Security.Features.Core.Cache.ICacheManager">
+            <summary>
+            Defines a contract for managing cached data with support for insertion, retrieval, and removal operations.
+            </summary>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Cache.ICacheManager.Insert(System.String,System.Object,System.TimeSpan)">
+            <summary>
+            Inserts an object into the cache with a specified key and duration.
+            </summary>
+            <param name="cacheKey">The unique identifier for the cached item.</param>
+            <param name="value">The object to be cached.</param>
+            <param name="duration">The time span for which the item should remain in the cache.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Cache.ICacheManager.Get``1(System.String)">
+            <summary>
+            Retrieves a cached item by its key.
+            </summary>
+            <typeparam name="T">The type of the cached object, which must be a reference type.</typeparam>
+            <param name="cacheKey">The unique identifier for the cached item.</param>
+            <returns>The cached object of type <typeparamref name="T"/>, or null if the key is not found.</returns>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Cache.ICacheManager.Get``1(System.String,System.Func{``0},System.TimeSpan)">
+            <summary>
+            Retrieves a cached item by its key, or generates and caches the value if it doesn't exist.
+            </summary>
+            <typeparam name="T">The type of the cached object, which must be a reference type.</typeparam>
+            <param name="cacheKey">The unique identifier for the cached item.</param>
+            <param name="getValue">A function that generates the value to be cached if it's not found.</param>
+            <param name="duration">The time span for which the item should remain in the cache.</param>
+            <returns>The cached or newly generated object of type <typeparamref name="T"/>.</returns>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Cache.ICacheManager.Remove(System.String)">
+            <summary>
+            Removes a cached item by its key.
+            </summary>
+            <param name="cacheKey">The unique identifier for the cached item to be removed.</param>
+        </member>
+        <member name="T:Jhoose.Security.Features.Core.Controllers.NotificationBaseController">
+            <summary>
+            Base controller that provides webhook notification helpers.
+            </summary>
+            <param name="settingsRepository">Repository for settings.</param>
+            <param name="webhookNotifications">Service to send webhook notifications.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Controllers.NotificationBaseController.#ctor(Jhoose.Security.Features.Settings.Repository.ISettingsRepository,Jhoose.Security.Features.Core.Webhooks.IWebhookNotifications)">
+            <summary>
+            Base controller that provides webhook notification helpers.
+            </summary>
+            <param name="settingsRepository">Repository for settings.</param>
+            <param name="webhookNotifications">Service to send webhook notifications.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Controllers.NotificationBaseController.NotifyWebhooks">
+            <summary>
+            Notifies configured webhook URLs using the webhook notifications service.
+            </summary>
+        </member>
+        <member name="T:Jhoose.Security.Features.Core.Services.IJhooseSecurityService">
+            <summary>
+            Defines a service for applying security-related HTTP headers to responses.
+            </summary>
+            <remarks>
+            This service provides methods to add various security headers including Content Security Policy (CSP),
+            Permissions Policy, and other security-related HTTP headers to enhance application security.
+            </remarks>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Services.IJhooseSecurityService.AddContentSecurityPolicy(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            Adds the Content Security Policy (CSP) header to the specified HTTP response.
+            </summary>
+            <param name="response"></param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Services.IJhooseSecurityService.AddPermissionsPolicy(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            Adds the Permissions Policy header to the specified HTTP response.
+            </summary>
+            <param name="response"></param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Services.IJhooseSecurityService.AddHeaders(Microsoft.AspNetCore.Http.HttpResponse)">
+            <summary>
+            Adds other security-related headers to the specified HTTP response.
+            </summary>
+            <param name="response"></param>
+        </member>
+        <member name="T:Jhoose.Security.Features.Core.Services.JhooseSecurityService">
+            <summary>
+            Service responsible for managing and applying security headers to HTTP responses,
+            including Content Security Policy (CSP), custom response headers, and Permissions-Policy headers.
+            </summary>
+            <remarks>
+            This service integrates with caching mechanisms to optimize header retrieval and applies
+            security headers to outgoing HTTP responses. It handles CSP directives with nonce generation,
+            custom security headers, and browser permissions policies while avoiding conflicts with existing headers.
+            </remarks>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Services.JhooseSecurityService.#ctor(Jhoose.Security.Features.CSP.Provider.ICspProvider,Jhoose.Security.Features.ResponseHeaders.Providers.IResponseHeadersProvider,Jhoose.Security.Features.Permissions.Providers.IPermissionsProvider,Jhoose.Security.Features.Core.Cache.ICacheManager,Microsoft.Extensions.Logging.ILogger{Jhoose.Security.Features.Core.Services.JhooseSecurityService})">
+            <summary>
+            Service responsible for managing and applying security headers to HTTP responses,
+            including Content Security Policy (CSP), custom response headers, and Permissions-Policy headers.
+            </summary>
+            <remarks>
+            This service integrates with caching mechanisms to optimize header retrieval and applies
+            security headers to outgoing HTTP responses. It handles CSP directives with nonce generation,
+            custom security headers, and browser permissions policies while avoiding conflicts with existing headers.
+            </remarks>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Services.JhooseSecurityService.AddHeaders(Microsoft.AspNetCore.Http.HttpResponse)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Services.JhooseSecurityService.AddContentSecurityPolicy(Microsoft.AspNetCore.Http.HttpResponse)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Services.JhooseSecurityService.AddPermissionsPolicy(Microsoft.AspNetCore.Http.HttpResponse)">
+            <inheritdoc/>
+        </member>
+        <member name="T:Jhoose.Security.Features.Core.Webhooks.DefaultWebhookNotifications">
+            <summary>
+            Provides default implementation for webhook notifications that posts to specified endpoints asynchronously.
+            </summary>
+            <param name="serviceScopeFactory">Factory for creating service scopes to resolve dependencies within the async task.</param>
+            <param name="logger">Logger instance for logging errors that occur during webhook notification.</param>
+            <remarks>
+            This class creates a fire-and-forget task that posts empty content to all provided webhook endpoints.
+            Errors during notification are logged but do not throw exceptions to the caller.
+            Each notification request uses an HTTP client configured with the name "webhooks".
+            </remarks>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Webhooks.DefaultWebhookNotifications.#ctor(Microsoft.Extensions.DependencyInjection.IServiceScopeFactory,Microsoft.Extensions.Logging.ILogger{Jhoose.Security.Features.Core.Webhooks.DefaultWebhookNotifications})">
+            <summary>
+            Provides default implementation for webhook notifications that posts to specified endpoints asynchronously.
+            </summary>
+            <param name="serviceScopeFactory">Factory for creating service scopes to resolve dependencies within the async task.</param>
+            <param name="logger">Logger instance for logging errors that occur during webhook notification.</param>
+            <remarks>
+            This class creates a fire-and-forget task that posts empty content to all provided webhook endpoints.
+            Errors during notification are logged but do not throw exceptions to the caller.
+            Each notification request uses an HTTP client configured with the name "webhooks".
+            </remarks>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Webhooks.DefaultWebhookNotifications.Notify(System.Collections.Generic.List{System.Uri})">
+            <inheritdoc/>
+        </member>
+        <member name="T:Jhoose.Security.Features.Core.Webhooks.IWebhookNotifications">
+            <summary>
+            Defines a contract for sending webhook notifications to registered endpoints.
+            </summary>
+        </member>
+        <member name="M:Jhoose.Security.Features.Core.Webhooks.IWebhookNotifications.Notify(System.Collections.Generic.List{System.Uri})">
+            <summary>
+            Sends notifications to the specified list of webhook endpoints.
+            </summary>
+            <param name="endPoints">A list of URIs representing the webhook endpoints to notify.</param>
+        </member>
+        <member name="T:Jhoose.Security.Features.CSP.Controllers.CspController">
+            <summary>
+            Controller for managing Content Security Policy (CSP) policies.
+            </summary>
+            <param name="policyRepository">Repository used to read and modify CSP policies.</param>
+            <param name="settingsRepository">Repository used to read application settings.</param>
+            <param name="webhookNotifications">Service used to send webhook notifications.</param>
+            <param name="logger">Logger for diagnostic messages.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.CSP.Controllers.CspController.#ctor(Jhoose.Security.Features.Core.ContentSecurityPolicyRepository,Jhoose.Security.Features.Settings.Repository.ISettingsRepository,Jhoose.Security.Features.Core.Webhooks.IWebhookNotifications,Microsoft.Extensions.Logging.ILogger{Jhoose.Security.Features.CSP.Controllers.CspController})">
+            <summary>
+            Controller for managing Content Security Policy (CSP) policies.
+            </summary>
+            <param name="policyRepository">Repository used to read and modify CSP policies.</param>
+            <param name="settingsRepository">Repository used to read application settings.</param>
+            <param name="webhookNotifications">Service used to send webhook notifications.</param>
+            <param name="logger">Logger for diagnostic messages.</param>
+        </member>
+        <member name="T:Jhoose.Security.Features.Reporting.Controllers.DashboardController">
+            <summary>
+            API controller for reporting dashboard operations.
+            </summary>
+            <param name="dashboardService"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Reporting.Controllers.DashboardController.#ctor(Jhoose.Security.Features.Reporting.IDashboardService,Microsoft.Extensions.Logging.ILogger{Jhoose.Security.Features.Reporting.Controllers.DashboardController})">
+            <summary>
+            API controller for reporting dashboard operations.
+            </summary>
+            <param name="dashboardService"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Reporting.Controllers.DashboardController.Dashboard(Jhoose.Security.Features.Reporting.Models.Dashboard.DashboardSummaryQuery)">
+            <summary>
+            Gets the dashboard summary.
+            </summary>
+            <param name="query">The dashboard summary query.</param>
+            <returns>The dashboard summary.</returns>
+        </member>
+        <member name="M:Jhoose.Security.Features.Reporting.Controllers.DashboardController.Search(Jhoose.Security.Features.Reporting.Models.Search.CspSearchParams)">
+            <summary>
+            Searches for CSP policies.
+            </summary>
+            <param name="searchParams">The search parameters.</param>
+            <returns>The search results.</returns>
+        </member>
+        <member name="P:Jhoose.Security.Features.Reporting.ElasticSearch.ElasticSearchReportingOptions.CloudId">
+            <summary>
+            The cloud id for the elastic cloud instance
+            </summary>
+        </member>
+        <member name="T:Jhoose.Security.Features.Data.Models.ResponseHeaderStorage">
+            <summary>
+            Represents a storage model for HTTP response header configurations.
+            </summary>
+            <param name="Id">The unique identifier for the response header storage entry.</param>
+            <param name="Name">The name of the HTTP response header.</param>
+            <param name="Directive">The directive or policy type associated with the header.</param>
+            <param name="Value">The serializable value to be set for the response header directive.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Data.Models.ResponseHeaderStorage.#ctor(System.Guid,System.String,System.String,System.String)">
+            <summary>
+            Represents a storage model for HTTP response header configurations.
+            </summary>
+            <param name="Id">The unique identifier for the response header storage entry.</param>
+            <param name="Name">The name of the HTTP response header.</param>
+            <param name="Directive">The directive or policy type associated with the header.</param>
+            <param name="Value">The serializable value to be set for the response header directive.</param>
+        </member>
+        <member name="P:Jhoose.Security.Features.Data.Models.ResponseHeaderStorage.Id">
+            <summary>The unique identifier for the response header storage entry.</summary>
+        </member>
+        <member name="P:Jhoose.Security.Features.Data.Models.ResponseHeaderStorage.Name">
+            <summary>The name of the HTTP response header.</summary>
+        </member>
+        <member name="P:Jhoose.Security.Features.Data.Models.ResponseHeaderStorage.Directive">
+            <summary>The directive or policy type associated with the header.</summary>
+        </member>
+        <member name="P:Jhoose.Security.Features.Data.Models.ResponseHeaderStorage.Value">
+            <summary>The serializable value to be set for the response header directive.</summary>
+        </member>
+        <member name="T:Jhoose.Security.Features.Permissions.Controllers.PermissionsController">
+            <summary>
+            Controller for managing permission policies.
+            </summary>
+            <param name="permissionsRepository">Repository for permissions.</param>
+            <param name="settingsRepository">Repository for settings used by the base controller.</param>
+            <param name="webhookNotifications">Service to notify webhooks on changes.</param>
+            <param name="logger">Logger instance for this controller.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Permissions.Controllers.PermissionsController.#ctor(Jhoose.Security.Features.Core.PermissionsPolicyRepository,Jhoose.Security.Features.Settings.Repository.ISettingsRepository,Jhoose.Security.Features.Core.Webhooks.IWebhookNotifications,Microsoft.Extensions.Logging.ILogger{Jhoose.Security.Features.Permissions.Controllers.PermissionsController})">
+            <summary>
+            Controller for managing permission policies.
+            </summary>
+            <param name="permissionsRepository">Repository for permissions.</param>
+            <param name="settingsRepository">Repository for settings used by the base controller.</param>
+            <param name="webhookNotifications">Service to notify webhooks on changes.</param>
+            <param name="logger">Logger instance for this controller.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Permissions.Controllers.PermissionsController.Save(Jhoose.Security.Features.Permissions.Models.PermissionPolicy)">
+            <summary>
+            Gets a permission policy by key.
+            </summary>
+            <param name="policy"></param>
+            <returns>The permission policy.</returns>
+        </member>
+        <member name="T:Jhoose.Security.Features.Permissions.Models.PermissionPolicy">
+            <summary>
+            Represents a permission policy.
+            </summary>
+            <param name="Key"></param>
+            <param name="Mode"></param>
+            <param name="Scope"></param>
+            <param name="Allowlist"></param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Permissions.Models.PermissionPolicy.#ctor(System.Guid,System.String,System.String,System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            Represents a permission policy.
+            </summary>
+            <param name="Key"></param>
+            <param name="Mode"></param>
+            <param name="Scope"></param>
+            <param name="Allowlist"></param>
+        </member>
+        <member name="P:Jhoose.Security.Features.Permissions.Models.PermissionPolicy.Key">
+            <summary></summary>
+        </member>
+        <member name="P:Jhoose.Security.Features.Permissions.Models.PermissionPolicy.Mode">
+            <summary></summary>
+        </member>
+        <member name="P:Jhoose.Security.Features.Permissions.Models.PermissionPolicy.Scope">
+            <summary></summary>
+        </member>
+        <member name="P:Jhoose.Security.Features.Permissions.Models.PermissionPolicy.Allowlist">
+            <summary></summary>
+        </member>
+        <member name="M:Jhoose.Security.Features.Permissions.Models.PermissionPolicy.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jhoose.Security.Features.Permissions.Models.PermissionPolicy"/> class.
+            </summary>
+        </member>
+        <member name="T:Jhoose.Security.Features.ResponseHeaders.Controllers.ResponseHeadersController">
+            <summary>
+            Controller for managing response headers and related operations.
+            </summary>
+            <param name="responseHeadersRepository">Repository for response headers.</param>
+            <param name="settingsRepository">Repository for application settings.</param>
+            <param name="options">Injected options for JhooseSecurity.</param>
+            <param name="webhookNotifications">Service for sending webhook notifications.</param>
+            <param name="logger">Logger instance for the controller.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.ResponseHeaders.Controllers.ResponseHeadersController.#ctor(Jhoose.Security.Features.Core.ResponseHeaderRepository,Jhoose.Security.Features.Settings.Repository.ISettingsRepository,Microsoft.Extensions.Options.IOptions{Jhoose.Security.Configuration.JhooseSecurityOptions},Jhoose.Security.Features.Core.Webhooks.IWebhookNotifications,Microsoft.Extensions.Logging.ILogger{Jhoose.Security.Features.ResponseHeaders.Controllers.ResponseHeadersController})">
+            <summary>
+            Controller for managing response headers and related operations.
+            </summary>
+            <param name="responseHeadersRepository">Repository for response headers.</param>
+            <param name="settingsRepository">Repository for application settings.</param>
+            <param name="options">Injected options for JhooseSecurity.</param>
+            <param name="webhookNotifications">Service for sending webhook notifications.</param>
+            <param name="logger">Logger instance for the controller.</param>
+        </member>
+        <member name="T:Jhoose.Security.Features.ResponseHeaders.Repository.FixResponseHeaderHelper">
+            <summary>
+            Helper class to fix response headers deserialization issues.
+            This is necessary because of a bug intriduced in V2.5 see https://github.com/andrewmarkham/contentsecuritypolicy/issues/145
+            </summary>
+        </member>
+        <member name="M:Jhoose.Security.Features.ResponseHeaders.Repository.FixResponseHeaderHelper.IsFixRequired(Jhoose.Security.Features.ResponseHeaders.Models.ResponseHeader,System.String)">
+            <summary>
+            Determines if a fix is required based on the type name.
+            </summary>
+            <param name="deserializedHeader"></param>
+            <param name="typeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Jhoose.Security.Features.ResponseHeaders.Repository.FixResponseHeaderHelper.ApplyFix(Jhoose.Security.Features.ResponseHeaders.Models.ResponseHeader,System.String)">
+            <summary>
+            Fixes the response type based on the original header name.
+            </summary>
+            <param name="originalHeader"></param>
+            <param name="jsonValue"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Jhoose.Security.Features.Settings.Controllers.SettingsController">
+            <summary>
+            API controller to manage Jhoose security settings, response headers, policy imports/exports and webhook notifications.
+            </summary>
+            <param name="settingsRepository">Repository for managing CSP settings.</param>
+            <param name="webhookNotifications">Service used to send webhook notifications.</param>
+            <param name="importExportService">Service to perform import and export operations.</param>
+            <param name="importRepository">Repository to persist and retrieve import records.</param>
+            <param name="logger">Logger instance for the controller.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Settings.Controllers.SettingsController.#ctor(Jhoose.Security.Features.Settings.Repository.ISettingsRepository,Jhoose.Security.Features.Core.Webhooks.IWebhookNotifications,Jhoose.Security.Features.ImportExport.Services.IImportExportService,Jhoose.Security.Features.ImportExport.Repository.IImportRepository,Microsoft.Extensions.Logging.ILogger{Jhoose.Security.Features.Settings.Controllers.SettingsController})">
+            <summary>
+            API controller to manage Jhoose security settings, response headers, policy imports/exports and webhook notifications.
+            </summary>
+            <param name="settingsRepository">Repository for managing CSP settings.</param>
+            <param name="webhookNotifications">Service used to send webhook notifications.</param>
+            <param name="importExportService">Service to perform import and export operations.</param>
+            <param name="importRepository">Repository to persist and retrieve import records.</param>
+            <param name="logger">Logger instance for the controller.</param>
+        </member>
+        <member name="M:Jhoose.Security.Features.Settings.Controllers.SettingsController.Settings">
+            <summary>
+            Gets the CSP settings.
+            </summary>
+            <returns>The CSP settings.</returns>
+        </member>
+        <member name="M:Jhoose.Security.Features.Settings.Controllers.SettingsController.Settings(Jhoose.Security.Features.Settings.Models.CspSettings)">
+            <summary>
+            Updates the CSP settings.
+            </summary>
+            <param name="settings">The CSP settings to update.</param>
+            <returns>The updated CSP settings.</returns>
+        </member>
+        <member name="M:Jhoose.Security.Features.Settings.Controllers.SettingsController.Export(Jhoose.Security.Features.ImportExport.Models.ExportOptions)">
+            <summary>
+            Exports selected CSP policies, response headers, and settings according to the provided options.
+            </summary>
+            <param name="options">Options specifying which parts of the configuration to include in the export.</param>
+            <returns>An export object containing the requested configuration data.</returns>
+        </member>
+        <member name="M:Jhoose.Security.Features.Settings.Controllers.SettingsController.UploadImport(Jhoose.Security.Features.ImportExport.Models.JhoooseSecurityExport)">
+            <summary>
+            Uploads an exported configuration package and persists it to the import repository.
+            </summary>
+            <param name="export">The exported configuration data to save; if null a BadRequest is returned.</param>
+            <returns>Returns 204 No Content on success or 400 Bad Request if the export is null.</returns>
+        </member>
+        <member name="P:Jhoose.Security.Features.Settings.Models.CspSettings.ReportingUrl">
+            <summary>
+            Used for the report-uri directive
+            </summary>
+        </member>
+        <member name="P:Jhoose.Security.Features.Settings.Models.CspSettings.ReportToUrl">
+            <summary>
+            Used by the report-to directive
+            </summary>
+        </member>
+        <member name="P:Jhoose.Security.Features.Settings.Models.CspSettings.WebhookUrls">
+            <summary>
+            Urls that will be triggered when the settings change
+            </summary>
+        </member>
+        <member name="T:Jhoose.Security.Helpers.ObjectHasher">
+            <summary>
+            Provides functionality to compute a hash for an object.
+            </summary>
+        </member>
+        <member name="M:Jhoose.Security.Helpers.ObjectHasher.ComputeHash(System.Object)">
+            <summary>
+            Computes a SHA256 hash for the given object.
+            </summary>
+            <param name="obj">The object to hash.</param>
+            <returns>Hexadecimal string representation of the hash.</returns>
+        </member>
+        <member name="T:Jhoose.Security.Helpers.SpanHelpers">
+            <summary>
+            Span-based helper methods for high-performance string processing in CSP contexts
+            </summary>
+        </member>
+        <member name="M:Jhoose.Security.Helpers.SpanHelpers.IsUrlDomainAllowed(System.ReadOnlySpan{System.Char},System.ReadOnlySpan{System.Char})">
+            <summary>
+            Efficiently checks if a URL domain matches any of the allowed domains using Span
+            </summary>
+            <param name="url">The URL to check</param>
+            <param name="allowedDomains">Comma-separated list of allowed domains</param>
+            <returns>True if the URL domain is allowed</returns>
+        </member>
+        <member name="M:Jhoose.Security.Helpers.SpanHelpers.ExtractDomainFromUrl(System.ReadOnlySpan{System.Char})">
+            <summary>
+            Extracts the domain portion from a URL using Span for performance
+            </summary>
+            <param name="url">The URL to parse</param>
+            <returns>The domain portion of the URL</returns>
+        </member>
+        <member name="M:Jhoose.Security.Helpers.SpanHelpers.ProcessCspDirectiveValue(System.ReadOnlySpan{System.Char})">
+            <summary>
+            Efficiently processes CSP directive values by removing unnecessary whitespace
+            </summary>
+            <param name="directiveValue">The directive value to process</param>
+            <returns>Processed directive value</returns>
+        </member>
+        <member name="M:Jhoose.Security.Helpers.SpanHelpers.IsValidNonceFormat(System.ReadOnlySpan{System.Char})">
+            <summary>
+            Validates if a nonce value has the correct format using Span operations
+            </summary>
+            <param name="nonce">The nonce value to validate</param>
+            <returns>True if the nonce format is valid</returns>
+        </member>
+        <member name="T:Jhoose.Security.UI.ContentSecurityPolicyMenuProvider">
+            <summary>
+            Provides menu items for the Jhoose Security section in the EPiServer CMS.
+            </summary>
+        </member>
+        <member name="M:Jhoose.Security.UI.ContentSecurityPolicyMenuProvider.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Jhoose.Security.UI.ContentSecurityPolicyMenuProvider"/> class.
+            </summary>
+        </member>
+    </members>
+</doc>

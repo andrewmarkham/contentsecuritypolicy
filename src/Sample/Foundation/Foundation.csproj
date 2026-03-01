@@ -4,6 +4,7 @@
 	  <VersionPrefix>2021.04.1.0</VersionPrefix>
 	  <VersionSuffix></VersionSuffix>
 	  <PackageVersion Condition=" '$(PackageVersion)' == '' ">$(VersionPrefix)$(VersionSuffix)</PackageVersion>
+    <UserSecretsId>58a4172b-5356-429e-a0b3-93b0d5022416</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <!-- Optimizely CMS and Commerce, with OIDC provider and other main packages -->
@@ -32,6 +33,7 @@
     <!-- Optimizely Search & Navigation -->
     <PackageReference Include="EPiServer.Find.Cms" Version="16.6.0" />
     <PackageReference Include="EPiServer.Find.Commerce" Version="12.2.4" />
+
     <PackageReference Include="PowerSlice" Version="5.2.0" />
 
     <!-- Productivity enhancements, Tools, Other Add-ons -->
@@ -99,17 +101,8 @@
 	  <Folder Include="wwwroot\" />
   </ItemGroup>
 
+
 	<ItemGroup>
-		<ProjectReference Include="..\..\Jhoose.Security.Reporting\Jhoose.Security.Reporting.csproj">
-			<GlobalPropertiesToRemove>
-			</GlobalPropertiesToRemove>
-			<Private>True</Private>
-		</ProjectReference>
-		<ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj">
-			<GlobalPropertiesToRemove>
-			</GlobalPropertiesToRemove>
-			<Private>True</Private>
-		</ProjectReference>
 		<ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
 			<GlobalPropertiesToRemove>
 			</GlobalPropertiesToRemove>

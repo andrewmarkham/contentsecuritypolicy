@@ -4,41 +4,44 @@ import { createRoot } from 'react-dom/client';
 
 import "./css/app.css";
 
-import { Typography } from "antd";
+import { SecurityHeaders } from './Features/SecurityHeaders/SecurityHeaders';
 
-import { SecurityHeaders } from './components/securityheaders/SecurityHeaders';
-
-import { CspModule } from './components/csp/CspModule';
-import { ModuleSettings } from './components/settings/ModuleSettings';
-import { PermissionPolicyModule } from './components/permissionpolicy/PermissionPolicyModule';
+import { CspModule } from './Features/Csp/CspModule/CspModule';
+import { ModuleSettings } from './Features/Settings/ModuleSettings/ModuleSettings';
+import { PermissionPolicyModule } from './Features/PermissionPolicy/PermissionPolicyModule/PermissionPolicyModule';
 
 import React from 'react';
 
-import { Route,HashRouter, Routes, Navigate } from 'react-router-dom';
+import { Route, HashRouter, Routes } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SecurityDashboard } from './Features/Dashboard/SecurityDashboard/SecurityDashboard';
+import { CspIssueSearch } from './Features/CspSearch/CspIssueSearch/CspIssueSearch';
 
-import { AppProvider } from './context';
-import { SecurityDashboard } from './components/dashboard/SecurityDashboard';
-import { CspIssueSearch } from './components/cspsearch/CspIssueSearch';
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
-
-  const { Title } = Typography;
-  
     return (
-      <AppProvider>
+      <QueryClientProvider client={queryClient}>
         <HashRouter>
-          <main>    
-            <Routes>         
-                <Route path="/" element={<SecurityDashboard />} />
-                <Route path="/cspissues" element={<CspIssueSearch />} />
-                <Route path="/csp" element={<CspModule />} />
-                <Route path="/permissions" element={<PermissionPolicyModule />} />
-                <Route path="/headers" element={ <SecurityHeaders /> } />
-                <Route path="/settings" element={ <ModuleSettings /> } />
-            </Routes> 
+          <main>
+            <Routes>
+              <Route path="/" element={<SecurityDashboard />} />
+              <Route path="/cspissues" element={<CspIssueSearch />} />
+              <Route path="/csp" element={<CspModule />} />
+              <Route path="/permissions" element={<PermissionPolicyModule />} />
+              <Route path="/headers" element={<SecurityHeaders />} />
+              <Route path="/settings" element={<ModuleSettings />} />
+            </Routes>
           </main>
         </HashRouter>
-      </AppProvider>
+      </QueryClientProvider>
     );
   }
 

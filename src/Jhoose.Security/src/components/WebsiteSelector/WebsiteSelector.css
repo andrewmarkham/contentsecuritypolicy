@@ -1,0 +1,16 @@
+.website-selector__label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.website-selector__select {
+    width: 280px;
+}
+
+.website-selector__select--wide {
+    width: 320px;
+}
+
+.website-selector__select--default {
+    width: 280px;
+}

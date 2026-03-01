@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Threading.Tasks;
+
+using Jhoose.Security.Features.ResponseHeaders.Models;
+
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+
+namespace Jhoose.Security.Features.ResponseHeaders.Binders;
+
+public class ResponseHeaderModelBinder : IModelBinder
+{
+    private static readonly JsonSerializerOptions serializerOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
+    public async Task BindModelAsync(ModelBindingContext bindingContext)
+    {
+
+        JsonNode? jsonNode;
+        ResponseHeader? responseHeader;
+
+        try
+        {
+            jsonNode = await JsonNode.ParseAsync(bindingContext.ActionContext.HttpContext.Request.Body);
+        }
+        catch (JsonException)
+        {
+            bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Request body was not valid JSON.");
+            bindingContext.Result = ModelBindingResult.Failed();
+            return;
+        }
+
+        var typeMappings = new Dictionary<string, Type>
+        {
+            { "Cross-Origin-Embedder-Policy", typeof(CrossOriginEmbedderPolicyHeader) },
+            { "Cross-Origin-Opener-Policy", typeof(CrossOriginOpenerPolicyHeader) },
+            { "Cross-Origin-Resource-Policy", typeof(CrossOriginResourcePolicyHeader) },
+            { "Referrer-Policy", typeof(ReferrerPolicyHeader) },
+            { "Strict-Transport-Security", typeof(StrictTransportSecurityHeader) },
+            { "X-Content-Type-Options", typeof(XContentTypeOptionsHeader) },
+            { "X-Frame-Options", typeof(XFrameOptionsHeader) },
+            { "X-Permitted-Cross-Domain-Policies", typeof(XPermittedCrossDomainPoliciesHeader) },
+        };
+
+        if (jsonNode is not null)
+        {
+            var responseName = jsonNode["name"];
+
+            typeMappings.TryGetValue(responseName?.GetValue<string>() ?? string.Empty, out var bindingType);
+
+            if (bindingType is not null)
+            {
+                responseHeader = jsonNode.Deserialize(bindingType, serializerOptions) as ResponseHeader;
+                bindingContext.Result = ModelBindingResult.Success(responseHeader);
+            }
+            else
+            {
+                var typeName = responseName?.GetValue<string>() ?? string.Empty;
+                bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, $"Unsupported response header type '{typeName}'.");
+                bindingContext.Result = ModelBindingResult.Failed();
+            }
+        }
+        else
+        {
+            bindingContext.ModelState.TryAddModelError(bindingContext.ModelName, "Request body was empty.");
+            bindingContext.Result = ModelBindingResult.Failed();
+        }
+    }
+}

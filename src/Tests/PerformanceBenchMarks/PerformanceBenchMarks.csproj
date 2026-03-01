@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../Jhoose.Security.Reporting/Jhoose.Security.Reporting.csproj" />
+    <ProjectReference Include="../../Jhoose.Security/Jhoose.Security.csproj" />
   </ItemGroup>
 
 </Project>

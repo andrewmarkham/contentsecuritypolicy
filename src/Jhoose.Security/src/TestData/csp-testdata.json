@@ -1,0 +1,71 @@
+
+[
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e10", "policyName": "default-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e12", "policyName": "script-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e13", "policyName": "style-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+
+
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e14", "policyName": "img-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }  },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e15", "policyName": "connect-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e16", "policyName": "font-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e17", "policyName": "object-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }  },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e18", "policyName": "media-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e19", 
+        "policyName": "frame-src",
+        "reportOnly": false, 
+        "schemaSource": { 
+            "enabled": false, 
+            "http": false, 
+            "https": false, 
+            "data": false, 
+            "mediastream": false, 
+            "blob": false, 
+            "filesystem": false,
+            "ws": false, 
+            "wss": false
+        }, 
+            "value": "", 
+            "options": { 
+                "wildcard": false, 
+                "none": false, 
+                "self": false, 
+                "unsafeEval": false, 
+                "unsafeHashes": false, 
+                "unsafeInline": false, 
+                "strictDynamic": false, 
+                "nonce": false 
+                }
+        },
+
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e20", 
+        "policyName": "sandbox",
+        "reportOnly": false, 
+        "sandboxOptions": {
+            "enabled": false,
+            "allowDownloads": false,
+            "allowForms": false ,
+            "allowModals": false ,
+            "allowOrientationLock": false,
+            "allowPointerLock": false ,
+            "allowPopups": false  ,
+            "allowPopupsToEscapeSandbox": false,
+            "allowPresentation": false ,
+            "allowSameOrigin" : false, 
+            "allowScripts" : false ,
+            "allowTopNavigation": false ,
+            "allowTopNavigationByUserActivation": false,
+            "allowTopNavigationToCustomProtocols": false
+        }},
+
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e21", "policyName": "child-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }},
+
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e22", "policyName": "form-action","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e23", "policyName": "frame-ancestors","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }  },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e25", "policyName": "base-uri","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e26", "policyName": "worker-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e27", "policyName": "manifest-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false } },
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e28", "policyName": "prefetch-src","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }},
+    { "id": "a5780475-6944-429d-bf5c-ac417d274e29", "policyName": "navigate-to","reportOnly": false, "schemaSource": { "enabled": false, "http": false, "https": false, "data": false, "mediastream": false, "blob": false, "filesystem": false }, "value": "", "options": { "wildcard": false, "none": false, "self": false, "unsafeEval": false, "unsafeHashes": false, "unsafeInline": false, "strictDynamic": false, "nonce": false }}
+]
+
