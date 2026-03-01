@@ -1,9 +1,7 @@
 ﻿
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
-using Jhoose.Security.Features.Core.Cache;
 using Jhoose.Security.Features.Core.Providers;
 using Jhoose.Security.Features.CSP.Models;
 
@@ -29,7 +27,6 @@ namespace Jhoose.Security.Features.Core.Services;
 public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<CspPolicyHeaderBase> cspProvider,
                              [FromKeyedServices("responseHeaders")] IHeaderProvider<ResponseHeader> responseHeaderProvider,
                              [FromKeyedServices("permissions")] IHeaderProvider<ResponseHeader> permissionsProvider,
-    ICacheManager cache,
     ISiteService siteService, 
     ISettingsRepository settingsRepository,
     INonceService nonceService,
@@ -43,7 +40,7 @@ public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<Cs
 
             var siteId = siteService.ResolveSiteId(response) ?? string.Empty;
             
-            var headerValues = cache.Get<List<ResponseHeader>>(Constants.ResponseHeadersCacheKey, () => [.. responseHeaderProvider.Headers(siteId, response.HttpContext.Request.Host.Host).Where(h => h.Enabled)], new TimeSpan(1, 0, 0));
+            var headerValues = responseHeaderProvider.Headers(siteId, response.HttpContext.Request.Host.Host);
 
             var enabledHeaders = headerValues?.Where(h => h.Enabled) ?? [];
 

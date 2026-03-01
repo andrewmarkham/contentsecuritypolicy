@@ -46,12 +46,19 @@ public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope,
                 break;
             case "enabled":
             case "report":
-                sb.Append("=(self");
-                if (this.Allowlist != null && this.Allowlist.Count > 0)
+                if (this.Scope=="all")
                 {
-                    sb.Append(' ').AppendJoin(' ',this.Allowlist);
+                    sb.Append("=(*)");
+                } 
+                else
+                {
+                    sb.Append("=(self");
+                    if (this.Allowlist != null && this.Allowlist.Count > 0)
+                    {
+                        sb.Append(' ').AppendJoin(' ',this.Allowlist);
+                    }
+                    sb.Append(')');
                 }
-                sb.Append(')');
                 break;
         }
         
