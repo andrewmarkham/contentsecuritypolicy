@@ -578,14 +578,14 @@ namespace Foundation.Features.Search
                 .Take(pageSize)
                 .StaticallyCacheFor(TimeSpan.FromMinutes(1));
 
-                var result = query.GetContentResult();
+                //var result = query.GetContentResult();
 
             return new ProductSearchResults
             {
-                ProductViewModels = CreateProductViewModels(result, currentContent, filterOptions.Q),
+                //ProductViewModels = CreateProductViewModels(result, currentContent, filterOptions.Q),
                 FacetGroups = GetFacetResults(filterOptions.FacetGroups, facetQuery, selectedfacets),
-                TotalCount = result.TotalMatching,
-                DidYouMeans = string.IsNullOrEmpty(filterOptions.Q) ? null : result.TotalMatching != 0 ? null : _findClient.Statistics().GetDidYouMean(filterOptions.Q),
+                TotalCount = 0,//result.TotalMatching,
+                DidYouMeans = string.IsNullOrEmpty(filterOptions.Q) ? null : 0 != 0 ? null : _findClient.Statistics().GetDidYouMean(filterOptions.Q),
                 Query = filterOptions.Q,
             };
         }
@@ -726,29 +726,12 @@ namespace Foundation.Features.Search
 
             query = facets.Aggregate(query, (current, facet) => facet.Facet(current, GetSelectedFilter(options, facet.FieldName)));
 
-            var productFacetsResult = query.Take(0).GetContentResult();
-            if (productFacetsResult.Facets == null)
-            {
+            //var productFacetsResult = null;//query.Take(0).GetContentResult();
+            //if (productFacetsResult?.Facets == null)
+            //{
                 return facetGroups;
-            }
+            //}
 
-            foreach (var facetGroup in facetGroups)
-            {
-                var filter = facets.FirstOrDefault(x => x.FieldName.Equals(facetGroup.GroupFieldName));
-                if (filter == null)
-                {
-                    continue;
-                }
-
-                var facet = productFacetsResult.Facets.FirstOrDefault(x => x.Name.Equals(facetGroup.GroupFieldName));
-                if (facet == null)
-                {
-                    continue;
-                }
-
-                filter.PopulateFacet(facetGroup, facet, selectedfacets);
-            }
-            return facetGroups;
         }
 
         private Filter GetSelectedFilter(List<FacetGroupOption> options, string currentField)

@@ -78,6 +78,9 @@ public class CspPolicy  : ISitePolicy
                 {
                     var replaced = valueSpan.ToString().Replace("\n", " ");
                     sb.Append(replaced).Append("; ");
+                } else
+                {
+                    sb.Append(this.Value).Append("; ");
                 }
                 else 
                 {
