@@ -26,7 +26,7 @@ public class StandardPermissionsProvider(ISecurityRepository<PermissionPolicy> p
             yield return new ReportingEndpointHeader(settings, host, "permissions-endpoint");
         }
 
-        var mergedPolicies = this.MergePolicies(siteId, policies.ToList());
+        var mergedPolicies = this.MergePolicies(siteId, policies.Where(p => p.Mode != "default").ToList());
             
         // for global report only
         if (mode.Equals("report"))
