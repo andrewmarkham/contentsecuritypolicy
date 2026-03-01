@@ -10068,3 +10068,6 @@ src/Jhoose.Security/src/node_modules/@antv/g6-extension-react/src/react-node/nod
 src/Jhoose.Security/src/node_modules/@antv/g6-extension-react/src/react-node/render.ts
 src/Jhoose.Security/src/node_modules/@antv/g6-extension-react/src/react-node/render16.ts
 src/Jhoose.Security/src/node_modules/@antv/g6-extension-react/src/react-node/render18.ts
+src/Tests/PerformanceBenchMarks/bin/Release/net8.0/Jhoose.Security.dll
+src/Tests/PerformanceBenchMarks/bin/Release/net8.0/Jhoose.Security.pdb
+src/Tests/PerformanceBenchMarks/bin/Release/net8.0/Jhoose.Security.xml
