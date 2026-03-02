@@ -17,11 +17,12 @@ public abstract class CspPolicyHeaderBase : ResponseHeader
     {
         this.settings = settings;
 
+        var normalizedHost = NormalizeHost(host);
         switch (this.settings.ReportingMode)
         {
             case ReportingMode.Local:
-                this.reportUrl = $"{host}api/reporting/";
-                this.reportToUrl = $"{host}api/reporting/";
+                this.reportUrl = $"{normalizedHost}api/reporting/";
+                this.reportToUrl = $"{normalizedHost}api/reporting/";
                 break;
             case ReportingMode.External:
                 this.reportUrl = this.settings.ReportingUrl;

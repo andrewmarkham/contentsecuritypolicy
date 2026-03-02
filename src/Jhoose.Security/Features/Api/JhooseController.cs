@@ -77,8 +77,7 @@ public class JhooseController([FromKeyedServices("csp")] IHeaderProvider<CspPoli
 
     private IEnumerable<KeyValuePair<string, string>> GetHeaders(string siteId, string host)
     {
-        var headerValues = cache.Get<List<ResponseHeader>>(Constants.ResponseHeadersCacheKey,
-            () => [.. responseHeaderProvider.Headers(siteId, host).Where(h => h.Enabled)], new TimeSpan(1, 0, 0));
+        var headerValues = responseHeaderProvider.Headers(siteId, host).Where(h => h.Enabled).ToList();
 
         foreach (var header in headerValues ?? [])
         {
@@ -95,16 +94,9 @@ public class JhooseController([FromKeyedServices("csp")] IHeaderProvider<CspPoli
         if (policySettings!.IsEnabledForSite(siteId))
         {
             // get the policy
-            var policyCache = cache.Get<Dictionary<string, List<CspPolicyHeaderBase>>>(Constants.PolicyCacheKey)
-                ?? new Dictionary<string, List<CspPolicyHeaderBase>>(StringComparer.OrdinalIgnoreCase);
-            if (!policyCache.TryGetValue(siteId, out var cachedHeaderValues))
-            {
-                cachedHeaderValues = [.. cspProvider.Headers(siteId, host)];
-                policyCache[siteId] = cachedHeaderValues;
-                cache.Insert(Constants.PolicyCacheKey, policyCache, new TimeSpan(1, 0, 0));
-            }
 
-            foreach (var cachedHeader in cachedHeaderValues)
+            var hearderValies = cspProvider.Headers(siteId, host);
+            foreach (var cachedHeader in hearderValies ?? [])
             {
                 var header = cachedHeader.Clone();
                 header.NonceValue = nonce;
@@ -121,17 +113,9 @@ public class JhooseController([FromKeyedServices("csp")] IHeaderProvider<CspPoli
 
         if (policySettings!.IsPermissionsEnabledForSite(siteId))
         {
-            // get the policy
-            var permissionsCache = cache.Get<Dictionary<string, List<ResponseHeader>>>(Constants.PermissionPolicyCacheKey)
-                ?? new Dictionary<string, List<ResponseHeader>>(StringComparer.OrdinalIgnoreCase);
-            if (!permissionsCache.TryGetValue(siteId, out var headerValues))
-            {
-                headerValues = [.. permissionsProvider.Headers(siteId, host)];
-                permissionsCache[siteId] = headerValues;
-                cache.Insert(Constants.PermissionPolicyCacheKey, permissionsCache, new TimeSpan(1, 0, 0));
-            }
+            var headerValues = permissionsProvider.Headers(siteId, host);
 
-            foreach (var header in headerValues)
+            foreach (var header in headerValues ?? [])
             {
                 yield return new KeyValuePair<string, string>(header.Name, header.Value);
             }
