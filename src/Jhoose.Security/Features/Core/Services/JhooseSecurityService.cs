@@ -40,7 +40,7 @@ public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<Cs
 
             var siteId = siteService.ResolveSiteId(response) ?? string.Empty;
             
-            var headerValues = responseHeaderProvider.Headers(siteId, response.HttpContext.Request.Host.Host);
+            var headerValues = responseHeaderProvider.Headers(siteId, response.HttpContext.Request.Host.Value ?? string.Empty);
 
             var enabledHeaders = headerValues?.Where(h => h.Enabled) ?? [];
 
@@ -82,7 +82,7 @@ public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<Cs
             }
 
             // get the policy
-            var cachedHeaders = cspProvider.Headers(siteId, response.HttpContext.Request.Host.Host).ToList();
+            var cachedHeaders = cspProvider.Headers(siteId, response.HttpContext.Request.Host.Value ?? string.Empty).ToList();
             var nonceValue = nonceService.GenerateNonce();
             
             foreach (var cachedHeader in cachedHeaders)
@@ -123,7 +123,7 @@ public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<Cs
                 return;
             }
     
-            var headerValues = permissionsProvider.Headers(siteId, response.HttpContext.Request.Host.Host);
+            var headerValues = permissionsProvider.Headers(siteId, response.HttpContext.Request.Host.Value ?? string.Empty);
 
             foreach (var header in headerValues)
             {

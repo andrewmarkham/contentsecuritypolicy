@@ -29,4 +29,34 @@ public class ResponseHeader : IResponseHeader , ISitePolicy
     public virtual string Value { get; set; } = string.Empty;
 
     public string GroupingKey => this.Name;
+
+
+    protected static string NormalizeHost(string host)
+    {
+        if (string.IsNullOrWhiteSpace(host))
+        {
+            return string.Empty;
+        }
+
+        var trimmed = host.Trim();
+        if (trimmed.IndexOf("://", StringComparison.Ordinal) < 0)
+        {
+            trimmed = $"https://{trimmed}";
+        }
+
+        if (!Uri.TryCreate(trimmed, UriKind.Absolute, out var uri))
+        {
+            return string.Empty;
+        }
+
+        var scheme = uri.Scheme;
+        if (!scheme.Equals("http", StringComparison.OrdinalIgnoreCase)
+            && !scheme.Equals("https", StringComparison.OrdinalIgnoreCase))
+        {
+            return string.Empty;
+        }
+
+        var baseUri = uri.GetLeftPart(UriPartial.Authority);
+        return baseUri.EndsWith("/", StringComparison.Ordinal) ? baseUri : $"{baseUri}/";
+    }
 }

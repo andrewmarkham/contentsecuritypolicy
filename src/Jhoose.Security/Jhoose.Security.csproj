@@ -10,7 +10,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>3.0.0.0</Version>
+		<Version>3.0.1.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy, Permissions Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
