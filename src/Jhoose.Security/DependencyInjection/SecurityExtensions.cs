@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using EPiServer.Authorization;
-using EPiServer.ServiceLocation;
+
 using EPiServer.Shell.Modules;
 using Jhoose.Security.Configuration;
 
@@ -41,6 +41,11 @@ using Jhoose.Security.Features.ResponseHeaders.Repository;
 using Jhoose.Security.Features.CSP.Repository;
 using Jhoose.Security.Features.Core.Providers;
 
+#if NET8_0 || NET9_0
+using EPiServer.ServiceLocation;
+#else
+using EPiServer.DependencyInjection;
+#endif
 namespace Jhoose.Security.DependencyInjection;
 
 public static class SecurityExtensions

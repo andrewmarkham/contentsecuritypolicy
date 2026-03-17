@@ -43,6 +43,18 @@
             ],
             "problemMatcher": "$msCompile"
         },
+    {
+            "label": "buildCMS13",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Sample/CMS13/alloy13preview.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
         {
             "label": "copy",
             "command": "cp",
