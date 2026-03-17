@@ -77,29 +77,47 @@
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' OR '$(TargetFramework)' == 'net9.0'">
         <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+
+        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework" Version="[12.22.3,13)" />
+
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
+        <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
         <PackageReference Include="System.Linq.Async" Version="6.0.1" ExcludeAssets="All" />
+
+        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[13.0.0-preview3,14)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[13.0.0-preview3,14)" />
+        <PackageReference Include="EPiServer.Framework" Version="[13.0.0-preview3,14)" />
+        <PackageReference Include="EPiServer.Cms.AspNetCore.TagHelpers" Version="[13.0.0-preview3,14)" />
+
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.0" />
+
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
+        
+        <PackageReference Include="System.IO.Packaging" Version="10.0.0" />
+        <PackageReference Include="Castle.Core" Version="5.2.1" />
     </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Dapper" Version="2.1.66" />
-		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
-		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.22.3,13)" />
-		<PackageReference Include="EPiServer.Framework" Version="[12.22.3,13)" />
 
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
 
 		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
 
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.11" />
         <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
         <PackageReference Include="MimeKit" Version="4.14.0" />
         <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
-        <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
+        <PackageReference Include="System.IO.Packaging" Version="10.0.0" />
+
 	</ItemGroup>
     <!--
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
@@ -128,13 +146,9 @@
 		</Content>
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="Microsoft.Extensions.Options.ConfigurationExtensions" />
 		<None Remove="Provider\" />
 		<None Remove="Authorization\" />
 		<None Remove="Webhooks\" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Provider\" />
