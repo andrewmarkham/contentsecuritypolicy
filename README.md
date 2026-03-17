@@ -296,3 +296,4 @@ X-API-Key: ...
  |2.6.2|Fixed another bug with (CRLF in header values)|
  |2.6.3|Fixed performance issues with the reporting API.<br/>Fixed a race condition that caused the nonce to leak across requests under high load.|
  |3.0.0|Added multisite support, CSP and Permissions Policy, Security Headers can now be configured per site.  |
+ |3.0.2|Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.|
