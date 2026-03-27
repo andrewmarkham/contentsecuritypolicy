@@ -16,7 +16,7 @@
     }
 
     
-    var website = applicationResolver.GetByContext() as Website;
+    var website = applicationResolver.GetByContext() as InProcessWebsite;
 }
 
 <header>
@@ -31,7 +31,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        @Html.MenuList(website.RoutingEntryPoint, ItemTemplate)
+                        @Html.MenuList(website.EntryPoint, ItemTemplate)
                     </ul>
                 </div>
             </div>

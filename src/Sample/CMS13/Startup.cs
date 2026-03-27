@@ -9,6 +9,8 @@ using EPiServer.Web.Routing;
 
 using Jhoose.Security.DependencyInjection;
 
+using Optimizely.Graph.DependencyInjection;
+
 namespace alloy13preview;
 
 public class Startup
@@ -38,7 +40,10 @@ public class Startup
             .AddAdminUserRegistration()
             .AddEmbeddedLocalization<Startup>();
 
-        services.AddVisitorGroups();
+        services.AddContentGraph();
+        services.AddContentManager();
+
+        //services.AddVisitorGroups();
         
         // Required by Wangkanai.Detection
         services.AddDetection();
@@ -55,15 +60,15 @@ public class Startup
             options.UpdateDatabaseCompatibilityLevel = true;
         });
 
-            services.AddJhooseSecurity(_configuration,(o) =>
-            {
-                o.UseHeadersUI = true;
-                o.ExclusionPaths.Add("/Episerver");
+        services.AddJhooseSecurity(_configuration,(o) =>
+        {
+            o.UseHeadersUI = true;
+            o.ExclusionPaths.Add("/Episerver");
 
-                //TODO Investigate why this is required to avoid a serialization error when accessing the admin UI. It may be related to the fact that the admin UI is making a request to an endpoint that is being blocked by the reporting feature, but this is just a guess.
-                o.ExclusionPaths.Add("/Optimizely"); // if remove this get a serialization error when accessing the admin UI
-                o.Reporting.RateLimiting.Enabled = false;
-            });
+            //TODO Investigate why this is required to avoid a serialization error when accessing the admin UI. It may be related to the fact that the admin UI is making a request to an endpoint that is being blocked by the reporting feature, but this is just a guess.
+            o.ExclusionPaths.Add("/Optimizely"); // if remove this get a serialization error when accessing the admin UI
+            o.Reporting.RateLimiting.Enabled = false;
+        });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

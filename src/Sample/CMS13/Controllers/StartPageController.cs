@@ -1,7 +1,7 @@
 using alloy13preview.Models.Pages;
 using alloy13preview.Models.ViewModels;
 using EPiServer.Applications;
-using EPiServer.Web;
+
 using EPiServer.Web.Mvc;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +20,9 @@ public class StartPageController : PageControllerBase<StartPage>
         var model = PageViewModel.Create(currentPage);
         var application = await _applicationResolver.GetByContextAsync(cancellationToken);
 
-        var website = application as Website;
+        var website = application as InProcessWebsite;
         // Check if it is the StartPage or just a page of the StartPage type.
-        if (website is not null && website.RoutingEntryPoint.CompareToIgnoreWorkID(currentPage.ContentLink))
+        if (website is not null && website.EntryPoint.CompareToIgnoreWorkID(currentPage.ContentLink))
         {
             // Connect the view models logotype property to the start page's to make it editable
             var editHints = ViewData.GetEditHints<PageViewModel<StartPage>, StartPage>();

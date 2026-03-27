@@ -156,6 +156,7 @@ public static class SecurityExtensions
 
     public static IApplicationBuilder UseJhooseSecurity(this IApplicationBuilder applicationBuilder)
     {
+        
         var securityOptions = applicationBuilder.ApplicationServices.GetService<IOptions<JhooseSecurityOptions>>();
 
         applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c.Request, securityOptions?.Value.ExclusionPaths ?? Enumerable.Empty<string>()), ab =>
@@ -177,7 +178,10 @@ public static class SecurityExtensions
 
     public static bool IsValidPath(HttpRequest request, IEnumerable<string> exclusionPaths)
     {
-
+        if (request.Path.StartsWithSegments("/api", StringComparison.InvariantCultureIgnoreCase))
+        {
+            return true;
+        }
         foreach (var path in exclusionPaths)
         {
             if (request.Path.StartsWithSegments(path, System.StringComparison.InvariantCultureIgnoreCase))
