@@ -119,14 +119,15 @@
 		<Content Include="buildTransitive\Jhoose.Security.Admin.targets" PackagePath="buildTransitive\Jhoose.Security.Admin.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
-			<PackagePath>ContentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
+			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
+        <!--
 		<Content Include="Jhoose.Security.Views\Views\**" Exclude="src\**\*">
 			<Pack>true</Pack>
-			<PackagePath>ContentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
+			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
-		</Content>
+		</Content>-->
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Microsoft.Extensions.Options.ConfigurationExtensions" />
