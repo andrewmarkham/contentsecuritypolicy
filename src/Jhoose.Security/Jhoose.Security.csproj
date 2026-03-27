@@ -122,12 +122,12 @@
 			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
-        <!--
+        
 		<Content Include="Jhoose.Security.Views\Views\**" Exclude="src\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
-		</Content>-->
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Microsoft.Extensions.Options.ConfigurationExtensions" />
