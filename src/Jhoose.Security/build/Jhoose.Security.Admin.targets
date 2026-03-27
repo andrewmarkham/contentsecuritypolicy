@@ -5,7 +5,7 @@
     <JhooseSecurityCopyToSource Condition="'$(JhooseSecurityCopyToSource)' == ''">true</JhooseSecurityCopyToSource>
 
     <!-- Prefer solution root when available, fallback to project root -->
-    <JhooseSecuritySourceRoot Condition="'$(JhooseSecuritySourceRoot)' == '' and '$(SolutionDir)' != ''">$(SolutionDir)</JhooseSecuritySourceRoot>
+    <JhooseSecuritySourceRoot Condition="'$(JhooseSecuritySourceRoot)' == '' and '$(SolutionDir)' != '*Undefined*' and '$(SolutionDir)' != ''">$(SolutionDir)</JhooseSecuritySourceRoot>
     <JhooseSecuritySourceRoot Condition="'$(JhooseSecuritySourceRoot)' == ''">$(MSBuildProjectDirectory)</JhooseSecuritySourceRoot>
     <JhooseSecuritySourceRoot>$([MSBuild]::EnsureTrailingSlash('$(JhooseSecuritySourceRoot)'))</JhooseSecuritySourceRoot>
   </PropertyGroup>
