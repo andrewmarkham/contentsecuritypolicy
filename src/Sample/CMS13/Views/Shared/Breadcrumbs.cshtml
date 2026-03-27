@@ -34,15 +34,15 @@
         return new HelperResult(w => Task.CompletedTask);
     }
 
-    var website = applicationResolver.GetByContext() as Website;
+    var website = applicationResolver.GetByContext() as InProcessWebsite;
     //var startPage = _contentLoader.Get<StartPage>(website.RoutingEntryPoint);
 }
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb d-none d-lg-flex">
         <li class="breadcrumb-item">
-            <a epi-property="@website.RoutingEntryPoint" />
+            <a epi-property="@website.EntryPoint" />
         </li>
-        @Html.MenuList(website.RoutingEntryPoint, ItemTemplate, requireVisibleInMenu: false, requirePageTemplate: false)
+        @Html.MenuList(website.EntryPoint, ItemTemplate, requireVisibleInMenu: false, requirePageTemplate: false)
     </ol>
 </nav>

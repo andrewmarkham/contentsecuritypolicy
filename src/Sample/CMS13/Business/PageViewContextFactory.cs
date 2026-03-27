@@ -3,7 +3,7 @@ using alloy13preview.Models.ViewModels;
 using EPiServer.Applications;
 using EPiServer.Data;
 using EPiServer.ServiceLocation;
-using EPiServer.Web;
+
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Html;
@@ -37,8 +37,8 @@ public class PageViewContextFactory
 
     public virtual LayoutModel CreateLayoutModel(ContentReference currentContentLink, HttpContext httpContext)
     {
-        var website = this.applicationResolver.GetByContent(currentContentLink, true) as Website;
-        var startPageContentLink = website.RoutingEntryPoint;
+        var website = this.applicationResolver.GetByContent(currentContentLink, true) as InProcessWebsite;
+        var startPageContentLink = website.EntryPoint;
 
         // Use the content link with version information when editing the startpage,
         // otherwise the published version will be used when rendering the props below.
@@ -71,8 +71,8 @@ public class PageViewContextFactory
 
     public virtual IContent GetSection(ContentReference contentLink)
     {
-        var website = this.applicationResolver.GetByContent(contentLink, true) as Website;
-        var startPageContentLink = website.RoutingEntryPoint;
+        var website = this.applicationResolver.GetByContent(contentLink, true) as InProcessWebsite;
+        var startPageContentLink = website.EntryPoint;
 
         var currentContent = _contentLoader.Get<IContent>(contentLink);
 

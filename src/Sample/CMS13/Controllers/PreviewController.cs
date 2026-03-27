@@ -40,8 +40,8 @@ public class PreviewController : ActionControllerBase, IRenderTemplate<BlockData
     public IActionResult Index(IContent currentContent)
     {
         //As the layout requires a page for title etc we "borrow" the start page
-        var website = this.applicationResolver.GetByContent(currentContent.ContentLink, true) as Website;
-        var startPage = _contentLoader.Get<StartPage>(website.RoutingEntryPoint);
+        var website = this.applicationResolver.GetByContent(currentContent.ContentLink, true) as InProcessWebsite;
+        var startPage = _contentLoader.Get<StartPage>(website.EntryPoint);
 
         var model = new PreviewModel(startPage, currentContent);
 

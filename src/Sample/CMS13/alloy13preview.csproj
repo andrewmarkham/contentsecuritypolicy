@@ -13,19 +13,24 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="EPiServer.CMS" Version="13.0.0-preview3" />
-    <PackageReference Include="EPiServer.CMS.UI.AspNetIdentity" Version="13.0.0-preview3" />
+    <PackageReference Include="EPiServer.CMS" Version="13.0.0-preview4" />
+    <PackageReference Include="EPiServer.CMS.UI.AspNetIdentity" Version="13.0.0-preview4" />
+    <PackageReference Include="Optimizely.Graph.Cms" Version="13.0.0-preview4" />
+    <PackageReference Include="EPiServer.Cms.UI.ContentManager" Version="13.0.0-preview4" />
+    <PackageReference Include="Jhoose.Security.Admin" Version="3.0.2.415" />
+
     <PackageReference Include="Wangkanai.Detection" Version="8.7.0" />
   </ItemGroup>
   
   <ItemGroup>
     <EmbeddedResource Include="Resources\Translations\**\*" />
   </ItemGroup>
-
+<!--
   <ItemGroup>
 		<ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
 			<GlobalPropertiesToRemove>
 			</GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>
+  -->
 </Project>

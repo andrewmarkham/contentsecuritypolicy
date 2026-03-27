@@ -4,7 +4,7 @@ using EPiServer.Applications;
 using EPiServer.Filters;
 using EPiServer.ServiceLocation;
 using EPiServer.Shell.Configuration;
-using EPiServer.Web;
+
 
 namespace alloy13preview.Business;
 
@@ -101,10 +101,10 @@ public class ContentLocator
     public IEnumerable<ContactPage> GetContactPages()
     {
         var website = this.applicationResolver.GetByContext() as Website;
-        var startPage = _contentLoader.Get<StartPage>(website.RoutingEntryPoint);
+        var startPage = _contentLoader.Get<StartPage>(website.EntryPoint);
 
 
-        var contactsRootPageLink = _contentLoader.Get<StartPage>(website.RoutingEntryPoint).ContactsPageLink;
+        var contactsRootPageLink = _contentLoader.Get<StartPage>(website.EntryPoint).ContactsPageLink;
 
         if (ContentReference.IsNullOrEmpty(contactsRootPageLink))
         {
