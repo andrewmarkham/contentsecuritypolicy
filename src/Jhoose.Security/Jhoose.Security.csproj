@@ -115,7 +115,7 @@
 		<Content Remove="*.json" />
 		<Content Remove="Jhoose.Security.Views\**" />
 		<!--  -->
-		<Content Include="build\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
+		<Content Include="build\\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
