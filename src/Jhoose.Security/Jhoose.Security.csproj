@@ -115,11 +115,13 @@
 		<Content Remove="*.json" />
 		<Content Remove="Jhoose.Security.Views\**" />
 		<!--  -->
-		<Content Include="build\\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
+		<Content Include="build\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
+            <BuildAction>Content</BuildAction>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 		<Content Include="Jhoose.Security.Views\Views\**" Exclude="src\**\*">
 			<Pack>true</Pack>
@@ -127,6 +129,11 @@
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
 
+        <PackageContentFiles Include="contentFiles\any\any\modules\_protected\Jhoose.Security\**">
+            <BuildAction>Content</BuildAction>
+            <CopyToOutput>true</CopyToOutput>
+            <Flatten>false</Flatten>
+        </PackageContentFiles>
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Microsoft.Extensions.Options.ConfigurationExtensions" />

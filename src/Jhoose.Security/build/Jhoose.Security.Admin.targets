@@ -8,6 +8,8 @@
         <Copy
             SourceFiles="@(SourceScripts)"
             DestinationFolder="$(MSBuildProjectDirectory)\modules\_protected\%(RecursiveDir)"
+            BuildAction="Content"
+            CopyToOutputDirectory="PreserveNewest" 
         />
     </Target>
 </Project>
