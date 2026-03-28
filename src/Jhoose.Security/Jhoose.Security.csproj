@@ -10,7 +10,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>3.0.3.0</Version>
+		<Version>3.0.4.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy, Permissions Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -53,7 +53,7 @@
             2.6.2 - Fixed another bug with (CRLF in header values)
             2.6.3 - Fixed performance issues with the reporting API.
             3.0.0 - Added multisite support, CSP and Permissions Policy, Security Headers can now be configured per site.
-            3.0.2 - Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.
+            3.0.4 - Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
@@ -115,18 +115,18 @@
 		<Content Remove="*.json" />
 		<Content Remove="Jhoose.Security.Views\**" />
 		<!--  -->
-		<Content Include="build\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
+		<Content Include="build\\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
-        
 		<Content Include="Jhoose.Security.Views\Views\**" Exclude="src\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
+
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Microsoft.Extensions.Options.ConfigurationExtensions" />
