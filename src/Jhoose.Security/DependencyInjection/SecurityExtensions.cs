@@ -41,10 +41,11 @@ using Jhoose.Security.Features.ResponseHeaders.Repository;
 using Jhoose.Security.Features.CSP.Repository;
 using Jhoose.Security.Features.Core.Providers;
 
-#if NET8_0 || NET9_0
-using EPiServer.ServiceLocation;
+
+#if CMS12
+    using EPiServer.ServiceLocation;
 #else
-using EPiServer.DependencyInjection;
+    using EPiServer.DependencyInjection;
 #endif
 namespace Jhoose.Security.DependencyInjection;
 
@@ -178,10 +179,6 @@ public static class SecurityExtensions
 
     public static bool IsValidPath(HttpRequest request, IEnumerable<string> exclusionPaths)
     {
-        if (request.Path.StartsWithSegments("/api", StringComparison.InvariantCultureIgnoreCase))
-        {
-            return true;
-        }
         foreach (var path in exclusionPaths)
         {
             if (request.Path.StartsWithSegments(path, System.StringComparison.InvariantCultureIgnoreCase))

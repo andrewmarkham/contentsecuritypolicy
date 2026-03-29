@@ -23,8 +23,6 @@ jobs:
       uses: actions/setup-dotnet@v5
       with:
         dotnet-version: | 
-          8.0.x
-          9.0.x
           10.0.x
 
     - name: Configure Source
@@ -44,12 +42,12 @@ jobs:
 
     - name: Build (Production)
       if: github.ref == 'refs/heads/main'
-      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }}
+      run: dotnet build --configuration Release -p:Version=${{ env.BUILD_NO }} -p:CMSVersion=CMS13
       working-directory: ./src/Jhoose.Security
 
     - name: Build (Pre Release)
       if: github.ref != 'refs/heads/main'
-      run: dotnet build --configuration PreRelease -p:Version=${{ env.BUILD_NO_PRE }}
+      run: dotnet build --configuration PreRelease -p:Version=${{ env.BUILD_NO_PRE }} -p:CMSVersion=CMS13
       working-directory: ./src/Jhoose.Security
 
     - name: Run Jhoose.Security.Tests

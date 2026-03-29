@@ -1,12 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <!-- Consumer sets this, you can provide a default -->
+        <CMSVersion Condition="'$(CMSVersion)' == ''">CMS12</CMSVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(CMSVersion)' == 'CMS12'">
+        <DefineConstants>$(DefineConstants);CMS12</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(CMSVersion)' == 'CMS13'">
+        <DefineConstants>$(DefineConstants);CMS13</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(CMSVersion)' == 'CMS12'">
+        <AssemblyName>Jhoose.Security.Admin</AssemblyName>
+        <PackageId>Jhoose.Security.Admin</PackageId>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(CMSVersion)' == 'CMS13'">
+        <AssemblyName>Jhoose.Security.Admin13</AssemblyName>
+        <PackageId>Jhoose.Security.Admin13</PackageId>
+    </PropertyGroup>
+
 	<PropertyGroup>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<TargetFrameworks  Condition="'$(CMSVersion)' == 'CMS12'">net8.0;net9.0;net10.0</TargetFrameworks>
+        <TargetFrameworks  Condition="'$(CMSVersion)' == 'CMS13'">net10.0</TargetFrameworks>
+
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<Nullable>enable</Nullable>
 		<LangVersion>14</LangVersion>
-		<PackageId>Jhoose.Security.Admin</PackageId>
+		
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -69,6 +95,7 @@
 		<ReleaseVersion>2.5.0.0</ReleaseVersion>
         <NoWarn>1587, 1591</NoWarn>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net8.0|AnyCPU'">
 		<DebugType>portable</DebugType>
 	</PropertyGroup>
@@ -79,18 +106,21 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' OR '$(TargetFramework)' == 'net9.0'">
         <PackageReference Include="System.Linq.Async" Version="6.0.1" />
 
-        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
-		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.22.3,13)" />
-		<PackageReference Include="EPiServer.Framework" Version="[12.22.3,13)" />
-
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
         <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
 
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
-        <PackageReference Include="System.Linq.Async" Version="6.0.1" ExcludeAssets="All" />
+    <ItemGroup Condition="'$(CMSVersion)' == 'CMS12'">
+
+        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework" Version="[12.22.3,13)" />
+
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(CMSVersion)' == 'CMS13' and '$(TargetFramework)' == 'net10.0'">
 
         <PackageReference Include="EPiServer.CMS.UI.Core" Version="[13.0.0-preview4,14)" />
 		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[13.0.0-preview4,14)" />
@@ -100,6 +130,11 @@
         <PackageReference Include="EPiServer.Cms.AspNetCore.Templating" Version="[13.0.0-preview4,14)" /> 
         <PackageReference Include="EPiServer.LinkAnalyzer" Version="[13.0.0-preview4,14)" />
         <PackageReference Include="EPiServer.ApplicationModules" Version="[13.0.0-preview4,14)" />
+
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
+        <PackageReference Include="System.Linq.Async" Version="6.0.1" ExcludeAssets="All" />
 
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.2" />
