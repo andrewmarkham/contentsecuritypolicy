@@ -42,14 +42,14 @@ public class SqlDatabaseReportingRepository(ILogger<SqlDatabaseReportingReposito
                 sqlHelper.CreateParameter<DateTime>("RecievedAt", SqlDbType.DateTime, reportTo.RecievedAt),
                 sqlHelper.CreateParameter<DateTime>("RecievedAtMin", SqlDbType.DateTime, recievedAtMin),
                 sqlHelper.CreateParameter<DateTime>("RecievedAtHour", SqlDbType.DateTime, recievedAtHour),
-                sqlHelper.CreateParameter<string>("Type", SqlDbType.NVarChar, reportTo.Type),
-                sqlHelper.CreateParameter<string>("Url", SqlDbType.NVarChar, reportTo.Url),
-                sqlHelper.CreateParameter<string>("UserAgent", SqlDbType.NVarChar, reportTo.UserAgent),
-                sqlHelper.CreateParameter<string>("Browser", SqlDbType.NVarChar, reportTo?.Browser ?? string.Empty),
-                sqlHelper.CreateParameter<string>("Version", SqlDbType.NVarChar, reportTo?.Version ?? string.Empty),
-                sqlHelper.CreateParameter<string>("OS", SqlDbType.NVarChar, reportTo?.OS ?? string.Empty),
-                sqlHelper.CreateParameter<string>("Directive", SqlDbType.NVarChar, reportTo?.Directive ?? string.Empty),
-                sqlHelper.CreateParameter<string>("BlockedUri", SqlDbType.NVarChar, reportTo?.Message ?? string.Empty),
+                sqlHelper.CreateParameter<string>("Type", SqlDbType.NVarChar, reportTo.Type[..30]),
+                sqlHelper.CreateParameter<string>("Url", SqlDbType.NVarChar, reportTo.Url[..512]),
+                sqlHelper.CreateParameter<string>("UserAgent", SqlDbType.NVarChar, reportTo.UserAgent[..512]),
+                sqlHelper.CreateParameter<string>("Browser", SqlDbType.NVarChar, reportTo?.Browser?[..20] ?? string.Empty),
+                sqlHelper.CreateParameter<string>("Version", SqlDbType.NVarChar, reportTo?.Version?[..20] ?? string.Empty),
+                sqlHelper.CreateParameter<string>("OS", SqlDbType.NVarChar, reportTo?.OS?[..20] ?? string.Empty),
+                sqlHelper.CreateParameter<string>("Directive", SqlDbType.NVarChar, reportTo?.Directive?[..20] ?? string.Empty),
+                sqlHelper.CreateParameter<string>("BlockedUri", SqlDbType.NVarChar, reportTo?.Message?[..1024] ?? string.Empty),
                 sqlHelper.CreateParameter<string>("Body", SqlDbType.NVarChar, JsonSerializer.Serialize(reportTo?.Body)));
         }
         catch (Exception ex)
@@ -160,14 +160,14 @@ private static IEnumerable<SqlDataRecord> CreateReportToRecords(
         new SqlMetaData("RecievedAt", SqlDbType.DateTime),
         new SqlMetaData("RecievedAtMin", SqlDbType.DateTime),
         new SqlMetaData("RecievedAtHour", SqlDbType.DateTime),
-        new SqlMetaData("Type", SqlDbType.NVarChar, 200),
-        new SqlMetaData("Url", SqlDbType.NVarChar, 2000),
-        new SqlMetaData("UserAgent", SqlDbType.NVarChar, 1000),
-        new SqlMetaData("Browser", SqlDbType.NVarChar, 200),
-        new SqlMetaData("Version", SqlDbType.NVarChar, 100),
-        new SqlMetaData("OS", SqlDbType.NVarChar, 200),
-        new SqlMetaData("Directive", SqlDbType.NVarChar, 500),
-        new SqlMetaData("BlockedUri", SqlDbType.NVarChar, 2000),
+        new SqlMetaData("Type", SqlDbType.NVarChar, 30),
+        new SqlMetaData("Url", SqlDbType.NVarChar, 512),
+        new SqlMetaData("UserAgent", SqlDbType.NVarChar, 512),
+        new SqlMetaData("Browser", SqlDbType.NVarChar, 20),
+        new SqlMetaData("Version", SqlDbType.NVarChar, 20),
+        new SqlMetaData("OS", SqlDbType.NVarChar, 20),
+        new SqlMetaData("Directive", SqlDbType.NVarChar, 20),
+        new SqlMetaData("BlockedUri", SqlDbType.NVarChar, 1024),
         new SqlMetaData("Body", SqlDbType.NVarChar, -1)
     };
 
@@ -183,14 +183,14 @@ private static IEnumerable<SqlDataRecord> CreateReportToRecords(
         record.SetDateTime(1, c.RecievedAt);
         record.SetDateTime(2, recievedAtMin);
         record.SetDateTime(3, recievedAtHour);
-        record.SetString(4, c.Type);
-        record.SetString(5, c.Url);
-        record.SetString(6, c.UserAgent);
-        record.SetString(7, c.Browser);
-        record.SetString(8, c.Version);
-        record.SetString(9, c.OS);
-        record.SetString(10, c.Directive);
-        record.SetString(11, c.Message ?? string.Empty);
+        record.SetString(4, c.Type[..30]);
+        record.SetString(5, c.Url[..512]);
+        record.SetString(6, c.UserAgent[..512]);
+        record.SetString(7, c.Browser?[..20]);
+        record.SetString(8, c.Version?[..20]);
+        record.SetString(9, c.OS?[..20]);
+        record.SetString(10, c.Directive?[..20]);
+        record.SetString(11, c.Message?[..1024] ?? string.Empty);
         record.SetString(12, JsonSerializer.Serialize(c.Body));
 
         yield return record;
