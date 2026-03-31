@@ -4,6 +4,10 @@
         <SourceScripts Include="$(MSBuildThisFileDirectory)..\contentFiles\any\any\modules\_protected\**\*"/>
     </ItemGroup>
 
+    <Target Name="CleanClientResources" BeforeTargets="CopyFiles">
+        <RemoveDir Directories="$(MSBuildProjectDirectory)\modules\_protected\Jhoose.Security\ClientResources" />
+    </Target>
+
     <Target Name="CopyFiles" BeforeTargets="Build">
         <Copy
             SourceFiles="@(SourceScripts)"

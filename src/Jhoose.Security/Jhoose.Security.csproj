@@ -10,7 +10,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>3.0.4.0</Version>
+		<Version>3.0.5-preview1</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy, Permissions Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -98,7 +98,7 @@
 
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.11" />
         <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
-        <PackageReference Include="MimeKit" Version="4.14.0" />
+        <PackageReference Include="MimeKit" Version="4.15.1" />
         <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
         <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
 	</ItemGroup>
@@ -145,6 +145,7 @@
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
+		<Folder Include="Properties\" />
 		<Folder Include="Provider\" />
 		<Folder Include="Authorization\" />
 		<Folder Include="Webhooks\" />
