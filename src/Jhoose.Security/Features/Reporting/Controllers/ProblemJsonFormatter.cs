@@ -22,8 +22,24 @@ public class ProblemJsonFormatter : TextInputFormatter
         this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/csp-report"));
         this.SupportedEncodings.Add(Encoding.UTF8);
         this.SupportedEncodings.Add(Encoding.Unicode);
+
     }
 
+    override public bool CanRead(InputFormatterContext context)
+    {
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+
+        var contentType = context.HttpContext.Request.ContentType;
+        if (string.IsNullOrEmpty(contentType))
+        {
+            return false;
+        }
+
+        return this.SupportedMediaTypes.Any(m => m.IsSubsetOf(contentType));
+    }
     public override async Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context, Encoding effectiveEncoding)
     {
         var httpContext = context.HttpContext;
