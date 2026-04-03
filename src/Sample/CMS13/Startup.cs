@@ -65,7 +65,6 @@ public class Startup
             o.UseHeadersUI = true;
             o.ExclusionPaths.Add("/Episerver");
 
-            //TODO Investigate why this is required to avoid a serialization error when accessing the admin UI. It may be related to the fact that the admin UI is making a request to an endpoint that is being blocked by the reporting feature, but this is just a guess.
             o.ExclusionPaths.Add("/Optimizely"); // if remove this get a serialization error when accessing the admin UI
             o.Reporting.RateLimiting.Enabled = false;
         });

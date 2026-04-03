@@ -33,7 +33,6 @@
     <!-- Optimizely Search & Navigation -->
     <PackageReference Include="EPiServer.Find.Cms" Version="16.6.0" />
     <PackageReference Include="EPiServer.Find.Commerce" Version="12.2.4" />
-    <PackageReference Include="Jhoose.Security.Admin" Version="3.0.4.448" />
 
     <PackageReference Include="PowerSlice" Version="5.2.0" />
 
@@ -102,12 +101,12 @@
 	  <Folder Include="wwwroot\" />
   </ItemGroup>
 
-<!--
+
 	<ItemGroup>
 		<ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
 			<GlobalPropertiesToRemove>
 			</GlobalPropertiesToRemove>
 		</ProjectReference>
 	</ItemGroup>
--->
+
 </Project>

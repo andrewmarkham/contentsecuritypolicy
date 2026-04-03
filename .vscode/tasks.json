@@ -51,6 +51,7 @@
                 "build",
                 "${workspaceFolder}/src/Sample/CMS13/alloy13preview.csproj",
                 "/property:GenerateFullPaths=true",
+                "/property:CMSVersion=CMS13",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"

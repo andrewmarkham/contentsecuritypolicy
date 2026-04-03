@@ -42,14 +42,14 @@ public class SqlDatabaseReportingRepository(ILogger<SqlDatabaseReportingReposito
                 sqlHelper.CreateParameter<DateTime>("RecievedAt", SqlDbType.DateTime, reportTo.RecievedAt),
                 sqlHelper.CreateParameter<DateTime>("RecievedAtMin", SqlDbType.DateTime, recievedAtMin),
                 sqlHelper.CreateParameter<DateTime>("RecievedAtHour", SqlDbType.DateTime, recievedAtHour),
-                sqlHelper.CreateParameter<string>("Type", SqlDbType.NVarChar, reportTo.Type[..30]),
-                sqlHelper.CreateParameter<string>("Url", SqlDbType.NVarChar, reportTo.Url[..512]),
-                sqlHelper.CreateParameter<string>("UserAgent", SqlDbType.NVarChar, reportTo.UserAgent[..512]),
-                sqlHelper.CreateParameter<string>("Browser", SqlDbType.NVarChar, reportTo?.Browser?[..20] ?? string.Empty),
-                sqlHelper.CreateParameter<string>("Version", SqlDbType.NVarChar, reportTo?.Version?[..20] ?? string.Empty),
-                sqlHelper.CreateParameter<string>("OS", SqlDbType.NVarChar, reportTo?.OS?[..20] ?? string.Empty),
-                sqlHelper.CreateParameter<string>("Directive", SqlDbType.NVarChar, reportTo?.Directive?[..20] ?? string.Empty),
-                sqlHelper.CreateParameter<string>("BlockedUri", SqlDbType.NVarChar, reportTo?.Message?[..1024] ?? string.Empty),
+                sqlHelper.CreateParameter<string>("Type", SqlDbType.NVarChar, reportTo.Type[..Math.Min(30, reportTo.Type.Length)]),
+                sqlHelper.CreateParameter<string>("Url", SqlDbType.NVarChar, reportTo.Url[..Math.Min(512, reportTo.Url.Length)]),
+                sqlHelper.CreateParameter<string>("UserAgent", SqlDbType.NVarChar, reportTo.UserAgent[..Math.Min(512, reportTo.UserAgent.Length)]),
+                sqlHelper.CreateParameter<string>("Browser", SqlDbType.NVarChar, reportTo?.Browser?[..Math.Min(20, reportTo.Browser.Length)] ?? string.Empty),
+                sqlHelper.CreateParameter<string>("Version", SqlDbType.NVarChar, reportTo?.Version?[..Math.Min(20, reportTo.Version.Length)] ?? string.Empty),
+                sqlHelper.CreateParameter<string>("OS", SqlDbType.NVarChar, reportTo?.OS?[..Math.Min(20, reportTo.OS.Length)] ?? string.Empty),
+                sqlHelper.CreateParameter<string>("Directive", SqlDbType.NVarChar, reportTo?.Directive?[..Math.Min(20, reportTo.Directive.Length)] ?? string.Empty),
+                sqlHelper.CreateParameter<string>("BlockedUri", SqlDbType.NVarChar, reportTo?.Message?[..Math.Min(1024, reportTo.Message.Length)] ?? string.Empty),
                 sqlHelper.CreateParameter<string>("Body", SqlDbType.NVarChar, JsonSerializer.Serialize(reportTo?.Body)));
         }
         catch (Exception ex)
@@ -183,14 +183,14 @@ private static IEnumerable<SqlDataRecord> CreateReportToRecords(
         record.SetDateTime(1, c.RecievedAt);
         record.SetDateTime(2, recievedAtMin);
         record.SetDateTime(3, recievedAtHour);
-        record.SetString(4, c.Type[..30]);
-        record.SetString(5, c.Url[..512]);
-        record.SetString(6, c.UserAgent[..512]);
-        record.SetString(7, c.Browser?[..20]);
-        record.SetString(8, c.Version?[..20]);
-        record.SetString(9, c.OS?[..20]);
-        record.SetString(10, c.Directive?[..20]);
-        record.SetString(11, c.Message?[..1024] ?? string.Empty);
+        record.SetString(4, c.Type[..Math.Min(30, c.Type.Length)]);
+        record.SetString(5, c.Url[..Math.Min(512, c.Url.Length)]);
+        record.SetString(6, c.UserAgent[..Math.Min(512, c.UserAgent.Length)]);
+        record.SetString(7, c.Browser != null ? c.Browser[..Math.Min(20, c.Browser.Length)] : null);
+        record.SetString(8, c.Version != null ? c.Version[..Math.Min(20, c.Version.Length)] : null);
+        record.SetString(9, c.OS != null ? c.OS[..Math.Min(20, c.OS.Length)] : null);
+        record.SetString(10, c.Directive != null ? c.Directive[..Math.Min(20, c.Directive.Length)] : null);
+        record.SetString(11, c.Message != null ? c.Message[..Math.Min(1024, c.Message.Length)] : string.Empty);
         record.SetString(12, JsonSerializer.Serialize(c.Body));
 
         yield return record;

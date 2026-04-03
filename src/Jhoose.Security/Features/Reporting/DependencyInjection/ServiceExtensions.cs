@@ -30,9 +30,6 @@ public static class SecurityExtensions
 
         services.AddSingleton<IDashboardService, DashboardService>();
 
-        services.AddControllers()
-                .AddMvcOptions(o => o.InputFormatters.Insert(0, new Controllers.ProblemJsonFormatter()));
-
         services.ConfigureOptions<ReportingOptionsSetup>();
 
         services.AddRateLimiter(_ => { }); 

@@ -13,10 +13,10 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="EPiServer.CMS" Version="13.0.0-preview4" />
-    <PackageReference Include="EPiServer.CMS.UI.AspNetIdentity" Version="13.0.0-preview4" />
-    <PackageReference Include="Optimizely.Graph.Cms" Version="13.0.0-preview4" />
-    <PackageReference Include="EPiServer.Cms.UI.ContentManager" Version="13.0.0-preview4" />
+    <PackageReference Include="EPiServer.CMS" Version="13.0.0" />
+    <PackageReference Include="EPiServer.CMS.UI.AspNetIdentity" Version="13.0.0" />
+    <PackageReference Include="Optimizely.Graph.Cms" Version="13.0.0" />
+    <PackageReference Include="EPiServer.Cms.UI.ContentManager" Version="13.0.0" />
     
     <PackageReference Include="Wangkanai.Detection" Version="8.7.0" />
   </ItemGroup>

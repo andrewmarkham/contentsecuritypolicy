@@ -15,12 +15,12 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(CMSVersion)' == 'CMS12'">
-        <AssemblyName>Jhoose.Security.Admin</AssemblyName>
+        <AssemblyName>Jhoose.Security</AssemblyName>
         <PackageId>Jhoose.Security.Admin</PackageId>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(CMSVersion)' == 'CMS13'">
-        <AssemblyName>Jhoose.Security.Admin13</AssemblyName>
+        <AssemblyName>Jhoose.Security</AssemblyName>
         <PackageId>Jhoose.Security.Admin13</PackageId>
     </PropertyGroup>
 
@@ -122,14 +122,14 @@
 
     <ItemGroup Condition="'$(CMSVersion)' == 'CMS13' and '$(TargetFramework)' == 'net10.0'">
 
-        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[13.0.0-preview4,14)" />
-		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[13.0.0-preview4,14)" />
-        <PackageReference Include="EPiServer.Framework" Version="[13.0.0-preview4,14)" />
-        <PackageReference Include="EPiServer.Cms.AspNetCore.TagHelpers" Version="[13.0.0-preview4,14)" />
-        <PackageReference Include="EPiServer.Cms.AspNetCore.Routing" Version="[13.0.0-preview4,14)" />    
-        <PackageReference Include="EPiServer.Cms.AspNetCore.Templating" Version="[13.0.0-preview4,14)" /> 
-        <PackageReference Include="EPiServer.LinkAnalyzer" Version="[13.0.0-preview4,14)" />
-        <PackageReference Include="EPiServer.ApplicationModules" Version="[13.0.0-preview4,14)" />
+        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[13.0.0,14)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[13.0.0,14)" />
+        <PackageReference Include="EPiServer.Framework" Version="[13.0.0,14)" />
+        <PackageReference Include="EPiServer.Cms.AspNetCore.TagHelpers" Version="[13.0.0,14)" />
+        <PackageReference Include="EPiServer.Cms.AspNetCore.Routing" Version="[13.0.0,14)" />    
+        <PackageReference Include="EPiServer.Cms.AspNetCore.Templating" Version="[13.0.0,14)" /> 
+        <PackageReference Include="EPiServer.LinkAnalyzer" Version="[13.0.0,14)" />
+        <PackageReference Include="EPiServer.ApplicationModules" Version="[13.0.0,14)" />
 
     </ItemGroup>
 
@@ -150,6 +150,8 @@
 
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    
+        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
 
 		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
 
