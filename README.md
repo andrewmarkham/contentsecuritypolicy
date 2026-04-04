@@ -7,6 +7,7 @@ This module adds several security features to an Optimizely website.
  - User interface to manage the Recommended Security headers and add to the response headers.
 
  This module fully supports
+  - Optimizely 13, .NET (10.0) (From version 3.1.0)
   - Optimizely 12, .NET (6.0-8.0) (Up to version 2.5.0)
   - Optimizely 12, .NET (8.0-10.0) (From version 2.6.0)
   - Episerver 11, .Net Framework 4.7.1 and Optimizely 12, .NET 5.0 [Legacy Documentation](./documentation/Legacy%20README.md)
@@ -18,12 +19,20 @@ This module adds several security features to an Optimizely website.
 
 Install the package directly from the Optimizely NuGet repository.  
 
-``` 
+``` bash
+# To install CMS12
 dotnet add package Jhoose.Security.Admin
+
+# To install CMS13
+dotnet add package Jhoose.Security.Admin13
 ```
 
-```
+``` bash
+# To install CMS12
 Install-Package Jhoose.Security.Admin
+
+# To install CMS13
+Install-Package Jhoose.Security.Admin13
 ```
 
 ### Upgrade to V3.0.0
