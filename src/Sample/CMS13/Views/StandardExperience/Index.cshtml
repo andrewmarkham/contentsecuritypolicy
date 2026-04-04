@@ -1,0 +1,68 @@
+@model alloy13preview.Models.Experiences.StandardExperience
+
+@{
+    Layout = "";
+}
+<style>
+    .experience {
+        padding: 1rem;
+        border: 2px solid #333;
+        background: #f5f5f5;
+    }
+
+    .section {
+        padding: 1rem;
+        border: 2px solid #666;
+        background: #fff;
+    }
+
+    .row {
+        display: flex;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid #999;
+        background: #e8e8e8;
+    }
+
+    .row:last-child {
+        margin-bottom: 0;
+    }
+
+    .column {
+        flex: 1;
+        padding: 1rem;
+        margin-right: 1rem;
+        border: 1px solid #bbb;
+        background: #fff;
+    }
+
+    .column:last-child {
+        margin-right: 0;
+    }
+
+    .component {
+        padding: 1rem;
+        border: 1px solid #ddd;
+        background: #fafafa;
+    }
+</style>
+
+@if (Model != null)
+{
+    <h1>What an experience</h1>
+    
+    <epi-outline class="experience" experience="@Model">
+        <epi-grid class="section">
+            <epi-row class="row">
+                <epi-column class="column">
+                    <epi-component class="component" />
+                </epi-column>
+            </epi-row>
+        </epi-grid>
+        <epi-component/>
+    </epi-outline>
+}
+else
+{
+    <p>No content available</p>
+}

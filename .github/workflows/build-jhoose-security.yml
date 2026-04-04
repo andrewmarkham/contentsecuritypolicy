@@ -1,4 +1,4 @@
-name: Jhoose Security
+name: Jhoose Security CMS12
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_NO: 3.0.4.${{ github.run_number }}  
-  BUILD_NO_PRE: 3.0.4-rc.${{ github.run_number }} 
+  BUILD_NO: 3.1.0.${{ github.run_number }}  
+  BUILD_NO_PRE: 3.1.0-rc.${{ github.run_number }} 
 
 jobs:
   build:
@@ -17,10 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: | 
           8.0.x
@@ -32,7 +32,7 @@ jobs:
       run: dotnet nuget add source https://nuget.pkg.github.com/andrewmarkham/index.json --name "GithubBuild" --store-password-in-clear-text --username andrewmarkham --password ${{ secrets.PACKAGE_TOKEN }}
 
     - name: Use Node.js 22.21.0
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v5
       with:
         node-version: 22.21.0
 
@@ -58,7 +58,7 @@ jobs:
 
     - name: Report tests
       if: always()
-      uses: dorny/test-reporter@v1
+      uses: dorny/test-reporter@v3
       with:
         name: NUnit Tests
         path: './src/**/test_results.trx'
