@@ -10076,3 +10076,5 @@ src/Jhoose.Security/src/node_modules/@antv/g6-extension-react/src/react-node/ren
 src/Tests/PerformanceBenchMarks/bin/Release/net8.0/Jhoose.Security.dll
 src/Tests/PerformanceBenchMarks/bin/Release/net8.0/Jhoose.Security.pdb
 src/Tests/PerformanceBenchMarks/bin/Release/net8.0/Jhoose.Security.xml
+src/Sample/Foundation/modules/_protected/Jhoose.Security/ClientResources/csp-app.js
+src/Sample/Foundation/modules/_protected/Jhoose.Security/module.config

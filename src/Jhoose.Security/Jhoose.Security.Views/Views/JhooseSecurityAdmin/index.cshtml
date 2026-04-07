@@ -1,5 +1,13 @@
 @using EPiServer.Shell.Navigation
 
+@{
+#if CMS13
+    }
+@addTagHelper *, EPiServer.Shell.UI
+@{
+#endif
+}
+
 <!DOCTYPE html>
 <html>
 
@@ -20,11 +28,24 @@
 
 <body class="epi-workspace">
   @Html.AntiForgeryToken()
-  @Html.Raw(Html.CreatePlatformNavigationMenu())
-  <div @Html.Raw(Html.ApplyPlatformNavigation())>
+  @{
+#if CMS12
+    }
+@Html.Raw(Html.CreatePlatformNavigationMenu())
+<div class='epi-pn-navigation--fixed-adjust ' @Html.Raw(Html.ApplyPlatformNavigation())>
+<div id="csp-root"></div>
+</div>
+@{
+#else
+  }
+  <platform-navigation />
+  <div class='epi-pn-navigation--fixed-adjust '>
     <div id="csp-root"></div>
   </div>
-
-<script defer src="ClientResources/csp-app.fc31d14e.js"></script></body>
-
+  @{
+#endif
+  }
+  <script defer src="ClientResources/csp-app.js"></script>
+</body>
+    
 </html>

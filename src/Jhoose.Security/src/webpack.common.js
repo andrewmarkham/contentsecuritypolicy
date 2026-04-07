@@ -13,7 +13,7 @@ module.exports = {
       inject: "body",
     }),
     new HtmlWebpackPlugin({
-      template: "./index.cshtml",
+      template: "./index.cshtml.template",
       filename: path.resolve(
         __dirname,
         "../Jhoose.Security.Views/Views/JhooseSecurityAdmin/Index.cshtml",
