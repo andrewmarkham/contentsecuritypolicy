@@ -1,16 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Razor">
+
+    <PropertyGroup>
+        <!-- Consumer sets this, you can provide a default -->
+        <CMSVersion Condition="'$(CMSVersion)' == ''">CMS12</CMSVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(CMSVersion)' == 'CMS12'">
+        <DefineConstants>$(DefineConstants);CMS12</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(CMSVersion)' == 'CMS13'">
+        <DefineConstants>$(DefineConstants);CMS13</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(CMSVersion)' == 'CMS12'">
+        <AssemblyName>Jhoose.Security</AssemblyName>
+        <PackageId>Jhoose.Security.Admin</PackageId>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(CMSVersion)' == 'CMS13'">
+        <AssemblyName>Jhoose.Security</AssemblyName>
+        <PackageId>Jhoose.Security.Admin13</PackageId>
+    </PropertyGroup>
+
 	<PropertyGroup>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-		<TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<TargetFrameworks  Condition="'$(CMSVersion)' == 'CMS12'">net8.0;net9.0;net10.0</TargetFrameworks>
+        <TargetFrameworks  Condition="'$(CMSVersion)' == 'CMS13'">net10.0</TargetFrameworks>
+
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<Nullable>enable</Nullable>
 		<LangVersion>14</LangVersion>
-		<PackageId>Jhoose.Security.Admin</PackageId>
+		
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>3.0.4.0</Version>
+		<Version>3.1.0.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy, Permissions Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -54,6 +80,7 @@
             2.6.3 - Fixed performance issues with the reporting API.
             3.0.0 - Added multisite support, CSP and Permissions Policy, Security Headers can now be configured per site.
             3.0.4 - Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.
+            3.1.0 - Added support for CMS13.
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
@@ -66,9 +93,10 @@
       		https://nuget.pkg.github.com/andrewmarkham/index.json
 	  	</RestoreSources>
 		<Configurations>Debug;Release;PreRelease</Configurations>
-		<ReleaseVersion>2.5.0.0</ReleaseVersion>
+		<ReleaseVersion>3.1.0.0</ReleaseVersion>
         <NoWarn>1587, 1591</NoWarn>
 	</PropertyGroup>
+
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='PreRelease|net8.0|AnyCPU'">
 		<DebugType>portable</DebugType>
 	</PropertyGroup>
@@ -78,29 +106,61 @@
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' OR '$(TargetFramework)' == 'net9.0'">
         <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
+        <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(CMSVersion)' == 'CMS12'">
+
+        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.22.3,13)" />
+		<PackageReference Include="EPiServer.Framework" Version="[12.22.3,13)" />
+
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(CMSVersion)' == 'CMS13' and '$(TargetFramework)' == 'net10.0'">
+
+        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[13.0.0,14)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[13.0.0,14)" />
+        <PackageReference Include="EPiServer.Framework" Version="[13.0.0,14)" />
+        <PackageReference Include="EPiServer.Cms.AspNetCore.TagHelpers" Version="[13.0.0,14)" />
+        <PackageReference Include="EPiServer.Cms.AspNetCore.Routing" Version="[13.0.0,14)" />    
+        <PackageReference Include="EPiServer.Cms.AspNetCore.Templating" Version="[13.0.0,14)" /> 
+        <PackageReference Include="EPiServer.LinkAnalyzer" Version="[13.0.0,14)" />
+        <PackageReference Include="EPiServer.ApplicationModules" Version="[13.0.0,14)" />
+
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
         <PackageReference Include="System.Linq.Async" Version="6.0.1" ExcludeAssets="All" />
+
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.2" />
+
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
+        
+        <PackageReference Include="System.IO.Packaging" Version="10.0.2" />
+        <PackageReference Include="Castle.Core" Version="5.2.1" />
     </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Dapper" Version="2.1.66" />
-		<PackageReference Include="EPiServer.CMS.UI.Core" Version="[12.22.3,13)" />
-		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[12.22.3,13)" />
-		<PackageReference Include="EPiServer.Framework" Version="[12.22.3,13)" />
 
 		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.11" />
+    
+        <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
 
 		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.13.12" />
 
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.11" />
         <PackageReference Include="MyCSharp.HttpUserAgentParser.AspNetCore" Version="3.0.4" />
-        <PackageReference Include="MimeKit" Version="4.14.0" />
+        <PackageReference Include="MimeKit" Version="4.15.1" />
         <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
-        <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
+        <PackageReference Include="System.IO.Packaging" Version="10.0.2" />
+
 	</ItemGroup>
     <!--
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
@@ -115,7 +175,8 @@
 		<Content Remove="*.json" />
 		<Content Remove="Jhoose.Security.Views\**" />
 		<!--  -->
-		<Content Include="build\\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
+		<Content Condition="'$(CMSVersion)' == 'CMS12'" Include="build\\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
+        <Content Condition="'$(CMSVersion)' == 'CMS13'" Include="build\\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin13.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
 			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
@@ -136,13 +197,9 @@
         </PackageContentFiles>
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="Microsoft.Extensions.Options.ConfigurationExtensions" />
 		<None Remove="Provider\" />
 		<None Remove="Authorization\" />
 		<None Remove="Webhooks\" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Provider\" />
