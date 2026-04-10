@@ -1,8 +1,5 @@
-@model alloy13preview.Models.Experiences.StandardExperience
-
-@{
-    Layout = "";
-}
+@model IPageViewModel<alloy13preview.Models.Experiences.StandardExperience> 
+    
 <style>
     .experience {
         padding: 1rem;
@@ -51,18 +48,31 @@
 {
     <h1>What an experience</h1>
     
-    <epi-outline class="experience" experience="@Model">
+    <epi-outline class="experience" experience="@Model.CurrentPage">
+
         <epi-grid class="section">
+                            <epi-styles class="experience">
+            <epi-style name="margin">
+                <epi-style-map value="top" class="mt-3" />
+                <epi-style-map value="bottom" class="mb-3" />
+                <epi-style-map value="both" class="mt-3 mb-3" />
+            </epi-style>
+            <epi-style name="padding">
+                <epi-style-map value="none" class="p-0" />
+                <epi-style-map value="small" class="p-3" />
+                <epi-style-map value="large" class="p-9" />
+            </epi-style>
+        </epi-styles>
             <epi-row class="row">
                 <epi-column class="column">
                     <epi-component class="component" />
                 </epi-column>
             </epi-row>
         </epi-grid>
-        <epi-component/>
+        <epi-component />
     </epi-outline>
 }
-else
+else    
 {
     <p>No content available</p>
 }

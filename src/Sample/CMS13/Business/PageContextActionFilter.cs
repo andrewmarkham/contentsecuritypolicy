@@ -1,5 +1,7 @@
 using alloy13preview.Models.Pages;
 using alloy13preview.Models.ViewModels;
+
+using EPiServer.VisualBuilder;
 using EPiServer.Web.Routing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -43,6 +45,22 @@ public class PageContextActionFilter : IResultFilter
             model.Layout = layoutModel;
 
             model.Section ??= _contextFactory.GetSection(currentContentLink);
+        }
+
+        if (viewModel is IPageViewModel<ExperienceData> visualBuilderModel)
+        {
+            var currentContentLink = context.HttpContext.GetContentLink();
+
+            var layoutModel = visualBuilderModel.Layout ?? _contextFactory.CreateLayoutModel(currentContentLink, context.HttpContext);
+
+            if (context.Controller is IModifyLayout layoutController)
+            {
+                layoutController.ModifyLayout(layoutModel);
+            }
+
+            visualBuilderModel.Layout = layoutModel;
+
+            visualBuilderModel.Section ??= _contextFactory.GetSection(currentContentLink);
         }
     }
 

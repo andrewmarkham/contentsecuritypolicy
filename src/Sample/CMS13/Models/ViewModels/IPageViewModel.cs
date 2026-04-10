@@ -1,4 +1,3 @@
-using alloy13preview.Models.Pages;
 
 namespace alloy13preview.Models.ViewModels;
 
@@ -9,7 +8,7 @@ namespace alloy13preview.Models.ViewModels;
 /// Views which should handle several page types (T) can use this interface as model type rather than the
 /// concrete PageViewModel class, utilizing the that this interface is covariant.
 /// </remarks>
-public interface IPageViewModel<out T> where T : SitePageData
+public interface IPageViewModel<out T> where T : PageData
 {
     T CurrentPage { get; }
 

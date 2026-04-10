@@ -9,6 +9,7 @@ using EPiServer.Web.Routing;
 
 using Jhoose.Security.DependencyInjection;
 
+using Optimizely.Cms.Service.V1.Authentication;
 using Optimizely.Graph.DependencyInjection;
 
 namespace alloy13preview;
@@ -40,6 +41,18 @@ public class Startup
             .AddAdminUserRegistration()
             .AddEmbeddedLocalization<Startup>();
 
+        services.AddOptions<CmsServiceOauthOptions>()
+                .Configure(o => {
+                        o.AddDevelopmentSigningCredentials();
+                        o.Clients.Add(new OauthClient
+                        {
+                            ClientId = "client_id",
+                            ClientSecret = "client_secret"
+                        });
+                    }   
+                );
+        
+        //DisplayTemplate
         services.AddContentGraph();
         services.AddContentManager();
 

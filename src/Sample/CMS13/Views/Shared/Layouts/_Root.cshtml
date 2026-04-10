@@ -1,6 +1,6 @@
 @using EPiServer.Framework.Web.Mvc.Html
 
-@model IPageViewModel<SitePageData>
+@model IPageViewModel<PageData>
 
 <!DOCTYPE html>
 <html lang="@(Model.CurrentPage.Language)">
@@ -8,6 +8,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=10" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @*
     <title>@Model.CurrentPage.MetaTitle</title>
     @if (Model.CurrentPage.MetaKeywords != null && Model.CurrentPage.MetaKeywords.Count > 0)
     {
@@ -17,6 +18,7 @@
     {
         <meta name="description" content="@Model.CurrentPage.MetaDescription" />
     }
+    *@
     @Html.CanonicalLink()
     @Html.AlternateLinks()
     <link rel="stylesheet" href="~/css/bootstrap.min.css" />
