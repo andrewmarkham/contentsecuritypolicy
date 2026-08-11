@@ -144,6 +144,9 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
         
         <PackageReference Include="System.IO.Packaging" Version="10.0.2" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(CMSVersion)' == 'CMS13' and '$(TargetFramework)' == 'net10.0'">
         <PackageReference Include="Castle.Core" Version="5.2.1" />
     </ItemGroup>
 
