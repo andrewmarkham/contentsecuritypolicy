@@ -36,7 +36,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>3.2.0.0</Version>
+		<Version>3.2.1.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy, Permissions Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -82,6 +82,7 @@
             3.0.4 - Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.
             3.1.0 - Added support for CMS13.
             3.2.0 - Updated Purge scheduled job to run in batches : thanks @kennygutierrez
+            3.2.1 - Fixed a bug where it was targeting the wrong version of Castle.Core for CMS12/.NET10 : thanks @kennygutierrez
 		</ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">
