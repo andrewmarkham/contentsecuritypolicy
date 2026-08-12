@@ -308,7 +308,7 @@ X-API-Key: ...
  |3.0.4 |Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.|
  |3.1.0 | Added CMS13 Support.|
  |3.2.0 | Updated Purge scheduled job to run in batches : thanks @kennygutierrez
- |3.2.1 | Updated bug with targeting the wrong version of Castle.Core for CMS12/.NET10 : thanks @kennygutierrez
+ |3.2.1 | Fixed a bug where it was targeting the wrong version of Castle.Core for CMS12/.NET10 : thanks @kennygutierrez
 
   ---
  ## Contributors
