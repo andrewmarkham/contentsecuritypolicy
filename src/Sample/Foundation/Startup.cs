@@ -37,7 +37,6 @@ using System.IO;
 using TinymceDamPicker;
 using UNRVLD.ODP.VisitorGroups.Initilization;
 using Jhoose.Security.DependencyInjection;
-using EPiServer.Social.Framework;
 
 namespace Foundation
 {
