@@ -15,7 +15,9 @@ public class StandardCspProvider(ISecurityRepository<CspPolicy> policyRepository
     ISettingsRepository settingsRepository) : HeaderProviderBase<CspPolicyHeaderBase>
 {
 
-    public override IEnumerable<CspPolicyHeaderBase> Headers(string siteId, string host)
+    public override IEnumerable<CspPolicyHeaderBase> Headers(string siteId, string host) => Headers(siteId, host, string.Empty);
+
+    public override IEnumerable<CspPolicyHeaderBase> Headers(string siteId, string host, string contentLink)
     {
         var policies = policyRepository.Load().ToList();
 
@@ -28,8 +30,8 @@ public class StandardCspProvider(ISecurityRepository<CspPolicy> policyRepository
             yield return new ReportToHeader(settings, host, "csp-endpoint");
         }
 
-        var mergedPolicies = this.MergePolicies(siteId, policies.ToList());
-            
+        var mergedPolicies = this.MergePolicies(siteId, contentLink, policies.ToList());
+
         // for global report only
         if (mode.Equals("report"))
         {

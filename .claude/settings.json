@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /private/tmp -path \"*dijit*\" -iname \"*.js\" 2>/dev/null *)",
+      "Read(//private/tmp/**)",
+      "Bash(dotnet build *)"
+    ]
+  }
+}

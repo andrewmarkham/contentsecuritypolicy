@@ -9,7 +9,8 @@
     "server": "npx node ./index.js",
     "dev": "webpack --config webpack.config.js",
     "watch": "npx webpack watch --config webpack.config.js && node ./index.js",
-    "copy": "cp ../dist/Jhoose.Security/ClientResources/csp-app.js ../../Sample/Foundation/modules/_protected/Jhoose.Security/ClientResources/csp-app.js"
+    "copy:scripts-to-dist": "cp -R OnPageEditor/Scripts ../dist/Jhoose.Security/ClientResources/",
+    "copy": "npm run copy:scripts-to-dist && cp ../dist/Jhoose.Security/module.config ../../Sample/Foundation/modules/_protected/Jhoose.Security/module.config && cp ../dist/Jhoose.Security/ClientResources/csp-app.js ../../Sample/Foundation/modules/_protected/Jhoose.Security/ClientResources/csp-app.js && cp ../dist/Jhoose.Security/ClientResources/inline-editor-bundle.js ../../Sample/Foundation/modules/_protected/Jhoose.Security/ClientResources/inline-editor-bundle.js && rm -rf ../../Sample/Foundation/modules/_protected/Jhoose.Security/ClientResources/Scripts && cp -R ../dist/Jhoose.Security/ClientResources/Scripts ../../Sample/Foundation/modules/_protected/Jhoose.Security/ClientResources/Scripts"
   },
   "keywords": [],
   "author": "",
