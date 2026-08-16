@@ -305,5 +305,16 @@ X-API-Key: ...
  |2.6.2|Fixed another bug with (CRLF in header values)|
  |2.6.3|Fixed performance issues with the reporting API.<br/>Fixed a race condition that caused the nonce to leak across requests under high load.|
  |3.0.0|Added multisite support, CSP and Permissions Policy, Security Headers can now be configured per site.  |
- |3.0.4|Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.|
- |3.1.0| Added CMS13 Support.|
+ |3.0.4 |Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.|
+ |3.1.0 | Added CMS13 Support.|
+ |3.2.0 | Updated Purge scheduled job to run in batches : thanks @kennygutierrez
+ |3.2.1 | Fixed a bug where it was targeting the wrong version of Castle.Core for CMS12/.NET10 : thanks @kennygutierrez
+
+  ---
+ ## Contributors
+
+https://github.com/Doom-83
+https://github.com/neorth
+https://github.com/kennygutierrez
+
+Thanks for all the support, suggestions, features and bugfixes
