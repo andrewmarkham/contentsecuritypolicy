@@ -17,10 +17,17 @@ public class PermissionsPolicyMiddleware
 
     public async Task InvokeAsync(HttpContext context, IJhooseSecurityService securityService)
     {
-        if (!context.Response.HasStarted)
+        // Deferred to OnStarting (see ContentSecurityPolicyMiddleware for the full explanation) -
+        // EPiServer only resolves IContentRouteHelper.Content once the endpoint has executed,
+        // which happens inside _next(context), not before it.
+        context.Response.OnStarting(() =>
         {
-            securityService.AddPermissionsPolicy(context.Response);
-        }
+            if (!context.Response.HasStarted)
+            {
+                securityService.AddPermissionsPolicy(context.Response);
+            }
+            return Task.CompletedTask;
+        });
 
         await _next(context);
     }

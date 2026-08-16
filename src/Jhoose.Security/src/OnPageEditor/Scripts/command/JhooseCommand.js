@@ -76,13 +76,13 @@ define([
                 // simply stays null and the dialog is torn down immediately, discarding whatever
                 // unsaved state the React tree was holding.
                 dialog.on("execute", function () {
-                    self._pendingCommit = window.__commitReactDialog(contentNode);
+                    self._pendingCommit = window.__commitReactCspDialog(contentNode);
                 });
 
                 // React's createRoot/render works on a detached node - no need to wait for a
                 // dialog lifecycle event (the widget's "show" never actually fires for this widget).
-                console.log("[Jhoose] mounting React into contentNode, window.__mountReactDialog is:", typeof window.__mountReactDialog);
-                window.__mountReactDialog(contentNode, {
+                console.log("[Jhoose] mounting React into contentNode, window.__mountReactCspDialog is:", typeof window.__mountReactCspDialog);
+                window.__mountReactCspDialog(contentNode, {
                     contentLink: contentLink
                 });
 
@@ -116,7 +116,7 @@ define([
                 this._pendingCommit = null;
 
                 if (contentNode) {
-                    window.__unmountReactDialog(contentNode);
+                    window.__unmountReactCspDialog(contentNode);
                 }
                 dialog.hide();
                 dialog.destroyRecursive();

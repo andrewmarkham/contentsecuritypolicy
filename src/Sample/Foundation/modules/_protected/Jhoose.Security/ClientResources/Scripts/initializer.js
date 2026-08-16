@@ -4,7 +4,8 @@ define([
     "epi/_Module",
     "jhoosesecurity/JhooseToolbarProvider",
     "jhoosesecurity/command/JhooseCommand",
-], function(declare, dependency, _Module, JhooseToolbarProvider, JhooseCommand) {
+    "jhoosesecurity/command/JhoosePermissionsCommand",
+], function(declare, dependency, _Module, JhooseToolbarProvider, JhooseCommand, JhoosePermissionsCommand) {
     console.log("[Jhoose] initializer.js module loaded (jhoosesecurity/initializer resolved and required)");
     return declare([_Module], {
         initialize: function() {
@@ -18,7 +19,12 @@ define([
             var jc = new JhooseCommand();
             console.log("[Jhoose] JhooseCommand instantiated:", jc);
             commandregistry.registerProvider("epi.cms.publishmenu", new JhooseToolbarProvider(jc));
-            console.log("[Jhoose] registerProvider('epi.cms.publishmenu', ...) called");
+            console.log("[Jhoose] registerProvider('epi.cms.publishmenu', ...) called for JhooseCommand");
+
+            var jpc = new JhoosePermissionsCommand();
+            console.log("[Jhoose] JhoosePermissionsCommand instantiated:", jpc);
+            commandregistry.registerProvider("epi.cms.publishmenu", new JhooseToolbarProvider(jpc));
+            console.log("[Jhoose] registerProvider('epi.cms.publishmenu', ...) called for JhoosePermissionsCommand");
         }
     });
 });

@@ -128,7 +128,8 @@ public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<Cs
                 return;
             }
     
-            var headerValues = permissionsProvider.Headers(siteId, response.HttpContext.Request.Host.Value ?? string.Empty);
+            var contentLink = contentRouteHelper.Content?.ContentLink?.ID.ToString() ?? string.Empty;
+            var headerValues = permissionsProvider.Headers(siteId, response.HttpContext.Request.Host.Value ?? string.Empty, contentLink);
 
             foreach (var header in headerValues)
             {
