@@ -309,7 +309,7 @@ X-API-Key: ...
  |3.1.0 | Added CMS13 Support.|
  |3.2.0 | Updated Purge scheduled job to run in batches : thanks @kennygutierrez
  |3.2.1 | Fixed a bug where it was targeting the wrong version of Castle.Core for CMS12/.NET10 : thanks @kennygutierrez
-
+ |3.3.0| Add support for page level oveerides for both the CSP and permissions policy |
   ---
  ## Contributors
 
