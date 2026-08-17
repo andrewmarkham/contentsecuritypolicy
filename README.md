@@ -121,6 +121,17 @@ To enable this feature the the Issue Reporting Mode to **Local Dashboard**
 
 ![image](./documentation/images/settings.png)
 
+### Page Level Overrides
+Individual pages can override the site-wide CSP and Permissions Policy directives directly from the Optimizely on-page (all properties) editor, without having to go into the admin interface.
+
+A page override takes priority over the site-wide policy, which in turn takes priority over the global default - so you only need to override the directives that should differ for that specific page.
+
+Two toolbar commands are added to the editor:
+
+- **Jhoose CSP Page Override** - add, edit or remove CSP directive overrides (including the `sandbox` directive) for the current page. Each directive is edited using the same options as the site-wide CSP editor (sources, schema sources, `report-only`, etc.).
+- **Jhoose Permissions Policy Page Override** - add, edit or remove Permissions Policy overrides for the current page, using the same **Mode** (Default / Enabled / Enabled (Report Only) / Disabled), **Scope** (Self / All) and **Allowlist** options as the site-wide Permissions Policy editor.
+
+Changes are only applied to the site once the dialog is saved (`OK`); closing or cancelling the dialog discards any unsaved changes.
 
 ## Recommended Security Headers
 
@@ -309,7 +320,7 @@ X-API-Key: ...
  |3.1.0 | Added CMS13 Support.|
  |3.2.0 | Updated Purge scheduled job to run in batches : thanks @kennygutierrez
  |3.2.1 | Fixed a bug where it was targeting the wrong version of Castle.Core for CMS12/.NET10 : thanks @kennygutierrez
- |3.3.0| Add support for page level oveerides for both the CSP and permissions policy |
+ |3.3.0| Add support for page level overrides for both the CSP and permissions policy, managed directly from the on-page editor |
   ---
  ## Contributors
 
