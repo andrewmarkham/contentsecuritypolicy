@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 
@@ -68,7 +69,17 @@ const editorConfig = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss']
-  }
+  },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'OnPageEditor/Scripts'),
+          to: path.resolve(__dirname, '../dist/Jhoose.Security/ClientResources/Scripts'),
+        },
+      ],
+    }),
+  ],
 };
 
 module.exports = [appConfig, editorConfig];
