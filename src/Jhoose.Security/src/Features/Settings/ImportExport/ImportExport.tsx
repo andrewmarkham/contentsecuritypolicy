@@ -54,7 +54,8 @@ function HandleExport() {
         { label: 'Export CSP', value: 'csp' },
         { label: 'Export Permissions', value: 'permissions' },
         { label: 'Export Headers', value: 'headers' },
-        { label: 'Export Settings', value: 'settings' }
+        { label: 'Export Settings', value: 'settings' },
+        { label: 'Export IP Restrictions', value: 'ipRestrictions' }
     ];
 
     const [form] = Form.useForm();

@@ -31,7 +31,15 @@ public class JhooseSecurityOptions
         CrossOriginResourcePolicy = new CrossOriginResourcePolicyHeader() { Id = System.Guid.NewGuid() };
     }
     public const string JhooseSecurity = "JhooseSecurity";
-    public List<string> ExclusionPaths { get; set; } = ["/episerver","/optimizely","/api/jhoose"];
+
+    /// <summary>
+    /// Paths excluded from CSP, security headers, the Permissions Policy, and (depending on
+    /// <see cref="IpRestrictionScope"/>) IP restriction. Covers this module's own admin UI/API and
+    /// the CMS edit-mode paths out of the box - extend this list if you install other admin modules
+    /// (e.g. commerce management, a headless CMS UI, or third-party add-ons) with their own paths
+    /// that should be treated the same way.
+    /// </summary>
+    public List<string> ExclusionPaths { get; set; } = ["/episerver", "/optimizely", "/api/jhoose"];
 
     /// <summary>
     /// Controls which parts of the application the IP restriction allow-list is enforced against.

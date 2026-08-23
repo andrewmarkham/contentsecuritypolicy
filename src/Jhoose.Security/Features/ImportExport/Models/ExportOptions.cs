@@ -9,4 +9,5 @@ public record ExportOptions
     public bool ExportHeaders => Options.Contains("headers");
     public bool ExportSettings => Options.Contains("settings");
     public bool ExportPermissions => Options.Contains("permissions");
+    public bool ExportIpRestrictions => Options.Contains("ipRestrictions");
 }
