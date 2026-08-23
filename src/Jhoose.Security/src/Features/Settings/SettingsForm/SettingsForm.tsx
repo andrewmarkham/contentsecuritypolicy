@@ -90,13 +90,15 @@ export const SettingsForm = ({ onDirtyChange, refreshToken, resetDirtyToken }: P
     const baseSettings: SecuritySettings = settingsQuery.data ?? {
       mode: "on",
       permissionMode: "on",
+      ipRestrictionMode: "off",
       reportingMode: 0,
       reportingUrl: "",
       reportToUrl: "",
       webhookUrls: [],
       authenticationKeys: [],
       siteModes: {},
-      permissionModesBySite: {}
+      permissionModesBySite: {},
+      ipRestrictionModesBySite: {}
     };
 
     const { siteMode, sitePermissionMode, ...restValues } = values;

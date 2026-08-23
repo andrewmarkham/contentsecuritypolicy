@@ -116,7 +116,7 @@ public class SettingsController(ISettingsRepository settingsRepository,
     [ProducesResponseType(typeof(JhoooseSecurityExport), StatusCodes.Status500InternalServerError)]
     public ActionResult<JhoooseSecurityExport> Export([FromBody] ExportOptions options)
     {
-        var export = importExportService.Export(options.ExportCsp, options.ExportPermissions, options.ExportHeaders, options.ExportSettings);
+        var export = importExportService.Export(options.ExportCsp, options.ExportPermissions, options.ExportHeaders, options.ExportSettings, options.ExportIpRestrictions);
         return new JsonResult(export, jsonSerializerOptions)
         {
             StatusCode = StatusCodes.Status200OK,

@@ -4,6 +4,7 @@ using Jhoose.Security.Features.Core;
 using Jhoose.Security.Features.CSP.Models;
 
 using Jhoose.Security.Features.ImportExport.Models;
+using Jhoose.Security.Features.IpRestrictions.Models;
 using Jhoose.Security.Features.Permissions.Models;
 
 using Jhoose.Security.Features.ResponseHeaders.Models;
@@ -18,6 +19,9 @@ namespace Jhoose.Security.Features.ImportExport.Services;
 public class ImportExportService(ISecurityRepository<CspPolicy> policyRepository,
                           ISecurityRepository<ResponseHeader> responseHeadersRepository,
                           ISecurityRepository<PermissionPolicy> permissionsRepository,
+                          ISecurityRepository<IpRestrictionEntry> ipRestrictionRepository,
+                          ISecurityRepository<IpRestrictionIgnoredPath> ipRestrictionIgnoredPathRepository,
+                          ISecurityRepository<IpRestrictionIgnoreHeader> ipRestrictionIgnoreHeaderRepository,
                           ISettingsRepository settingsRepository,
                           ILogger<ImportExportService> logger) : IImportExportService
 {
@@ -46,9 +50,18 @@ public class ImportExportService(ISecurityRepository<CspPolicy> policyRepository
 
         //handle permissions import
         HandlePermissionsImport(export);
-        
+
         //handle response headers import
         HandleResponseHeadersImport(export);
+
+        //handle ip restrictions import
+        HandleIpRestrictionsImport(export);
+
+        //handle ip restriction ignored paths import
+        HandleIpRestrictionIgnoredPathsImport(export);
+
+        //handle ip restriction ignore headers import
+        HandleIpRestrictionIgnoreHeadersImport(export);
     }
 
     public bool IsValid(JhoooseSecurityExport export)
@@ -60,7 +73,7 @@ public class ImportExportService(ISecurityRepository<CspPolicy> policyRepository
         return receivedHash == computedHash;
     }
 
-    public JhoooseSecurityExport Export(bool includeCsp = true, bool includePermissions = true, bool includeHeaders = true, bool includeSettings = true)
+    public JhoooseSecurityExport Export(bool includeCsp = true, bool includePermissions = true, bool includeHeaders = true, bool includeSettings = true, bool includeIpRestrictions = true)
     {
         var export = new JhoooseSecurityExport
         {
@@ -68,7 +81,10 @@ public class ImportExportService(ISecurityRepository<CspPolicy> policyRepository
             CspSettings = includeSettings ? settingsRepository.Load() : null,
             CspPolicies = includeCsp ? [.. policyRepository.Load()] : null,
             Permissions = includePermissions ? [.. permissionsRepository.Load()] : null,
-            ResponseHeaders = includeHeaders ? [.. responseHeadersRepository.Load()] : null
+            ResponseHeaders = includeHeaders ? [.. responseHeadersRepository.Load()] : null,
+            IpRestrictions = includeIpRestrictions ? [.. ipRestrictionRepository.Load()] : null,
+            IpRestrictionIgnoredPaths = includeIpRestrictions ? [.. ipRestrictionIgnoredPathRepository.Load()] : null,
+            IpRestrictionIgnoreHeaders = includeIpRestrictions ? [.. ipRestrictionIgnoreHeaderRepository.Load()] : null
         };
 
         var hash = ObjectHasher.ComputeHash(export);
@@ -122,6 +138,42 @@ public class ImportExportService(ISecurityRepository<CspPolicy> policyRepository
                     header.Id = existingHeader.Id; // Update
                     responseHeadersRepository.Save(header);
                 }
+            }
+        }
+    }
+
+    protected virtual void HandleIpRestrictionsImport(JhoooseSecurityExport export)
+    {
+        if (export.IpRestrictions != null && export.IpRestrictions.Count > 0)
+        {
+            ipRestrictionRepository.Clear();
+            foreach (var entry in export.IpRestrictions)
+            {
+                ipRestrictionRepository.Save(entry);
+            }
+        }
+    }
+
+    protected virtual void HandleIpRestrictionIgnoredPathsImport(JhoooseSecurityExport export)
+    {
+        if (export.IpRestrictionIgnoredPaths != null && export.IpRestrictionIgnoredPaths.Count > 0)
+        {
+            ipRestrictionIgnoredPathRepository.Clear();
+            foreach (var entry in export.IpRestrictionIgnoredPaths)
+            {
+                ipRestrictionIgnoredPathRepository.Save(entry);
+            }
+        }
+    }
+
+    protected virtual void HandleIpRestrictionIgnoreHeadersImport(JhoooseSecurityExport export)
+    {
+        if (export.IpRestrictionIgnoreHeaders != null && export.IpRestrictionIgnoreHeaders.Count > 0)
+        {
+            ipRestrictionIgnoreHeaderRepository.Clear();
+            foreach (var entry in export.IpRestrictionIgnoreHeaders)
+            {
+                ipRestrictionIgnoreHeaderRepository.Save(entry);
             }
         }
     }
