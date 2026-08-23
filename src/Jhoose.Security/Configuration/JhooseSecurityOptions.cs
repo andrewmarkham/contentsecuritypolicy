@@ -4,6 +4,18 @@ using Jhoose.Security.Features.ResponseHeaders.Models;
 
 namespace Jhoose.Security.Configuration;
 
+public enum IpRestrictionScope
+{
+    PublicSite,
+    CmsSite,
+    Both,
+
+    /// <summary>
+    /// IP restrictions are ignored entirely, regardless of the enable/disable mode configured in the admin UI.
+    /// </summary>
+    Off
+}
+
 public class JhooseSecurityOptions
 {
     public JhooseSecurityOptions()
@@ -19,8 +31,13 @@ public class JhooseSecurityOptions
         CrossOriginResourcePolicy = new CrossOriginResourcePolicyHeader() { Id = System.Guid.NewGuid() };
     }
     public const string JhooseSecurity = "JhooseSecurity";
-    public List<string> ExclusionPaths { get; set; } = ["/episerver"];
+    public List<string> ExclusionPaths { get; set; } = ["/episerver","/optimizely","/api/jhoose"];
 
+    /// <summary>
+    /// Controls which parts of the application the IP restriction allow-list is enforced against.
+    /// Set to <see cref="IpRestrictionScope.Off"/> to bypass IP restriction checks entirely.
+    /// </summary>
+    public IpRestrictionScope IpRestrictionScope { get; set; } = IpRestrictionScope.Both;
 
     public bool HttpsRedirection { get; set; }
 
