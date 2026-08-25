@@ -21,4 +21,7 @@ public record JhoooseSecurityExport
     public List<IpRestrictionIgnoredPath>? IpRestrictionIgnoredPaths { get; init; }
     public List<IpRestrictionIgnoreHeader>? IpRestrictionIgnoreHeaders { get; init; }
 
+    public List<ContentLinkReference>? CspContentReferences { get; init; }
+    public List<ContentLinkReference>? PermissionsContentReferences { get; init; }
+
 }

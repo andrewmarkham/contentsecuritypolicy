@@ -10,4 +10,6 @@ public record ExportOptions
     public bool ExportSettings => Options.Contains("settings");
     public bool ExportPermissions => Options.Contains("permissions");
     public bool ExportIpRestrictions => Options.Contains("ipRestrictions");
+    public bool ExportCspPageOverrides => Options.Contains("cspPageOverrides");
+    public bool ExportPermissionsPageOverrides => Options.Contains("permissionsPageOverrides");
 }
