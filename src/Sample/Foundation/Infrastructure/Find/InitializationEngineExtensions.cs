@@ -1,4 +1,6 @@
-﻿using EPiServer.Framework.Initialization;
+﻿using EPiServer.Find.ClientConventions;
+using EPiServer.Find.Framework;
+using EPiServer.Framework.Initialization;
 using Foundation.Infrastructure.Find.Facets;
 using Foundation.Infrastructure.Find.Facets.Config;
 
@@ -27,6 +29,11 @@ namespace Foundation.Infrastructure.Find
 
         private static void InitializeFacets(IList<FacetFilterConfigurationItem> configItems)
         {
+
+            
+
+
+
             _facetRegistry.Value.Clear();
 
             if (configItems != null && configItems.Any())
