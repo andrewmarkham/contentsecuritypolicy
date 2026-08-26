@@ -1,6 +1,9 @@
+using EPiServer.Cms.Shell.UI.Rest.ContentQuery;
 using EPiServer.Filters;
 using EPiServer.Framework.Web;
 using EPiServer.ServiceLocation;
+using EPiServer.Shell.ContentQuery;
+using EPiServer.Shell.Notification;
 
 namespace alloy13preview.Business;
 
