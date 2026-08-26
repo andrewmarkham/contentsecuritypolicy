@@ -33,7 +33,7 @@
     "express": "^5.2.1",
     "ip-address": "^10.5.0",
     "lokijs": "^1.5.12",
-    "react-router-dom": "^7.13.1",
+    "react-router-dom": "^7.17.0",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
