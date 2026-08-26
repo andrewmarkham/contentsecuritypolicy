@@ -100,13 +100,27 @@ public class SqlDatabaseReportingRepository(ILogger<SqlDatabaseReportingReposito
         }
     }
 
-    public async Task<int> PurgeReporingData(DateTime beforeDate)
+    public async Task<int> PurgeReporingData(DateTime beforeDate, int? batchSize = null)
     {
         try {
-            var sqlCommand = "DELETE FROM SecurityReportTo WHERE RecievedAt < @BeforeDate";
+            // Unbatched path preserves prior behavior for callers that pass no batch size.
+            if (!batchSize.HasValue || batchSize.Value <= 0)
+            {
+                var sqlCommand = "DELETE FROM SecurityReportTo WHERE RecievedAt < @BeforeDate";
+
+                return await sqlHelper.ExecuteNonQuery(
+                    sqlCommand,
+                    sqlHelper.CreateParameter<DateTime>("BeforeDate", SqlDbType.DateTime, beforeDate));
+            }
+
+            // Single batch: caller is expected to loop until rows == 0. Keeps each
+            // statement's transaction small enough to commit before the SqlCommand
+            // timeout, instead of rolling back a multi-hour DELETE.
+            var batchedSql = "DELETE TOP (@BatchSize) FROM SecurityReportTo WHERE RecievedAt < @BeforeDate";
 
             return await sqlHelper.ExecuteNonQuery(
-                sqlCommand,
+                batchedSql,
+                sqlHelper.CreateParameter<int>("BatchSize", SqlDbType.Int, batchSize.Value),
                 sqlHelper.CreateParameter<DateTime>("BeforeDate", SqlDbType.DateTime, beforeDate));
         }
         catch (Exception ex)
