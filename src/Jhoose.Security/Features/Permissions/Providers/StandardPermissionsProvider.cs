@@ -46,10 +46,13 @@ public class StandardPermissionsProvider(ISecurityRepository<PermissionPolicy> p
         // for global report only
         if (mode.Equals("report"))
         {
-            yield return new PermissionsPolicyReportHeader(settings, host)
+            if (mergedPolicies.Count > 0)
             {
-                Policies = mergedPolicies
-            };
+                yield return new PermissionsPolicyReportHeader(settings, host)
+                {
+                    Policies = mergedPolicies
+                };
+            }
         }
         else
         {
