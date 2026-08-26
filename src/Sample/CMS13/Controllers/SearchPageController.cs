@@ -2,11 +2,13 @@ using alloy13preview.Models.Pages;
 using alloy13preview.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
+using Optimizely.Graph.Cms.Query;
+
 namespace alloy13preview.Controllers;
 
-public class SearchPageController : PageControllerBase<SearchPage>
+public class SearchPageController(IGraphContentClient client) : PageControllerBase<SearchPage>
 {
-    public ViewResult Index(SearchPage currentPage, string q)
+    public async Task<ViewResult> Index(SearchPage currentPage, string q)
     {
         var model = new SearchContentModel(currentPage)
         {
@@ -15,6 +17,13 @@ public class SearchPageController : PageControllerBase<SearchPage>
             SearchServiceDisabled = true,
             SearchedQuery = q
         };
+
+        var results = await client.QueryContent<SitePageData>()
+            .SearchFor(q)
+            .UsingFullText()
+            .Limit(10)
+            .Skip(0)
+            .GetAsContentAsync();
 
         return View(model);
     }

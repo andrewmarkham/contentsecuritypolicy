@@ -52,9 +52,12 @@ function HandleExport() {
 
     var exportOptions: CheckboxOptionType[] =[
         { label: 'Export CSP', value: 'csp' },
+        { label: 'Include CSP page overrides', value: 'cspPageOverrides' },
         { label: 'Export Permissions', value: 'permissions' },
+        { label: 'Include Permissions page overrides', value: 'permissionsPageOverrides' },
         { label: 'Export Headers', value: 'headers' },
-        { label: 'Export Settings', value: 'settings' }
+        { label: 'Export Settings', value: 'settings' },
+        { label: 'Export IP Restrictions', value: 'ipRestrictions' }
     ];
 
     const [form] = Form.useForm();
@@ -356,7 +359,14 @@ const ListUploadedFiles = ({ reloadFlag }: { reloadFlag: number }) => {
             if (!response.ok) {
                 throw new Error('Import failed');
             }
-            setToaster({ show: true, message: 'Import started successfully.', type: 'success' });
+            return response.json();
+        })
+        .then((result: { warnings?: string[] }) => {
+            if (result?.warnings && result.warnings.length > 0) {
+                setToaster({ show: true, message: `Import completed with warnings: ${result.warnings.join(' ')}`, type: 'error' });
+            } else {
+                setToaster({ show: true, message: 'Import started successfully.', type: 'success' });
+            }
             getImportFiles();
         })
         .catch(error => {
