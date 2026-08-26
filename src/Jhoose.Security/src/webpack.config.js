@@ -1,13 +1,13 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 
-module.exports = {
+const appConfig = {
   mode: 'development',
   entry: './app.tsx',
   devtool: 'inline-source-map',
-  //watch: true,
   output: {
     filename: 'csp-app.js',
     path: path.resolve(__dirname, '../dist/Jhoose.Security/ClientResources'),
@@ -31,78 +31,55 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-            {
-                loader: "style-loader",
-            },
-            {
-                loader: "css-loader",
-            }
-        ],
+        use: ["style-loader", "css-loader"],
         include: path.resolve(__dirname, "../")
-    }/*,
-      {
-        test: /\.scss$/,
-        use: [
-            {
-                loader: "style-loader",
-            },
-            {
-                loader: "css-loader",
-            }, 
-            {
-                loader: "sass-loader",
-                options: {
-                    includePaths: ["node_modules"]
-                }
-            }
-        ],
-        include: path.resolve(__dirname, "../")
-    }*/
+      }
     ]
   },
   resolve: {
-    extensions: ['.js', '.jsx','.ts', '.tsx', '.scss']
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss']
   }
 };
 
-/*
+const editorConfig = {
+  mode: 'development',
+  entry: './OnPageEditor/Editor/EditorBridge.tsx',
+  devtool: 'inline-source-map',
+  output: {
+    filename: 'inline-editor-bundle.js',
+    path: path.resolve(__dirname, '../dist/Jhoose.Security/ClientResources'),
+    library: {
+      name: 'InlineEditor',
+      type: 'window',
+    },
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+        include: path.resolve(__dirname, "../")
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.scss']
+  },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'OnPageEditor/Scripts'),
+          to: path.resolve(__dirname, '../dist/Jhoose.Security/ClientResources/Scripts'),
+        },
+      ],
+    }),
+  ],
+};
 
-
-            {
-                test: /\.module\.s(a|c)ss$/,
-                loader: [
-                  isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
-                  {
-                loader: 'css-loader',
-                    options: {
-                      modules: true,
-                      sourceMap: isDevelopment
-                    }
-                  },
-              {
-                    loader: 'sass-loader',
-                    options: {
-                      sourceMap: isDevelopment
-                    }
-                  }
-                ]
-              },
-              {
-                test: /\.s(a|c)ss$/,
-                exclude: /\.module.(s(a|c)ss)$/,
-                loader: [
-                  isDevelopment ? 'style-loader' : MiniCssExtractPlugin.loader,
-                  'css-loader',
-                  {
-                    loader: 'sass-loader',
-                    options: {
-                      sourceMap: isDevelopment
-                    }
-                  }
-                ]
-              }
-
-
-
-*/
+module.exports = [appConfig, editorConfig];

@@ -56,6 +56,7 @@ function createEmptyPolicy(policyName: string, siteId: string): CspSandboxPolicy
         id: uuidv4(),
         policyName,
         site: siteId,
+        contentLink: '',
         sandboxOptions: {
             enabled: false,
             allowDownloads: false,

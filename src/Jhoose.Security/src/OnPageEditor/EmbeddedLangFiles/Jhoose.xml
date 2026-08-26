@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<languages>
+    <language name="English" id="en">
+        <jhoose>
+            <epi>
+                <security>
+                    <contentoverridecommand>
+                        <label>Jhoose Security Content Override</label>
+                        <tooltip>Overrides security settings for this content item</tooltip>
+                    </contentoverridecommand>
+                </security>
+            </epi>
+        </jhoose>
+    </language>
+</languages>
