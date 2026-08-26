@@ -22,5 +22,7 @@ public class ContactPage : SitePageData, IContainerPage
 
     [Display(GroupName = Globals.GroupNames.Contact)]
     [EmailAddress]
+    [Searchable(false)]
+    [IndexingType(IndexingType.Default | IndexingType.Disabled | IndexingType.Queryable | IndexingType.Searchable)]
     public virtual string Email { get; set; }
 }

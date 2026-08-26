@@ -1,0 +1,15 @@
+.ip-path-list-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ip-path-list-input__preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.ip-path-list-input__error {
+    font-size: 12px;
+}

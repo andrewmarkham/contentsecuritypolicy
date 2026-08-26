@@ -119,8 +119,13 @@ public class ElasticSearchReportingRepository : IReportingRepository
         return summary;
     }
 
-    public async Task<int> PurgeReporingData(DateTime beforeDate)
+    public async Task<int> PurgeReporingData(DateTime beforeDate, int? batchSize = null)
     {
+        // batchSize is ignored: Elasticsearch DeleteByQuery handles large deletions
+        // server-side without the rollback risk SQL has, so the caller's batching
+        // loop is unnecessary here. The parameter exists only to satisfy the interface.
+        _ = batchSize;
+
         var response = await this.client.Value.DeleteByQueryAsync<ReportTo<IReportToBody>>(d => d.Query(query => query.Bool(b => b.Must(m => m.Range(r => r.DateRange(dr => dr.Field(f => f.RecievedAt).Gte(beforeDate)))))));
 
         var deletedCount = response.Deleted ?? 0;
