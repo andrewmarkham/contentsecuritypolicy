@@ -5,6 +5,7 @@ This module adds several security features to an Optimizely website.
  - User interface to manage the Content Secutiry Policy (CSP) policy for your site. 
  - Summary dashboard to monitor any ongoing CSP issues.
  - User interface to manage the Recommended Security headers and add to the response headers.
+ - User interface to manage IP Restrictions - an IP allow-list, with path and header based bypasses.
 
  This module fully supports
   - Optimizely 13, .NET (10.0) (From version 3.1.0)
@@ -67,12 +68,14 @@ The `Action<SecurityOptions> options` is optional and if not specified then the 
 ``` json
   "JhooseSecurity": {
     "ExclusionPaths": [
-      "/episerver"
+      "/episerver",
+      "/optimizely",
+      "/api/jhoose"
     ]
   },
 ```
 
-*ExclusionPaths:* Any request which starts with a path specified in this property will not include the CSP header.
+*ExclusionPaths:* Any request which starts with a path specified in this property will not include the CSP header. The default list covers the CMS edit-mode paths and this module's own admin UI/API - extend it if you install other admin modules (e.g. commerce management, a headless CMS UI, or third-party add-ons) whose paths should be treated the same way.
 
 ``` c#
 app.UseJhooseSecurity();
@@ -121,6 +124,17 @@ To enable this feature the the Issue Reporting Mode to **Local Dashboard**
 
 ![image](./documentation/images/settings.png)
 
+### Page Level Overrides
+Individual pages can override the site-wide CSP and Permissions Policy directives directly from the Optimizely on-page (all properties) editor, without having to go into the admin interface.
+
+A page override takes priority over the site-wide policy, which in turn takes priority over the global default - so you only need to override the directives that should differ for that specific page.
+
+Two toolbar commands are added to the editor:
+
+- **Jhoose CSP Page Override** - add, edit or remove CSP directive overrides (including the `sandbox` directive) for the current page. Each directive is edited using the same options as the site-wide CSP editor (sources, schema sources, `report-only`, etc.).
+- **Jhoose Permissions Policy Page Override** - add, edit or remove Permissions Policy overrides for the current page, using the same **Mode** (Default / Enabled / Enabled (Report Only) / Disabled), **Scope** (Self / All) and **Allowlist** options as the site-wide Permissions Policy editor.
+
+Changes are only applied to the site once the dialog is saved (`OK`); closing or cancelling the dialog discards any unsaved changes.
 
 ## Recommended Security Headers
 
@@ -244,6 +258,93 @@ These aren't removed, the reason being
 </configuration>
 ```
 
+## IP Restrictions
+
+Restrict access to your site using an allow-list of IPv4/IPv6 addresses and CIDR ranges. Visitors whose address isn't on the effective list receive a `403 Forbidden` response.
+
+The feature is managed from its own admin screen (**CMS > Security > IP Restrictions**) and is made up of three tabs:
+
+- **IP Addresses** - the allow-list of individual IPs/CIDR ranges.
+- **Ignored Paths** - path prefixes that bypass the allow-list check entirely.
+- **Ignore Headers** - header name/value pairs that bypass the allow-list check entirely.
+
+Every entry in all three tabs can be scoped either **globally** (applies to every site) or to **a single site** - use the site selector at the top of the screen to switch between them. Global and site-specific entries are additive: a site always sees the global entries *and* its own.
+
+### Enabling the feature
+
+IP Restriction enforcement is off by default. Turn it on either globally or per-site from the **IP Addresses** tab.
+
+Unlike `ExclusionPaths` and `IpRestrictionScope` above, the mode itself (`IpRestrictionMode` / `IpRestrictionModesBySite`) is **not** part of `JhooseSecurityOptions` and cannot be set via `appsettings.json` - it's part of the module's settings record, stored in the database and managed entirely through the admin UI (or the [Import / Export](./documentation/admin-interface.md#import--export) feature, if you're scripting settings between environments). A site with no override falls back to the global mode.
+
+### IP Addresses (allow-list)
+
+Add one or more IPv4/IPv6 addresses or CIDR ranges (e.g. `203.0.113.10`, `198.51.100.0/24`). When the mode is `on` for a site, only requests originating from an address that matches an effective entry (global ∪ site-specific) are allowed through; everything else gets a `403`.
+
+The client IP is resolved using the left-most entry in the `X-Forwarded-For` header when present, otherwise the connection's remote IP address. Only trust `X-Forwarded-For` if it is set by a proxy/load balancer you control - it can otherwise be spoofed by the caller.
+
+### Ignored Paths
+
+Path prefixes (e.g. `/healthz`, `/webhooks/stripe`) that are always allowed through, regardless of the caller's address or the allow-list mode. Matching is segment-aware (`/health` matches `/health/live` but not `/healthcheck`), and only affects IP Restriction - it has no effect on CSP, security headers or the Permissions Policy.
+
+Useful for health checks, monitoring probes, and inbound webhooks that can't be pinned to a known IP.
+
+### Ignore Headers
+
+Header name/value pairs that are always allowed through, regardless of the caller's address. If an incoming request carries a header whose name and value match an effective entry (global ∪ site-specific), the allow-list check is bypassed for that request. Matching is case-insensitive on both the header name and value.
+
+This is useful for trusted automation, internal services, or CI/CD systems that can attach a shared-secret-style header but can't be pinned to a stable IP.
+
+Add entries from the **Ignore Headers** tab by entering a header name and value - multiple headers can be added, each scoped globally or to a specific site.
+
+> Treat ignore-header values as secrets. Anyone who knows the header name/value pair can bypass the IP allow-list entirely, so use a long, random value and rotate it if it may have leaked.
+
+### Scope - which parts of the site are protected
+
+Configure `IpRestrictionScope` at startup to control which requests the allow-list applies to. Like `ExclusionPaths`, it's part of `JhooseSecurityOptions`, so it can be set either in code or via `appsettings.json`:
+
+``` c#
+services.AddJhooseSecurity(_configuration, (o) =>
+{
+    o.IpRestrictionScope = IpRestrictionScope.PublicSite;
+});
+```
+
+``` json
+"JhooseSecurity": {
+  "IpRestrictionScope": "PublicSite"
+}
+```
+
+| Value | Behaviour |
+|:---|:---|
+| `Off` | IP Restriction is bypassed entirely, regardless of the enable/disable mode configured in the admin UI. |
+| `PublicSite` | The allow-list is enforced only for requests **outside** `ExclusionPaths` (i.e. the public-facing site). Requests to an excluded path are always allowed. |
+| `CmsSite` | The allow-list is enforced only for requests **inside** `ExclusionPaths` (i.e. edit mode / the CMS UI). |
+| `Both` *(default)* | The allow-list is enforced everywhere. |
+
+`ExclusionPaths` is the same list used to exclude CSP, security headers and the Permissions Policy from a path (see [Configuration](#configuration) above) - it defaults to `["/episerver", "/optimizely", "/api/jhoose"]`, which covers CMS edit mode and this module's own admin UI/API out of the box.
+
+**Important:** if you use `IpRestrictionScope.PublicSite`, requests to any path in `ExclusionPaths` (edit mode, this module's admin API, etc.) are always allowed through regardless of the caller's IP - which is what keeps the admin UI usable. If you install other admin modules with their own paths (e.g. commerce management, a headless CMS UI, or third-party add-ons), add them to `ExclusionPaths` too, otherwise they'll be treated as part of the public site and enforced against the allow-list:
+
+``` c#
+services.AddJhooseSecurity(_configuration, (o) =>
+{
+    o.ExclusionPaths.Add("/commercemanager");
+    o.IpRestrictionScope = IpRestrictionScope.PublicSite;
+});
+```
+
+If you instead use `IpRestrictionScope.CmsSite`, the reasoning flips: the allow-list is enforced *inside* `ExclusionPaths`, so anything you add there (including the defaults) becomes IP-restricted rather than exempt. Review the default list carefully in that mode - it's usually what you want to protect, not exclude.
+
+### Order of evaluation
+
+For each in-scope request, the middleware checks, in order:
+
+1. Does the request path match an **Ignored Path** entry? If so, allow.
+2. Does the request carry a header matching an **Ignore Headers** entry? If so, allow.
+3. Does the caller's IP match an **IP Addresses** allow-list entry? If so, allow - otherwise return `403 Forbidden`.
+
+
 ## Authentication
 By default any user with the 'CmsAdmins' role can access the module, this can be changed at startup if you need to further restrict access.
 
@@ -305,5 +406,16 @@ X-API-Key: ...
  |2.6.2|Fixed another bug with (CRLF in header values)|
  |2.6.3|Fixed performance issues with the reporting API.<br/>Fixed a race condition that caused the nonce to leak across requests under high load.|
  |3.0.0|Added multisite support, CSP and Permissions Policy, Security Headers can now be configured per site.  |
- |3.0.4|Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.|
- |3.1.0| Added CMS13 Support.|
+ |3.0.4 |Fixed issue with the files not being copied to the output directory when building the project, this was causing the module to not work when installed from NuGet.|
+ |3.1.0 | Added CMS13 Support.|
+ |3.2.0 | Updated Purge scheduled job to run in batches : thanks @kennygutierrez
+ |3.2.1 | Fixed a bug where it was targeting the wrong version of Castle.Core for CMS12/.NET10 : thanks @kennygutierrez
+ |3.3.0 | Added IP Restrictions module - IP allow-list with global/per-site scoping, Ignored Paths, and Ignore Headers bypasses.<br/> Add support for page level overrides for both the CSP and permissions policy, managed directly from the on-page editor |
+  ---
+ ## Contributors
+
+https://github.com/Doom-83
+https://github.com/neorth
+https://github.com/kennygutierrez
+
+Thanks for all the support, suggestions, features and bugfixes

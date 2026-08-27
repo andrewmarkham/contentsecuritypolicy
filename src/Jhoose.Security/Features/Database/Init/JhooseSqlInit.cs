@@ -10,7 +10,7 @@ namespace Jhoose.Security.Features.Reporting.Database;
 
 public class JhooseSqlInit(ILogger<JhooseSqlInit> logger, ISqlHelper isqlHelper) : IHostedService
 {
-    protected const string DBVersion = "3.0.0";
+    protected const string DBVersion = "3.3.0";
 
     private readonly ILogger<JhooseSqlInit> logger = logger;
     private readonly ISqlHelper isqlHelper = isqlHelper;
@@ -121,7 +121,44 @@ public class JhooseSqlInit(ILogger<JhooseSqlInit> logger, ISqlHelper isqlHelper)
                     Value           NVARCHAR(max)
                 )
             END
-                          
+
+            IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='IpRestrictions' AND xtype='U')
+            BEGIN
+                CREATE TABLE IpRestrictions (
+                    Id              UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+                    Value           NVARCHAR(100) NOT NULL,
+                    Site            NVARCHAR(50) NOT NULL DEFAULT '*'
+                )
+            END
+
+            IF (INDEXPROPERTY(OBJECT_ID('IpRestrictions'), 'IDX_IpRestrictions_Site', 'IndexID') IS NULL)
+                CREATE NONCLUSTERED INDEX IDX_IpRestrictions_Site ON IpRestrictions (Site)
+
+            IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='IpRestrictionIgnoredPaths' AND xtype='U')
+            BEGIN
+                CREATE TABLE IpRestrictionIgnoredPaths (
+                    Id              UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+                    Value           NVARCHAR(256) NOT NULL,
+                    Site            NVARCHAR(50) NOT NULL DEFAULT '*'
+                )
+            END
+
+            IF (INDEXPROPERTY(OBJECT_ID('IpRestrictionIgnoredPaths'), 'IDX_IpRestrictionIgnoredPaths_Site', 'IndexID') IS NULL)
+                CREATE NONCLUSTERED INDEX IDX_IpRestrictionIgnoredPaths_Site ON IpRestrictionIgnoredPaths (Site)
+
+            IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='IpRestrictionIgnoreHeaders' AND xtype='U')
+            BEGIN
+                CREATE TABLE IpRestrictionIgnoreHeaders (
+                    Id              UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+                    HeaderName      NVARCHAR(100) NOT NULL,
+                    HeaderValue     NVARCHAR(256) NOT NULL,
+                    Site            NVARCHAR(50) NOT NULL DEFAULT '*'
+                )
+            END
+
+            IF (INDEXPROPERTY(OBJECT_ID('IpRestrictionIgnoreHeaders'), 'IDX_IpRestrictionIgnoreHeaders_Site', 'IndexID') IS NULL)
+                CREATE NONCLUSTERED INDEX IDX_IpRestrictionIgnoreHeaders_Site ON IpRestrictionIgnoreHeaders (Site)
+
         """;
 
         await isqlHelper.ExecuteNonQuery(sqlCommand);

@@ -101,7 +101,6 @@
 	  <Folder Include="wwwroot\" />
   </ItemGroup>
 
-
 	<ItemGroup>
 		<ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj">
 			<GlobalPropertiesToRemove>
