@@ -10,16 +10,24 @@ public class CspSettings
     {
         this.Mode = "off";
         this.PermissionMode = "off";
+        this.IpRestrictionMode = "off";
         this.ReportingMode = ReportingMode.None;
         this.SiteModes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         this.PermissionModesBySite = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        this.IpRestrictionModesBySite = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     }
     public string Mode { get; set; }
     public string PermissionMode { get; set; }
+
+    /// <summary>
+    /// Global enable/disable mode for the IP restriction allow-list. Disabled ("off") by default.
+    /// </summary>
+    public string IpRestrictionMode { get; set; }
     public ReportingMode ReportingMode { get; set; }
 
     public Dictionary<string, string> SiteModes { get; set; }
     public Dictionary<string, string> PermissionModesBySite { get; set; }
+    public Dictionary<string, string> IpRestrictionModesBySite { get; set; }
 
     /// <summary>
     /// Used for the report-uri directive
@@ -76,6 +84,18 @@ public class CspSettings
     public bool IsEnabledForSite(string siteId) => !GetModeForSite(siteId).Equals("off", StringComparison.CurrentCultureIgnoreCase);
 
     public bool IsPermissionsEnabledForSite(string siteId) => !GetPermissionModeForSite(siteId).Equals("off", StringComparison.CurrentCultureIgnoreCase);
+
+    public string GetIpRestrictionModeForSite(string siteId)
+    {
+        var key = NormalizeSiteId(siteId);
+        if (this.IpRestrictionModesBySite != null && this.IpRestrictionModesBySite.TryGetValue(key, out var mode))
+        {
+            return mode;
+        }
+        return this.IpRestrictionMode;
+    }
+
+    public bool IsIpRestrictionEnabledForSite(string siteId) => !GetIpRestrictionModeForSite(siteId).Equals("off", StringComparison.CurrentCultureIgnoreCase);
 
     private static string NormalizeSiteId(string siteId)
     {
