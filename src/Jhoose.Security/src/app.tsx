@@ -9,7 +9,6 @@ import { SecurityHeaders } from './Features/SecurityHeaders/SecurityHeaders';
 import { CspModule } from './Features/Csp/CspModule/CspModule';
 import { ModuleSettings } from './Features/Settings/ModuleSettings/ModuleSettings';
 import { PermissionPolicyModule } from './Features/PermissionPolicy/PermissionPolicyModule/PermissionPolicyModule';
-import { IpRestrictionsModule } from './Features/IpRestrictions/IpRestrictionsModule/IpRestrictionsModule';
 
 import React from 'react';
 
@@ -38,7 +37,6 @@ function App() {
               <Route path="/csp" element={<CspModule />} />
               <Route path="/permissions" element={<PermissionPolicyModule />} />
               <Route path="/headers" element={<SecurityHeaders />} />
-              <Route path="/iprestrictions" element={<IpRestrictionsModule />} />
               <Route path="/settings" element={<ModuleSettings />} />
             </Routes>
           </main>

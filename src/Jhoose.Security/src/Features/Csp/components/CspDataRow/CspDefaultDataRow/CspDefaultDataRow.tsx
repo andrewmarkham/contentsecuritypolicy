@@ -64,7 +64,6 @@ function createEmptyPolicy(policyName: string, siteId: string): CspPolicy {
         id: uuidv4(),
         policyName,
         site: siteId,
-        contentLink: '',
         options: {
             wildcard: false,
             none: false,
