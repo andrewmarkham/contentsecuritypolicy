@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+
+  <PropertyGroup>
+    <JhooseSecurityCopyToSource Condition="'$(JhooseSecurityCopyToSource)' == ''">true</JhooseSecurityCopyToSource>
+
+    <!-- Prefer solution root when available, fallback to project root -->
+    <JhooseSecuritySourceRoot Condition="'$(JhooseSecuritySourceRoot)' == '' and '$(SolutionDir)' != '*Undefined*' and '$(SolutionDir)' != ''">$(SolutionDir)</JhooseSecuritySourceRoot>
+    <JhooseSecuritySourceRoot Condition="'$(JhooseSecuritySourceRoot)' == ''">$(MSBuildProjectDirectory)</JhooseSecuritySourceRoot>
+    <JhooseSecuritySourceRoot>$([MSBuild]::EnsureTrailingSlash('$(JhooseSecuritySourceRoot)'))</JhooseSecuritySourceRoot>
+  </PropertyGroup>
+
+  <Target Name="JhooseSecurity_CopyFilesToSource"
+          BeforeTargets="Build"
+          Condition="'$(JhooseSecurityCopyToSource)' == 'true'">
+    <ItemGroup>
+      <!-- build/ -> package root is one level up -->
+      <_JhooseSourceScripts Include="$(MSBuildThisFileDirectory)..\contentFiles\any\any\modules\_protected\**\*.*" />
+    </ItemGroup>
+
+    <Message Importance="High"
+             Text="JhooseSecurity: copying @(_JhooseSourceScripts->Count()) files to $(JhooseSecuritySourceRoot)modules\_protected\" />
+
+    <MakeDir Directories="@(_JhooseSourceScripts->'$(JhooseSecuritySourceRoot)modules\_protected\%(RecursiveDir)')" />
+
+    <Copy SourceFiles="@(_JhooseSourceScripts)"
+          DestinationFiles="@(_JhooseSourceScripts->'$(JhooseSecuritySourceRoot)modules\_protected\%(RecursiveDir)%(Filename)%(Extension)')"
+          SkipUnchangedFiles="true" />
+  </Target>
+</Project>
