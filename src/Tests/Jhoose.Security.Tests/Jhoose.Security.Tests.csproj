@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net10.0</TargetFramework>
 		<IsPackable>false</IsPackable>
 		<RestoreSources>
 		$(RestoreSources);
@@ -14,13 +14,19 @@
         <ExcludeTestXunit>true</ExcludeTestXunit>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="EPiServer.CMS.UI.Core" Version="12.22.3" />
-		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="12.22.3" />
-		<PackageReference Include="EPiServer.Framework" Version="12.22.3" />
+        <PackageReference Include="EPiServer.CMS.UI.Core" Version="[13.0.0-preview4,14)" />
+		<PackageReference Include="EPiServer.Framework.AspNetCore" Version="[13.0.0-preview4,14)" />
+        <PackageReference Include="EPiServer.Framework" Version="[13.0.0-preview4,14)" />
+        <PackageReference Include="EPiServer.Cms.AspNetCore.TagHelpers" Version="[13.0.0-preview4,14)" />
+        <PackageReference Include="EPiServer.Cms.AspNetCore.Routing" Version="[13.0.0-preview4,14)" />    
+        <PackageReference Include="EPiServer.Cms.AspNetCore.Templating" Version="[13.0.0-preview4,14)" /> 
+        <PackageReference Include="EPiServer.LinkAnalyzer" Version="[13.0.0-preview4,14)" />
+        <PackageReference Include="EPiServer.ApplicationModules" Version="[13.0.0-preview4,14)" />
+
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
-		<PackageReference Include="Castle.Core" Version="5.0.0" />
+		<PackageReference Include="Castle.Core" Version="5.2.1" />
 		<PackageReference Include="NSubstitute" Version="4.4.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.11" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.2" />
 
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
         <PackageReference Include="NUnit" Version="4.4.0" />
@@ -28,7 +34,6 @@
         <PackageReference Include="coverlet.collector" Version="6.0.4" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\Jhoose.Security.Core\Jhoose.Security.Core.csproj" />
 	  <ProjectReference Include="..\..\Jhoose.Security\Jhoose.Security.csproj" />
 	</ItemGroup>
 	<ItemGroup>
