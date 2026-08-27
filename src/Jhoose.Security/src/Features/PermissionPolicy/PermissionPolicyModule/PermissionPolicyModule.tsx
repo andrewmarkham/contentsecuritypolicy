@@ -59,7 +59,7 @@ export function PermissionPolicyModule() {
         }
     }, [messageApi, permissionsQuery.error]);
 
-    const permissions = useMemo(() => (permissionsQuery.data ?? []).filter((permission) => !permission.contentLink), [permissionsQuery.data]);
+    const permissions = permissionsQuery.data ?? [];
     const isLoading = permissionsQuery.isLoading || permissionsQuery.isFetching;
     const isDefaultWebsite = activeWebsiteId === GLOBAL_DEFAULT_SITE_ID;
     const overrideCount = useMemo(() => {

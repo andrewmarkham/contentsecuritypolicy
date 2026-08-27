@@ -71,19 +71,11 @@ namespace Jhoose.Security.UI;
                 AuthorizationPolicy = Constants.Authentication.PolicyName
             },
 
-            new UrlMenuItem("IP Restrictions",
-            MenuPaths.Global + "/cms/security/iprestrictions",
-            Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/iprestrictions"))
-            {
-                SortIndex = SortIndex.First + 31,
-                AuthorizationPolicy = Constants.Authentication.PolicyName
-            },
-
             new UrlMenuItem("Settings",
             MenuPaths.Global + "/cms/security/settings",
             Paths.ToResource(base.GetType(), "jhoosesecurityadmin#/settings"))
             {
-                SortIndex = SortIndex.First + 32,
+                SortIndex = SortIndex.First + 31,
                 AuthorizationPolicy = Constants.Authentication.PolicyName
             }
         };

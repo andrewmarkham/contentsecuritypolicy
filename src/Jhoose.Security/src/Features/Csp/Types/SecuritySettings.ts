@@ -5,7 +5,6 @@ import type { ReportingMode } from './ReportingMode';
 export interface SecuritySettings {
     mode: Mode;
     permissionMode: Mode;
-    ipRestrictionMode: "on" | "off";
     reportingMode: ReportingMode;
     reportingUrl: string;
     reportToUrl: string;
@@ -13,5 +12,4 @@ export interface SecuritySettings {
     authenticationKeys: Array<AuthenticationKey>;
     siteModes?: Record<string, Mode>;
     permissionModesBySite?: Record<string, Mode>;
-    ipRestrictionModesBySite?: Record<string, "on" | "off">;
 }

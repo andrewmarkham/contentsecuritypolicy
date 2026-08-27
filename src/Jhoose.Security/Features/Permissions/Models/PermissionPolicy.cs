@@ -14,7 +14,7 @@ namespace Jhoose.Security.Features.Permissions.Models;
 /// <param name="Scope"></param>
 /// <param name="Allowlist"></param>
 /// <param name="Site"></param>
-public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope, List<string> Allowlist, string Site) : ISitePolicy, IContentPolicy
+public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope, List<string> Allowlist, string Site) : ISitePolicy
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="PermissionPolicy"/> class.
@@ -28,9 +28,7 @@ public record PermissionPolicy(Guid Id, string Key, string? Mode, string? Scope,
         get => string.IsNullOrEmpty(field) ? "*" : field;
         set => field = value ?? string.Empty;
     }
-
-    public string ContentLink { get; set; } = string.Empty;
-
+    
     public string GroupingKey => this.Key;
     public override string ToString()
     {

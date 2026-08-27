@@ -116,7 +116,7 @@ public class SettingsController(ISettingsRepository settingsRepository,
     [ProducesResponseType(typeof(JhoooseSecurityExport), StatusCodes.Status500InternalServerError)]
     public ActionResult<JhoooseSecurityExport> Export([FromBody] ExportOptions options)
     {
-        var export = importExportService.Export(options.ExportCsp, options.ExportPermissions, options.ExportHeaders, options.ExportSettings, options.ExportIpRestrictions, options.ExportCspPageOverrides, options.ExportPermissionsPageOverrides);
+        var export = importExportService.Export(options.ExportCsp, options.ExportPermissions, options.ExportHeaders, options.ExportSettings);
         return new JsonResult(export, jsonSerializerOptions)
         {
             StatusCode = StatusCodes.Status200OK,
@@ -160,9 +160,9 @@ public class SettingsController(ISettingsRepository settingsRepository,
 
     [HttpPost]
     [Route("import/{id}")]
-    [ProducesResponseType(typeof(ImportResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public ActionResult<ImportResult> Import(Guid id)
+    public ActionResult Import(Guid id)
     {
         var export = importRepository.Get(id);
 
@@ -170,11 +170,8 @@ public class SettingsController(ISettingsRepository settingsRepository,
         {
             return NotFound("Import not found.");
         }
-        var result = importExportService.Import(export);
-        return new JsonResult(result, jsonSerializerOptions)
-        {
-            StatusCode = StatusCodes.Status200OK,
-        };
+        importExportService.Import(export);
+        return StatusCode(StatusCodes.Status204NoContent);
     }
 
     [HttpDelete]

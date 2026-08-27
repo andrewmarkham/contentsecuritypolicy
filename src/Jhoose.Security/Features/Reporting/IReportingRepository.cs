@@ -18,15 +18,7 @@ public interface IReportingRepository
     
     Task<DashboardSummary> GetDashboardSummary(DashboardSummary summary);
 
-    /// <summary>
-    /// Deletes reporting rows older than <paramref name="beforeDate"/>.
-    /// When <paramref name="batchSize"/> is provided and greater than zero, providers
-    /// that support it should delete at most that many rows per call so callers can
-    /// loop and bound the work each query does (avoiding command-timeout rollbacks on
-    /// large tables). When null, the call behaves as before and deletes everything in
-    /// one statement.
-    /// </summary>
-    Task<int> PurgeReporingData(DateTime beforeDate, int? batchSize = null);
+    Task<int> PurgeReporingData(DateTime beforeDate);
 
     Task<CspSearchResults> Search(CspSearchParams searchParams);
 }

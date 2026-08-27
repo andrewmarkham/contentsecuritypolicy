@@ -6,13 +6,12 @@ using Jhoose.Security.Features.Core.Model;
 
 namespace Jhoose.Security.Features.CSP.Models;
 
-public class CspPolicy  : ISitePolicy, IContentPolicy
+public class CspPolicy  : ISitePolicy
 {
     public CspPolicy()
     {
         this.Id = Guid.NewGuid();
         this.Site = string.Empty;
-        this.ContentLink = string.Empty;
         this.Order = 1;
         this.Level = CspPolicyLevel.Level1;
         this.ReportOnly = false;
@@ -32,8 +31,6 @@ public class CspPolicy  : ISitePolicy, IContentPolicy
         get => string.IsNullOrEmpty(field) ? "*" : field;
         set => field = value ?? string.Empty;
     }
-
-    public string ContentLink { get; set; }
 
     public int Order { get; set; }
 

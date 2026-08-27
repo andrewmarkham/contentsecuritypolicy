@@ -35,21 +35,14 @@ public abstract class SecurityRepositoryBase<T>(ILogger logger, IConfiguration c
         
         var headerList = new List<T>();
 
-        try {
-            foreach (var header in headers)
+        foreach (var header in headers)
+        {
+            var responseHeader = JsonSerializer.Deserialize<T>(header.Value);
+            if (responseHeader != null)
             {
-                var responseHeader = JsonSerializer.Deserialize<T>(header.Value);
-                if (responseHeader != null)
-                {
-                    headerList.Add(responseHeader);
-                }
+                headerList.Add(responseHeader);
             }
         }
-        catch (JsonException ex)
-        {
-            logger.LogError(ex, "Error deserializing response header from database");
-        }
-
         return headerList;
     }
 

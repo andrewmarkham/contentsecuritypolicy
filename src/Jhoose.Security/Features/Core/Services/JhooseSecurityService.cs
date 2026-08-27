@@ -9,8 +9,6 @@ using Jhoose.Security.Features.ResponseHeaders.Models;
 
 using Jhoose.Security.Features.Settings.Repository;
 
-using EPiServer.Web.Routing;
-
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -29,10 +27,9 @@ namespace Jhoose.Security.Features.Core.Services;
 public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<CspPolicyHeaderBase> cspProvider,
                              [FromKeyedServices("responseHeaders")] IHeaderProvider<ResponseHeader> responseHeaderProvider,
                              [FromKeyedServices("permissions")] IHeaderProvider<ResponseHeader> permissionsProvider,
-    ISiteService siteService,
+    ISiteService siteService, 
     ISettingsRepository settingsRepository,
     INonceService nonceService,
-    IContentRouteHelper contentRouteHelper,
     ILogger<JhooseSecurityService> logger) : IJhooseSecurityService
 {
     /// <inheritdoc/>
@@ -84,12 +81,10 @@ public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<Cs
                 return;
             }
 
-            // get the policy, preferring any override scoped to the page currently being served
-            var contentLink = contentRouteHelper.Content?.ContentLink?.ID.ToString() ?? string.Empty;
-
-            var cachedHeaders = cspProvider.Headers(siteId, response.HttpContext.Request.Host.Value ?? string.Empty, contentLink).ToList();
+            // get the policy
+            var cachedHeaders = cspProvider.Headers(siteId, response.HttpContext.Request.Host.Value ?? string.Empty).ToList();
             var nonceValue = nonceService.GenerateNonce();
-
+            
             foreach (var cachedHeader in cachedHeaders)
             {
                 var header = cachedHeader.Clone();
@@ -128,8 +123,7 @@ public class JhooseSecurityService([FromKeyedServices("csp")] IHeaderProvider<Cs
                 return;
             }
     
-            var contentLink = contentRouteHelper.Content?.ContentLink?.ID.ToString() ?? string.Empty;
-            var headerValues = permissionsProvider.Headers(siteId, response.HttpContext.Request.Host.Value ?? string.Empty, contentLink);
+            var headerValues = permissionsProvider.Headers(siteId, response.HttpContext.Request.Host.Value ?? string.Empty);
 
             foreach (var header in headerValues)
             {

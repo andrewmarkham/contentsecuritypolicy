@@ -32,10 +32,7 @@ export function CspDataGrid() {
         }
     }, [cspPoliciesQuery.error, messageApi]);
 
-    // Page-level overrides share this same policy list/API but are scoped by contentLink rather
-    // than site - exclude them here so they can't collide with (and silently clobber) a global
-    // or site-level policy of the same name in this grid.
-    const policies = useMemo(() => (cspPoliciesQuery.data ?? []).filter((policy) => !policy.contentLink), [cspPoliciesQuery.data]);
+    const policies = cspPoliciesQuery.data ?? [];
     const isDefaultWebsite = activeWebsiteId === GLOBAL_DEFAULT_SITE_ID;
 
     const policiesBySite = useMemo(() => {
