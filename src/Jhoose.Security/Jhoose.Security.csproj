@@ -10,7 +10,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>3.0.1.0</Version>
+		<Version>3.0.3.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy, Permissions Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -115,16 +115,16 @@
 		<Content Remove="*.json" />
 		<Content Remove="Jhoose.Security.Views\**" />
 		<!--  -->
-		<Content Include="buildTransitive\Jhoose.Security.Admin.props" PackagePath="buildTransitive\Jhoose.Security.Admin.props" />
-		<Content Include="buildTransitive\Jhoose.Security.Admin.targets" PackagePath="buildTransitive\Jhoose.Security.Admin.targets" />
+		<Content Include="build\Jhoose.Security.Admin.targets" PackagePath="build\Jhoose.Security.Admin.targets" />
 		<Content Include="dist\Jhoose.Security\**" Exclude="src\**\*">
 			<Pack>true</Pack>
-			<PackagePath>ContentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
+			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
+        
 		<Content Include="Jhoose.Security.Views\Views\**" Exclude="src\**\*">
 			<Pack>true</Pack>
-			<PackagePath>ContentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
+			<PackagePath>contentFiles\any\any\modules\_protected\Jhoose.Security\Views</PackagePath>
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 		</Content>
 	</ItemGroup>
