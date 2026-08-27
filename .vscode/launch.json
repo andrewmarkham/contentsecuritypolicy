@@ -43,6 +43,26 @@
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/src/Sample/Foundation/Views"
             }
+        },
+        {
+            "name": "CMS13",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "buildCMS13",
+            "program": "${workspaceFolder}/src/Sample/CMS13/bin/Debug/net10.0/alloy13preview.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Sample/CMS13",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/src/Sample/CMS13/Views"
+            }
         }
     ]
 }

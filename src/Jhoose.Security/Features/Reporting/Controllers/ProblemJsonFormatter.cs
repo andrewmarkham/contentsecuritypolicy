@@ -1,8 +1,12 @@
 using System;
-
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using EPiServer.Formatters;
+
+using Jhoose.Security.Features.Reporting.Models;
 
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,16 +16,17 @@ using MyCSharp.HttpUserAgentParser.Providers;
 
 namespace Jhoose.Security.Features.Reporting.Controllers;
 
-public class ProblemJsonFormatter : TextInputFormatter
+public class ProblemJsonFormatter : TextInputFormatter, IJsonInputFormatter
 {
+
     public ProblemJsonFormatter()
     {
-
         this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/problem+json"));
         this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/reports+json"));
         this.SupportedMediaTypes.Add(new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("application/csp-report"));
         this.SupportedEncodings.Add(Encoding.UTF8);
         this.SupportedEncodings.Add(Encoding.Unicode);
+
     }
 
     public override async Task<InputFormatterResult> ReadRequestBodyAsync(InputFormatterContext context, Encoding effectiveEncoding)
