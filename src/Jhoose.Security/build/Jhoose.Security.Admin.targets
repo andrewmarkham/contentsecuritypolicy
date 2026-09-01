@@ -17,7 +17,18 @@
       <!-- build/ -> package root is one level up -->
       <_JhooseSourceScripts Include="$(MSBuildThisFileDirectory)..\contentFiles\any\any\modules\_protected\**\*.*" />
     </ItemGroup>
+<!--
+    <Target Name="CleanClientResources" BeforeTargets="CopyFiles">
+        <RemoveDir Directories="$(MSBuildProjectDirectory)\modules\_protected\Jhoose.Security\ClientResources" />
+    </Target>
 
+    <Target Name="CopyFiles" BeforeTargets="Build">
+        <Copy
+            SourceFiles="@(SourceScripts)"
+            DestinationFolder="$(MSBuildProjectDirectory)\modules\_protected\%(RecursiveDir)"
+        />
+    </Target>
+-->
     <Message Importance="High"
              Text="JhooseSecurity: copying @(_JhooseSourceScripts->Count()) files to $(JhooseSecuritySourceRoot)modules\_protected\" />
 

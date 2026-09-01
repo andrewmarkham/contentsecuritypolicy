@@ -23,6 +23,11 @@ src/Jhoose.Security.Admin/dist/Jhoose.Security/ClientResources/
 
 src/Jhoose.Security/dist/Jhoose.Security/ClientResources/
 
+# Build-time generated JSON from @mdn/browser-compat-data
+src/Jhoose.Security/src/Features/PermissionPolicy/Data/permissions-policy-compat.json
+src/Jhoose.Security/src/Features/PermissionPolicy/Data/browser-details.json
+src/Jhoose.Security/src/Features/PermissionPolicy/Data/permission-policy-directives.json
+
 src/Tests/Jhoose.Security.Tests/bin/
 
 src/Tests/Jhoose.Security.Tests/obj/

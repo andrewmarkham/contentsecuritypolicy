@@ -1,27 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html>
-<head>
+  <head>
     <title>Jhoose Security</title>
 
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link href="https://fonts.googleapis.com/css?family=Barlow:400,500,700" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Barlow:400,500,700"
+      rel="stylesheet"
+    />
     <base href="/" />
-    
+
     <style>
-        body {
-            margin: 0;
-        }
+      body {
+        margin: 0;
+      }
     </style>
-</head>
-<body class="epi-workspace">
+  </head>
+  <body class="epi-workspace">
     <div @Html.Raw(Html.ApplyFullscreenPlatformNavigation())>
-        <!-- Content -->
+      <!-- Content -->
     </div>
     <div id="csp-root"></div>
-</body>
-    <script src="dist/clientresources/csp-app.js"> </script>
+  </body>
 </html>

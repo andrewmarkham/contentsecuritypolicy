@@ -45,7 +45,6 @@
   @{
 #endif
   }
-  <script defer src="ClientResources/csp-app.js"></script>
 </body>
     
 </html>
