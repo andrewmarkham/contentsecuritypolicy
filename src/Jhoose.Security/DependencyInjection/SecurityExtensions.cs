@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using EPiServer.Authorization;
-
+using EPiServer.ServiceLocation;
 using EPiServer.Shell.Modules;
 using Jhoose.Security.Configuration;
 
@@ -41,12 +41,6 @@ using Jhoose.Security.Features.ResponseHeaders.Repository;
 using Jhoose.Security.Features.CSP.Repository;
 using Jhoose.Security.Features.Core.Providers;
 
-
-#if CMS12
-    using EPiServer.ServiceLocation;
-#else
-    using EPiServer.DependencyInjection;
-#endif
 namespace Jhoose.Security.DependencyInjection;
 
 public static class SecurityExtensions
@@ -157,7 +151,6 @@ public static class SecurityExtensions
 
     public static IApplicationBuilder UseJhooseSecurity(this IApplicationBuilder applicationBuilder)
     {
-        
         var securityOptions = applicationBuilder.ApplicationServices.GetService<IOptions<JhooseSecurityOptions>>();
 
         applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c.Request, securityOptions?.Value.ExclusionPaths ?? Enumerable.Empty<string>()), ab =>
@@ -179,6 +172,7 @@ public static class SecurityExtensions
 
     public static bool IsValidPath(HttpRequest request, IEnumerable<string> exclusionPaths)
     {
+
         foreach (var path in exclusionPaths)
         {
             if (request.Path.StartsWithSegments(path, System.StringComparison.InvariantCultureIgnoreCase))
