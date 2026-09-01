@@ -5,5 +5,4 @@ export type Permission = {
     scope: "all" | "self" ;
     allowlist: string[];
     site?: string;
-    contentLink?: string;
 };

@@ -16,7 +16,6 @@ public class PurgeReporintgDataJob : ScheduledJobBase
     private readonly IReportingRepositoryFactory reportingRepositoryFactory;
     private readonly IOptions<ReportingOptions> options;
     private readonly ILogger<PurgeReporintgDataJob> logger;
-    private bool stopSignaled;
 
     public PurgeReporintgDataJob(IReportingRepositoryFactory reportingRepositoryFactory,
                                  IOptions<ReportingOptions> options,
@@ -25,10 +24,7 @@ public class PurgeReporintgDataJob : ScheduledJobBase
         this.reportingRepositoryFactory = reportingRepositoryFactory;
         this.options = options;
         this.logger = logger;
-        this.IsStoppable = true;
     }
-
-    public override void Stop() => stopSignaled = true;
 
     public override string Execute()
     {
@@ -46,37 +42,9 @@ public class PurgeReporintgDataJob : ScheduledJobBase
             }
 
             var beforeDate = DateTime.UtcNow.AddDays(options.Value.RetainDays * -1);
-            var batchSize = options.Value.PurgeBatchSize;
+            var purged = reportingRepository.PurgeReporingData(beforeDate).Result;
 
-            // PurgeBatchSize <= 0 disables batching and preserves the original
-            // single-DELETE behavior for anyone who relied on it.
-            if (batchSize <= 0)
-            {
-                var purgedOnce = reportingRepository.PurgeReporingData(beforeDate).Result;
-                return $"Purged {purgedOnce} records, from before {beforeDate}";
-            }
-
-            var totalPurged = 0;
-            var batches = 0;
-
-            OnStatusChanged($"Purging reporting rows older than {beforeDate:u} in batches of {batchSize}...");
-
-            while (!stopSignaled)
-            {
-                var purgedInBatch = reportingRepository.PurgeReporingData(beforeDate, batchSize).Result;
-                if (purgedInBatch <= 0)
-                {
-                    break;
-                }
-
-                totalPurged += purgedInBatch;
-                batches++;
-                OnStatusChanged($"Batch {batches}: purged {purgedInBatch} (total {totalPurged}).");
-            }
-
-            return stopSignaled
-                ? $"Stopped. Purged {totalPurged} records, from before {beforeDate} across {batches} batches."
-                : $"Purged {totalPurged} records, from before {beforeDate} across {batches} batches.";
+            return $"Purged {purged} records, from before {beforeDate}";
         }
         catch (Exception ex)
         {

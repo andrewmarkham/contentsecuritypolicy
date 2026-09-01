@@ -1,0 +1,50 @@
+@using EPiServer.Shell.Navigation
+
+@{
+#if CMS13
+    }
+@addTagHelper *, EPiServer.Shell.UI
+@{
+#endif
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Content Security Policy</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css?family=Barlow:400,500,700" rel="stylesheet" />
+
+  <style>
+      body {
+        margin: 0;
+      }
+  </style>
+</head>
+
+<body class="epi-workspace">
+  @Html.AntiForgeryToken()
+  @{
+#if CMS12
+    }
+@Html.Raw(Html.CreatePlatformNavigationMenu())
+<div class='epi-pn-navigation--fixed-adjust ' @Html.Raw(Html.ApplyPlatformNavigation())>
+<div id="csp-root"></div>
+</div>
+@{
+#else
+  }
+  <platform-navigation />
+  <div class='epi-pn-navigation--fixed-adjust '>
+    <div id="csp-root"></div>
+  </div>
+  @{
+#endif
+  }
+</body>
+    
+</html>

@@ -4,7 +4,6 @@ import type { SchemaSource } from './SchemaSource';
 export interface CspPolicy {
     id: string;
     site: string;
-    contentLink: string;
     policyName: string;
     reportOnly: boolean;
     schemaSource: SchemaSource;

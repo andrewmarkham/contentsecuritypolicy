@@ -15,9 +15,7 @@ namespace Jhoose.Security.Features.Permissions.Providers;
 public class StandardPermissionsProvider(ISecurityRepository<PermissionPolicy> permissionsRepository, 
     ISettingsRepository settingsRepository) : HeaderProviderBase<ResponseHeader>
 {
-    public override IEnumerable<ResponseHeader> Headers(string siteId, string host) => Headers(siteId, host, string.Empty);
-
-    public override IEnumerable<ResponseHeader> Headers(string siteId, string host, string contentLink)
+    public override IEnumerable<ResponseHeader> Headers(string siteId, string host)
     {
         var policies = permissionsRepository.Load() ?? [];
         var settings = settingsRepository.Load();
@@ -28,21 +26,8 @@ public class StandardPermissionsProvider(ISecurityRepository<PermissionPolicy> p
             yield return new ReportingEndpointHeader(settings, host, "permissions-endpoint");
         }
 
-        // "default" means different things at different scopes. At site/global scope it means "no
-        // override here", so those entries are excluded up front and simply let a lower-priority
-        // tier win the merge, same as before. At page scope it means "explicitly suppress this
-        // permission on this page", so a page-scoped "default" entry must still win its merge slot
-        // (excluding it here would let the site/global entry underneath it leak through instead) -
-        // it's only dropped from the final output afterwards, which discards the whole permission
-        // for this page rather than falling back to whatever site/global has set.
-        var candidatePolicies = policies
-            .Where(p => p.Mode != "default" || (!string.IsNullOrEmpty(p.ContentLink) && p.ContentLink == contentLink))
-            .ToList();
-
-        var mergedPolicies = this.MergePolicies(siteId, contentLink, candidatePolicies)
-            .Where(p => p.Mode != "default")
-            .ToList();
-
+        var mergedPolicies = this.MergePolicies(siteId, policies.Where(p => p.Mode != "default").ToList());
+            
         // for global report only
         if (mode.Equals("report"))
         {

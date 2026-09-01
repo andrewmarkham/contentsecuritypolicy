@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using EPiServer.Authorization;
-
+using EPiServer.ServiceLocation;
 using EPiServer.Shell.Modules;
 using Jhoose.Security.Configuration;
 
@@ -40,16 +40,7 @@ using Jhoose.Security.Features.Permissions.Repository;
 using Jhoose.Security.Features.ResponseHeaders.Repository;
 using Jhoose.Security.Features.CSP.Repository;
 using Jhoose.Security.Features.Core.Providers;
-using Jhoose.Security.Features.IpRestrictions.Models;
-using Jhoose.Security.Features.IpRestrictions.Repository;
-using Jhoose.Security.Features.IpRestrictions.Services;
 
-
-#if CMS12
-    using EPiServer.ServiceLocation;
-#else
-    using EPiServer.DependencyInjection;
-#endif
 namespace Jhoose.Security.DependencyInjection;
 
 public static class SecurityExtensions
@@ -117,30 +108,6 @@ public static class SecurityExtensions
         services.AddKeyedScoped<IHeaderProvider<ResponseHeader>, StandardPermissionsProvider>("permissions");
         services.AddScoped<ISiteService, SiteService>();
 
-        services.AddScoped<ISecurityRepository<IpRestrictionEntry>, IpRestrictionRepository>();
-        services.Intercept<ISecurityRepository<IpRestrictionEntry>>((locator, inner) =>
-        {
-            var cache = locator.GetRequiredService<ICacheManager>();
-            return new CachedSecurityRepository<IpRestrictionEntry>(inner, cache);
-        });
-        services.AddScoped<IIpRestrictionService, IpRestrictionService>();
-
-        services.AddScoped<ISecurityRepository<IpRestrictionIgnoredPath>, IpRestrictionIgnoredPathRepository>();
-        services.Intercept<ISecurityRepository<IpRestrictionIgnoredPath>>((locator, inner) =>
-        {
-            var cache = locator.GetRequiredService<ICacheManager>();
-            return new CachedSecurityRepository<IpRestrictionIgnoredPath>(inner, cache);
-        });
-        services.AddScoped<IIpRestrictionIgnoredPathService, IpRestrictionIgnoredPathService>();
-
-        services.AddScoped<ISecurityRepository<IpRestrictionIgnoreHeader>, IpRestrictionIgnoreHeaderRepository>();
-        services.Intercept<ISecurityRepository<IpRestrictionIgnoreHeader>>((locator, inner) =>
-        {
-            var cache = locator.GetRequiredService<ICacheManager>();
-            return new CachedSecurityRepository<IpRestrictionIgnoreHeader>(inner, cache);
-        });
-        services.AddScoped<IIpRestrictionIgnoreHeaderService, IpRestrictionIgnoreHeaderService>();
-
         services.AddScoped<IImportRepository, JhooseImportRepository>();
 
         services.AddKeyedScoped<IHeaderProvider<ResponseHeader>>("responseHeaders",(sp, key) =>
@@ -184,10 +151,7 @@ public static class SecurityExtensions
 
     public static IApplicationBuilder UseJhooseSecurity(this IApplicationBuilder applicationBuilder)
     {
-        
         var securityOptions = applicationBuilder.ApplicationServices.GetService<IOptions<JhooseSecurityOptions>>();
-
-        applicationBuilder = applicationBuilder.UseMiddleware<IpRestrictionMiddleware>();
 
         applicationBuilder = applicationBuilder.UseWhen(c => IsValidPath(c.Request, securityOptions?.Value.ExclusionPaths ?? Enumerable.Empty<string>()), ab =>
         {
@@ -208,6 +172,7 @@ public static class SecurityExtensions
 
     public static bool IsValidPath(HttpRequest request, IEnumerable<string> exclusionPaths)
     {
+
         foreach (var path in exclusionPaths)
         {
             if (request.Path.StartsWithSegments(path, System.StringComparison.InvariantCultureIgnoreCase))

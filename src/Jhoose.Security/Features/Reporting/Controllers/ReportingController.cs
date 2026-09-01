@@ -16,7 +16,6 @@ namespace Jhoose.Security.Features.Reporting.Controllers;
 [Route("api/[controller]")]
 
 [EnableRateLimiting("fixed")]
-
 public class ReportingController : ControllerBase
 {
     private readonly IReportingRepository reportingRepository;
@@ -27,7 +26,6 @@ public class ReportingController : ControllerBase
     }
 
     [HttpPost]
-    [UseProblemJsonFormatter]
     public async Task<IActionResult> Post([FromBody] List<ReportTo<IReportToBody>> reportTos)
     {
         await reportingRepository.AddReports(reportTos);
