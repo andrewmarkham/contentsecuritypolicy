@@ -56,11 +56,25 @@ public class ElasticSearchReportingRepository : IReportingRepository
 
     public async Task AddReports(IEnumerable<ReportTo<IReportToBody>> reportTos)
     {
+        var reportsToStore = reportTos.ToList();
+
+        // Elasticsearch rejects a bulk request with no operations
+        if (reportsToStore.Count == 0)
+            return;
+
         await CreateIndexIsNeeded();
 
         var bulkResponse = await client.Value.BulkAsync(b => b
             .Index(options.Value.IndexName)
-            .IndexMany(reportTos));
+            .IndexMany(reportsToStore));
+
+        if (!bulkResponse.IsValidResponse || bulkResponse.Errors)
+        {
+            logger.LogError("Bulk insert of report tos failed, {FailedCount} of {Count} failed: {DebugInformation}",
+                bulkResponse.ItemsWithErrors.Count(),
+                reportsToStore.Count,
+                bulkResponse.DebugInformation);
+        }
     }
     public async Task<DashboardSummary> GetDashboardSummary(DashboardSummary summary)
     {
@@ -158,7 +172,7 @@ public class ElasticSearchReportingRepository : IReportingRepository
             Id = Guid.NewGuid().ToString(),
             Age = d.Age,
             RecievedAt = d.RecievedAt,
-            Type = d?.Directive ?? string.Empty,
+            Type = d?.Type ?? string.Empty,
             Url = d?.Url ?? string.Empty,
             UserAgent = d?.Browser ?? string.Empty,
             Browser = d?.Browser ?? string.Empty,

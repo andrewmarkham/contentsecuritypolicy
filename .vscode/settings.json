@@ -1,2 +1,6 @@
 {
+    // The CMS12 and CMS13 sample sites can't restore together (they need different CMSVersion values),
+    // so load the library and tests only. Build the samples with the tasks in tasks.json.
+    // This must be a real .sln: C# Dev Kit restores a solution filter's parent solution, which includes the samples.
+    "dotnet.defaultSolution": "src/csp.Tests.sln"
 }

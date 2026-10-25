@@ -415,6 +415,7 @@ X-API-Key: ...
  |3.2.0 | Updated Purge scheduled job to run in batches : thanks @kennygutierrez
  |3.2.1 | Fixed a bug where it was targeting the wrong version of Castle.Core for CMS12/.NET10 : thanks @kennygutierrez
  |3.3.0 | Added IP Restrictions module - IP allow-list with global/per-site scoping, Ignored Paths, and Ignore Headers bypasses.<br/> Add support for page level overrides for both the CSP and permissions policy, managed directly from the on-page editor |
+ |3.3.2 | added support for `potential-permissions-policy-violation`, `intervention` reports, `crash` reports or any other report types are dropped. #227 </br>  Fixed #189, Issue with `Permissions-Policy-Report-Only` <br> Fixed #219 Issue parsing reports in some scenarios <br> #222 Updated migration documentation | 
   ---
  ## Contributors
 
