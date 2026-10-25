@@ -20,6 +20,12 @@ public class ProblemJsonFormatterBenchmark
     private static readonly string payload = BuildCspViolationPayload(50);
     private static byte[] bytes = Encoding.UTF8.GetBytes(payload);
 
+    // about 165 KB of small reports, so the 16 KB read buffer is refilled many times
+    private static readonly byte[] largeBytes = Encoding.UTF8.GetBytes(BuildCspViolationPayload(500));
+
+    // browsers send the whole CSP header as originalPolicy, which is often several KB
+    private static readonly byte[] realisticPolicyBytes = Encoding.UTF8.GetBytes(BuildCspViolationPayload(200, policyLength: 3000));
+
     [Benchmark(Baseline = true)]
     public async Task<bool> ReportApiStreamReaderBenchmarkLegacy()
     {
@@ -61,8 +67,69 @@ public class ProblemJsonFormatterBenchmark
 
         return true;
     }
-    private static string BuildCspViolationPayload(int count)
+    [Benchmark]
+    public async Task<bool> ReportApiStreamReaderLargeBenchmark()
     {
+        var reader = new ReportApiStreamReader(parser);
+
+        for (var i = 0; i < 20; i++)
+        {
+            await using var stream = _memoryStreamManager.GetStream(largeBytes);
+            var result = await reader.ReadAsync(stream, UserAgent).ToListAsync();
+        }
+
+        return true;
+    }
+
+    [Benchmark]
+    public async Task<bool> NativeSerializationLargeBenchmark()
+    {
+        for (var i = 0; i < 20; i++)
+        {
+            await using var stream = _memoryStreamManager.GetStream(largeBytes);
+            var result = await System.Text.Json.JsonSerializer.DeserializeAsync<List<ReportTo<CspReportToBody>>>(stream);
+        }
+
+        return true;
+    }
+
+    [Benchmark]
+    public async Task<bool> ReportApiStreamReaderRealisticPolicyBenchmark()
+    {
+        var reader = new ReportApiStreamReader(parser);
+
+        for (var i = 0; i < 20; i++)
+        {
+            await using var stream = _memoryStreamManager.GetStream(realisticPolicyBytes);
+            var result = await reader.ReadAsync(stream, UserAgent).ToListAsync();
+        }
+
+        return true;
+    }
+
+    [Benchmark]
+    public async Task<bool> NativeSerializationRealisticPolicyBenchmark()
+    {
+        for (var i = 0; i < 20; i++)
+        {
+            await using var stream = _memoryStreamManager.GetStream(realisticPolicyBytes);
+            var result = await System.Text.Json.JsonSerializer.DeserializeAsync<List<ReportTo<CspReportToBody>>>(stream);
+        }
+
+        return true;
+    }
+
+    private static string BuildCspViolationPayload(int count, int policyLength = 0)
+    {
+        var originalPolicy = "default-src 'none'; report-to csp-endpoint;";
+        if (policyLength > 0)
+        {
+            var policy = new StringBuilder("default-src 'self'; script-src 'self'");
+            while (policy.Length < policyLength)
+                policy.Append(" https://cdn").Append(policy.Length).Append(".example.com");
+            originalPolicy = policy.ToString(0, policyLength);
+        }
+
         var reports = Enumerable.Range(0, count).Select(i => new
         {
             age = 100 + i,
@@ -72,7 +139,7 @@ public class ProblemJsonFormatterBenchmark
                 disposition = "report",
                 documentURL = "https://example.test/",
                 effectiveDirective = "script-src",
-                originalPolicy = "default-src 'none'; report-to csp-endpoint;",
+                originalPolicy,
                 referrer = string.Empty,
                 sample = string.Empty,
                 statusCode = 200

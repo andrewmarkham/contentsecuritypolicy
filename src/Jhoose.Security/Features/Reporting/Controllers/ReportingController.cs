@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Jhoose.Security.Features.Reporting.Models;
@@ -30,7 +31,12 @@ public class ReportingController : ControllerBase
     [UseProblemJsonFormatter]
     public async Task<IActionResult> Post([FromBody] List<ReportTo<IReportToBody>> reportTos)
     {
-        await reportingRepository.AddReports(reportTos);
+        // Reports of an unrecognised type (e.g. crash) have no body, so there is nothing to store
+        var reportsToStore = reportTos.Where(r => r.Body is not null).ToList();
+
+        if (reportsToStore.Count > 0)
+            await reportingRepository.AddReports(reportsToStore);
+
         return Ok();
     }
 

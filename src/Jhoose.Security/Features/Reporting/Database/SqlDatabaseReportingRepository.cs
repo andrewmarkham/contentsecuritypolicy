@@ -62,10 +62,16 @@ public class SqlDatabaseReportingRepository(ILogger<SqlDatabaseReportingReposito
     public async Task AddReports(IEnumerable<ReportTo<IReportToBody>> reportTos)
     {
         try {
+            var reportsToStore = reportTos.ToList();
+
+            // A table valued parameter can't be empty
+            if (reportsToStore.Count == 0)
+                return;
+
             await sqlHelper.ExecuteStoredProcedure<IEnumerable<SqlDataRecord>>(
                 "InsertSecurityReportTo",
                 [
-                    sqlHelper.CreateParameter("ReportTos", SqlDbType.Structured, CreateReportToRecords(reportTos))
+                    sqlHelper.CreateParameter("ReportTos", SqlDbType.Structured, CreateReportToRecords(reportsToStore))
                 ]);
         }
         catch (Exception ex)
@@ -200,10 +206,11 @@ private static IEnumerable<SqlDataRecord> CreateReportToRecords(
         record.SetString(4, c.Type[..Math.Min(30, c.Type.Length)]);
         record.SetString(5, c.Url[..Math.Min(512, c.Url.Length)]);
         record.SetString(6, c.UserAgent[..Math.Min(512, c.UserAgent.Length)]);
-        record.SetString(7, c.Browser != null ? c.Browser[..Math.Min(20, c.Browser.Length)] : null);
-        record.SetString(8, c.Version != null ? c.Version[..Math.Min(20, c.Version.Length)] : null);
-        record.SetString(9, c.OS != null ? c.OS[..Math.Min(20, c.OS.Length)] : null);
-        record.SetString(10, c.Directive != null ? c.Directive[..Math.Min(20, c.Directive.Length)] : null);
+        // SetString doesn't accept null, so use an empty string as AddReport does
+        record.SetString(7, c.Browser?[..Math.Min(20, c.Browser.Length)] ?? string.Empty);
+        record.SetString(8, c.Version?[..Math.Min(20, c.Version.Length)] ?? string.Empty);
+        record.SetString(9, c.OS?[..Math.Min(20, c.OS.Length)] ?? string.Empty);
+        record.SetString(10, c.Directive?[..Math.Min(20, c.Directive.Length)] ?? string.Empty);
         record.SetString(11, c.Message != null ? c.Message[..Math.Min(1024, c.Message.Length)] : string.Empty);
         record.SetString(12, JsonSerializer.Serialize(c.Body));
 

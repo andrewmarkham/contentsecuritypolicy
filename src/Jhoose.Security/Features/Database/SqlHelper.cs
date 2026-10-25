@@ -117,7 +117,7 @@ public class SqlHelper(ILogger<SqlHelper> logger, IOptions<ReportingOptions> opt
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error while running stored procedure");
+            logger.LogError(ex, "Error while running stored procedure {StoredProcedure}", storedProcedureName);
         }
 
         return result;

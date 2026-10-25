@@ -6,6 +6,7 @@ namespace Jhoose.Security.Features.Reporting.Models;
 [JsonDerivedType(typeof(CspReportToBody), "csp")]
 [JsonDerivedType(typeof(PermissionsReportToBody), "permissions")]
 [JsonDerivedType(typeof(DeprecationReportToBody), "deprecation")]
+[JsonDerivedType(typeof(InterventionReportToBody), "intervention")]
 public interface IReportToBody
 {
     string? Directive { get; }
@@ -44,9 +45,10 @@ public sealed class PermissionsReportToBody : IReportToBody
         string? message,
         string? sourceFile,
         int? lineNumber,
-        int? columnNumber)
-        => (Disposition, PolicyId, Message, SourceFile, LineNumber, ColumnNumber)
-         = (disposition, policyId, message, sourceFile, lineNumber, columnNumber);
+        int? columnNumber,
+        string? allowAttribute = null)
+        => (Disposition, PolicyId, Message, SourceFile, LineNumber, ColumnNumber, AllowAttribute)
+         = (disposition, policyId, message, sourceFile, lineNumber, columnNumber, allowAttribute);
 
     [JsonPropertyName("disposition")] public string? Disposition { get; }
     [JsonPropertyName("policyId")] public string? PolicyId { get; }
@@ -54,6 +56,11 @@ public sealed class PermissionsReportToBody : IReportToBody
     [JsonPropertyName("sourceFile")] public string? SourceFile { get; }
     [JsonPropertyName("lineNumber")] public int? LineNumber { get; }
     [JsonPropertyName("columnNumber")] public int? ColumnNumber { get; }
+
+    // Only present on potential-permissions-policy-violation reports
+    [JsonPropertyName("allowAttribute")]
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? AllowAttribute { get; }
 
     public string? Directive => PolicyId;
 
@@ -65,6 +72,30 @@ public sealed class DeprecationReportToBody : IReportToBody
 {
     [JsonConstructor]
     public DeprecationReportToBody(
+        string? id,
+        int? lineNumber,
+        int? columnNumber,
+        string? message,
+        string? sourceFile)
+        => (Id, LineNumber, ColumnNumber, Message, SourceFile)
+         = (id, lineNumber, columnNumber, message, sourceFile);
+
+    [JsonPropertyName("id")] public string? Id { get; }
+    [JsonPropertyName("lineNumber")] public int? LineNumber { get; }
+    [JsonPropertyName("columnNumber")] public int? ColumnNumber { get; }
+    [JsonPropertyName("message")] public string? Message { get; }
+    [JsonPropertyName("sourceFile")] public string? SourceFile { get; }
+
+    public string? Directive => Id;
+
+    // satisfy interface
+    string? IReportToBody.Message => Message;
+}
+
+public sealed class InterventionReportToBody : IReportToBody
+{
+    [JsonConstructor]
+    public InterventionReportToBody(
         string? id,
         int? lineNumber,
         int? columnNumber,

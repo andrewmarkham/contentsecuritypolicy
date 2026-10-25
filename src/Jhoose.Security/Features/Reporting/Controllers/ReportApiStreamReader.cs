@@ -19,7 +19,9 @@ namespace Jhoose.Security.Features.Reporting.Controllers;
         Unknown,
         CspViolation,
         PermissionsPolicyViolation,
+        PotentialPermissionsPolicyViolation,
         Deprecation,
+        Intervention,
 
         Firefox_CSP_Report
     }
@@ -51,6 +53,7 @@ namespace Jhoose.Security.Features.Reporting.Controllers;
         Message,
         PolicyId,
         SourceFile,
+        AllowAttribute,
 
         Id
     }
@@ -58,72 +61,95 @@ namespace Jhoose.Security.Features.Reporting.Controllers;
 public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
 {
     private const int BufferSize = 4096 * 4;
-    private const int BufferAt90Percent = BufferSize / 100 * 90;
+
+    // A single report larger than this is rejected rather than growing the buffer further
+    private const int MaxBufferSize = 1024 * 1024;
 
     public async IAsyncEnumerable<ReportTo<IReportToBody>> ReadAsync(Stream stream, string userAgent, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         var buffer = ArrayPool<byte>.Shared.Rent(BufferSize);
 
-        bool isComplete = false;
+        // buffer[position..dataLength] is the data not yet parsed. Anything after dataLength is left over from
+        // a previous use of the pooled array, so it is never read.
+        int position = 0;
+        int dataLength = 0;
+        bool streamEnded = false;
         bool isArray = false;
-        bool isFinalBlock = false;
-        long totalRead = 0;
-        JsonReaderState readerState = default;
-        long bufferPosition = 0;
+        bool isComplete = false;
 
         var userAgentInfo = parser.Parse(userAgent);
 
         try
         {
-            (totalRead, buffer) = await ReadToFillBufferAsync(stream, buffer, 0, cancellationToken);
-            isFinalBlock = totalRead < BufferSize;
+            (dataLength, streamEnded) = await FillBufferAsync(stream, buffer, 0, cancellationToken);
+
+            if (dataLength >= 3 && buffer[0] == 0xEF && buffer[1] == 0xBB && buffer[2] == 0xBF)
+                position = 3;
 
             while (!isComplete)
             {
-                if (buffer[bufferPosition] == 0 || bufferPosition >= BufferAt90Percent)
+                // the array separators are handled here, so each report is parsed on its own
+                position = SkipSeparators(buffer, position, dataLength, skipCommas: isArray);
+
+                if (position == dataLength)
                 {
-                    // get the postion of the first null byte
-                    (totalRead, buffer) = await ReadToFillBufferAsync(stream, buffer, (int)bufferPosition, cancellationToken);
-                    isFinalBlock = totalRead < BufferSize;
-                    bufferPosition = 0;
+                    if (streamEnded)
+                    {
+                        if (isArray)
+                            throw new JsonException("Unexpected end of data, the array of reports is not closed.");
+
+                        break;
+                    }
+
+                    (dataLength, streamEnded) = await FillBufferAsync(stream, buffer, 0, cancellationToken);
+                    position = 0;
+                    continue;
                 }
-                else if (buffer[bufferPosition] == (byte)'[')
+
+                switch (buffer[position])
                 {
-                    isArray = true;
+                    case (byte)'[' when !isArray:
+                        isArray = true;
+                        position++;
+                        break;
 
-                    // we have recieved an array of reports
-                    (var nextState, totalRead, var report) = ParseReport(buffer.AsSpan()[(int)bufferPosition..], readerState, userAgent);
-                    
-                    readerState = nextState;
-
-                    bufferPosition += totalRead;
-
-                    report.Browser = userAgentInfo.Name ?? string.Empty;
-                    report.Version = userAgentInfo.Version ?? string.Empty;
-                    report.OS = userAgentInfo.Platform?.Name ?? string.Empty;
-
-                    yield return report;
-                }
-                else if (buffer[bufferPosition] == (byte)']')
-                {
-                    // we are at then end of an array of reports, so finish
-                    isComplete = true;
-                }
-                else
-                {
-                    (var nextState, totalRead, var report) = ParseReport(buffer.AsSpan()[(int)bufferPosition..], readerState, userAgent);
-                    
-                    readerState = nextState;
-                    bufferPosition += totalRead;
-
-                    report.Browser = userAgentInfo.Name ?? string.Empty;
-                    report.Version = userAgentInfo.Version ?? string.Empty;
-                    report.OS = userAgentInfo.Platform?.Name ?? string.Empty;
-
-                    yield return report;
-
-                    if (!isArray)
+                    case (byte)']' when isArray:
                         isComplete = true;
+                        break;
+
+                    case (byte)'{':
+                        var (bytesConsumed, report) = ParseReport(buffer.AsSpan(position, dataLength - position), streamEnded, userAgent);
+
+                        if (report is null)
+                        {
+                            // The report continues past the data read so far. Move it to the start of the buffer,
+                            // growing the buffer only if the report already fills it, and read more.
+                            int remaining = dataLength - position;
+
+                            if (position == 0)
+                                buffer = GrowBuffer(buffer, remaining);
+                            else
+                                Buffer.BlockCopy(buffer, position, buffer, 0, remaining);
+
+                            (dataLength, streamEnded) = await FillBufferAsync(stream, buffer, remaining, cancellationToken);
+                            position = 0;
+                            break;
+                        }
+
+                        position += bytesConsumed;
+
+                        report.Browser = userAgentInfo.Name ?? string.Empty;
+                        report.Version = userAgentInfo.Version ?? string.Empty;
+                        report.OS = userAgentInfo.Platform?.Name ?? string.Empty;
+
+                        yield return report;
+
+                        if (!isArray)
+                            isComplete = true;
+                        break;
+
+                    default:
+                        throw new JsonException($"Unexpected character '{(char)buffer[position]}' in the reports.");
                 }
             }
         }
@@ -132,44 +158,94 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
             ArrayPool<byte>.Shared.Return(buffer, clearArray: true);
         }
     }
-    private static (JsonReaderState state, long bytesConsumed, ReportTo<IReportToBody>) ParseReport(ReadOnlySpan<byte> buffer, JsonReaderState prevState, string userAgent)
+
+    private static int SkipSeparators(byte[] buffer, int position, int dataLength, bool skipCommas)
+    {
+        while (position < dataLength)
+        {
+            var b = buffer[position];
+
+            if (b != (byte)' ' && b != (byte)'\n' && b != (byte)'\r' && b != (byte)'\t' && !(skipCommas && b == (byte)','))
+                break;
+
+            position++;
+        }
+
+        return position;
+    }
+
+    private static byte[] GrowBuffer(byte[] buffer, int dataLength)
+    {
+        if (buffer.Length >= MaxBufferSize)
+            throw new JsonException($"A report is larger than the {MaxBufferSize} byte limit.");
+
+        var larger = ArrayPool<byte>.Shared.Rent(buffer.Length * 2);
+        Buffer.BlockCopy(buffer, 0, larger, 0, dataLength);
+        ArrayPool<byte>.Shared.Return(buffer, clearArray: true);
+
+        return larger;
+    }
+
+    /// <summary>
+    /// Parses the report at the start of the buffer.
+    /// </summary>
+    /// <returns>The report and the bytes it used, or a null report when it continues past the end of the buffer.</returns>
+    private static (int bytesConsumed, ReportTo<IReportToBody>? report) ParseReport(ReadOnlySpan<byte> buffer, bool isFinalBlock, string userAgent)
     {
         bool isComplete = false;
 
         ReportType reportType = ReportType.Unknown;
         
         CurrentPropertyName currentPropertyName = CurrentPropertyName.None;
-        ReadOnlySpan<byte> url = [];
+        JsonString url = default;
         ReadOnlySpan<byte> bodyBuffer = [];
         IReportToBody? body = null;
+        BodyValues bodyValues = default;
 
         int age = 0;
-        long totalBytesConsumed = 0;
 
-        var reader = new Utf8JsonReader(buffer, isFinalBlock: true, state: prevState);
-        
+        var reader = new Utf8JsonReader(buffer, isFinalBlock, state: default);
+
         while (!isComplete)
         {
-            reader.Read();
+            // only returns false when more data is needed, nothing has been allocated by this point
+            if (!reader.Read())
+                return (0, null);
 
             switch (reader.TokenType)
             {
                 case JsonTokenType.StartObject:
 
-                    if (currentPropertyName == CurrentPropertyName.Body || reportType == ReportType.Firefox_CSP_Report)
+                    if (reportType == ReportType.Firefox_CSP_Report)
                     {
-                        // We will parse the body based on the report type
-                        int startingPosition = buffer.Slice((int)reader.BytesConsumed - 1).IndexOf((byte)'}');
-                        bodyBuffer = buffer.Slice((int)reader.BytesConsumed - 1,startingPosition+1);
+                        // Skip a copy of the reader to find the end of the body, rather than searching for '}',
+                        // as string values and nested objects can contain it.
+                        int bodyStart = (int)reader.TokenStartIndex;
+                        var bodyReader = reader;
 
-                        if (reportType != ReportType.Firefox_CSP_Report)
-                            reader.Skip();
-                    } 
-                    else
-                    {
-                        currentPropertyName = CurrentPropertyName.None;
-                        reportType = ReportType.Unknown;
+                        if (!bodyReader.TrySkip())
+                            return (0, null);
+
+                        bodyBuffer = buffer[bodyStart..(int)bodyReader.BytesConsumed];
+                        reader = bodyReader;
                     }
+                    else if (currentPropertyName == CurrentPropertyName.Body)
+                    {
+                        // The type usually comes after the body (Chrome sorts the properties), so capture the body
+                        // values in this pass and create the body for the type at the end
+                        if (!TryReadBody(ref reader, ref bodyValues))
+                            return (0, null);
+                    }
+                    else if (reader.CurrentDepth > 0)
+                    {
+                        // an object we don't use
+                        if (!reader.TrySkip())
+                            return (0, null);
+                    }
+                    break;
+                case JsonTokenType.StartArray:
+                    if (!reader.TrySkip())
+                        return (0, null);
                     break;
                 case JsonTokenType.PropertyName:
                     if (reader.ValueSpan.SequenceEqual("csp-report"u8))
@@ -196,81 +272,117 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
                         {
                             var span when span.SequenceEqual("csp-violation"u8) => ReportType.CspViolation,
                             var span when span.SequenceEqual("permissions-policy-violation"u8) => ReportType.PermissionsPolicyViolation,
+                            var span when span.SequenceEqual("potential-permissions-policy-violation"u8) => ReportType.PotentialPermissionsPolicyViolation,
                             var span when span.SequenceEqual("deprecation"u8) => ReportType.Deprecation,
+                            var span when span.SequenceEqual("intervention"u8) => ReportType.Intervention,
                             _ => ReportType.Unknown
                         };
                     }
                     else if (currentPropertyName == CurrentPropertyName.Url)
                     {
-                        url = reader.ValueSpan;
+                        url = JsonString.From(ref reader);
                     }
-                    else if (currentPropertyName == CurrentPropertyName.Age)
+                    else if (currentPropertyName == CurrentPropertyName.Age && reader.TryGetInt32(out var value))
                     {
-                        age = reader.GetInt32();
+                        age = value;
                     }
                 break;
                 case JsonTokenType.EndObject:
-                case JsonTokenType.EndArray:
-                    if (reader.CurrentDepth == 1)
+                    // the end of the report itself
+                    if (reader.CurrentDepth == 0)
                         isComplete = true;
-                        break;
+                    break;
                     
                 default:
                     break;
             }
         }
 
-        totalBytesConsumed += reader.BytesConsumed;
-
-        body = reportType == ReportType.Firefox_CSP_Report ? ParseFFBody(bodyBuffer) : ParseBody(bodyBuffer, reportType);
+        body = reportType == ReportType.Firefox_CSP_Report ? ParseFFBody(bodyBuffer) : CreateBody(reportType, ref bodyValues);
 
         var type = reportType switch
         {
             ReportType.CspViolation => "csp-violation",
             ReportType.PermissionsPolicyViolation => "permissions-policy-violation",
+            // shortened to fit the 30 character Type column
+            ReportType.PotentialPermissionsPolicyViolation => "potential-permissions-policy",
             ReportType.Deprecation => "deprecation",
+            ReportType.Intervention => "intervention",
             ReportType.Firefox_CSP_Report => "csp-violation",
             _ => "unknown"
         };
 
-        var urlString = reportType == ReportType.Firefox_CSP_Report ? (body as CspReportToBody)?.DocumentURL : System.Text.Encoding.UTF8.GetString(url);
+        var urlString = reportType == ReportType.Firefox_CSP_Report ? (body as CspReportToBody)?.DocumentURL : url.ToStringOrNull();
         
         var report = new ReportTo<IReportToBody>(age, type, urlString ?? string.Empty, userAgent, body!, DateTime.UtcNow);
 
-        return (reader.CurrentState, totalBytesConsumed, report);
- 
+        return ((int)reader.BytesConsumed, report);
     }
-    private  static IReportToBody? ParseBody(ReadOnlySpan<byte> sourceBuffer, ReportType reportType)
+    /// <summary>
+    /// A string value from the request, kept as UTF-8 bytes in the request buffer until the string is created.
+    /// Escaped values (e.g. \u0027 or \/) are unescaped when read, which is rare, so other values allocate nothing extra.
+    /// </summary>
+    private ref struct JsonString
     {
-        var reader = new Utf8JsonReader(sourceBuffer, isFinalBlock: false, default);
+        private ReadOnlySpan<byte> utf8;
+        private string? unescaped;
 
+        public static JsonString From(scoped ref Utf8JsonReader reader) => reader.ValueIsEscaped
+            ? new JsonString { unescaped = reader.GetString() }
+            : new JsonString { utf8 = reader.ValueSpan };
+
+        public readonly bool HasValue => unescaped is not null ? unescaped.Length > 0 : utf8.Length > 0;
+
+        public readonly string? ToStringOrNull() => unescaped is not null
+            ? (unescaped.Length > 0 ? unescaped : null)
+            : (utf8.Length > 0 ? System.Text.Encoding.UTF8.GetString(utf8) : null);
+    }
+
+    // The body values of every report type
+    private ref struct BodyValues
+    {
+        public JsonString BlockedURL;
+        public JsonString Disposition;
+        public JsonString DocumentURL;
+        public JsonString EffectiveDirective;
+        public JsonString OriginalPolicy;
+        public JsonString Referrer;
+        public JsonString Sample;
+        public int? StatusCode;
+        public int? ColumnNumber;
+        public int? LineNumber;
+        public JsonString Message;
+        public JsonString PolicyId;
+        public JsonString SourceFile;
+        public JsonString AllowAttribute;
+        public JsonString Id;
+    }
+
+    /// <summary>
+    /// Reads the body object the reader is positioned on, leaving the reader on its end.
+    /// </summary>
+    /// <returns>false when the body continues past the end of the buffer.</returns>
+    private static bool TryReadBody(ref Utf8JsonReader reader, ref BodyValues values)
+    {
+        int bodyDepth = reader.CurrentDepth;
         bool isComplete = false;
         CurrentBodyPropertyName currentBodyPropertyName = CurrentBodyPropertyName.None;
 
-        ReadOnlySpan<byte> blockedURL = [];
-        ReadOnlySpan<byte> disposition = [];
-        ReadOnlySpan<byte> documentURL = [];
-        ReadOnlySpan<byte> effectiveDirective = [];
-        ReadOnlySpan<byte> originalPolicy = [];
-        ReadOnlySpan<byte> referrer = [];
-        ReadOnlySpan<byte> sample = [];
-        int statusCode = 0;
-        int columnNumber = 0;
-        int lineNumber = 0;
-        ReadOnlySpan<byte> message = [];
-        ReadOnlySpan<byte> policyId = [];
-        ReadOnlySpan<byte> sourceFile = [];
-        ReadOnlySpan<byte> id = [];
-
         while (!isComplete)
         {
-            reader.Read();
-            
+            if (!reader.Read())
+                return false;
+
             switch (reader.TokenType)
             {
                 case JsonTokenType.StartObject:
+                case JsonTokenType.StartArray:
+                    // a nested value we don't use, e.g. crash_report_api
+                    if (!reader.TrySkip())
+                        return false;
                     break;
                 case JsonTokenType.PropertyName:
+                    // the permissions policy explainer uses featureId and snake case names, Chrome sends policyId and camel case
                     currentBodyPropertyName = reader.ValueSpan switch
                         {
                             var span when span.SequenceEqual("blockedURL"u8) => CurrentBodyPropertyName.BlockedURL,
@@ -283,10 +395,15 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
                             var span when span.SequenceEqual("statusCode"u8) => CurrentBodyPropertyName.StatusCode,
 
                             var span when span.SequenceEqual("columnNumber"u8) => CurrentBodyPropertyName.ColumnNumber,
+                            var span when span.SequenceEqual("column_number"u8) => CurrentBodyPropertyName.ColumnNumber,
                             var span when span.SequenceEqual("lineNumber"u8) => CurrentBodyPropertyName.LineNumber,
+                            var span when span.SequenceEqual("line_number"u8) => CurrentBodyPropertyName.LineNumber,
                             var span when span.SequenceEqual("message"u8) => CurrentBodyPropertyName.Message,
                             var span when span.SequenceEqual("policyId"u8) => CurrentBodyPropertyName.PolicyId,
+                            var span when span.SequenceEqual("featureId"u8) => CurrentBodyPropertyName.PolicyId,
                             var span when span.SequenceEqual("sourceFile"u8) => CurrentBodyPropertyName.SourceFile,
+                            var span when span.SequenceEqual("source_file"u8) => CurrentBodyPropertyName.SourceFile,
+                            var span when span.SequenceEqual("allowAttribute"u8) => CurrentBodyPropertyName.AllowAttribute,
 
                             var span when span.SequenceEqual("id"u8) => CurrentBodyPropertyName.Id,
 
@@ -295,52 +412,56 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
                 break;
                 case JsonTokenType.String:
                 case JsonTokenType.Number:
-                    // We could capture body properties here if needed
-
                     switch (currentBodyPropertyName)
                     {
                         case CurrentBodyPropertyName.BlockedURL:
-                            blockedURL = reader.ValueSpan;
+                            values.BlockedURL = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.Disposition:
-                            disposition = reader.ValueSpan;
+                            values.Disposition = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.DocumentURL:
-                            documentURL = reader.ValueSpan;
+                            values.DocumentURL = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.EffectiveDirective:
-                            effectiveDirective = reader.ValueSpan;
+                            values.EffectiveDirective = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.OriginalPolicy:
-                            originalPolicy = reader.ValueSpan;
+                            values.OriginalPolicy = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.Referrer:
-                            referrer = reader.ValueSpan;
+                            values.Referrer = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.Sample:
-                            sample = reader.ValueSpan;
+                            values.Sample = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.StatusCode:
-                            statusCode = reader.GetInt32();
+                            if (reader.TokenType == JsonTokenType.Number && reader.TryGetInt32(out var statusCode))
+                                values.StatusCode = statusCode;
                             break;
 
                         case CurrentBodyPropertyName.ColumnNumber:
-                            columnNumber = reader.GetInt32();
+                            if (reader.TokenType == JsonTokenType.Number && reader.TryGetInt32(out var columnNumber))
+                                values.ColumnNumber = columnNumber;
                             break;
                         case CurrentBodyPropertyName.LineNumber:
-                            lineNumber = reader.GetInt32();
+                            if (reader.TokenType == JsonTokenType.Number && reader.TryGetInt32(out var lineNumber))
+                                values.LineNumber = lineNumber;
                             break;
                         case CurrentBodyPropertyName.Message:
-                            message = reader.ValueSpan;
+                            values.Message = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.PolicyId:
-                            policyId = reader.ValueSpan;
+                            values.PolicyId = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.SourceFile:
-                            sourceFile = reader.ValueSpan;
+                            values.SourceFile = JsonString.From(ref reader);
+                            break;
+                        case CurrentBodyPropertyName.AllowAttribute:
+                            values.AllowAttribute = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.Id:
-                            id = reader.ValueSpan;
+                            values.Id = JsonString.From(ref reader);
                             break;
 
                         default:
@@ -348,7 +469,8 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
                     }
                     break;
                 case JsonTokenType.EndObject:
-                    isComplete = true;
+                    if (reader.CurrentDepth == bodyDepth)
+                        isComplete = true;
                     break;
                     
                 default:
@@ -356,32 +478,45 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
             }
         }
 
+        return true;
+    }
+
+    private static IReportToBody? CreateBody(ReportType reportType, ref BodyValues values)
+    {
         IReportToBody? reportToBody =  reportType switch
         {
             ReportType.CspViolation => new  CspReportToBody(
-                documentURL.Length > 0 ? System.Text.Encoding.UTF8.GetString(documentURL) : null,
-                disposition.Length > 0 ? System.Text.Encoding.UTF8.GetString(disposition) : null,
-                referrer.Length > 0 ? System.Text.Encoding.UTF8.GetString(referrer) : null,
-                effectiveDirective.Length > 0 ? System.Text.Encoding.UTF8.GetString(effectiveDirective) : null,
-                blockedURL.Length > 0 ? System.Text.Encoding.UTF8.GetString(blockedURL) : null,
-                originalPolicy.Length > 0 ? System.Text.Encoding.UTF8.GetString(originalPolicy) : null,
-                statusCode,
-                sample.Length > 0 ? System.Text.Encoding.UTF8.GetString(sample) : null
+                values.DocumentURL.ToStringOrNull(),
+                values.Disposition.ToStringOrNull(),
+                values.Referrer.ToStringOrNull(),
+                values.EffectiveDirective.ToStringOrNull(),
+                values.BlockedURL.ToStringOrNull(),
+                values.OriginalPolicy.ToStringOrNull(),
+                values.StatusCode,
+                values.Sample.ToStringOrNull()
             ),
-            ReportType.PermissionsPolicyViolation => new PermissionsReportToBody(
-                disposition.Length > 0 ? System.Text.Encoding.UTF8.GetString(disposition) : null,
-                policyId.Length > 0 ? System.Text.Encoding.UTF8.GetString(policyId) : null,
-                message.Length > 0 ? System.Text.Encoding.UTF8.GetString(message) : null,
-                sourceFile.Length > 0 ? System.Text.Encoding.UTF8.GetString(sourceFile) : null,
-                lineNumber,
-                columnNumber
+            ReportType.PermissionsPolicyViolation or ReportType.PotentialPermissionsPolicyViolation => new PermissionsReportToBody(
+                values.Disposition.ToStringOrNull(),
+                values.PolicyId.ToStringOrNull(),
+                values.Message.ToStringOrNull(),
+                values.SourceFile.ToStringOrNull(),
+                values.LineNumber,
+                values.ColumnNumber,
+                reportType == ReportType.PotentialPermissionsPolicyViolation ? values.AllowAttribute.ToStringOrNull() : null
             ),
             ReportType.Deprecation => new DeprecationReportToBody(
-                id.Length > 0 ? System.Text.Encoding.UTF8.GetString(id) : null,
-                lineNumber,
-                columnNumber,
-                message.Length > 0 ? System.Text.Encoding.UTF8.GetString(message) : null,
-                sourceFile.Length > 0 ? System.Text.Encoding.UTF8.GetString(sourceFile) : null
+                values.Id.ToStringOrNull(),
+                values.LineNumber,
+                values.ColumnNumber,
+                values.Message.ToStringOrNull(),
+                values.SourceFile.ToStringOrNull()
+            ),
+            ReportType.Intervention => new InterventionReportToBody(
+                values.Id.ToStringOrNull(),
+                values.LineNumber,
+                values.ColumnNumber,
+                values.Message.ToStringOrNull(),
+                values.SourceFile.ToStringOrNull()
             ),
             _ => null
         };
@@ -396,18 +531,20 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
         bool isComplete = false;
         CurrentBodyPropertyName currentBodyPropertyName = CurrentBodyPropertyName.None;
 
-        ReadOnlySpan<byte> blockedURL = [];
-        ReadOnlySpan<byte> disposition = [];
-        ReadOnlySpan<byte> documentURL = [];
-        ReadOnlySpan<byte> effectiveDirective = [];
-        ReadOnlySpan<byte> originalPolicy = [];
-        ReadOnlySpan<byte> referrer = [];
+        JsonString blockedURL = default;
+        JsonString disposition = default;
+        JsonString documentURL = default;
+        JsonString effectiveDirective = default;
+        JsonString originalPolicy = default;
+        JsonString referrer = default;
         int statusCode = 0;
-        ReadOnlySpan<byte> violatedDirective = [];
+        JsonString violatedDirective = default;
+        JsonString sample = default;
 
         while (!isComplete)
         {
-            reader.Read();
+            if (!reader.Read())
+                break;
             
             switch (reader.TokenType)
             {
@@ -424,6 +561,7 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
                             var span when span.SequenceEqual("original-policy"u8) => CurrentBodyPropertyName.OriginalPolicy,
                             var span when span.SequenceEqual("referrer"u8) => CurrentBodyPropertyName.Referrer,
                             var span when span.SequenceEqual("status-code"u8) => CurrentBodyPropertyName.StatusCode,
+                            var span when span.SequenceEqual("script-sample"u8) => CurrentBodyPropertyName.Sample,
 
                             var span when span.SequenceEqual("violated-directive"u8) => CurrentBodyPropertyName.ViolatedDirective,
 
@@ -437,25 +575,28 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
                     switch (currentBodyPropertyName)
                     {
                         case CurrentBodyPropertyName.BlockedURL:
-                            blockedURL = reader.ValueSpan;
+                            blockedURL = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.Disposition:
-                            disposition = reader.ValueSpan;
+                            disposition = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.DocumentURL:
-                            documentURL = reader.ValueSpan;
+                            documentURL = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.EffectiveDirective:
-                            effectiveDirective = reader.ValueSpan;
+                            effectiveDirective = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.OriginalPolicy:
-                            originalPolicy = reader.ValueSpan;
+                            originalPolicy = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.Referrer:
-                            referrer = reader.ValueSpan;
+                            referrer = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.ViolatedDirective:
-                            violatedDirective = reader.ValueSpan;
+                            violatedDirective = JsonString.From(ref reader);
+                            break;
+                        case CurrentBodyPropertyName.Sample:
+                            sample = JsonString.From(ref reader);
                             break;
                         case CurrentBodyPropertyName.StatusCode:
                             statusCode = reader.GetInt32();
@@ -474,43 +615,39 @@ public sealed class ReportApiStreamReader(IHttpUserAgentParserProvider parser)
             }
         }
 
+        // older browsers only send violated-directive
+        if (!effectiveDirective.HasValue)
+            effectiveDirective = violatedDirective;
+
         return new  CspReportToBody(
-                documentURL.Length > 0 ? System.Text.Encoding.UTF8.GetString(documentURL) : null,
-                disposition.Length > 0 ? System.Text.Encoding.UTF8.GetString(disposition) : null,
-                referrer.Length > 0 ? System.Text.Encoding.UTF8.GetString(referrer) : null,
-                effectiveDirective.Length > 0 ? System.Text.Encoding.UTF8.GetString(effectiveDirective) : null,
-                blockedURL.Length > 0 ? System.Text.Encoding.UTF8.GetString(blockedURL) : null,
-                originalPolicy.Length > 0 ? System.Text.Encoding.UTF8.GetString(originalPolicy) : null,
+                documentURL.ToStringOrNull(),
+                disposition.ToStringOrNull(),
+                referrer.ToStringOrNull(),
+                effectiveDirective.ToStringOrNull(),
+                blockedURL.ToStringOrNull(),
+                originalPolicy.ToStringOrNull(),
                 statusCode,
-                violatedDirective.Length > 0 ? System.Text.Encoding.UTF8.GetString(violatedDirective) : null
+                sample.ToStringOrNull()
             );
     }
 
-    private static async Task<(int totalRead, byte[] buffer)> ReadToFillBufferAsync(Stream stream, byte[] buffer, int bufferPosition, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// Reads from the stream into buffer[offset..] until the buffer is full or the stream ends.
+    /// </summary>
+    private static async ValueTask<(int dataLength, bool streamEnded)> FillBufferAsync(Stream stream, byte[] buffer, int offset, CancellationToken cancellationToken)
     {
-        var totalRead = 0;
-        bool readFinished = false;
+        var dataLength = offset;
 
-        if (bufferPosition > 0)
+        while (dataLength < buffer.Length)
         {
-            //var s = System.Text.Encoding.UTF8.GetString(buffer);
-            //shift existing data to start of buffer
-            //bufferPosition++;
-            Buffer.BlockCopy(buffer, bufferPosition, buffer, 0, buffer.Length - bufferPosition);
+            var bytesRead = await stream.ReadAsync(buffer.AsMemory(dataLength), cancellationToken);
 
-            //var s1 = System.Text.Encoding.UTF8.GetString(buffer);
+            if (bytesRead == 0)
+                return (dataLength, true);
 
-            totalRead = buffer.Length - bufferPosition;
+            dataLength += bytesRead;
         }
-    
-        while (readFinished == false)
-        {   
-            var bytesRead = await stream.ReadAsync(buffer, totalRead, buffer.Length - totalRead, cancellationToken);
-            totalRead += bytesRead;
 
-            if (bytesRead == 0  || totalRead == buffer.Length)
-                readFinished = true;
-        }
-        return (totalRead, buffer);
+        return (dataLength, false);
     }
 }
