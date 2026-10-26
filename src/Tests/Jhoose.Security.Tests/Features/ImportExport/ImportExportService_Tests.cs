@@ -351,5 +351,52 @@ namespace Jhoose.Security.Tests.Features.ImportExport
 
             Assert.That(service.IsValid(export), Is.True);
         }
+
+        [Test]
+        public void GetImportStatus_Unchanged_IsValid()
+        {
+            var export = ExportWithPolicy();
+
+            Assert.That(service.GetImportStatus(export), Is.EqualTo(ImportStatus.Valid));
+            Assert.That(export.IntegrityHash, Is.Not.Empty, "checking the hash should leave it in place");
+        }
+
+        [Test]
+        public void GetImportStatus_ChangedAfterExport_IsModifiedSinceExport()
+        {
+            var export = ExportWithPolicy();
+            export.CspPolicies![0].Value = "https://changed.example.com";
+
+            Assert.That(service.GetImportStatus(export), Is.EqualTo(ImportStatus.ModifiedSinceExport));
+        }
+
+        [Test]
+        public void GetImportStatus_DifferentVersion_IsFileVersion()
+        {
+            var export = ExportWithPolicy() with { Metadata = new ExportMetadata { Version = "1.0.0" } };
+
+            Assert.That(service.GetImportStatus(export), Is.EqualTo("File Version 1.0.0"));
+        }
+
+        [Test]
+        public void Deserialize_JsonWithoutMetadata_Throws()
+        {
+            // JSON that isn't an export fails to deserialize, which is what marks an upload Invalid
+            Assert.That(() => System.Text.Json.JsonSerializer.Deserialize<JhoooseSecurityExport>("""{ "something": "else" }"""),
+                Throws.InstanceOf<System.Text.Json.JsonException>());
+        }
+
+        private JhoooseSecurityExport ExportWithPolicy()
+        {
+            policyRepository.Load().Returns(new List<CspPolicy> { new() { PolicyName = "img-src", Value = "https://cdn.example.com" } });
+            permissionsRepository.Load().Returns(new List<PermissionPolicy>());
+            responseHeadersRepository.Load().Returns(new List<ResponseHeader>());
+            settingsRepository.Load().Returns(new CspSettings());
+            ipRestrictionRepository.Load().Returns(new List<IpRestrictionEntry>());
+            ipRestrictionIgnoredPathRepository.Load().Returns(new List<IpRestrictionIgnoredPath>());
+            ipRestrictionIgnoreHeaderRepository.Load().Returns(new List<IpRestrictionIgnoreHeader>());
+
+            return service.Export();
+        }
     }
 }

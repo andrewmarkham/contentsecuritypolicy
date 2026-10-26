@@ -187,9 +187,11 @@ export function PageOverrideDialog(props: PageOverrideDialogProps) {
         props.registerControls?.({ commit });
     }, [commit]);
 
-    const editingPolicy = editingDirective
+    // Memoised so a new policy isn't recreated on every render - EditPageCspItem resets its state
+    // whenever this prop changes, which would discard what has been entered.
+    const editingPolicy = useMemo(() => editingDirective
         ? (policiesByName[editingDirective] ?? createEmptyPolicy(editingDirective))
-        : null;
+        : null, [editingDirective, policiesByName, props.contentLink]);
 
     return (
         <div className="page-override-dialog">

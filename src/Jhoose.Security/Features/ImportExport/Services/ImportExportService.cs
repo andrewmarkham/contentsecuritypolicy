@@ -79,8 +79,21 @@ public class ImportExportService(ISecurityRepository<CspPolicy> policyRepository
         var receivedHash = export.IntegrityHash;
         export.IntegrityHash = string.Empty; // Remove hash for recalculation
         var computedHash = ObjectHasher.ComputeHash(export);
+        export.IntegrityHash = receivedHash;
 
         return receivedHash == computedHash;
+    }
+
+    public string GetImportStatus(JhoooseSecurityExport export)
+    {
+        // The hash covers the serialized model, which changes between versions, so a file from another
+        // version is reported by its version rather than as modified.
+        if (export.Metadata.Version != ExportMetadata.CurrentVersion)
+        {
+            return ImportStatus.FileVersion(export.Metadata.Version);
+        }
+
+        return IsValid(export) ? ImportStatus.Valid : ImportStatus.ModifiedSinceExport;
     }
 
     public JhoooseSecurityExport Export(bool includeCsp = true, bool includePermissions = true, bool includeHeaders = true, bool includeSettings = true, bool includeIpRestrictions = true, bool includeCspPageOverrides = true, bool includePermissionsPageOverrides = true)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 using EPiServer.Data.Dynamic;
 
@@ -33,30 +34,72 @@ public class JhooseImportRepository : IImportRepository
 
     public void Save(JhoooseSecurityExport export)
     {
-        var IsValid = importExportService.IsValid(export);
+        Save(importExportService.GetImportStatus(export), System.Text.Json.JsonSerializer.Serialize(export));
+    }
 
+    public void SaveInvalid(string json)
+    {
+        Save(ImportStatus.Invalid, json);
+    }
+
+    private void Save(string status, string serializedExport)
+    {
         var exportRecord = new JhoooseSecurityExportRecord
         {
             Id = Guid.NewGuid(),
             CreatedAt = DateTime.UtcNow,
-            Status = IsValid ? "Valid" : "Invalid",
-            SerializedExport = System.Text.Json.JsonSerializer.Serialize(export)
+            Status = status,
+            SerializedExport = serializedExport
         };
 
-        this.logger.LogInformation("Saving export with ID: {ExportId}", exportRecord.Id);
+        this.logger.LogInformation("Saving export with ID: {ExportId}, status: {Status}", exportRecord.Id, status);
 
         this.exportStore.Save(exportRecord);
     }
 
     public IEnumerable<JhoooseSecurityExportRecord> List()
     {
-        return this.exportStore.Items<JhoooseSecurityExportRecord>();
+        foreach (var record in this.exportStore.Items<JhoooseSecurityExportRecord>())
+        {
+            // Earlier versions marked an import Invalid whenever the hash didn't match, so work out the
+            // status again for those that can be read. Only Invalid records are read, to keep the list cheap.
+            if (record.Status == ImportStatus.Invalid && TryDeserialize(record, out var export))
+            {
+                record.Status = importExportService.GetImportStatus(export);
+            }
+
+            yield return record;
+        }
+    }
+
+    public JhoooseSecurityExportRecord? GetRecord(Guid id)
+    {
+        return this.exportStore.Load(id) as JhoooseSecurityExportRecord;
     }
 
     public JhoooseSecurityExport? Get(Guid id)
     {
-        var exportRecord = this.exportStore.Load(id) as JhoooseSecurityExportRecord;
-        return exportRecord != null ? System.Text.Json.JsonSerializer.Deserialize<JhoooseSecurityExport>(exportRecord.SerializedExport) : null;
+        var exportRecord = GetRecord(id);
+
+        // An invalid record holds the file as uploaded, which can't be read as an export. Records saved by
+        // earlier versions could be marked Invalid only because the hash didn't match, so rely on whether the
+        // export can be read rather than on the status.
+        return exportRecord != null && TryDeserialize(exportRecord, out var export) ? export : null;
+    }
+
+    private bool TryDeserialize(JhoooseSecurityExportRecord record, [NotNullWhen(true)] out JhoooseSecurityExport? export)
+    {
+        try
+        {
+            export = System.Text.Json.JsonSerializer.Deserialize<JhoooseSecurityExport>(record.SerializedExport);
+        }
+        catch (System.Text.Json.JsonException ex)
+        {
+            this.logger.LogWarning(ex, "Import {ExportId} can't be read as an export", record.Id);
+            export = null;
+        }
+
+        return export?.Metadata != null;
     }
 
     public void Delete(Guid id)

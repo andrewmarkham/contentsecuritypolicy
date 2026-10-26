@@ -88,6 +88,8 @@
                     Fixed #189, Issue with `Permissions-Policy-Report-Only`
                     Fixed #219 Issue parsing reports in some scenarios 
                     Addressed #222 Updated migration documentation
+            3.3.3 - UI Bug fix: hostnames not saved when a space not entered after it's entered
+                    Improved import statuses, was confusiong before
         </ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">

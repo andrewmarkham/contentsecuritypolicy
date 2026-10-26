@@ -7,4 +7,9 @@ public interface IImportExportService
     JhoooseSecurityExport Export(bool includeCsp = true, bool includePermissions = true, bool includeHeaders = true, bool includeSettings = true, bool includeIpRestrictions = true, bool includeCspPageOverrides = true, bool includePermissionsPageOverrides = true);
     ImportResult Import(JhoooseSecurityExport export);
     bool IsValid(JhoooseSecurityExport export);
+
+    /// <summary>
+    /// Gets the status to show for an uploaded export, see <see cref="ImportStatus"/>.
+    /// </summary>
+    string GetImportStatus(JhoooseSecurityExport export);
 }
