@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 using Jhoose.Security.Features.CSP.Models;
 using Jhoose.Security.Features.IpRestrictions.Models;
@@ -12,6 +13,9 @@ public record JhoooseSecurityExport
 {
     public string IntegrityHash { get; set; } = string.Empty;
 
+    // Required so that JSON which isn't an export (e.g. some other file) fails to deserialize
+    // rather than being read as an empty export.
+    [JsonRequired]
     public ExportMetadata Metadata { get; init; } = new ExportMetadata();
     public CspSettings? CspSettings { get; init; }
     public List<CspPolicy>? CspPolicies { get; init; }

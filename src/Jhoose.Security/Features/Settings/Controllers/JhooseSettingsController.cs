@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Jhoose.Security.Features.Settings.Controllers;
 
@@ -30,6 +31,7 @@ namespace Jhoose.Security.Features.Settings.Controllers;
 /// <param name="importRepository">Repository to persist and retrieve import records.</param>
 /// <param name="logger">Logger instance for the controller.</param>
 /// <param name="siteService"></param>
+/// <param name="mvcJsonOptions">The MVC JSON options, used to read uploaded imports as model binding would.</param>
 [Route("api/jhoose/[controller]")]
 [ApiController]
 [Authorize(Policy = Constants.Authentication.PolicyName)]
@@ -38,7 +40,8 @@ public class SettingsController(ISettingsRepository settingsRepository,
                           IImportExportService importExportService,
                           IImportRepository importRepository,
                           ILogger<SettingsController> logger,
-                          ISiteService siteService) : NotificationBaseController(settingsRepository,webhookNotifications)
+                          ISiteService siteService,
+                          IOptions<JsonOptions> mvcJsonOptions) : NotificationBaseController(settingsRepository,webhookNotifications)
 {
      private static readonly JsonSerializerOptions jsonSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     private readonly ISettingsRepository settingsRepository = settingsRepository;
@@ -127,20 +130,36 @@ public class SettingsController(ISettingsRepository settingsRepository,
     /// <summary>
     /// Uploads an exported configuration package and persists it to the import repository.
     /// </summary>
-    /// <param name="export">The exported configuration data to save; if null a BadRequest is returned.</param>
-    /// <returns>Returns 204 No Content on success or 400 Bad Request if the export is null.</returns>
+    /// <remarks>
+    /// A file that can't be read as an export is still saved, with an Invalid status, so the user can see why it can't be imported.
+    /// </remarks>
+    /// <param name="upload">The uploaded JSON.</param>
+    /// <returns>Returns 204 No Content.</returns>
     [HttpPost]
     [Route("uploadimport")]
     [ProducesResponseType(typeof(JhoooseSecurityExport), StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(JhoooseSecurityExport), StatusCodes.Status500InternalServerError)]
-    public ActionResult UploadImport(JhoooseSecurityExport? export)
+    public ActionResult UploadImport([FromBody] JsonElement upload)
     {
-        if (export == null)
+        JhoooseSecurityExport? export = null;
+
+        try
         {
-            return BadRequest("Invalid export data.");
+            export = upload.Deserialize<JhoooseSecurityExport>(mvcJsonOptions.Value.JsonSerializerOptions);
+        }
+        catch (JsonException ex)
+        {
+            logger.LogWarning(ex, "Uploaded import can't be read as an export");
         }
 
-        importRepository.Save(export);
+        if (export?.Metadata == null)
+        {
+            importRepository.SaveInvalid(upload.GetRawText());
+        }
+        else
+        {
+            importRepository.Save(export);
+        }
 
         return StatusCode(StatusCodes.Status204NoContent);
     }
@@ -161,14 +180,21 @@ public class SettingsController(ISettingsRepository settingsRepository,
     [HttpPost]
     [Route("import/{id}")]
     [ProducesResponseType(typeof(ImportResult), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public ActionResult<ImportResult> Import(Guid id)
     {
+        if (importRepository.GetRecord(id) == null)
+        {
+            return NotFound("Import not found.");
+        }
+
         var export = importRepository.Get(id);
 
         if (export == null)
         {
-            return NotFound("Import not found.");
+            return BadRequest("The file can't be read as a Jhoose Security export, so it can't be imported.");
         }
         var result = importExportService.Import(export);
         return new JsonResult(result, jsonSerializerOptions)

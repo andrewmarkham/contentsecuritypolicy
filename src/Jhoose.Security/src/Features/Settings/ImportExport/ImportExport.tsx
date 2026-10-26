@@ -398,8 +398,9 @@ const ListUploadedFiles = ({ reloadFlag }: { reloadFlag: number }) => {
                         okText="Import"
                         cancelText="Cancel"
                         onConfirm={() => handleRunImport(record.id)}
+                        disabled={record.status === INVALID_STATUS}
                     >
-                        <Button type="primary" color="primary" icon={<ImportOutlined />}>Import</Button>
+                        <Button type="primary" color="primary" icon={<ImportOutlined />} disabled={record.status === INVALID_STATUS}>Import</Button>
                     </Popconfirm>
                     <Popconfirm
                         title="Delete this import?"
@@ -443,6 +444,9 @@ const ListUploadedFiles = ({ reloadFlag }: { reloadFlag: number }) => {
         </>
     );
 };
+
+// Matches ImportStatus.Invalid on the server: the file couldn't be read as an export, so it can't be imported
+const INVALID_STATUS = 'Invalid';
 
 interface JhoooseSecurityExport {
     id: string;

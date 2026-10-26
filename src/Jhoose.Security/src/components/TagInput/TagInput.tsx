@@ -45,6 +45,28 @@ export const TagInput: React.FC<TagInputProps> = ({
         return () => window.clearTimeout(timeoutId);
     }, [draft, onChange, tags]);
 
+    // Adds whatever has been typed but not yet turned into a tag, so it isn't lost when the user
+    // presses Enter or moves on (e.g. clicks OK) without typing a trailing space.
+    const commitDraft = () => {
+        const completed = splitTags(draft);
+        if (completed.length > 0) {
+            onChange([...tags, ...completed].join(' '));
+        }
+        setDraft('');
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key !== 'Enter' || event.nativeEvent.isComposing) {
+            return;
+        }
+
+        // Stop Enter reaching a surrounding dialog (e.g. the CMS edit mode dialog), which would
+        // otherwise treat it as OK and save before the tag is added.
+        event.preventDefault();
+        event.stopPropagation();
+        commitDraft();
+    };
+
     const handleRemove = (index: number) => {
         const nextTags = tags.filter((_, tagIndex) => tagIndex !== index);
         onChange(nextTags.join(' '));
@@ -76,6 +98,8 @@ export const TagInput: React.FC<TagInputProps> = ({
                     className="tag-input__input"
                     value={draft}
                     onChange={(event) => setDraft(event.target.value)}
+                    onKeyDown={handleKeyDown}
+                    onBlur={commitDraft}
                     placeholder={placeholder}
                     disabled={disabled}
                     aria-label={ariaLabel ?? label}

@@ -6,7 +6,7 @@
       "Bash(dotnet test *)",
       "Bash(npm install *)",
       "Bash(npx tsc *)",
-      "Bash(npx webpack *)"
+      "Bash(npx webpack *)",
       "Bash(find /private/tmp -path \"*dijit*\" -iname \"*.js\" 2>/dev/null *)",
       "Read(//private/tmp/**)"
     ]

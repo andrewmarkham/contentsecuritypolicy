@@ -135,9 +135,11 @@ export function PermissionsPageOverrideDialog(props: PermissionsPageOverrideDial
         props.registerControls?.({ commit });
     }, [commit]);
 
-    const editingPermission = editingKey
+    // Memoised so a new permission isn't recreated on every render - EditPagePermissionItem resets
+    // its state whenever this prop changes, which would discard what has been entered.
+    const editingPermission = useMemo(() => editingKey
         ? (permissionsByKey[editingKey] ?? createEmptyPermission(editingKey))
-        : null;
+        : null, [editingKey, permissionsByKey, props.contentLink]);
     const editingPolicyData = editingKey ? policyDataByName[editingKey] : undefined;
 
     return (
