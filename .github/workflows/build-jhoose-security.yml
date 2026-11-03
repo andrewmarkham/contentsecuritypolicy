@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 env:
-  BUILD_NO: 3.3.3.${{ github.run_number }}  
-  BUILD_NO_PRE: 3.3.3-rc.${{ github.run_number }} 
+  BUILD_NO: 3.3.4.${{ github.run_number }}  
+  BUILD_NO_PRE: 3.3.4-rc.${{ github.run_number }} 
 
 jobs:
   build:
