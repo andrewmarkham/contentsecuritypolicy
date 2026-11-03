@@ -1,16 +1,13 @@
 const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const isDevelopment = process.env.NODE_ENV === 'development'
+const outputPath = path.resolve(__dirname, '../dist/Jhoose.Security/ClientResources');
 
 const appConfig = {
-  mode: 'development',
   entry: './app.tsx',
-  devtool: 'inline-source-map',
   output: {
     filename: 'csp-app.js',
-    path: path.resolve(__dirname, '../dist/Jhoose.Security/ClientResources'),
+    path: outputPath,
   },
   module: {
     rules: [
@@ -42,12 +39,10 @@ const appConfig = {
 };
 
 const editorConfig = {
-  mode: 'development',
   entry: './OnPageEditor/Editor/EditorBridge.tsx',
-  devtool: 'inline-source-map',
   output: {
     filename: 'inline-editor-bundle.js',
-    path: path.resolve(__dirname, '../dist/Jhoose.Security/ClientResources'),
+    path: outputPath,
     library: {
       name: 'InlineEditor',
       type: 'window',
@@ -75,11 +70,13 @@ const editorConfig = {
       patterns: [
         {
           from: path.resolve(__dirname, 'OnPageEditor/Scripts'),
-          to: path.resolve(__dirname, '../dist/Jhoose.Security/ClientResources/Scripts'),
+          to: path.resolve(outputPath, 'Scripts'),
+          // Copy the dojo modules as-is; stop the production build minifying them.
+          info: { minimized: true },
         },
       ],
     }),
   ],
 };
 
-module.exports = [appConfig, editorConfig];
+module.exports = { appConfig, editorConfig };
