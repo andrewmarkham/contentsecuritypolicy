@@ -11,7 +11,8 @@ import { WebsiteSelector, GLOBAL_DEFAULT_SITE_ID } from '../../../components/Web
 import { PermissionPolicyData, browserDetails } from '../Data/PermissionPolicyData';
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 
-import bcd, { Identifier } from '@mdn/browser-compat-data' 
+import type { Identifier } from '@mdn/browser-compat-data';
+import permissionPolicyCompat from '../Data/permissions-policy-compat.json';
 import { Toaster } from '../../../components/Toaster/Toaster';
 import { PermissionDataRow } from '../components/PermissionDataRow/PermissionDataRow';
 import { getErrorMessage, usePermissionsQuery } from '../lib/permissionQueries';
@@ -50,8 +51,8 @@ export function PermissionPolicyModule() {
     const [activeWebsiteId, setActiveWebsiteId] = useState<string>(GLOBAL_DEFAULT_SITE_ID);
     const [selectedWebsiteLabel, setSelectedWebsiteLabel] = useState<string>('Global Default');
 
-    const permissionPolicy = bcd.http["headers"]["Permissions-Policy"];
-    const permissionPolicyRecords = permissionPolicy as Record<string, Identifier | undefined>;
+    const permissionPolicy = permissionPolicyCompat as unknown as Identifier;
+    const permissionPolicyRecords = permissionPolicy as unknown as Record<string, Identifier | undefined>;
 
     useEffect(() => {
         if (permissionsQuery.error) {
