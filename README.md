@@ -417,11 +417,13 @@ X-API-Key: ...
  |3.3.0 | Added IP Restrictions module - IP allow-list with global/per-site scoping, Ignored Paths, and Ignore Headers bypasses.<br/> Add support for page level overrides for both the CSP and permissions policy, managed directly from the on-page editor |
  |3.3.2 | added support for `potential-permissions-policy-violation`, `intervention` reports, `crash` reports or any other report types are dropped. #227 </br>  Fixed #189, Issue with `Permissions-Policy-Report-Only` <br> Fixed #219 Issue parsing reports in some scenarios <br> #222 Updated migration documentation | 
  |3.3.3 | UI Bug fix: hostnames not saved when a space not entered after it's entered<br>Improved import statuses, was confusiong before |
+ |3.3.4| Frontend build optimisations. |
   ---
  ## Contributors
 
-https://github.com/Doom-83
-https://github.com/neorth
-https://github.com/kennygutierrez
+- https://github.com/Doom-83
+- https://github.com/neorth
+- https://github.com/kennygutierrez
+- https://github.com/huerpfse
 
 Thanks for all the support, suggestions, features and bugfixes

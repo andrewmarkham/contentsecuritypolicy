@@ -36,7 +36,7 @@
 		<RepositoryUrl>https://github.com/andrewmarkham/contentsecuritypolicy</RepositoryUrl>
 		<ProjectUrl>https://github.com/andrewmarkham/contentsecuritypolicy</ProjectUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>3.3.2.0</Version>
+		<Version>3.3.4.0</Version>
 		<Authors>Andrew Markham</Authors>
 		<Description>Interface to manage Content Security Policy, Permissions Policy and OWASP Recommended response headers</Description>
 		<Title>Jhoose Security</Title>
@@ -90,6 +90,7 @@
                     Addressed #222 Updated migration documentation
             3.3.3 - UI Bug fix: hostnames not saved when a space not entered after it's entered
                     Improved import statuses, was confusiong before
+            3.3.4 - Frontend build optimisations. thanks Huseyin.Erdinc@preciofishbone.se
         </ReleaseNotes>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<RestoreSources Condition=" '$(Configuration)' == 'Debug' ">

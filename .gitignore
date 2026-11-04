@@ -23,6 +23,9 @@ src/Jhoose.Security.Admin/dist/Jhoose.Security/ClientResources/
 
 src/Jhoose.Security/dist/Jhoose.Security/ClientResources/
 
+# Build-time generated from @mdn/browser-compat-data (scripts/extract-bcd-data.js)
+src/Jhoose.Security/src/Features/PermissionPolicy/Data/permissions-policy-compat.json
+
 src/Tests/Jhoose.Security.Tests/bin/
 
 src/Tests/Jhoose.Security.Tests/obj/
